@@ -81,6 +81,7 @@ class Shortcodes {
 				'items_downloadable_product',
 				'items_downloadable_title',
 				'get_heading',
+				'get_refund_email_text',
 				'woocommerce_email_order_meta',
 				'woocommerce_email_order_details',
 				'woocommerce_email_before_order_table',
@@ -294,7 +295,7 @@ class Shortcodes {
 	}
 
 	public function filter_safe_style_css( $array ) {
-		if ( function_exists( 'is_plugin_active' ) && is_plugin_active( 'wp-social-reviews/wp-social-reviews.php' ) ) {
+		if ( defined( 'YAYMAIL_THIRD_PARTY_AUTOMATEWOO_IS_ACTIVE' ) || ( function_exists( 'is_plugin_active' ) && is_plugin_active( 'wp-social-reviews/wp-social-reviews.php' ) ) ) {
 			$style_css = array(
 				'background',
 				'background-color',
@@ -883,12 +884,13 @@ class Shortcodes {
 		$shortcode['[yaymail_items_downloadable_product]'] = $this->itemsDownloadableProduct( '', $this->order, $sent_to_admin, '' ); // done
 
 		// ORDER DETAILS
-		$shortcode['[yaymail_items_border]']         = $this->itemsBorder( '', $this->order, $sent_to_admin ); // done
-		$shortcode['[yaymail_items_border_before]']  = $this->itemsBorderBefore( '', $this->order, $sent_to_admin ); // done
-		$shortcode['[yaymail_items_border_after]']   = $this->itemsBorderAfter( '', $this->order, $sent_to_admin ); // done
-		$shortcode['[yaymail_items_border_title]']   = $this->itemsBorderTitle( '', $this->order, $sent_to_admin ); // done
-		$shortcode['[yaymail_items_border_content]'] = $this->itemsBorderContent( '', $this->order, $sent_to_admin ); // done
-		$shortcode['[yaymail_get_heading]']          = $this->getHeading( $args, $this->order, $sent_to_admin, array() );
+		$shortcode['[yaymail_items_border]']          = $this->itemsBorder( '', $this->order, $sent_to_admin ); // done
+		$shortcode['[yaymail_items_border_before]']   = $this->itemsBorderBefore( '', $this->order, $sent_to_admin ); // done
+		$shortcode['[yaymail_items_border_after]']    = $this->itemsBorderAfter( '', $this->order, $sent_to_admin ); // done
+		$shortcode['[yaymail_items_border_title]']    = $this->itemsBorderTitle( '', $this->order, $sent_to_admin ); // done
+		$shortcode['[yaymail_items_border_content]']  = $this->itemsBorderContent( '', $this->order, $sent_to_admin ); // done
+		$shortcode['[yaymail_get_heading]']           = $this->getHeading( $args, $this->order, $sent_to_admin, array() );
+		$shortcode['[yaymail_get_refund_email_text]'] = $this->getRefundEmailText( $args, $this->order, $sent_to_admin, array() );
 
 		// WC HOOK
 		$shortcode['[woocommerce_email_order_meta]']         = $this->woocommerceEmailOrderMeta( $args, $sent_to_admin ); // not Changed
@@ -1052,7 +1054,7 @@ class Shortcodes {
 				$shortcode['[yaymail_order_number]'] = $order->get_order_number();
 			}
 		}
-		$shortcode['[yaymail_order_refund]'] = wc_price( $refund, ['currency' => $order->get_currency()] );
+		$shortcode['[yaymail_order_refund]'] = wc_price( $refund, array( 'currency' => $order->get_currency() ) );
 		if ( isset( $totals['cart_subtotal']['value'] ) ) {
 			$shortcode['[yaymail_order_sub_total]'] = $totals['cart_subtotal']['value'];
 		} else {
@@ -1063,7 +1065,7 @@ class Shortcodes {
 			$shortcode['[yaymail_order_discount]'] = $totals['discount']['value'];
 		}
 
-		$shortcode['[yaymail_order_total]']         = wc_price( $order->get_total(), ['currency' => $order->get_currency()] );
+		$shortcode['[yaymail_order_total]']         = wc_price( $order->get_total(), array( 'currency' => $order->get_currency() ) );
 		$shortcode['[yaymail_order_total_numbers]'] = $order->get_total();
 		$shortcode['[yaymail_orders_count]']        = count( $order->get_items() );
 		$shortcode['[yaymail_quantity_count]']      = $order->get_item_count();
@@ -1101,9 +1103,9 @@ class Shortcodes {
 
 		// SHIPPINGS
 		if ( isset( $order->get_data()['shipping_total'] ) && ! empty( $order->get_data()['shipping_total'] ) ) {
-			$shortcode['[yaymail_order_shipping]'] = wc_price( $order->get_data()['shipping_total'] + $order->get_data()['shipping_tax'], ['currency' => $order->get_currency()] );
+			$shortcode['[yaymail_order_shipping]'] = wc_price( $order->get_data()['shipping_total'] + $order->get_data()['shipping_tax'], array( 'currency' => $order->get_currency() ) );
 		} else {
-			$shortcode['[yaymail_order_shipping]'] = wc_price( 0, ['currency' => $order->get_currency()] );
+			$shortcode['[yaymail_order_shipping]'] = wc_price( 0, array( 'currency' => $order->get_currency() ) );
 		}
 		$shortcode['[yaymail_shipping_address]'] = $shipping_address;
 		if ( ! empty( $order->get_shipping_address_1() ) ) {
@@ -1449,12 +1451,12 @@ class Shortcodes {
 		// ORDER DETAILS
 		$shortcode['[yaymail_items_border]'] = $this->itemsBorder( '', $this->order, $sent_to_admin ); // done
 
-		$shortcode['[yaymail_items_border_before]']  = $this->itemsBorderBefore( '', $this->order, $sent_to_admin ); // done
-		$shortcode['[yaymail_items_border_after]']   = $this->itemsBorderAfter( '', $this->order, $sent_to_admin ); // done
-		$shortcode['[yaymail_items_border_title]']   = $this->itemsBorderTitle( '', 'sampleOrder', $sent_to_admin ); // done
-		$shortcode['[yaymail_items_border_content]'] = $this->itemsBorderContent( '', 'sampleOrder', $sent_to_admin ); // done
-		$shortcode['[yaymail_get_heading]']          = $this->getHeading( '', $this->order, $sent_to_admin, array() );
-
+		$shortcode['[yaymail_items_border_before]']   = $this->itemsBorderBefore( '', $this->order, $sent_to_admin ); // done
+		$shortcode['[yaymail_items_border_after]']    = $this->itemsBorderAfter( '', $this->order, $sent_to_admin ); // done
+		$shortcode['[yaymail_items_border_title]']    = $this->itemsBorderTitle( '', 'sampleOrder', $sent_to_admin ); // done
+		$shortcode['[yaymail_items_border_content]']  = $this->itemsBorderContent( '', 'sampleOrder', $sent_to_admin ); // done
+		$shortcode['[yaymail_get_heading]']           = $this->getHeading( '', $this->order, $sent_to_admin, array() );
+		$shortcode['[yaymail_get_refund_email_text]'] = $this->getRefundEmailText( '', $this->order, $sent_to_admin, array() );
 		// WC HOOK
 		$shortcode['[woocommerce_email_order_meta]']         = $this->woocommerceEmailOrderMeta( array(), $sent_to_admin, 'sampleOrder' ); // not Changed
 		$shortcode['[woocommerce_email_order_details]']      = $this->woocommerceEmailOrderDetails( array(), $sent_to_admin, 'sampleOrder' ); // not Changed
@@ -2015,6 +2017,17 @@ class Shortcodes {
 		}
 		return $email_heading;
 	}
+
+	public function getRefundEmailText( $atts, $order, $sent_to_admin, $args ) {
+		if ( ! empty( $args ) && isset( $args['partial_refund'] ) && $args['partial_refund'] ) {
+			/* translators: %s: Site title */
+			return '<p style=\"margin: 0px;\"><span style=\"font-size: 14px;\">' . sprintf( esc_html__( 'Your order on %s has been partially refunded. There are more details below for your reference:', 'woocommerce' ), do_shortcode( '[yaymail_site_name]' ) ) . '</span></p>';
+		} else {
+			/* translators: %s: Site title */
+			return '<p style=\"margin: 0px;\"><span style=\"font-size: 14px;\">' . sprintf( esc_html__( 'Your order on %s has been refunded. There are more details below for your reference:', 'woocommerce' ), do_shortcode( '[yaymail_site_name]' ) ) . '</span></p>';
+		}
+	}
+
 	public function orderCouponCodes( $args, $order ) {
 		if ( isset( $order ) && method_exists( $order, 'get_coupon_codes' ) && ! empty( $order->get_coupon_codes() ) ) {
 			$coupon_codes = $order->get_coupon_codes();

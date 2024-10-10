@@ -3,8 +3,8 @@ Contributors: YayCommerce
 Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: email customizer, email designer, email templates, marketing, woocommerce emails
 Requires at least: 3.0
-Tested up to: 6.6.1
-Stable tag: 3.5.5
+Tested up to: 6.6.3
+Stable tag: 3.5.6
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -197,6 +197,11 @@ We offer single-site licenses and also unlimited site licenses to better support
 5. Easily copy your favorite content blocks over to another Woo email template to reuse the design that’s paying off
 
 == Changelog ==
+
+= Oct 10, 2024 - Version 3.5.6 =
+- Fixed: Deprecated warning "Creation of dynamic property"
+- Fixed: Style not work when Automate Woo Addon is active
+- Fixed: Social icon RTL style
 
 = Aug 25, 2024 - Version 3.5.5 =
 - Fixed: Display email in mobile

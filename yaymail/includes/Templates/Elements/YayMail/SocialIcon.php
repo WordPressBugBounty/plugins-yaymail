@@ -19,13 +19,15 @@ $direction_rtl    = $yaymail_settings['direction_rtl'];
 		  align="<?php echo esc_attr( $attrs['align'] ); ?>"
 		  id="web-<?php echo esc_attr( $id ); ?>-socialicon"
 		  class="web-video-wrap"
-		  style="<?php echo esc_attr( 'padding: ' . $attrs['paddingTop'] . 'px ' . $attrs['paddingRight'] . 'px ' . $attrs['paddingBottom'] . 'px ' . $attrs['paddingLeft'] . 'px;' ); ?>"
+		  style="<?php echo esc_attr( 'padding: ' . $attrs['paddingTop'] . 'px ' . $attrs['paddingRight'] . 'px ' . $attrs['paddingBottom'] . 'px ' . $attrs['paddingLeft'] . 'px;' . ' text-align: ' . $attrs['align'] . ';'); ?>"
 		>
 			<?php
 			if ( isset( $attrs['iconSocialsArr'] ) ) {
 				foreach ( $attrs['iconSocialsArr'] as $key => $el ) {
 					$imgUrl      = YAYMAIL_PLUGIN_URL . 'assets/dist/images/SocialIcons/' . $attrs['styleTheme'] . '/' . $el['icon'] . '.png';
-					$margin_left = ( 'rtl' === $direction_rtl ? ( $attrs['iconSpacing'] . 'px' ) : ( ( 0 == $key ) ? '0px' : $attrs['iconSpacing'] . 'px' ) );
+					
+					$first_index = ('rtl' === $direction_rtl) ? count($attrs['iconSocialsArr']) - 1 : 0;
+					$margin_left = ($first_index === $key) ? '0px' : $attrs['iconSpacing'] . 'px';
 					
 					?> 
 
