@@ -67,6 +67,15 @@ class Settings {
 			array( $this, 'search_by_meta_value_or_post_title' )
 		);
 
+		//Alow text cid: in img-> src
+		add_filter(
+			'kses_allowed_protocols',
+			function ( $protocols ) {
+				$protocols[] = 'cid';
+				return $protocols;
+			}
+		);
+
 		// Excute Ajax
 		Ajax::getInstance();
 	}
@@ -582,6 +591,7 @@ class Settings {
 					'nonce'                      => wp_create_nonce( 'email-nonce' ),
 					'defaultDataElement'         => $element->defaultDataElement,
 					'home_url'                   => home_url(),
+					'wc_setting_email_url'       => admin_url( 'admin.php?page=wc-settings&tab=email' ),
 					'settings'                   => $settings,
 					'admin_url'                  => get_admin_url(),
 					'yaymail_plugin_url'         => YAYMAIL_PLUGIN_URL,

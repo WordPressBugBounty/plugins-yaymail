@@ -48,7 +48,7 @@ if ( isset( $downloads ) && ! empty( $downloads ) ) {
 		</tr>
 	</thead>
 	<?php foreach ( $downloads as $download ) : ?>
-		<tfoot>
+		<tbody>
 			<tr style="<?php echo esc_attr( $textColor ); ?>">
 				<?php foreach ( $columns as $column_id => $column_name ) : ?>
 					<td class="td" style="<?php echo esc_attr( $borderColor ); ?>;text-align:<?php echo esc_attr( $text_align ); ?>">
@@ -62,7 +62,7 @@ if ( isset( $downloads ) && ! empty( $downloads ) ) {
 									<?php
 									if ( '1' == $order_image ) :
 										$product           = wc_get_product( $download['product_id'] );
-										$size = isset($args['image_size'][2]) ? $args['image_size'][2] : null;
+										$size              = isset( $args['image_size'][2] ) ? $args['image_size'][2] : null;
 										$product_image_src = ( $product->get_image_id() ? current( wp_get_attachment_image_src( $product->get_image_id(), $size ) ) : wc_placeholder_img_src() );
 										$image_width       = isset( $yaymail_settings['image_width'] ) ? str_replace( 'px', '', $yaymail_settings['image_width'] ) : 32;
 										$image_height      = isset( $yaymail_settings['image_height'] ) ? str_replace( 'px', '', $yaymail_settings['image_height'] ) : 32;
@@ -99,7 +99,7 @@ if ( isset( $downloads ) && ! empty( $downloads ) ) {
 					</td>
 				<?php endforeach; ?>
 			</tr>
-		</tfoot>
+		</tbody>
 	<?php endforeach; ?>
 </table>
 	<?php

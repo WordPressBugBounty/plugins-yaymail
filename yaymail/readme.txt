@@ -3,8 +3,8 @@ Contributors: YayCommerce
 Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: email customizer, email designer, email templates, marketing, woocommerce emails
 Requires at least: 3.0
-Tested up to: 6.6.3
-Stable tag: 3.5.6
+Tested up to: 6.7
+Stable tag: 3.5.7
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -197,6 +197,14 @@ We offer single-site licenses and also unlimited site licenses to better support
 5. Easily copy your favorite content blocks over to another Woo email template to reuse the design that’s paying off
 
 == Changelog ==
+
+= Nov 12, 2024 - Version 3.5.7 =
+- Added: Add shortcode [yaymail_get_refund_email_text]
+- Fixed: Missing style when activate Automate addon
+- Fixed: The trim function does not work when value is not string in PHP 8
+- Fixed: Display item download
+- Fixed: Can't send template Dokan Wholesale Registration
+- Fixed: Allow 'cid' protocol in image src to enhance email compatibility
 
 = Oct 10, 2024 - Version 3.5.6 =
 - Fixed: Deprecated warning "Creation of dynamic property"

@@ -299,6 +299,10 @@ class Shortcodes {
 			$style_css = array(
 				'background',
 				'background-color',
+				'background-position',
+				'background-repeat',
+				'background-size',
+				'background-image',
 				'border',
 				'border-width',
 				'border-color',
@@ -1318,9 +1322,9 @@ class Shortcodes {
 
 				// when array $v has tow value ???
 				if ( is_array( $v ) && count( $v ) > 0 ) {
-					$shortcode[ $nameShorcode ] = trim( $v[0] );
+					$shortcode[ $nameShorcode ] = is_string( $v[0] ) ? trim( $v[0] ) : $v[0];
 				} else {
-					$shortcode[ $nameShorcode ] = trim( $v );
+					$shortcode[ $nameShorcode ] = is_string( $v ) ? trim( $v ) : $v;
 				}
 			}
 		}
@@ -1603,9 +1607,9 @@ class Shortcodes {
 
 				// when array $v has tow value ???
 				if ( is_array( $v ) && count( $v ) > 0 ) {
-					$shortcode[ $nameShorcode ] = trim( $v[0] );
+					$shortcode[ $nameShorcode ] = is_string( $v[0] ) ? trim( $v[0] ) : $v[0];
 				} else {
-					$shortcode[ $nameShorcode ] = trim( $v );
+					$shortcode[ $nameShorcode ] = is_string( $v ) ? trim( $v ) : $v;
 				}
 			}
 		}

@@ -12,7 +12,7 @@ if ( isset( $args['yith_wc_email'] ) && isset( $args['yith_wc_email']->id ) && !
 	$template = $args['yith_wc_email']->id;
 } else {
 	$template = isset( $args['email'] ) && isset( $args['email']->id ) && ! empty( $args['email']->id ) ? $args['email']->id : false;
-	if ( 'dokan-wholesale/' == $template_path ) {
+	if ( 'emails/customer-wholesale-register.php' == $template_name ) {
 		$template = 'Dokan_Email_Wholesale_Register';
 	}
 	if ( 'emails/admin-notify-approved.php' === $template_name ) {
@@ -138,6 +138,13 @@ if ( ( false === $checkIsSumoTemp ) && ( false === $checkIsQWCTemp ) && isset( $
 }
 
 if ( $flag_do_action ) {
+
+	// check plugin WBW Currency Switcher for WooCommerce active
+	if(class_exists('\currencyWcu')) {
+		$currencyWcu = \frameWcu::_()->getModule('currency');
+		remove_filter('woocommerce_order_get_total', array( $currencyWcu, 'getTotalCurrencyPrice'), 9999, 2);
+	}
+	
 	$updateElement        = new UpdateElement();
 	$yaymail_elements     = get_post_meta( $postID, '_yaymail_elements', true );
 	$yaymail_elements     = $updateElement->merge_new_props_to_elements( $yaymail_elements );

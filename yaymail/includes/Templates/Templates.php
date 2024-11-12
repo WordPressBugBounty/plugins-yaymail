@@ -467,7 +467,7 @@ class Templates {
               width: 100% !important;
             }';
 		if ( 'yes' == $enableCustomCss ) {
-			$css .= $custom_css;
+			$css .= wp_unslash( $custom_css );
 		}
 
 		if ( 'Left' == $orderImagePostions ) {

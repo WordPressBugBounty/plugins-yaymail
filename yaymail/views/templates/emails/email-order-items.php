@@ -57,8 +57,12 @@ endif;
 
 foreach ( $items as $item_id => $item ) :
 	if ( apply_filters( 'woocommerce_order_item_visible', true, $item ) ) {
-						$product           = $item->get_product();
-						$result_attributes = array();
+		$product           = $item->get_product();
+		$result_attributes = array();
+
+		if ( ! $product ) {
+			continue;
+		}
 		?>
 		<tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order_item', $item, $order ) ); ?>">
 		<th colspan="<?php echo wp_kses_post( apply_filters( 'yaymail_order_item_product_title_colspan', 1, $yaymail_template ) ); ?>" class="td" style="text-align:<?php echo esc_attr( $text_align ); ?>;font-weight: normal;word-wrap:break-word;vertical-align: middle;padding: 12px;font-size: 14px;border-width: 1px;border-style: solid;<?php echo esc_attr( isset( $default_args['border_color'] ) ? $default_args['border_color'] : '' ); ?>;">

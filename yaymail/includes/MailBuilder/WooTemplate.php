@@ -471,7 +471,7 @@ class WooTemplate {
 			$template = $args['yith_wc_email']->id;
 		} else {
 			$template = isset( $args['email'] ) && isset( $args['email']->id ) && ! empty( $args['email']->id ) ? $args['email']->id : false;
-			if ( 'dokan-wholesale/' == $template_path ) {
+			if ( 'emails/customer-wholesale-register.php' == $template_name ) {
 				$template = 'Dokan_Email_Wholesale_Register';
 			}
 			if ( 'new-user-registration.php' == $template_name ) {

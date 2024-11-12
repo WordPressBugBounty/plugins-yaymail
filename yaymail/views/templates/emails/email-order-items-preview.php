@@ -57,9 +57,13 @@ endif;
 
 foreach ( $items as $item_id => $item ) :
 	if ( apply_filters( 'woocommerce_order_item_visible', true, $item ) ) {
-						$product           = $item->get_product();
-						$result_attributes = array();
-						$product_id        = ( $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
+		$product           = $item->get_product();
+		$result_attributes = array();
+		$product_id        = ( $item['variation_id'] ? $item['variation_id'] : $item['product_id'] );
+
+		if ( ! $product ) {
+			continue;
+		}
 		?>
 		<?php
 		// For Woo Show Attributes Plugins
