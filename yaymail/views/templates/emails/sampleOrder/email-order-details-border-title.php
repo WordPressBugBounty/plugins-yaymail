@@ -13,13 +13,13 @@ $titleColor       = isset( $atts['titlecolor'] ) && $atts['titlecolor'] ? 'color
 
 <?php
 if ( $is_preview ) {
-	$before            = '<h2 style="font-weight: normal;' . esc_attr( $titleColor ) . '" class="yaymail_builder_link" href="">';
-	$after             = '</h2>';
+	$before            = '<span style="font-weight: normal;' . esc_attr( $titleColor ) . '" class="yaymail_builder_link" href="">';
+	$after             = '</span>';
 	$allowed_html_tags = Helper::customAllowedHTMLTags( array( 'v-html' => true ) );
 	echo wp_kses( $before . '<span v-html="order_title"></span>' . $after, $allowed_html_tags );
 } else {
-	$before                   = '<h2 style="font-weight: normal;font-size: 18px;' . esc_attr( $titleColor ) . '" class="yaymail_builder_link" >';
-	$after                    = '</h2>';
+	$before                   = '<span style="font-weight: normal;font-size: 18px;' . esc_attr( $titleColor ) . '" class="yaymail_builder_link" >';
+	$after                    = '</span>';
 	$do_shortcode_order_title = wp_kses_post( do_shortcode( $order_title ) );
 	echo wp_kses_post( $before . $do_shortcode_order_title . $after );
 }

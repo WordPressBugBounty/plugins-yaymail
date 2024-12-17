@@ -223,7 +223,7 @@
 			'plugin_name'  => 'wholesalex',
 			'plugin_title' => 'WholesaleX',
 		),
-		'woothemes_queue_update'      => array(
+		'wccfsq_activation_notice'      => array(
 			'plugin_name'  => 'WooCommerce_Contact_For_Shipping_Quote',
 			'plugin_title' => 'WooCommerce Contact for Shipping Quote',
 		),

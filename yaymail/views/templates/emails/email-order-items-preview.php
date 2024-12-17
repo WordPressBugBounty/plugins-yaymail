@@ -256,10 +256,44 @@ foreach ( $items as $item_id => $item ) :
 							$product_regular_price = $product_meta->value[ get_option( 'woocommerce_tax_display_cart' ) ? get_option( 'woocommerce_tax_display_cart' ) : 'excl' ];
 							break;
 						}
+
+						$wcpay_multi_currency_order_exchange_rate = $order->get_meta( '_wcpay_multi_currency_order_exchange_rate', true );
+						if ( ! empty( $wcpay_multi_currency_order_exchange_rate ) ) {
+							$wcpay_currency  = new \WCPay\MultiCurrency\Currency(
+								\WC_Payments::get_localization_service(),
+								strtolower( $order->get_currency() ),
+								$wcpay_multi_currency_order_exchange_rate
+							);
+							$is_zero_decimal = $wcpay_currency->get_is_zero_decimal();
+							$price_rounding  = (float) get_option( 'wcpay_multi_currency_price_rounding_' . $wcpay_currency->get_code(), $wcpay_currency->get_is_zero_decimal() ? '100' : '1.00' );
+
+							$product_regular_price = (float) $product_regular_price * $wcpay_multi_currency_order_exchange_rate;
+							if ( 0.00 !== $price_rounding ) {
+								$product_regular_price = (float) ceil( $product_regular_price / $price_rounding ) * $price_rounding;
+							}
+						}
+
 						if ( class_exists( 'Yay_Currency\Helpers\YayCurrencyHelper' ) ) {
 							$apply_currency        = Yay_Currency\Helpers\YayCurrencyHelper::get_currency_by_currency_code( $order->get_currency() );
 							$product_regular_price = Yay_Currency\Helpers\YayCurrencyHelper::calculate_price_by_currency( $product_regular_price, false, $apply_currency );
 						}
+					}
+					if ( 'incl' === get_option( 'woocommerce_tax_display_cart' ) ) {
+						$product_regular_price = wc_get_price_including_tax(
+							$product,
+							array(
+								'qty'   => $qty,
+								'price' => $product_regular_price,
+							)
+						);
+					} else {
+						$product_regular_price = wc_get_price_excluding_tax(
+							$product,
+							array(
+								'qty'   => $qty,
+								'price' => $product_regular_price,
+							)
+						);
 					}
 					$product_regular_price_html = ! empty( $product_regular_price ) ? wc_price( $product_regular_price * $item->get_quantity(), array( 'currency' => $order->get_currency() ) ) : '';
 					if ( ! empty( $product_regular_price_html ) && $product_regular_price_html !== $order->get_formatted_line_subtotal( $item ) ) {

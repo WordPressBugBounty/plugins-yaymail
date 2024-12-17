@@ -3,8 +3,8 @@ Contributors: YayCommerce
 Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: email customizer, email designer, email templates, marketing, woocommerce emails
 Requires at least: 3.0
-Tested up to: 6.7
-Stable tag: 3.5.7
+Tested up to: 6.7.1
+Stable tag: 3.5.8
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -197,6 +197,16 @@ We offer single-site licenses and also unlimited site licenses to better support
 5. Easily copy your favorite content blocks over to another Woo email template to reuse the design that’s paying off
 
 == Changelog ==
+
+= Dec 17, 2024 - Version 3.5.8 =
+- Fixed: Compatible with WCPayments (multi-currency)
+- Fixed: Issue with load text domain and WP > 6.7
+- Fixed: Children element ID does not change when duplicate column
+- Fixed: Column's elements work incorrectly after saved
+- Fixed: Hide hamburger menu
+- Fixed: Social icons come back after being removed
+- Fixed: Image element in column reset to default size when column element changes
+- Fixed: Small bugs
 
 = Nov 12, 2024 - Version 3.5.7 =
 - Added: Add shortcode [yaymail_get_refund_email_text]

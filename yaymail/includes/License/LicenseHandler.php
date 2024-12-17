@@ -142,10 +142,11 @@ class LicenseHandler {
 	}
 
 	public static function get_plugin_data( $plugin_info ) {
-		if ( ! function_exists( 'get_plugin_data' ) ) {
-			require_once ABSPATH . 'wp-admin/includes/plugin.php';
-		}
-		$plugin_data = get_plugin_data( $plugin_info['dir_path'] . basename( $plugin_info['basename'] ) );
+		$plugin_data = [
+			'Name' => 'YayMail - WooCommerce Email Customizer',
+			'Version' => YAYMAIL_VERSION,
+			'AuthorName' => 'YayCommerce'
+		];
 		return $plugin_data;
 	}
 

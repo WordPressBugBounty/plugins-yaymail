@@ -3,12 +3,12 @@
  * Plugin Name: YayMail - WooCommerce Email Customizer
  * Plugin URI: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
  * Description: Create awesome transactional emails with a drag and drop email builder
- * Version: 3.5.7
+ * Version: 3.5.8
  * Author: YayCommerce
  * Author URI: https://yaycommerce.com
  * Text Domain: yaymail
  * WC requires at least: 3.0.0
- * WC tested up to: 9.3.3
+ * WC tested up to: 9.4.3
  * Domain Path: /i18n/languages/
  */
 
@@ -22,7 +22,7 @@ if ( function_exists( 'YayMail\\init' ) ) {
 	require_once plugin_dir_path( __FILE__ ) . 'includes/Fallback.php';
 	add_action(
 		'admin_init',
-		function() {
+		function () {
 			deactivate_plugins( plugin_basename( __FILE__ ) );
 		}
 	);
@@ -38,7 +38,7 @@ if ( ! defined( 'YAYMAIL_DEBUG' ) ) {
 }
 
 if ( ! defined( 'YAYMAIL_VERSION' ) ) {
-	define( 'YAYMAIL_VERSION', '3.5.7' );
+	define( 'YAYMAIL_VERSION', '3.5.8' );
 }
 
 if ( ! defined( 'YAYMAIL_PLUGIN_URL' ) ) {
@@ -96,7 +96,7 @@ if ( ! function_exists( 'yaymail_enable_compatible_hpos' ) ) {
 
 			$yaymail_addons = array_filter(
 				$plugins,
-				function( $key ) {
+				function ( $key ) {
 					return strpos( $key, 'yaymail-addon' ) !== false || strpos( $key, 'email-customizer' ) !== false || strpos( $key, 'yaymail-premium-addon' ) !== false || strpos( $key, 'yaymail-conditional-logic' ) !== false;
 				},
 				ARRAY_FILTER_USE_KEY
@@ -105,7 +105,7 @@ if ( ! function_exists( 'yaymail_enable_compatible_hpos' ) ) {
 			$addon_keys = array_keys( $yaymail_addons );
 
 			array_map(
-				function( $key ) {
+				function ( $key ) {
 					\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $key, true );
 				},
 				$addon_keys
@@ -125,7 +125,6 @@ if ( ! function_exists( 'YayMail\\init' ) ) {
 		}
 
 		Plugin::getInstance();
-		I18n::loadPluginTextdomain();
 		Page\Settings::getInstance();
 		MailBuilder\WooTemplate::getInstance();
 		MailBuilder\YaymailElement::getInstance();
@@ -133,6 +132,10 @@ if ( ! function_exists( 'YayMail\\init' ) ) {
 }
 
 add_action( 'plugins_loaded', 'YayMail\\init' );
+
+add_action( 'init', function() {
+	I18n::loadPluginTextdomain();
+} );
 
 register_activation_hook( __FILE__, array( 'YayMail\\Plugin', 'activate' ) );
 register_deactivation_hook( __FILE__, array( 'YayMail\\Plugin', 'deactivate' ) );

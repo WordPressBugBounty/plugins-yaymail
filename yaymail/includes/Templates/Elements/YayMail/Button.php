@@ -1,3 +1,7 @@
+<?php
+use YayMail\Helper\Helper;
+?>
+
 <table
   width="<?php esc_attr_e( $general_attrs['tableWidth'], 'woocommerce' ); ?>"
   cellspacing="0"
@@ -28,7 +32,7 @@
 				  style="margin: 10px; word-break: break-word;"
 				  id="web-<?php echo esc_attr( $id ); ?>button"
 				  class="web-button-wrap">
-				  <a href="<?php echo esc_attr( $attrs['pathUrl'] ); ?>" class="yaymail-web-button" style='line-height: 21px;text-align: center; text-decoration: none; margin: 0px; display:block;<?php echo 'font-family: ' . wp_kses_post( str_replace( '"', '', $attrs['family'] ) ); ?>;<?php echo esc_attr( 'background-color: ' . $attrs['buttonBackgroundColor'] ); ?>;<?php echo esc_attr( 'font-size: ' . $attrs['fontSize'] . 'px' ); ?>;<?php echo esc_attr( 'color: ' . $attrs['textColor'] ); ?>;<?php echo esc_attr( 'font-weight: ' . $attrs['weight'] ); ?>;<?php echo esc_attr( 'padding: ' . $attrs['textPaddingTop'] . 'px ' . $attrs['textPaddingRight'] . 'px ' . $attrs['textPaddingBottom'] . 'px ' . $attrs['textPaddingLeft'] . 'px;' ); ?><?php echo esc_attr( 'border-radius: ' . $attrs['borderRadiusTop'] . 'px ' . $attrs['borderRadiusRight'] . 'px ' . $attrs['borderRadiusBottom'] . 'px ' . $attrs['borderRadiusLeft'] . 'px;' ); ?>'><span style="text-align: center;vertical-align: middle;<?php echo esc_attr( 'line-height: ' . $attrs['heightButton'] ) . 'px'; ?>;<?php echo esc_attr( 'color: ' . $attrs['textColor'] ); ?>"><?php echo wp_kses_post( $attrs['text'] ); ?></span></a>
+				  <a href="<?php echo esc_attr( $attrs['pathUrl'] ); ?>" class="yaymail-web-button" style='line-height: 21px;text-align: center; text-decoration: none; margin: 0px; display:block;<?php echo 'font-family: ' . wp_kses_post( str_replace( '"', '', $attrs['family'] ) ); ?>;<?php echo esc_attr( 'background-color: ' . Helper::yaymail_parse_color_to_hex($attrs['buttonBackgroundColor']) ); ?>;<?php echo esc_attr( 'font-size: ' . $attrs['fontSize'] . 'px' ); ?>;<?php echo esc_attr( 'color: ' . $attrs['textColor'] ); ?>;<?php echo esc_attr( 'font-weight: ' . $attrs['weight'] ); ?>;<?php echo esc_attr( 'padding: ' . $attrs['textPaddingTop'] . 'px ' . $attrs['textPaddingRight'] . 'px ' . $attrs['textPaddingBottom'] . 'px ' . $attrs['textPaddingLeft'] . 'px;' ); ?><?php echo esc_attr( 'border-radius: ' . $attrs['borderRadiusTop'] . 'px ' . $attrs['borderRadiusRight'] . 'px ' . $attrs['borderRadiusBottom'] . 'px ' . $attrs['borderRadiusLeft'] . 'px;' ); ?>'><span style="text-align: center;vertical-align: middle;<?php echo esc_attr( 'line-height: ' . $attrs['heightButton'] ) . 'px'; ?>;<?php echo esc_attr( 'color: ' . $attrs['textColor'] ); ?>"><?php echo wp_kses_post( $attrs['text'] ); ?></span></a>
 				</td>
 			  </tr>
 			</tbody>

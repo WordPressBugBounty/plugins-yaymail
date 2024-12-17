@@ -15,7 +15,7 @@ class Helper {
 
 	public static function sanitize_array( $var ) {
 		if ( is_array( $var ) ) {
-			return array_map( 'self::sanitize_array', $var );
+			return array_map( [__CLASS__, 'sanitize_array'], $var );
 		} else {
 			return is_scalar( $var ) ? wp_kses_allowed_html( $var ) : $var;
 		}
@@ -23,7 +23,7 @@ class Helper {
 
 	public static function unsanitize_array( $var ) {
 		if ( is_array( $var ) ) {
-			return array_map( 'self::unsanitize_array', $var );
+			return array_map( [__CLASS__, 'unsanitize_array'], $var );
 		} else {
 			return html_entity_decode( $var, ENT_QUOTES, 'UTF-8' );
 		}
@@ -396,4 +396,35 @@ class Helper {
 
 		return false;
 	}
+
+	 /**
+     * Converts an RGB string to HEX, or validates and returns a HEX string.
+     *
+     * @param  string $color The input color string (e.g., "rgb(52, 152, 219)" or "#3498db").
+     * @return string|false The HEX color string if valid, or false if the input is invalid.
+     */
+    public static function yaymail_parse_color_to_hex($color)
+    {
+        // Check if the color is already in HEX format
+        if (preg_match('/^#([a-fA-F0-9]{3}|[a-fA-F0-9]{6})$/', $color)) {
+            return $color; // Return the valid HEX color as is
+        }
+    
+        // Check if the color is in RGB format
+        if (preg_match('/^rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)$/', $color, $matches)) {
+            // Extract RGB values
+            $r = intval($matches[1]);
+            $g = intval($matches[2]);
+            $b = intval($matches[3]);
+    
+            // Ensure RGB values are within range
+            if ($r >= 0 && $r <= 255 && $g >= 0 && $g <= 255 && $b >= 0 && $b <= 255) {
+                // Convert RGB to HEX
+                return sprintf("#%02x%02x%02x", $r, $g, $b);
+            }
+        }
+    
+        // Invalid color input
+        return $color;
+    }
 }

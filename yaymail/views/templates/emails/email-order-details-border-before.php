@@ -36,6 +36,13 @@ if ( ( 'customer_on_hold_order' === $this->template
 	</p>
 
 	<?php
+
+	$country        = $order->get_billing_country();
+	$wc_gateway     = new \WC_Gateway_BACS();
+	$locale_current = $wc_gateway->get_country_locale();
+	// Get sortcode label in the $locale array and use appropriate one.
+	$sortcode = isset( $locale_current[ $country ]['sortcode']['label'] ) ? $locale_current[ $country ]['sortcode']['label'] : __( 'Sort code', 'woocommerce' );
+
 }
 
 /*
@@ -47,7 +54,7 @@ if ( false != $paymentGateways && isset( $paymentGateways->account_details ) ) {
 	$texts                = array(
 		'bank_name'      => 'Bank',
 		'account_number' => 'Account number',
-		'sort_code'      => 'Sort code',
+		'sort_code'      => $sortcode,
 		'iban'           => 'IBAN',
 		'bic'            => 'BIC',
 	);
