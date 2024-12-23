@@ -477,6 +477,7 @@ class PluginSupported {
 				'template_name' => array(
 					'gift_card_received',
 					'gift_card_send_to_buyer',
+					'gift_card_expiration_reminder',
 				),
 				'link_upgrade'  => 'https://yaycommerce.com/yaymail-addons/yaymail-premium-addon-for-woocommerce-gift-cards',
 			),

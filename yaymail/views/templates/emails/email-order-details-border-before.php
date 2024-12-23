@@ -54,7 +54,7 @@ if ( false != $paymentGateways && isset( $paymentGateways->account_details ) ) {
 	$texts                = array(
 		'bank_name'      => 'Bank',
 		'account_number' => 'Account number',
-		'sort_code'      => $sortcode,
+		'sort_code'      => $sortcode ?? __( 'Sort code', 'woocommerce' ),
 		'iban'           => 'IBAN',
 		'bic'            => 'BIC',
 	);
