@@ -5,6 +5,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 use YayMail\Page\Source\UpdateElement;
 $custom_shortcode = new YayMail\MailBuilder\Shortcodes( $template, '', false );
+$customCss        = $custom_shortcode->customCss();
 $arrData          = array( $custom_shortcode, $args, $template );
 do_action_ref_array( 'yaymail_addon_defined_shorcode', array( &$arrData ) );
 
@@ -17,19 +18,19 @@ $text_link_color      = get_post_meta( $postID, '_yaymail_email_textLinkColor_se
 $general_attrs        = array( 'tableWidth' => str_replace( 'px', '', $yaymail_settings['container_width'] ) );
 $yaymail_template     = get_post_meta( $postID, '_yaymail_template', true );
 ?>
-<!DOCTYPE html><html <?php language_attributes(); ?> ><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="x-apple-disable-message-reformatting"><style>a{color: <?php echo esc_attr( $text_link_color ); ?> !important}h1{font-family:inherit;text-shadow:unset;text-align:inherit}h2,h3{font-family:inherit;color:inherit;text-align:inherit}.yaymail-inline-block{display:inline-block} 
-												  <?php
+<!DOCTYPE html><html <?php language_attributes(); ?> ><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="x-apple-disable-message-reformatting"><style>a{color: <?php echo esc_attr( $text_link_color ); ?> !important}h1{font-family:inherit;text-shadow:unset;text-align:inherit}h2,h3{font-family:inherit;color:inherit;text-align:inherit}.yaymail-inline-block{display:inline-block} <?php echo $customCss; ?>
+													<?php
 													if ( is_plugin_active( 'yaymail-addon-for-automatewoo/yaymail-automatewoo.php' ) || is_plugin_active( 'email-customizer-automatewoo/yaymail-automatewoo.php' ) ) {
 														if ( function_exists( 'aw_get_template' ) ) {
 															aw_get_template( 'email/styles.php' );
 														}
 													}
 													?>
-				 </style></head><body style="background: <?php echo esc_attr( $emailBackgroundColor ); ?>" <?php echo is_rtl() ? 'rightmargin' : 'leftmargin'; ?>="0" marginwidth="0" topmargin="0" marginheight="0" offset="0"><table style="background: <?php echo esc_attr( $emailBackgroundColor ); ?>" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" class="yaymail-customizer-email-template-container <?php echo esc_attr( 'yaymail-template-' . $yaymail_template ); ?>"> 
+				</style></head><body style="background: <?php echo esc_attr( $emailBackgroundColor ); ?>" <?php echo is_rtl() ? 'rightmargin' : 'leftmargin'; ?>="0" marginwidth="0" topmargin="0" marginheight="0" offset="0"><table style="background: <?php echo esc_attr( $emailBackgroundColor ); ?>" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" class="yaymail-customizer-email-template-container <?php echo esc_attr( 'yaymail-template-' . $yaymail_template ); ?>"> 
 				<?php
 				foreach ( $yaymail_elements as $key => $element ) {
 					?>
-					 <tr><td> 
+					<tr><td> 
 					<?php
 						$reg_pattern = '/\[([a-z0-9A-Z_]+)\]/';
 					if ( isset( $element['settingRow']['content'] ) ) {
@@ -108,10 +109,10 @@ $yaymail_template     = get_post_meta( $postID, '_yaymail_template', true );
 					}
 
 					?>
-						 </td></tr> 
+						</td></tr> 
 						<?php
 				}
 				?>
-				 </table></body></html>
+				</table></body></html>
 
 

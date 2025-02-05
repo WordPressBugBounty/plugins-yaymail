@@ -7,6 +7,7 @@ use YayMail\Helper\Helper;
 // Templates Default
 use YayMail\Templates\DefaultTemplate\CancelledOrder;
 use YayMail\Templates\DefaultTemplate\CustomerCompletedOrder;
+use YayMail\Templates\DefaultTemplate\CustomerFailedOrder;
 use YayMail\Templates\DefaultTemplate\CustomerInvoice;
 use YayMail\Templates\DefaultTemplate\CustomerNewAccount;
 use YayMail\Templates\DefaultTemplate\CustomerNote;
@@ -84,6 +85,7 @@ class Templates {
 			'customer_new_account',
 			'customer_invoice',
 			'customer_completed_order',
+			'customer_failed_order',
 			'cancelled_order',
 		);
 		// Get Default Template
@@ -97,6 +99,7 @@ class Templates {
 		$cusProOrderArr    = CustomerProcessingOrder::getTemplates();
 		$cusRefdOrderArr   = CustomerRefundedOrder::getTemplates();
 		$cusResPasswordArr = CustomerResetPassword::getTemplates();
+		$cusFailedOrder    = CustomerFailedOrder::getTemplates();
 		$faiOrderArr       = FailedOrder::getTemplates();
 
 		$listTemplates = array();
@@ -111,21 +114,20 @@ class Templates {
 		$listTemplates = array_merge( $listTemplates, $cusNoteArr );
 		$listTemplates = array_merge( $listTemplates, $cusResPasswordArr );
 		$listTemplates = array_merge( $listTemplates, $cusNewAccountArr );
+		$listTemplates = array_merge( $listTemplates, $cusFailedOrder );
 
 		foreach ( $listEmails as $key => $value ) {
 			if ( is_array( $value ) ) {
 				if ( ! in_array( $value['id'], $listEmailDefaultOfWoo ) ) {
 					$newTempalte = apply_filters( 'YaymailNewTempalteDefault', '', $key, $value );
 					if ( isset( $newTempalte ) && null != $newTempalte && is_array( $newTempalte ) ) {
-						  $listTemplates = array_merge( $listTemplates, $newTempalte );
+							$listTemplates = array_merge( $listTemplates, $newTempalte );
 					}
 				}
-			} else {
-				if ( ! in_array( $value->id, $listEmailDefaultOfWoo ) ) {
+			} elseif ( ! in_array( $value->id, $listEmailDefaultOfWoo ) ) {
 					$newTempalte = apply_filters( 'YaymailNewTempalteDefault', '', $key, $value );
-					if ( isset( $newTempalte ) && null != $newTempalte && is_array( $newTempalte ) ) {
-						  $listTemplates = array_merge( $listTemplates, $newTempalte );
-					}
+				if ( isset( $newTempalte ) && null != $newTempalte && is_array( $newTempalte ) ) {
+						$listTemplates = array_merge( $listTemplates, $newTempalte );
 				}
 			}
 		}
@@ -143,7 +145,7 @@ class Templates {
 		$orderImagePostions     = isset( $yaymail_settings['image_position'] ) && ! empty( $yaymail_settings['image_position'] ) ? $yaymail_settings['image_position'] : 'Top';
 		$productRegularPrice    = isset( $yaymail_settings['product_regular_price'] ) ? $yaymail_settings['product_regular_price'] : 0;
 		/*
-		 ======
+		======
 		@@@ Start css for shortcode [yaymail_items_border]
 		@@@ note: use for table has border
 		====== */
@@ -291,7 +293,7 @@ class Templates {
 		/* ====== End ====== */
 
 		/*
-		 ======
+		======
 		@@@ Start  css for shortcode [yaymail_items]
 		@@@ note: use for table not border
 		====== */
@@ -431,7 +433,7 @@ class Templates {
               .yaymail_builder_table_items_border tbody {
                 flex-direction: inherit;
             }';
-		  // add css for table subcription, item download
+			// add css for table subcription, item download
 		$css .= 'table.yaymail_builder_table_subcription,
             table.yaymail_builder_table_tracking_item,
             table.yaymail_builder_table_item_download,

@@ -4,7 +4,7 @@ Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: email customizer, email designer, email templates, marketing, woocommerce emails
 Requires at least: 3.0
 Tested up to: 6.7.1
-Stable tag: 3.5.9
+Stable tag: 3.6
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -197,6 +197,17 @@ We offer single-site licenses and also unlimited site licenses to better support
 5. Easily copy your favorite content blocks over to another Woo email template to reuse the design that’s paying off
 
 == Changelog ==
+
+= Feb 5, 2025 - Version 3.6 =
+- Added: Support template Customer Failed Order
+- Fixed: Change HTML tag of Order Items Title
+- Fixed:  Image element in column reset to default size when column elements changed
+- Fixed:  Duplicated elements inside nested columns
+- Fixed: Could not rearrange elements inside columns
+- Fixed: Custom CSS not work in template trackship
+- Fixed: Small bugs
+- Released: Addon Woo Back in stock notification v1.2
+-- Update notification templates for consistent font styling
 
 = Dec 23, 2024 - Version 3.5.9 =
 - Fixed: Issue column dragged to column

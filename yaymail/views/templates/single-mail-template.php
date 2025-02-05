@@ -165,7 +165,6 @@ if ( $flag_do_action ) {
 				h2,h3{ font-family:inherit;color:inherit;text-align:inherit;}
 				.yaymail-inline-block {display: inline-block;}
 
-				<?php echo apply_filters("yaymail_email_head_style", ""); ?>
 				</style>
 			</head>
 			<body style="background: <?php echo esc_attr( $emailBackgroundColor ); ?>" <?php echo is_rtl() ? 'rightmargin' : 'leftmargin'; ?>="0" marginwidth="0" topmargin="0" marginheight="0" offset="0">

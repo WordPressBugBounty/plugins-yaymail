@@ -87,8 +87,8 @@ class ActivePlugin {
 		}
 
 		/*
-		 @@@@check key in settingRow whether or not it exists.
-		 @@@@note: case when add setting row for element.
+		@@@@check key in settingRow whether or not it exists.
+		@@@@note: case when add setting row for element.
 		*/
 		$versionCurrent = YAYMAIL_VERSION;
 		$versionOld     = get_option( 'yaymail_version' );
@@ -143,6 +143,7 @@ class ActivePlugin {
 			'new_order'                 => 1,
 			'cancelled_order'           => 1,
 			'failed_order'              => 1,
+			'customer_failed_order'     => 1,
 			'customer_on_hold_order'    => 1,
 			'customer_processing_order' => 1,
 			'customer_completed_order'  => 1,

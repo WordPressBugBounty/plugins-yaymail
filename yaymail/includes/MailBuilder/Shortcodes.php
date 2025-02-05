@@ -687,22 +687,34 @@ class Shortcodes {
 					$order_id = '';
 				}
 
+				$templateEmail  = Templates::getInstance();
+				$templates      = $templateEmail::getList();
 				$this->template = isset( $request['template'] ) ? sanitize_text_field( $request['template'] ) : false;
 				$post_id        = CustomPostType::postIDByTemplate( $this->template );
 
-				if ( ! $post_id ) {
-					$templateEmail = Templates::getInstance();
-					$templates     = $templateEmail::getList();
-					$arr           = array(
-						'mess'                            => '',
-						'post_date'                       => current_time( 'Y-m-d H:i:s' ),
-						'post_type'                       => 'yaymail_template',
-						'post_status'                     => 'publish',
-						'_yaymail_template'               => $this->template,
-						'_email_backgroundColor_settings' => 'rgb(236, 236, 236)',
-						'_yaymail_elements'               => json_decode( $templates[ $this->template ]['elements'], true ),
-					);
-					$post_id       = CustomPostType::insert( $arr );
+				if ( ! empty( $templates[ $this->template ] ) ) {
+					if ( ! $post_id ) {
+						$arr = array(
+							'mess'              => '',
+							'post_date'         => current_time( 'Y-m-d H:i:s' ),
+							'post_type'         => 'yaymail_template',
+							'post_status'       => 'publish',
+							'_yaymail_template' => $this->template,
+							'_email_backgroundColor_settings' => 'rgb(236, 236, 236)',
+							'_yaymail_elements' => json_decode( $templates[ $this->template ]['elements'], true ),
+						);
+
+						if ( empty( $arr['_yaymail_elements'] ) ) {
+							$post_id = CustomPostType::insert( $arr );
+						}
+					}
+
+					$is_has_data_yaymail_elements = ! empty( get_post_meta( $post_id, '_yaymail_elements', true ) ) ? true : false;
+
+					if ( ! $is_has_data_yaymail_elements ) {
+						$data = json_decode( $templates[ $this->template ]['elements'], true );
+						update_post_meta( $post_id, '_yaymail_elements', $data );
+					}
 				}
 
 				$this->postID   = $post_id;

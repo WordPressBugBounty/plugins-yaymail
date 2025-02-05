@@ -274,6 +274,8 @@ class Settings {
 				'new_order'                 => 1,
 				'cancelled_order'           => 1,
 				'failed_order'              => 1,
+				'customer_failed_order'     => 1,
+
 				'customer_on_hold_order'    => 1,
 				'customer_processing_order' => 1,
 				'customer_completed_order'  => 1,
@@ -420,10 +422,8 @@ class Settings {
 					if ( $value['id'] == $req_template['id'] ) {
 						$req_template['title'] = $value['title'];
 					}
-				} else {
-					if ( $value->id == $req_template['id'] ) {
+				} elseif ( $value->id == $req_template['id'] ) {
 						$req_template['title'] = $value->title;
-					}
 				}
 			}
 
@@ -447,7 +447,7 @@ class Settings {
 				)
 			);
 			$initial_categories = array_map(
-				function( $cat_item ) {
+				function ( $cat_item ) {
 					return array(
 						'label' => $cat_item->name,
 						'value' => $cat_item->term_id,
@@ -567,7 +567,7 @@ class Settings {
 			}
 
 			$this->emails = array_map(
-				function( $item ) {
+				function ( $item ) {
 					$final_item = new stdClass();
 
 					if ( is_array( $item ) ) {
@@ -649,7 +649,7 @@ class Settings {
 		if ( $title = $q->get( '_meta_or_title' ) ) {
 			add_filter(
 				'get_meta_sql',
-				function( $sql ) use ( $title ) {
+				function ( $sql ) use ( $title ) {
 					global $wpdb;
 
 					// Only run once:
