@@ -704,9 +704,9 @@ class Shortcodes {
 							'_yaymail_elements' => json_decode( $templates[ $this->template ]['elements'], true ),
 						);
 
-						if ( empty( $arr['_yaymail_elements'] ) ) {
+						// if ( empty( $arr['_yaymail_elements'] ) ) {
 							$post_id = CustomPostType::insert( $arr );
-						}
+						// }
 					}
 
 					$is_has_data_yaymail_elements = ! empty( get_post_meta( $post_id, '_yaymail_elements', true ) ) ? true : false;

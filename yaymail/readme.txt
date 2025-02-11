@@ -4,7 +4,7 @@ Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: email customizer, email designer, email templates, marketing, woocommerce emails
 Requires at least: 3.0
 Tested up to: 6.7.1
-Stable tag: 3.6
+Stable tag: 3.6.0.1
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -197,6 +197,9 @@ We offer single-site licenses and also unlimited site licenses to better support
 5. Easily copy your favorite content blocks over to another Woo email template to reuse the design that’s paying off
 
 == Changelog ==
+
+= Feb 11, 2025 - Version 3.6.0.1 =
+- Fixed: Addon's templates are not initialized upon first-time open
 
 = Feb 5, 2025 - Version 3.6 =
 - Added: Support template Customer Failed Order
