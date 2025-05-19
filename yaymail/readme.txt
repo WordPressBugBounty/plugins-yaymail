@@ -1,19 +1,51 @@
 === YayMail - WooCommerce Email Customizer ===
 Contributors: YayCommerce
 Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
-Tags: email customizer, email designer, email templates, marketing, woocommerce emails
+Tags: email customizer, email templates, marketing, woocommerce emails, design
 Requires at least: 3.0
-Tested up to: 6.7.1
-Stable tag: 3.6.0.1
+Tested up to: 6.8
+Stable tag: 4.0
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Customize WooCommerce email templates with an advanced drag and drop email builder. Works great with 70+ WooCommerce Email Customizer Addons.
+Customize WooCommerce email templates with an advanced drag-and-drop email builder. Works great with 70+ WooCommerce Email Customizer Addons.
 
 == Description ==
 
-**The best WooCommerce Email Customizer with custom blocks and visual designer**
+🎉 **YayMail 4.0 – Big Update is here!**
+This is a major release packed with performance improvements and UI enhancements. To ensure everything works smoothly, please update all related addons to their latest versions.
+
+If you encounter any issues, feel free to reach out to our support team via this link: [https://yaycommerce.com/support/](https://yaycommerce.com/support/)
+
+**Your brand deserves emails that shine.** ✨
+
+YayMail is the #1 Free drag-and-drop email template customizer that lets you design stunning, branded emails effortlessly. No coding required.  
+
+Plus, expand your design possibilities with premade blocks and extensive plugin compatibility.
+
+👋 **Works with Any WooCommerce Themes**
+
+- Brandy
+- Kadence
+- OceanWP
+- GeneratePress
+- Astra
+- Storefront
+- Neve
+- Kubio
+- YITH Wonder
+
+Here's how YayMail makes email customization easy:
+
+- 30+ elements are built-in
+- Preview on desktop/mobile easily
+- You can select an order to preview the email with real data
+- Personalize each email with tons of shortcodes
+- Comes with global settings
+- Import/export templates quickly
+- One-click to send a test email
+- Premade patterns (Coming soon)
 
 [**QUICK ADMIN DEMO**](https://demo.yaycommerce.com/try-yaymail/) | [**YAYMAIL PRO**](https://yaycommerce.com/yaymail-woocommerce-email-customizer/) 💎
  
@@ -21,9 +53,9 @@ Customize WooCommerce email templates with an advanced drag and drop email build
 
 [Free vs Pro](https://docs.yaycommerce.com/yaymail/compare-yaymail-free-and-pro) | [YayMail Addons](https://yaycommerce.com/yaymail-addons/)
 
-YayMail is a free **WooCommerce email template customizer** with a drag-and-drop interface. When combined with [**YayMail Premium Addons**](https://yaycommerce.com/yaymail-addons/), you will unlock the visual email designer integration to go with 70+ third-party WooCommerce plugins.
+When combined with [**YayMail Premium Addons**](https://yaycommerce.com/yaymail-addons/), you will unlock the visual email designer integration to go with 70+ third-party WooCommerce plugins.
 
-With YayMail, you can drag and drop elements to the email templates. Each element makes a block in the WooCommerce visual email editor. And it is very easy to edit content and design email layouts, just like how you do it with the Gutenberg editor or Elementor page builder.
+With YayMail, you can drag and drop elements to the email templates. Each element makes a block in the WooCommerce visual email editor. It is very easy to edit content and design email layouts, just like you do with the Gutenberg editor or Elementor page builder.
 
 Exclusively, you can also send personalized email templates using shortcodes, placeholders, and WooCommerce conditional logic.
 
@@ -38,7 +70,7 @@ Unlike Kadence Woo Commerce email designer, this email customizer allows you to 
 Easy to navigate between the element sidebar and the editing area to customise email block elements.
 
 **Edit Everything**
-You can edit content, layout, and design of email header, email body, visual footer, signature, social follow module, and more. It means that all your communication with your customers will finally match the rest of your branding.
+You can edit content, layout, and design of email header, email body, visual footer, signature, social follow module, and more. It means that all your communication with your customers will finally match the rest of your branding.
 
 **Stylish Social Icons**
 It comes with predesigned icons for your chosen social media platforms, including Facebook, Twitter/X, Instagram, Threads, TikTok, YouTube, Pinterest, website, and more!
@@ -78,7 +110,7 @@ You can fine-tune the design of WooCommerce email templates globally or individu
 
 - Order details, order table items, woocommerce order tracking
 - Smart coupon, personalized coupons, active discount campaigns, gift messages
-- Shipping quotes, client quores, request a quote
+- Shipping quotes, client quotes, request a quote
 - Social interactions, social rewards, rewards and points
 - Checkout fields, custom checkout field editor
 - Order confirmation page
@@ -92,9 +124,9 @@ You can fine-tune the design of WooCommerce email templates globally or individu
 
 ###💥 YAYMAIL PRO
 
-While YayMail Free provides full customizability for 11 default WooCommerce email templates, YayMail Pro supports many other plugins. It helps you show hooks, tables, custom fields, attributes, email meta fields and other variables in your outgoing transactional emails. 
+While YayMail Free provides full customizability for 11 default WooCommerce email templates, YayMail Pro supports many other plugins. It helps you show hooks, tables, custom fields, attributes, email meta fields, and other variables in your outgoing transactional emails. 
 
-This WooCommerce email designer's third-party integrations include but not limited to:
+This WooCommerce email designer's third-party integrations include but are not limited to:
 
 - Shipment Tracking by WooCommerce
 - Checkout Field Editor by WooCommerce
@@ -190,13 +222,38 @@ We offer single-site licenses and also unlimited site licenses to better support
 
 
 == Screenshots ==
-1. Overview of YayMail email builder with custom blocks, elements, toolbar, and preview area
-2. WooCommerce email templates with product updates and extra information
-3. Adding images, video, and branding content to a WooCommerce email template
-4. List of available shortcodes for your WooCommerce email templates
-5. Easily copy your favorite content blocks over to another Woo email template to reuse the design that’s paying off
+1. Overview of YayMail email builder with element panel, email template selector, toolbar, and editing area
+2. Editing WooCommerce email design and content
+3. One-click to send a test email to your email address
+4. Quickly preview your email within the same interface of WooCommerce email template editor
+5. List of shortcodes to personalize your WooCommerce order emails
+6. Add block visibility based on your conditions (Premium Addon required)
+7. Example of an order completed email template
+8. Example of an order confirmation with shipment tracking information, image gallery, coupon, trust badges, and more
+9. Example of a multi-vendor marketplace WooCommerce html email template
 
 == Changelog ==
+
+= May 19, 2025 - Version 4.0 =
+- Added: New admin layout for a cleaner and more intuitive interface.
+- Added: Global Header & Footer to apply consistent sections across templates.
+- Added: The Undo/Redo feature is now available in the free version. That’s exactly what we should have done.
+- Added: Recipient(s) visibility for each template.
+- Added: Display of the source plugin that generated each template.
+- Added: Patterns section for saving and reusing design blocks.
+- Added: Migration tool to transfer data between versions or revert to earlier versions.
+- Added: Multi-select elements for bulk actions and quicker editing.
+- Added: Ability to save custom blocks for reuse.
+- Added: Option to copy styles from one element to another.
+- Added: Email preview directly in the builder.
+- Improved: Layout of both the email editor and the rendered email templates.
+- Improved: Display of available shortcodes specific to each template.
+- Improved: Display of available elements based on template type.
+- Improved: Export/Import functionality for one or multiple templates.
+- Improved: Core logic and coding structure for better performance and maintainability.
+- Fixed: Issues related to the column element layout and styling.
+- Fixed: Layout issues on certain email clients (e.g. Outlook, Gmail).
+- Fixed: Some minor bugs.
 
 = Feb 11, 2025 - Version 3.6.0.1 =
 - Fixed: Addon's templates are not initialized upon first-time open
@@ -489,7 +546,7 @@ We offer single-site licenses and also unlimited site licenses to better support
 - Added: New template for new YITH pre-order version (YayMail Addon for YITH WooCommerce Pre-Order v1.4)
 - Fixed: Minor bug (YayMail Addon for WooCommerce German Market v1.3.1)
 - Fixed: Minor bug (YayMail Addon for Germanized for WooCommerce v2.0)
-- Fixed: Minor bug (YayMail Addon for WooCommerce Print Invoices & Packing Lists v1.2)
+- Fixed: Minor bug (YayMail Addon for WooCommerce Print Invoices & Packing Lists v1.2)
 
 = FEB 9, 2023 – VERSION 3.2.1 =
 - Fixed: Error when call function getTimestamp()

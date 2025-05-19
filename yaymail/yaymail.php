@@ -3,142 +3,152 @@
  * Plugin Name: YayMail - WooCommerce Email Customizer
  * Plugin URI: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
  * Description: Create awesome transactional emails with a drag and drop email builder
- * Version: 3.6.0.1
+ * Version: 4.0
  * Author: YayCommerce
  * Author URI: https://yaycommerce.com
  * Text Domain: yaymail
  * WC requires at least: 3.0.0
- * WC tested up to: 9.5.2
+ * WC tested up to: 9.9
  * Domain Path: /i18n/languages/
+ *
+ * @package YayMail
  */
 
 namespace YayMail;
 
-use YayMail\License\LicenseHandler;
-
 defined( 'ABSPATH' ) || exit;
 
-if ( function_exists( 'YayMail\\init' ) ) {
-	require_once plugin_dir_path( __FILE__ ) . 'includes/Fallback.php';
-	add_action(
-		'admin_init',
-		function () {
-			deactivate_plugins( plugin_basename( __FILE__ ) );
-		}
-	);
-	return;
-}
-
 if ( ! defined( 'YAYMAIL_PREFIX' ) ) {
-	define( 'YAYMAIL_PREFIX', 'yaymail' );
+    define( 'YAYMAIL_PREFIX', 'yaymail' );
 }
 
 if ( ! defined( 'YAYMAIL_DEBUG' ) ) {
-	define( 'YAYMAIL_DEBUG', false );
+    define( 'YAYMAIL_DEBUG', false );
 }
 
 if ( ! defined( 'YAYMAIL_VERSION' ) ) {
-	define( 'YAYMAIL_VERSION', '3.6.0.1' );
+    define( 'YAYMAIL_VERSION', '4.0' );
 }
 
 if ( ! defined( 'YAYMAIL_PLUGIN_URL' ) ) {
-	define( 'YAYMAIL_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+    define( 'YAYMAIL_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 }
 
 if ( ! defined( 'YAYMAIL_PLUGIN_PATH' ) ) {
-	define( 'YAYMAIL_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
+    define( 'YAYMAIL_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 }
 
 if ( ! defined( 'YAYMAIL_PLUGIN_BASENAME' ) ) {
-	define( 'YAYMAIL_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
+    define( 'YAYMAIL_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 }
 
-spl_autoload_register(
-	function ( $class ) {
-		$prefix   = __NAMESPACE__;
-		$base_dir = __DIR__ . '/includes';
+if ( ! defined( 'YAYMAIL_IS_DEVELOPMENT' ) ) {
+    define( 'YAYMAIL_IS_DEVELOPMENT', false );
+}
 
-		$len = strlen( $prefix );
-		if ( strncmp( $prefix, $class, $len ) !== 0 ) {
-			return;
-		}
+if ( ! defined( 'YAYMAIL_REST_NAMESPACE' ) ) {
+    define( 'YAYMAIL_REST_NAMESPACE', 'yaymail/v1' );
+}
 
-		$relative_class_name = substr( $class, $len );
+$yaymail_has_required_deps = true;
+if ( function_exists( 'YayMail\\init' ) ) {
+    require_once plugin_dir_path( __FILE__ ) . 'templates/fallbacks/fallback-exists.php';
+    $yaymail_has_required_deps = false;
+}
 
-		$file = $base_dir . str_replace( '\\', '/', $relative_class_name ) . '.php';
+if ( version_compare( PHP_VERSION, '7.2', '<' ) ) {
+    require_once plugin_dir_path( __FILE__ ) . 'templates/fallbacks/fallback-minimum-php.php';
+    $yaymail_has_required_deps = false;
+}
 
-		if ( file_exists( $file ) ) {
-			require $file;
-		}
-	}
-);
+if ( version_compare( $GLOBALS['wp_version'], '5.2', '<' ) ) {
+    require_once plugin_dir_path( __FILE__ ) . 'templates/fallbacks/fallback-minimum-wp.php';
+    $yaymail_has_required_deps = false;
+}
+
+if ( ! $yaymail_has_required_deps ) {
+    add_action(
+        'admin_init',
+        function() {
+            deactivate_plugins( plugin_basename( __FILE__ ) );
+        }
+    );
+
+    // Return early to prevent loading the plugin.
+    return;
+}
+
+require_once YAYMAIL_PLUGIN_PATH . 'vendor/autoload.php';
+
+/**
+ * Initialize constants
+ */
+Constants\ConstantsHandler::get_instance();
 
 if ( ! function_exists( 'install_yaymail_admin_notice' ) ) {
-	function install_yaymail_admin_notice() {
-		?>
-			<div class="error">
-				<p>
-					<?php
-					// translators: %s: search WooCommerce plugin link
-					printf( 'YayMail ' . esc_html__( 'is enabled but not effective. It requires %1$sWooCommerce%2$s in order to work.', 'yaymail' ), '<a href="' . esc_url( admin_url( 'plugin-install.php?s=woocommerce&tab=search&type=term' ) ) . '">', '</a>' );
-					?>
-				</p>
-			</div>
-		<?php
-	}
-}
-
-if ( ! function_exists( 'yaymail_enable_compatible_hpos' ) ) {
-	function yaymail_enable_compatible_hpos() {
-		if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
-			$plugins = get_plugins();
-
-			$yaymail_addons = array_filter(
-				$plugins,
-				function ( $key ) {
-					return strpos( $key, 'yaymail-addon' ) !== false || strpos( $key, 'email-customizer' ) !== false || strpos( $key, 'yaymail-premium-addon' ) !== false || strpos( $key, 'yaymail-conditional-logic' ) !== false;
-				},
-				ARRAY_FILTER_USE_KEY
-			);
-
-			$addon_keys = array_keys( $yaymail_addons );
-
-			array_map(
-				function ( $key ) {
-					\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $key, true );
-				},
-				$addon_keys
-			);
-		}
-	}
+    function install_yaymail_admin_notice() {
+        ?>
+            <div class="error">          
+                <p>
+                <?php
+                // translators: %s: search WooCommerce plugin link
+                printf( 'YayMail ' . esc_html__( 'is enabled but not effective. It requires %1$sWooCommerce%2$s in order to work.', 'yaymail' ), '<a href="' . esc_url( admin_url( 'plugin-install.php?s=woocommerce&tab=search&type=term' ) ) . '">', '</a>' );
+                ?>
+                </p>
+            </div>
+        <?php
+    }
 }
 
 if ( ! function_exists( 'YayMail\\init' ) ) {
-	function init() {
-		\YayMail\YayCommerceMenu\RegisterMenu::get_instance();
-		LicenseHandler::get_instance();
-		if ( ! function_exists( 'WC' ) ) {
-			add_action( 'admin_notices', 'YayMail\\install_yaymail_admin_notice' );
-		} else {
-			add_action( 'before_woocommerce_init', 'YayMail\\yaymail_enable_compatible_hpos' );
-		}
+    function init() {
+        \YayMail\YayCommerceMenu\RegisterMenu::get_instance();
+        \YayMail\License\LicenseHandler::get_instance();
+        if ( ! function_exists( 'WC' ) ) {
+            add_action( 'admin_notices', 'YayMail\\install_yaymail_admin_notice' );
+        } else {
+            add_action( 'before_woocommerce_init', 'YayMail\\yaymail_enable_compatible_hpos' );
+            do_action( 'yaymail_before_init' );
 
-		Plugin::getInstance();
-		Page\Settings::getInstance();
-		MailBuilder\WooTemplate::getInstance();
-		MailBuilder\YaymailElement::getInstance();
-	}
+            \YayMail\Initialize::get_instance();
+        }
+    }
 }
 
-add_action( 'plugins_loaded', 'YayMail\\init' );
+if ( ! function_exists( 'yaymail_enable_compatible_hpos' ) ) {
+    function yaymail_enable_compatible_hpos() {
+        if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
+            \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 
-add_action(
-	'init',
-	function () {
-		I18n::loadPluginTextdomain();
-	}
-);
+            // Set compatible for addon
+            $plugins = get_plugins();
+            foreach ( array_keys( $plugins ) as $key ) {
+                $is_yaymail_addon = strpos( $key, 'yaymail-addon' ) !== false || strpos( $key, 'email-customizer' ) !== false;
+                if ( $is_yaymail_addon ) {
+                    \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $key, true );
+                }
+            }
+        }
+    }
+}
 
-register_activation_hook( __FILE__, array( 'YayMail\\Plugin', 'activate' ) );
-register_deactivation_hook( __FILE__, array( 'YayMail\\Plugin', 'deactivate' ) );
+if ( ! wp_installing() ) {
+    add_action( 'plugins_loaded', 'YayMail\\init' );
+}
+
+register_activation_hook( __FILE__, [ \YayMail\Engine\ActDeact::class, 'activate' ] );
+register_deactivation_hook( __FILE__, [ \YayMail\Engine\ActDeact::class, 'deactivate' ] );
+
+if ( ! function_exists( 'YayMail\\on_update' ) ) {
+    function on_update( $upgrader_object, $options ) {
+        // The path to our plugin's main file
+        $our_plugin = plugin_basename( __FILE__ );
+        // If an update has taken place and the updated type is plugins and the plugins element exists
+        if ( $options['action'] === 'update' && $options['type'] === 'plugin' && isset( $options['plugins'] ) ) {
+            if ( in_array( $our_plugin, $options['plugins'], true ) ) {
+                \YayMail\Migrations\MainMigration::get_instance()->migrate();
+            }
+        }
+    }
+}
+add_action( 'upgrader_process_complete', 'YayMail\\on_update', 10, 2 );
