@@ -182,7 +182,7 @@ class OrderDetailsRenderer {
                         } else {
                             $width = '';
                         }
-                        echo '<th class="td yaymail_item_' . esc_attr( $key ) . '_title" colspan="' . esc_attr( $item['col_span'] ) . '" scope="col" style="' . esc_attr( $styles ) . ';' . esc_attr( $width ) . ';">' . esc_html( $item['label'] ) . '</th>';
+                        echo '<th class="td yaymail_item_' . esc_attr( $key ) . '_title" colspan="' . esc_attr( $item['col_span'] ) . '" scope="col" style="' . esc_attr( $styles ) . ';' . esc_attr( $width ) . ';"><span>' . esc_html( $item['label'] ) . '</span></th>';
                     endforeach;
                     ?>
                 </tr>
@@ -235,14 +235,14 @@ class OrderDetailsRenderer {
         $product_regular_price = '10';
         ?>
         <tr class="order_item">
-            <?php foreach ( $structure_items as $key => $item ) : ?>
+            <?php foreach ( $structure_items as $key => $structure_item ) : ?>
                 <?php
-                if ( isset( $item['width'] ) ) {
-                    $width = 'width: ' . $item['width'] . ';';
+                if ( isset( $structure_item['width'] ) ) {
+                    $width = 'width: ' . $structure_item['width'] . ';';
                 } else {
                     $width = '';
                 }
-                $item_style = isset( $item['style'] ) ? $item['style'] : [];
+                $item_style = isset( $structure_item['style'] ) ? $structure_item['style'] : [];
                 if ( ! empty( $item_style ) ) {
                     $item_style_string = TemplateHelpers::get_style( $item_style );
                 } else {
@@ -250,7 +250,7 @@ class OrderDetailsRenderer {
                 }
                 $column_style = $style . $width . $item_style_string;
                 ?>
-                <td colspan="<?php echo esc_attr( $item['col_span'] ); ?>" class="td yaymail_item_<?php echo esc_attr( $key ); ?>_content" scope="row" style="<?php echo esc_attr( $column_style ); ?>">
+                <td colspan="<?php echo esc_attr( $structure_item['col_span'] ); ?>" class="td yaymail_item_<?php echo esc_attr( $key ); ?>_content" scope="row" style="<?php echo esc_attr( $column_style ); ?>">
                     <?php
                     switch ( $key ) :
                         case 'product':

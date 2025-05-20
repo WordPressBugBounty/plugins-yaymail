@@ -234,6 +234,16 @@ We offer single-site licenses and also unlimited site licenses to better support
 
 == Changelog ==
 
+= May 20, 2025 - Version 4.0.1 =
+- Updated: Styles for search order select box
+- Updated: Prevent select email direction when using multi-languages plugin (PRO)
+- Fixed: Ensure order language is correctly retrieved as an array related to preview email (PRO)
+- Fixed: Update variable names for clarity in OrderDetailsRenderer
+- Fixed: Implement template file retrieval for Customer Partial Refunded Order email
+- Fixed: Incorrect Custom CSS content after saving
+- Fixed: Calling mime_content_type without namespace
+- Fixed: Issue when preview disabled template in Customizer
+
 = May 19, 2025 - Version 4.0 =
 - Added: New admin layout for a cleaner and more intuitive interface.
 - Added: Global Header & Footer to apply consistent sections across templates.

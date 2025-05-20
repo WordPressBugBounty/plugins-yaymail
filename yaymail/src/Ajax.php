@@ -216,17 +216,20 @@ class Ajax {
             $html = $template->get_content( $render_data );
 
             // TODO: render with passing settings
-
-            $email_address        = wp_get_current_user()->user_email ?? 'sample@example.com';
-            $email_preview_output = apply_filters( 'yaymail_preview_email', [], $order_id, $template_data['name'], $email_address );
-            if ( empty( $email_preview_output ) ) {
-                $email_preview_output = PreviewEmail\PreviewEmailWoo::email_preview_output( $order_id, $template_data['name'], $email_address, true );
+            $current_email = null;
+            $subject       = 'Sample Subject';
+            $emails        = wc()->mailer()->emails;
+            foreach ( $emails as $email ) {
+                if ( $email->id === $template_data['name'] ) {
+                    $current_email = $email;
+                    break;
+                }
             }
 
-            if ( ! empty( $email_address ) && ! empty( $email_preview_output['html'] ) ) {
-
-                $subject = $email_preview_output['subject'];
+            if ( ! empty( $current_email ) ) {
+                $subject = $current_email->get_subject();
             }
+            $email_address = wp_get_current_user()->user_email ?? 'sample@example.com';
 
             wp_send_json_success(
                 [

@@ -5,6 +5,7 @@ use YayMail\Utils\TemplateHelpers;
 use YayMail\Constants\TemplatesData;
 use YayMail\Elements\ColumnLayout;
 use YayMail\Elements\ElementsLoader;
+use YayMail\Integrations\TranslationModule;
 use YayMail\YayMailEmails;
 use YayMail\Utils\Logger;
 if ( ! function_exists( 'yaymail_get_emails' ) ) {
@@ -142,8 +143,7 @@ if ( ! function_exists( 'yaymail_kses_post_e' ) ) {
 
 if ( ! function_exists( 'yaymail_get_text_align' ) ) {
     function yaymail_get_text_align() {
-        $yaymail_settings    = yaymail_settings();
-        $container_direction = isset( $yaymail_settings['direction'] ) && 'rtl' === $yaymail_settings['direction'] ? 'rtl' : 'initial';
+        $container_direction = yaymail_get_email_direction();
 
         if ( 'rtl' === $container_direction ) {
             return 'right';
@@ -327,10 +327,6 @@ if ( ! function_exists( 'yaymail_get_logger' ) ) {
 
     /**
      * Get logger instance
-     *
-     * @param string $message
-     * @param string $log_type The type of log ('error' or 'warning')
-     * @param mixed  $additional_data
      */
     function yaymail_get_logger( $message, $log_type = 'error', $additional_data = null ) {
         $logger = new Logger();
@@ -363,3 +359,11 @@ if ( ! function_exists( 'yaymail_get_wc_email_settings' ) ) {
         ];
     }
 }//end if
+
+
+if ( ! function_exists( 'yaymail_get_email_direction' ) ) {
+    function yaymail_get_email_direction() {
+        $yaymail_settings = yaymail_settings();
+        return isset( $yaymail_settings['direction'] ) && 'rtl' === $yaymail_settings['direction'] ? 'rtl' : 'ltr';
+    }
+}

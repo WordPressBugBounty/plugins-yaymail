@@ -16,7 +16,7 @@ $template = isset( $args['template'] ) ? $args['template'] : null;
 $render_data = isset( $args['render_data'] ) ? $args['render_data'] : [];
 // Render data
 $yaymail_settings    = yaymail_settings();
-$container_direction = isset( $yaymail_settings['direction'] ) && 'rtl' === $yaymail_settings['direction'] ? 'rtl' : 'initial';
+$container_direction = yaymail_get_email_direction();
 $container_width     = isset( $yaymail_settings['container_width'] ) && is_numeric( $yaymail_settings['container_width'] ) ? $yaymail_settings['container_width'] : '605';
 
 $style_container = TemplateHelpers::get_style(

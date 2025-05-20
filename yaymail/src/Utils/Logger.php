@@ -16,10 +16,6 @@ class Logger {
      * Initializes the logger with a specified log directory, prefix for log entries,
      * and the maximum number of log files to keep. Ensures the log directory exists and
      * performs cleanup of old log files.
-     *
-     * @param string|null $log_directory Optional. The directory where log files will be stored. Default is null.
-     * @param string      $prefix Optional. A prefix to add to each log entry. Default is an empty string.
-     * @param int         $max_log_files Optional. The maximum number of log files to keep. Default is 30.
      */
     public function __construct( $log_directory = null, $max_log_files = 30 ) {
         if ( ! $log_directory ) {
@@ -99,10 +95,6 @@ class Logger {
     /**
      * Logs an exception message and sends a JSON error response.
      * Message will display in folder wp-content/yaymail-logs
-     *
-     * @param \Exception|\Error $ex The exception or error to log.
-     * @param mixed             $additional_data Optional. Additional data to log with the exception.
-     * @param string            $log_type Optional. Type of log: 'error' or 'warning'. Default is 'error'.
      */
     public function log_exception_message( $ex, $log_type = 'error', $additional_data = null ) {
         $prefix = ( $log_type === 'warning' ) ? __( 'WARNING:', 'yaymail' ) : __( 'SYSTEM ERROR:', 'yaymail' );

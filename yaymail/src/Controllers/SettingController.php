@@ -54,8 +54,11 @@ class SettingController extends BaseController {
 
     public function update_settings( \WP_REST_Request $request ) {
         $settings               = is_array( $request->get_param( 'settings' ) ) ? array_map( 'sanitize_text_field', wp_unslash( $request->get_param( 'settings' ) ) ) : [];
-        $settings['custom_css'] = wp_kses_post( isset( $request->get_param( 'settings' )['custom_css'] ) ? $request->get_param( 'settings' )['custom_css'] : '' );
+        $settings['custom_css'] = wp_strip_all_tags( isset( $request->get_param( 'settings' )['custom_css'] ) ? $request->get_param( 'settings' )['custom_css'] : '' );
         $this->model::update( $settings );
-        return [ 'success' => true, 'data' => $settings ];
+        return [
+            'success' => true,
+            'data'    => $settings,
+        ];
     }
 }

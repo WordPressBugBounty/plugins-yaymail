@@ -1611,6 +1611,7 @@ class SupportedPlugins {
         }
 
         if ( class_exists( 'Bright_Plugins_COSW' ) ) {
+            $template_ids   = [];
             $arg            = [
                 'numberposts' => -1,
                 'post_type'   => 'order_status',

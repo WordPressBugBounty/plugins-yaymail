@@ -15,8 +15,7 @@ if ( empty( $data['icon_list'] ) ) {
     return;
 }
 
-$yaymail_settings = yaymail_settings();
-$direction_rtl    = $yaymail_settings['direction'] ?? 'ltr';
+$direction_rtl = yaymail_get_email_direction();
 
 $wrapper_style = TemplateHelpers::get_style(
     [

@@ -5,6 +5,7 @@ namespace YayMail\Emails;
 use YayMail\Abstracts\BaseEmail;
 use YayMail\Elements\ElementsLoader;
 use YayMail\Utils\SingletonTrait;
+use YayMail\YayMailTemplate;
 
 /**
  * CustomerRefundedOrder Class
@@ -76,6 +77,30 @@ class CustomerRefundedOrder extends BaseEmail {
         return $default_elements;
     }
 
+    public function get_template_file( $located, $template_name, $args ) {
+        if ( ! isset( $args['email'] ) ) {
+            return $located;
+        }
+        if ( ! $args['email'] instanceof \WC_Email || ! $args['email'] instanceof \WC_Email_Customer_Refunded_Order ) {
+            return $located;
+        }
+        $template_path = $this->get_template_path();
+        if ( ! file_exists( $template_path ) ) {
+            return $located;
+        }
+
+        $order = apply_filters( 'yaymail_order_for_language', isset( $args['order'] ) ? $args['order'] : null, $args );
+
+        $language = $this->get_language( $order );
+
+        $this->template = new YayMailTemplate( $this->id, $language );
+
+        if ( ! $this->template->is_enabled() ) {
+            return $located;
+        }
+
+        return $template_path;
+    }
 
     public function get_template_path() {
         return YAYMAIL_PLUGIN_PATH . 'templates/emails/customer-refunded-order.php';

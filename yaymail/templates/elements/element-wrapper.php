@@ -17,7 +17,7 @@ if ( empty( $wrapper_style ) ) {
 }
 
 $yaymail_settings    = yaymail_settings();
-$container_direction = isset( $yaymail_settings['direction'] ) && 'rtl' === $yaymail_settings['direction'] ? 'rtl' : 'initial';
+$container_direction = yaymail_get_email_direction();
 
 $wrapper_style .= TemplateHelpers::get_style(
     [
