@@ -84,6 +84,10 @@ class ImageList extends BaseElement {
                                 'value' => isset( $attributes['column_1']['url'] ) ? $attributes['column_1']['url'] : '#',
                                 'type'  => 'content',
                             ],
+                            'alt'              => [
+                                'value' => isset( $attributes['column_1']['alt'] ) ? $attributes['column_1']['alt'] : 'YayMail Image',
+                                'type'  => 'content',
+                            ],
                         ],
                         'column_2' => [
                             'align'            => [
@@ -115,6 +119,10 @@ class ImageList extends BaseElement {
                                 'value' => isset( $attributes['column_2']['url'] ) ? $attributes['column_2']['url'] : '#',
                                 'type'  => 'content',
                             ],
+                            'alt'              => [
+                                'value' => isset( $attributes['column_2']['alt'] ) ? $attributes['column_2']['alt'] : 'YayMail Image',
+                                'type'  => 'content',
+                            ],
                         ],
                         'column_3' => [
                             'align'            => [
@@ -144,6 +152,10 @@ class ImageList extends BaseElement {
                             ],
                             'url'              => [
                                 'value' => isset( $attributes['column_3']['url'] ) ? $attributes['column_3']['url'] : '#',
+                                'type'  => 'content',
+                            ],
+                            'alt'              => [
+                                'value' => isset( $attributes['column_3']['alt'] ) ? $attributes['column_3']['alt'] : 'YayMail Image',
                                 'type'  => 'content',
                             ],
                         ],

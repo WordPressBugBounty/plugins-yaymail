@@ -155,10 +155,10 @@ final class Ver_4_0_0 extends AbstractMigration {
         ];
         $yaymail_settings['payment_display_mode'] = $payment_display_mode_map[ $yaymail_settings['payment_display_mode'] ] ?? 'yes';
 
-        $yaymail_settings['product_image_position'] = strtolower( $yaymail_settings['product_image_position'] );
-        $yaymail_settings['product_image_width']    = (int) str_replace( 'px', '', $yaymail_settings['product_image_width'] );
-        $yaymail_settings['product_image_height']   = (int) str_replace( 'px', '', $yaymail_settings['product_image_height'] );
-        $yaymail_settings['container_width']        = (int) str_replace( 'px', '', $yaymail_settings['container_width'] );
+        $yaymail_settings['product_image_position'] = strtolower( $yaymail_settings['product_image_position'] ?? 'top' );
+        $yaymail_settings['product_image_width']    = (int) str_replace( 'px', '', $yaymail_settings['product_image_width'] ?? '30' );
+        $yaymail_settings['product_image_height']   = (int) str_replace( 'px', '', $yaymail_settings['product_image_height'] ?? '30' );
+        $yaymail_settings['container_width']        = (int) str_replace( 'px', '', $yaymail_settings['container_width'] ?? '605' );
         if ( empty( $yaymail_settings['container_width'] ) ) {
             $yaymail_settings['container_width'] = 605;
         }
@@ -256,7 +256,7 @@ final class Ver_4_0_0 extends AbstractMigration {
 
         $this->add_new_attributes_to_element_data( $element );
 
-        $this->migrate_shortcodes( $data );
+        $this->migrate_shortcodes( $data, $element['type'] );
     }
 
     private function convert_element_data_attribute_names( &$data, $element_type ) {
@@ -713,7 +713,7 @@ final class Ver_4_0_0 extends AbstractMigration {
         }//end if
     }
 
-    private function migrate_shortcodes( &$data ) {
+    private function migrate_shortcodes( &$data, $element_type = '' ) {
         $shortcodes_map = [
             '[yaymail_items_border_content]'           => '[yaymail_order_details]',
             '[yaymail_items_border_title]'             => '[Order #[yaymail_order_number]] ([yaymail_order_date])',
@@ -729,15 +729,21 @@ final class Ver_4_0_0 extends AbstractMigration {
             '[yaymail_payment_method]'                 => '[yaymail_order_payment_method]',
             '[yaymail_transaction_id]'                 => '[yaymail_payment_transaction_id]',
             '[yaymail_set_password_url_string]'        => '[yaymail_set_password_url]',
+            '[yaymail_order_payment_url_string]'       => '[yaymail_order_payment_url]',
 
             // Turn the shortcode into a plain hook name
             '[woocommerce_email_before_order_table]' => '[yaymail_custom_hook hook="woocommerce_email_before_order_table"]',
             '[woocommerce_email_after_order_table]'  => '[yaymail_custom_hook hook="woocommerce_email_after_order_table"]',
         ];
 
+        if ( $element_type === 'heading' || $element_type === 'text' ) {
+            $shortcodes_map['[yaymail_order_id]']     = '[yaymail_order_id is_plain="true"]';
+            $shortcodes_map['[yaymail_order_number]'] = '[yaymail_order_number is_plain="true"]';
+        }
+
         foreach ( $data as $key => &$value ) {
             if ( is_array( $value ) ) {
-                $this->migrate_shortcodes( $value );
+                $this->migrate_shortcodes( $value, $element_type );
                 continue;
             }
 

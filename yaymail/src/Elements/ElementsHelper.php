@@ -336,13 +336,13 @@ class ElementsHelper {
     private static function get_component_data( $attributes, $config, $default_config ) {
         $value_path = $config['value_path'] ?? $default_config['value_path'] ?? '';
         $result     = wp_parse_args(
-            $config ?? [],
             [
                 'value_path'    => $value_path,
                 'title'         => $config['title'] ?? $default_config['title'] ?? '',
                 'default_value' => self::get_default_value( $attributes, $value_path, $config['default_value'] ?? $default_config['default_value'] ?? '' ),
                 'type'          => $config['type'] ?? $default_config['type'] ?? 'content',
-            ]
+            ],
+            $config ?? [],
         );
 
         return $result;

@@ -234,6 +234,21 @@ We offer single-site licenses and also unlimited site licenses to better support
 
 == Changelog ==
 
+= May 22, 2025 - Version 4.0.2 =
+- Added: Support dokan new templates
+- Added: payment_url_string shortcode when migrating
+- Added: Option "ALT text" for Logo, Image, Image List, Image Box
+- Added: New badge for element Global header/footer
+- Updated: Increase padding top for email content
+- Updated: Order details download class when sending mail
+- Fixed: Notice send test mail
+- Fixed: Container width was not working on Outlook Classic
+- Fixed: Missing downloadable product's thumbnail
+- Fixed: Style search box of Custom CSS editor
+- Fixed: Migrate shortcode order number and order id has plain text
+- Fixed: Preview email error when email has Text List element
+- Fixed: Missing regular price
+
 = May 20, 2025 - Version 4.0.1 =
 - Updated: Styles for search order select box
 - Updated: Prevent select email direction when using multi-languages plugin (PRO)

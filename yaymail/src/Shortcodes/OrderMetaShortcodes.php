@@ -78,7 +78,7 @@ class OrderMetaShortcodes {
         $meta_data = $meta_item->get_data();
         $value     = $meta_data['value'];
 
-        if ( $shortcode_attrs['is_date'] ) {
+        if ( ! empty( $shortcode_attrs['is_date'] ) ) {
             $date = is_numeric( $value )
                 ? \DateTime::createFromFormat( 'U', $value )
                 : \DateTime::createFromFormat( 'Ymd', $value );
@@ -92,7 +92,12 @@ class OrderMetaShortcodes {
         }
 
         if ( is_array( $value ) || is_object( $value ) ) {
-            $str = isset( $value['extra'] ) ? $value['extra'] : implode( ', ', $value );
+            if ( is_object( $value ) ) {
+                $value = (array) $value;
+            }
+            $str = isset( $value['extra'] ) && ( is_string( $value['extra'] ) || is_numeric( $value['extra'] ) )
+            ? $value['extra']
+                : implode( ', ', array_map( 'strval', $value ) );
             return str_replace( '|', '<br />', $str );
         }
 

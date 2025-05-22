@@ -30,14 +30,15 @@ class GlobalHeader extends BaseElement {
         }
 
         return [
-            'id'        => uniqid(),
-            'type'      => self::$type,
-            'name'      => __( 'Global Header', 'yaymail' ),
-            'icon'      => self::$icon,
-            'group'     => 'basic',
-            'available' => true,
-            'position'  => 40,
-            'data'      => [
+            'id'          => uniqid(),
+            'type'        => self::$type,
+            'name'        => __( 'Global Header', 'yaymail' ),
+            'icon'        => self::$icon,
+            'group'       => 'basic',
+            'available'   => true,
+            'status_info' => 'new',
+            'position'    => 40,
+            'data'        => [
                 'rich_text'     => [
                     'value_path'    => 'rich_text',
                     'component'     => 'RichTextEditor',

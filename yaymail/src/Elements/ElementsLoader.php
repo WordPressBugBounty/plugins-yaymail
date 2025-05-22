@@ -5,6 +5,7 @@ namespace YayMail\Elements;
 use YayMail\Abstracts\BaseElement;
 use YayMail\Shortcodes\ShortcodesExecutor;
 use YayMail\Utils\SingletonTrait;
+use YayMail\Utils\Helpers;
 
 /**
  * Email Loader Class
@@ -153,11 +154,11 @@ class ElementsLoader {
             }
 
             if ( 'column' === $element['type'] || $is_nested ) {
-                yaymail_kses_post_e( $layout );
+                yaymail_kses_post_e( Helpers::remove_shortcodes_empty( $layout ) );
             } else {
                 ?>
             <tr>
-                <td style="padding: 0;"><?php yaymail_kses_post_e( $layout ); ?></td>
+                <td style="padding: 0;"><?php yaymail_kses_post_e( Helpers::remove_shortcodes_empty( $layout ) ); ?></td>
             </tr>
                 <?php
             }

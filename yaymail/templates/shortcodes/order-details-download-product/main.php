@@ -12,6 +12,9 @@ $data            = isset( $args['element']['data'] ) ? $args['element']['data'] 
 $render_data     = isset( $args['render_data'] ) ? $args['render_data'] : [];
 $order_data      = isset( $render_data['order'] ) ? $render_data['order'] : null;
 
+$settings           = yaymail_settings();
+$show_product_image = isset( $settings['show_product_image'] ) ? boolval( $settings['show_product_image'] ) : false;
+
 $product_title  = isset( $data['product_title'] ) ? $data['product_title'] : TemplateHelpers::get_content_as_placeholder( 'product_title', esc_html__( 'Products', 'woocommerce' ), $is_placeholder );
 $expires_title  = isset( $data['expires_title'] ) ? $data['expires_title'] : TemplateHelpers::get_content_as_placeholder( 'expires_title', esc_html__( 'Expires', 'woocommerce' ), $is_placeholder );
 $download_title = isset( $data['download_title'] ) ? $data['download_title'] : TemplateHelpers::get_content_as_placeholder( 'download_title', esc_html__( 'Download', 'woocommerce' ), $is_placeholder );
@@ -47,7 +50,56 @@ if ( ! empty( $order_data ) ) :
         <?php foreach ( $downloads as $download ) : ?>
         <tr style="<?php echo esc_attr( $table_td_style ); ?>">
             <td class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
+            <?php
+            if ( $show_product_image ) :
+                $product        = wc_get_product( $download['product_id'] );
+                $image_url      = ( $product->get_image_id() ? current( wp_get_attachment_image_src( $product->get_image_id(), $size ) ) : wc_placeholder_img_src() );
+                $image_width    = isset( $settings['product_image_width'] ) ? $settings['product_image_width'] : '30';
+                $image_height   = isset( $settings['product_image_height'] ) ? $settings['product_image_height'] : '30';
+                $image_position = isset( $settings['product_image_position'] ) ? $settings['product_image_position'] : 'top';
+
+                $image_style =
+                [
+                    'margin-bottom' => '5px',
+                    'margin-right'  => '5px',
+                ];
+                if ( $image_position === 'left' && ! $is_placeholder ) {
+                    $image_style['float'] = 'left';
+                }
+                $image_style = TemplateHelpers::get_style( $image_style );
+                $image       = $is_placeholder ? "<img width='{{product_image_width}}px' height='{{product_image_height}}px' src='{$image_url}' alt='product image' style='{$image_style}'/>" : "<img width='{$image_width}px' height='{$image_height}px' src='{$image_url}' alt='product image' style='{$image_style}'/>";
+
+                ?>
+            <div class="yaymail-product-download-image" style="<?php echo esc_attr( $container_style ); ?>">
+                <a href="<?php echo esc_url( get_permalink( $download['product_id'] ) ); ?>" style="<?php echo esc_attr( $table_link_style ); ?>">
+                    <?php
+                    if ( $is_placeholder || ( $image_position === 'top' || $image_position === 'left' ) ) {
+                        echo wp_kses_post( "<span class='yaymail-product_image_position__top'>" );
+                        require YAYMAIL_PLUGIN_PATH . 'templates/shortcodes/order-details/order-items/image-content.php';
+                        echo ( '</span>' );
+                    }
+                    ?>
+                    <span><?php wp_kses_post( $download['product_name'] ); ?></span>
+                    <?php
+                    if ( $is_placeholder || ( $image_position === 'bottom' ) ) {
+                        echo wp_kses_post( "<span class='yaymail-product_image_position__bottom'>" );
+                        require YAYMAIL_PLUGIN_PATH . 'templates/shortcodes/order-details/order-items/image-content.php';
+                        echo ( '</span>' );
+                    }
+                    ?>
+                </a>
+            </div>
+                <?php else : ?>
+            <a href="<?php echo esc_url( get_permalink( $download['product_id'] ) ); ?>" style="<?php echo esc_attr( $table_link_style ); ?>">
+                    <?php wp_kses_post( $download['product_name'] ); ?>
+            </a>
+            <?php endif; ?>
+                
+
+                
                 <a href="<?php echo esc_url( get_permalink( $download['product_id'] ) ); ?>" style="<?php echo esc_attr( $table_link_style ); ?>" > <?php echo wp_kses_post( $download['product_name'] ); ?></a>
+
+                
             </td>
             <td class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
                 <?php if ( ! empty( $download['access_expires'] ) ) : ?>

@@ -189,7 +189,31 @@ class Helpers {
                 if ( 'FourColumns' === $element['type'] && ! array_key_exists( 'column4', $elements[ $key ]['settingRow'] ) ) {
                     $elements[ $key ]['settingRow']['column4'] = [];
                 }
-            }//end if
+            }
+            if ( 'FeaturedProducts' === $element['type'] ) {
+                if ( ! isset( $element['settingRow']['showingItems'] ) ) {
+                    $elements[ $key ]['settingRow']['showingItems'] = [];
+                }
+                if ( ! isset( $element['settingRow']['categories'] ) ) {
+                    $elements[ $key ]['settingRow']['categories'] = [];
+                }
+                if ( ! isset( $element['settingRow']['tags'] ) ) {
+                    $elements[ $key ]['settingRow']['tags'] = [];
+                }
+                if ( ! isset( $element['settingRow']['products'] ) ) {
+                    $elements[ $key ]['settingRow']['products'] = [];
+                }
+            }
+            if ( 'SingleBanner' === $element['type'] ) {
+                if ( ! isset( $element['settingRow']['showingItems'] ) ) {
+                    $elements[ $key ]['settingRow']['showingItems'] = [];
+                }
+            }
+            if ( 'SimpleOffer' === $element['type'] ) {
+                if ( ! isset( $element['settingRow']['showingItems'] ) ) {
+                    $elements[ $key ]['settingRow']['showingItems'] = [];
+                }
+            }
         }//end foreach
     }
 
@@ -334,5 +358,11 @@ class Helpers {
         }
 
         $current = $value;
+    }
+
+    public static function remove_shortcodes_empty( $content ) {
+        $content = preg_replace( '/<p\b[^>]*>\[yaymail_[^\]]*\]<\/p>/i', '', $content );
+        $content = preg_replace( '/\[yaymail_[^\]]*\]/', '', $content );
+        return $content;
     }
 }

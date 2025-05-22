@@ -9,7 +9,7 @@ if ( empty( $args['element'] ) ) {
 $element = $args['element'];
 $data    = $element['data'];
 
-$data_column_1 = is_array( $data['image_box']['column_1'] ) && ! empty( $data['image_box']['column_1'] ) ? $data['image_box']['column_1'] : [
+$data_column_1 = [
     'align'   => 'center',
     'width'   => '242',
     'url'     => '#',
@@ -22,7 +22,14 @@ $data_column_1 = is_array( $data['image_box']['column_1'] ) && ! empty( $data['i
     ],
 ];
 
-$data_column_2 = is_array( $data['image_box']['column_2'] ) && ! empty( $data['image_box']['column_2'] ) ? $data['image_box']['column_2'] : [
+if ( is_array( $data['image_box']['column_1'] ) && ! empty( $data['image_box']['column_1'] ) ) {
+    $_data_column_1 = $data['image_box']['column_1'];
+    foreach ( $_data_column_1 as $key => $value ) {
+        $data_column_1[ $key ] = $value['value'];
+    }
+}
+
+$data_column_2 = [
     'rich_text'   => '<p><span style="font-size: 18px;"><strong>This is a title</strong></span></p><p><span> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy.</span></p><p><span>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</span></p>',
     'font_family' => YAYMAIL_DEFAULT_FAMILY,
     'padding'     => [
@@ -32,6 +39,13 @@ $data_column_2 = is_array( $data['image_box']['column_2'] ) && ! empty( $data['i
         'left'   => '10',
     ],
 ];
+
+if ( is_array( $data['image_box']['column_2'] ) && ! empty( $data['image_box']['column_2'] ) ) {
+    $_data_column_2 = $data['image_box']['column_2'];
+    foreach ( $_data_column_2 as $key => $value ) {
+        $data_column_2[ $key ] = $value['value'];
+    }
+}
 
 $wrapper_style = TemplateHelpers::get_style(
     [
@@ -63,14 +77,13 @@ $text_style = TemplateHelpers::get_style(
 
 ob_start();
 ?>
-
     <table style="width: 100%;">
         <tbody>
             <tr>
                 <td align=<?php echo esc_attr( $data_column_1['align'] ); ?> width="50%" style="<?php echo esc_attr( $column_1_style ); ?>">
                     <div>
                         <a href="<?php echo esc_html( $data_column_1['url'] ); ?>" target="_blank" rel="noreferrer">
-                            <img src="<?php echo esc_html( $data_column_1['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_1['width'] ) ); ?>" alt="YayMail Image" />
+                            <img alt="<?php echo esc_attr( $data_column_1['alt'] ?? 'YayMail Image' ); ?>" src="<?php echo esc_html( $data_column_1['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_1['width'] ) ); ?>"/>
                         </a>
                     </div>
                 </td>

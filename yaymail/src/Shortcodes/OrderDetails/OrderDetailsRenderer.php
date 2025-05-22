@@ -118,26 +118,29 @@ class OrderDetailsRenderer {
                         'col_span' => apply_filters( 'yaymail_order_item_product_title_colspan', 1, $this->element_data ),
                         'style'    => [
                             'word-wrap' => 'break-word',
-                            // Width value must match CSS in /email-template-container/elements/order-details/index.scss line 40
                             'width'     => $this->show_product_item_cost ? '40%' : '45%',
                         ],
                     ],
                     'cost'     => [
-                        'label'     => $this->titles['cost'],
-                        'col_span'  => apply_filters( 'yaymail_order_item_cost_colspan', 1, $this->element_data ),
-                        'min-width' => '65px',
+                        'label'    => $this->titles['cost'],
+                        'col_span' => apply_filters( 'yaymail_order_item_cost_colspan', 1, $this->element_data ),
+                        'style'    => [
+                            'min-width' => '65px',
+                        ],
                     ],
                     'quantity' => [
-                        'label'     => $this->titles['quantity'],
-                        'col_span'  => apply_filters( 'yaymail_order_item_quantity_colspan', 1, $this->element_data ),
-                        'min-width' => '85px',
+                        'label'    => $this->titles['quantity'],
+                        'col_span' => apply_filters( 'yaymail_order_item_quantity_colspan', 1, $this->element_data ),
+                        'style'    => [
+                            'min-width' => '85px',
+                        ],
                     ],
                     'price'    => [
                         'label'    => $this->titles['price'],
                         'col_span' => apply_filters( 'yaymail_order_item_price_colspan', 1, $this->element_data ),
                         'style'    => [
                             'word-wrap' => 'break-word',
-                            // Width value must match CSS in /email-template-container/elements/order-details/index.scss line 40
+                            'min-width' => '100px',
                             'width'     => $this->show_product_item_cost ? '28%' : '38%',
                         ],
 
@@ -153,7 +156,7 @@ class OrderDetailsRenderer {
     }
 
     public function render() {
-        $style = $this->get_styles() . 'padding: 0; border-collapse: collapse;';
+        $style = $this->get_styles() . 'padding: 0;border-collapse: separate;';
         ?>
             <table class="yaymail-order-details-table" cellspacing="0" cellpadding="6" width="100%" style="<?php echo esc_attr( $style ); ?>" border="1">
             <?php
@@ -176,13 +179,20 @@ class OrderDetailsRenderer {
             <thead class="yaymail_element_head_order_details yaymail_element_head_order_item">
                 <tr>
                     <?php
-                    foreach ( $structure_items as $key => $item ) :
-                        if ( isset( $item['width'] ) ) {
-                            $width = 'width: ' . $item['width'] . ';';
+                    foreach ( $structure_items as $key => $structure_item ) :
+                        if ( isset( $structure_item['width'] ) ) {
+                            $width = 'width: ' . $structure_item['width'] . ';';
                         } else {
                             $width = '';
                         }
-                        echo '<th class="td yaymail_item_' . esc_attr( $key ) . '_title" colspan="' . esc_attr( $item['col_span'] ) . '" scope="col" style="' . esc_attr( $styles ) . ';' . esc_attr( $width ) . ';"><span>' . esc_html( $item['label'] ) . '</span></th>';
+                        $item_style = isset( $structure_item['style'] ) ? $structure_item['style'] : [];
+                        if ( ! empty( $item_style ) ) {
+                            $item_style_string = TemplateHelpers::get_style( $item_style );
+                        } else {
+                            $item_style_string = '';
+                        }
+                        $column_style = $styles . $width . $item_style_string;
+                        echo '<th class="td yaymail_item_' . esc_attr( $key ) . '_title" colspan="' . esc_attr( $structure_item['col_span'] ) . '" scope="col" style="' . esc_attr( $column_style ) . ';"><span>' . esc_html( $structure_item['label'] ) . '</span></th>';
                     endforeach;
                     ?>
                 </tr>
@@ -214,11 +224,11 @@ class OrderDetailsRenderer {
         $style            = $this->get_styles();
         $is_placeholder   = $this->is_placeholder;
 
-        $show_image         = isset( $yaymail_settings['show_product_image'] ) ? boolval( $yaymail_settings['show_product_image'] ) : false;
-        $image_position     = isset( $yaymail_settings['product_image_position'] ) ? $yaymail_settings['product_image_position'] : 'top';
-        $image_height       = isset( $yaymail_settings['product_image_height'] ) ? $yaymail_settings['product_image_height'] : '30';
-        $image_width        = isset( $yaymail_settings['product_image_width'] ) ? $yaymail_settings['product_image_width'] : '30';
-        $image_position     = isset( $yaymail_settings['product_image_position'] ) ? $yaymail_settings['product_image_position'] : 'top';
+        $show_image     = isset( $yaymail_settings['show_product_image'] ) ? boolval( $yaymail_settings['show_product_image'] ) : false;
+        $image_position = isset( $yaymail_settings['product_image_position'] ) ? $yaymail_settings['product_image_position'] : 'top';
+        $image_height   = isset( $yaymail_settings['product_image_height'] ) ? $yaymail_settings['product_image_height'] : '30';
+        $image_width    = isset( $yaymail_settings['product_image_width'] ) ? $yaymail_settings['product_image_width'] : '30';
+
         $show_image         = isset( $yaymail_settings['show_product_image'] ) ? boolval( $yaymail_settings['show_product_image'] ) : false;
         $show_sku           = isset( $yaymail_settings['show_product_sku'] ) ? boolval( $yaymail_settings['show_product_sku'] ) : false;
         $show_des           = isset( $yaymail_settings['show_product_description'] ) ? boolval( $yaymail_settings['show_product_description'] ) : false;
@@ -298,9 +308,9 @@ class OrderDetailsRenderer {
                             break;
                         case 'price':
                             // Show product regular price.
-                            if ( ( $show_regular_price && ! empty( $product_regular_price ) ) || ( $is_placeholder && ! empty( $product_regular_price ) ) ) {
+                            if ( ( $show_regular_price ) ) {
                                 ?>
-                                <del class="yaymail-product-regular-price" style="padding-right:5px"> <?php echo wp_kses_post( wc_price( $product_regular_price ) ); ?> </del>
+                                <del class="yaymail-product-regular-price" style="padding-right:5px"> <?php echo wp_kses_post( wc_price( 20 ) ); ?> </del>
                                 <?php
                             }
                             echo wp_kses_post( wc_price( 18 ) );

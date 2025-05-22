@@ -75,7 +75,7 @@ class Localize {
 
                             $pngs[] = [
                                 'theme' => self::kebab_to_pascal( str_replace( '.png', '', $file ) ),
-                                'src'   => 'data: ' . \mime_content_type( $file_path ) . ';base64,' . $base64,
+                                'src'   => 'data: image/png;base64,' . $base64,
                             ];
                         }
                     }

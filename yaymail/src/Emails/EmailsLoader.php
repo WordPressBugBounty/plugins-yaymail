@@ -65,6 +65,7 @@ class EmailsLoader {
     }
 
     public function inject_custom_css( $css = '' ) {
+        $css             .= '.yaymail-element table { border-spacing: 0; }';
         $yaymail_settings = yaymail_settings();
         if ( ! boolval( $yaymail_settings['enable_custom_css'] ?? false ) ) {
             return $css;

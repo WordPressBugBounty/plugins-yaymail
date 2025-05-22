@@ -159,6 +159,10 @@ class Ajax {
             $subject        = __( 'Email Test', 'yaymail' );
             $send_mail      = $class_wc_email->send( $email, $subject, $html, $headers, [] );
 
+            if ( ! $send_mail ) {
+                return wp_send_json_error( [ 'mess' => __( 'Can\'t send email', 'yaymail' ) ] );
+            }
+
             wp_send_json_success(
                 [
                     'email'             => $email,
@@ -265,6 +269,9 @@ class Ajax {
                 $class_wc_email = \WC_Emails::instance();
                 $subject        = __( 'Email Preview', 'yaymail' );
                 $send_mail      = $class_wc_email->send( $email_address, $subject, $email_preview_output['html'], $headers, [] );
+                if ( ! $send_mail ) {
+                    return wp_send_json_error( [ 'mess' => __( 'Can\'t send email', 'yaymail' ) ] );
+                }
             }
 
             wp_send_json_success(

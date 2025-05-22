@@ -77,6 +77,10 @@ class ImageBox extends BaseElement {
                             'value' => $attributes['column_1']['url'] ?? '#',
                             'type'  => 'content',
                         ],
+                        'alt'     => [
+                            'value' => $attributes['column_1']['alt'] ?? 'YayMail Image',
+                            'type'  => 'content',
+                        ],
                     ],
                     'column_2'   => [
                         'padding'     => [

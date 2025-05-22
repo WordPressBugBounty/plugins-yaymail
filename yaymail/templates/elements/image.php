@@ -15,7 +15,8 @@ if ( empty( $args['element'] ) ) {
 $element = $args['element'];
 $data    = $element['data'];
 
-$src = ! empty( $data['src'] ) ? $data['src'] : YAYMAIL_PLUGIN_URL . 'assets/images/woocommerce-logo.png'; // set fallback
+$src = ! empty( $data['src'] ) ? $data['src'] : YAYMAIL_PLUGIN_URL . 'assets/images/woocommerce-logo.png';
+// set fallback
 
 $wrapper_style = TemplateHelpers::get_style(
     [
@@ -30,7 +31,7 @@ ob_start();
 ?>
 
     <a href="<?php echo esc_url( $data['url'] ); ?>" target="_blank" rel="noreferrer">
-        <img src="<?php echo esc_url( $src ); ?>" style="max-width: 100%; width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data['width'] ) ); ?>" alt="YayMail Image" />
+        <img alt="<?php echo isset( $data['alt'] ) ? esc_attr( $data['alt'] ) : esc_attr__( 'YayMail Image', 'yaymail' ); ?>" src="<?php echo esc_url( $src ); ?>" style="max-width: 100%; width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data['width'] ) ); ?>" alt="YayMail Image" />
     </a>
 <?php
 $element_content = ob_get_clean();

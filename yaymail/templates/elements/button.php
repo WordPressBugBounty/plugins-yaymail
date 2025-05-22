@@ -27,10 +27,12 @@ $margin_value        = isset( $data['margin'] ) && 'center' === $data['margin'] 
 $float_value         = in_array( $data['align'], [ 'left', 'right' ], true ) ? $data['align'] : 'unset';
 $button_holder_style = TemplateHelpers::get_style(
     [
-        'width'   => $data['width'] . '%',
-        'margin'  => $margin_value,
-        'padding' => TemplateHelpers::get_spacing_value( isset( $data['padding'] ) ? $data['padding'] : [] ),
-        'float'   => $float_value,
+        'width'          => $data['width'] . '%',
+        'margin'         => $margin_value,
+        'padding'        => TemplateHelpers::get_spacing_value( isset( $data['padding'] ) ? $data['padding'] : [] ),
+        'float'          => $float_value,
+        'border-spacing' => '0',
+    // Make sure this will work when inject css not working
     ]
 );
 
@@ -64,7 +66,7 @@ ob_start();
     <table style="<?php echo esc_attr( $button_holder_style ); ?>">
         <tbody>
             <tr>
-                <td>
+                <td style="padding: 0;">
                     <a
                         href="<?php echo esc_url( do_shortcode( $data['url'] ) ); ?>"
                         style="<?php echo esc_attr( $link_style ); ?>"

@@ -9,7 +9,7 @@ if ( empty( $args['element'] ) ) {
 $element = $args['element'];
 $data    = $element['data'];
 
-$data_column_1 = is_array( $data['image_list']['column_1'] ) && ! empty( $data['image_list']['column_1'] ) ? $data['image_list']['column_1'] : [
+$data_column_1 = [
     'align'   => 'center',
     'width'   => '100',
     'url'     => '#',
@@ -22,7 +22,14 @@ $data_column_1 = is_array( $data['image_list']['column_1'] ) && ! empty( $data['
     ],
 ];
 
-$data_column_2 = is_array( $data['image_list']['column_2'] ) && ! empty( $data['image_list']['column_2'] ) ? $data['image_list']['column_2'] : [
+if ( is_array( $data['image_list']['column_1'] ) && ! empty( $data['image_list']['column_1'] ) ) {
+    $_data_column_1 = $data['image_list']['column_1'];
+    foreach ( $_data_column_1 as $key => $value ) {
+        $data_column_1[ $key ] = $value['value'];
+    }
+}
+
+$data_column_2 = [
     'align'   => 'center',
     'width'   => '100',
     'url'     => '#',
@@ -35,7 +42,14 @@ $data_column_2 = is_array( $data['image_list']['column_2'] ) && ! empty( $data['
     ],
 ];
 
-$data_column_3 = is_array( $data['image_list']['column_3'] ) && ! empty( $data['image_list']['column_3'] ) ? $data['image_list']['column_3'] : [
+if ( is_array( $data['image_list']['column_2'] ) && ! empty( $data['image_list']['column_2'] ) ) {
+    $_data_column_2 = $data['image_list']['column_2'];
+    foreach ( $_data_column_2 as $key => $value ) {
+        $data_column_2[ $key ] = $value['value'];
+    }
+}
+
+$data_column_3 = [
     'align'   => 'center',
     'width'   => '100',
     'url'     => '#',
@@ -47,6 +61,13 @@ $data_column_3 = is_array( $data['image_list']['column_3'] ) && ! empty( $data['
         'left'   => '10',
     ],
 ];
+
+if ( is_array( $data['image_list']['column_3'] ) && ! empty( $data['image_list']['column_3'] ) ) {
+    $_data_column_3 = $data['image_list']['column_3'];
+    foreach ( $_data_column_3 as $key => $value ) {
+        $data_column_3[ $key ] = $value['value'];
+    }
+}
 
 $wrapper_style = TemplateHelpers::get_style(
     [
@@ -91,7 +112,7 @@ ob_start();
                 <td style="<?php echo esc_attr( $column_style ); ?>">
                     <div style="<?php echo esc_attr( $column_1_style ); ?>">
                         <a href="<?php echo esc_html( $data_column_1['url'] ); ?>" target="_blank" rel="noreferrer">
-                            <img src="<?php echo esc_html( $data_column_1['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_1['width'] ) ); ?>" alt="YayMail Image" />
+                            <img alt="<?php echo esc_attr( $data_column_1['alt'] ?? 'YayMail Image' ); ?>" src="<?php echo esc_html( $data_column_1['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_1['width'] ) ); ?>"/>
                         </a>
                     </div>
                 </td>
@@ -99,7 +120,7 @@ ob_start();
                 <td style="<?php echo esc_attr( $column_style ); ?>">
                     <div style="<?php echo esc_attr( $column_2_style ); ?>">
                         <a href="<?php echo esc_html( $data_column_2['url'] ); ?>" target="_blank" rel="noreferrer">
-                            <img src="<?php echo esc_html( $data_column_2['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_2['width'] ) ); ?>" alt="YayMail Image" />
+                            <img alt="<?php echo esc_attr( $data_column_2['alt'] ?? 'YayMail Image' ); ?>" src="<?php echo esc_html( $data_column_2['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_2['width'] ) ); ?>"/>
                         </a>
                     </div>
                 </td>
@@ -108,7 +129,7 @@ ob_start();
                 <td style="<?php echo esc_attr( $column_style ); ?>">
                     <div style="<?php echo esc_attr( $column_3_style ); ?>">
                         <a href="<?php echo esc_html( $data_column_3['url'] ); ?>" target="_blank" rel="noreferrer">
-                            <img src="<?php echo esc_html( $data_column_3['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_3['width'] ) ); ?>" alt="YayMail Image" />
+                            <img alt="<?php echo esc_attr( $data_column_3['alt'] ?? 'YayMail Image' ); ?>" src="<?php echo esc_html( $data_column_3['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_3['width'] ) ); ?>"/>
                         </a>
                     </div>
                 </td>

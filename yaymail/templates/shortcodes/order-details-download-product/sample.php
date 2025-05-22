@@ -10,6 +10,9 @@ $text_link_color = ! empty( $template ) ? $template->get_text_link_color() : YAY
 $data            = isset( $args['element']['data'] ) ? $args['element']['data'] : [];
 $is_placeholder  = isset( $args['is_placeholder'] ) ? $args['is_placeholder'] : false;
 
+$settings           = yaymail_settings();
+$show_product_image = isset( $settings['show_product_image'] ) ? boolval( $settings['show_product_image'] ) : false;
+
 
 $product_title  = isset( $data['table_titles']['product_title'] ) ? $data['table_titles']['product_title'] : TemplateHelpers::get_content_as_placeholder( 'product_title', esc_html__( 'Products', 'woocommerce' ), $is_placeholder );
 $expires_title  = isset( $data['table_titles']['expires_title'] ) ? $data['table_titles']['expires_title'] : TemplateHelpers::get_content_as_placeholder( 'expires_title', esc_html__( 'Expires', 'woocommerce' ), $is_placeholder );
@@ -42,7 +45,49 @@ $table_link_style = TemplateHelpers::get_style(
     </tr>
     <tr style="<?php echo esc_attr( $table_td_style ); ?>">
         <td class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
-            <a href="" style="<?php echo esc_attr( $table_link_style ); ?>" > <?php esc_html_e( 'Downloadable Product', 'yaymail' ); ?></a>
+        <?php
+        if ( $show_product_image ) :
+            $image_url      = wc_placeholder_img_src();
+            $image_width    = isset( $settings['product_image_width'] ) ? $settings['product_image_width'] : '30';
+            $image_height   = isset( $settings['product_image_height'] ) ? $settings['product_image_height'] : '30';
+            $image_position = isset( $settings['product_image_position'] ) ? $settings['product_image_position'] : 'top';
+
+            $image_style =
+                [
+                    'margin-bottom' => '5px',
+                    'margin-right'  => '5px',
+                ];
+            if ( $image_position === 'left' && ! $is_placeholder ) {
+                $image_style['float'] = 'left';
+            }
+            $image_style = TemplateHelpers::get_style( $image_style );
+            $image       = $is_placeholder ? "<img width='{{product_image_width}}px' height='{{product_image_height}}px' src='{$image_url}' alt='product image' style='{$image_style}'/>" : "<img width='{$image_width}px' height='{$image_height}px' src='{$image_url}' alt='product image' style='{$image_style}'/>";
+
+            ?>
+            <div class="yaymail-product-download-image" style="<?php echo esc_attr( $container_style ); ?>">
+                <a href="" style="<?php echo esc_attr( $table_link_style ); ?>">
+                    <?php
+                    if ( $is_placeholder || ( $image_position === 'top' || $image_position === 'left' ) ) {
+                        echo wp_kses_post( "<span class='yaymail-product_image_position__top'>" );
+                        require YAYMAIL_PLUGIN_PATH . 'templates/shortcodes/order-details/order-items/image-content.php';
+                        echo ( '</span>' );
+                    }
+                    ?>
+                    <span><?php esc_html_e( 'Downloadable Product', 'yaymail' ); ?></span>
+                    <?php
+                    if ( $is_placeholder || ( $image_position === 'bottom' ) ) {
+                        echo wp_kses_post( "<span class='yaymail-product_image_position__bottom'>" );
+                        require YAYMAIL_PLUGIN_PATH . 'templates/shortcodes/order-details/order-items/image-content.php';
+                        echo ( '</span>' );
+                    }
+                    ?>
+                </a>
+            </div>
+            <?php else : ?>
+            <a href="" style="<?php echo esc_attr( $table_link_style ); ?>">
+                <?php esc_html_e( 'Downloadable Product', 'yaymail' ); ?>
+            </a>
+            <?php endif; ?>
         </td>
         <td class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
             <time datetime="2021-02-13" title="1613174400"> <?php echo wp_kses_post( wc_format_datetime( new WC_DateTime() ) ); ?></time>

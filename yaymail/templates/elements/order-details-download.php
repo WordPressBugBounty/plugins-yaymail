@@ -32,11 +32,12 @@ $title_style = TemplateHelpers::get_style(
 
 $table_style = TemplateHelpers::get_style(
     [
-        'font-size'   => '14px',
-        'text-align'  => yaymail_get_text_align(),
-        'border'      => isset( $data['border_color'] ) ? '1px solid ' . $data['border_color'] : 'inherit',
-        'font-family' => TemplateHelpers::get_font_family_value( isset( $data['font_family'] ) ? $data['font_family'] : 'inherit' ),
-        'color'       => isset( $data['text_color'] ) ? $data['text_color'] : 'inherit',
+        'font-size'       => '14px',
+        'text-align'      => yaymail_get_text_align(),
+        'border'          => isset( $data['border_color'] ) ? '1px solid ' . $data['border_color'] : 'inherit',
+        'font-family'     => TemplateHelpers::get_font_family_value( isset( $data['font_family'] ) ? $data['font_family'] : 'inherit' ),
+        'color'           => isset( $data['text_color'] ) ? $data['text_color'] : 'inherit',
+        'border-collapse' => 'separate',
     ]
 );
 
@@ -46,7 +47,7 @@ ob_start();
 ?>
 <?php if ( ! empty( $shortcoded_content ) ) : ?>
 <div class="yaymail-order-details-download-title" style="<?php echo esc_attr( $title_style ); ?>" > <?php yaymail_kses_post_e( $shortcoded_title ); ?></div>
-<table class="td yaymail-order-details-download-product" style="<?php echo esc_attr( $table_style ); ?>" border="0" cellpadding="6" cellspacing="0" width="100%" >
+<table class="yaymail-order-details-download-content" style="<?php echo esc_attr( $table_style ); ?>" border="0" cellpadding="6" cellspacing="0" width="100%" >
     <?php yaymail_kses_post_e( $shortcoded_content ); ?>
 </table>
 <?php endif; ?>

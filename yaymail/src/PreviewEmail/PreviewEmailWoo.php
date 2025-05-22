@@ -200,7 +200,7 @@ class PreviewEmailWoo {
                 $order = $order_id === self::$order_id_sample ? self::get_dummy_order() : wc_get_order( $order_id );
                 $email->set_object( $order );
 
-                if ( ! $is_in_customizer ) {
+                if ( ! $is_in_customizer && $order_id !== self::$order_id_sample ) {
                     $email->trigger( $order_id );
                 }
             }//end if

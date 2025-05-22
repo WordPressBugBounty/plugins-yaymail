@@ -22,14 +22,15 @@ class GlobalFooter extends BaseElement {
 </svg>';
 
         return [
-            'id'        => uniqid(),
-            'type'      => self::$type,
-            'name'      => __( 'Global Footer', 'yaymail' ),
-            'icon'      => self::$icon,
-            'group'     => 'basic',
-            'available' => true,
-            'position'  => 50,
-            'data'      => [
+            'id'          => uniqid(),
+            'type'        => self::$type,
+            'name'        => __( 'Global Footer', 'yaymail' ),
+            'icon'        => self::$icon,
+            'group'       => 'basic',
+            'available'   => true,
+            'status_info' => 'new',
+            'position'    => 50,
+            'data'        => [
                 'global_footer' => [
                     'value_path'    => 'global_footer',
                     'component'     => 'GlobalHeaderFooterCustomizerLink',

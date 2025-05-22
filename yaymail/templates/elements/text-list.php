@@ -47,10 +47,34 @@ $data_column_default = is_array( $data['text_list']['column_1'] ) && ! empty( $d
 ];
 
 $data_column_1 = is_array( $data['text_list']['column_1'] ) && ! empty( $data['text_list']['column_1'] ) ? $data['text_list']['column_1'] : $data_column_default;
+if ( is_array( $data['text_list']['column_1'] ) && ! empty( $data['text_list']['column_1'] ) ) {
+    $_data_column_1 = $data['text_list']['column_1'];
+    foreach ( $_data_column_1 as $key => $value ) {
+        if ( isset( $value['value'] ) ) {
+            $data_column_1[ $key ] = $value['value'];
+        }
+    }
+}
 
 $data_column_2 = is_array( $data['text_list']['column_2'] ) && ! empty( $data['text_list']['column_2'] ) ? $data['text_list']['column_2'] : $data_column_default;
+if ( is_array( $data['text_list']['column_2'] ) && ! empty( $data['text_list']['column_2'] ) ) {
+    $_data_column_2 = $data['text_list']['column_2'];
+    foreach ( $_data_column_2 as $key => $value ) {
+        if ( isset( $value['value'] ) ) {
+            $data_column_2[ $key ] = $value['value'];
+        }
+    }
+}
 
 $data_column_3 = is_array( $data['text_list']['column_3'] ) && ! empty( $data['text_list']['column_3'] ) ? $data['text_list']['column_3'] : $data_column_default;
+if ( is_array( $data['text_list']['column_3'] ) && ! empty( $data['text_list']['column_3'] ) ) {
+    $_data_column_3 = $data['text_list']['column_3'];
+    foreach ( $_data_column_3 as $key => $value ) {
+        if ( isset( $value['value'] ) ) {
+            $data_column_3[ $key ] = $value['value'];
+        }
+    }
+}
 
 $wrapper_style = TemplateHelpers::get_style(
     [

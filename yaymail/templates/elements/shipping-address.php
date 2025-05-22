@@ -44,7 +44,7 @@ $title_style = TemplateHelpers::get_style(
     [
         'text-align'  => yaymail_get_text_align(),
         'color'       => isset( $data['title_color'] ) ? $data['title_color'] : 'inherit',
-        'margin-top'  => '0',
+        'margin'      => '0 0 7px 0',
         'font-size'   => '20px',
         'font-weight' => '600',
         'font-family' => TemplateHelpers::get_font_family_value( isset( $data['font_family'] ) ? $data['font_family'] : 'inherit' ),

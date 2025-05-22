@@ -394,6 +394,11 @@ class SupportedPlugins {
                         'Dokan_Email_Vendor_Withdraw_Request',
                         'Dokan_Email_Withdraw_Approved',
                         'Dokan_Email_Withdraw_Cancelled',
+                        'Dokan_Email_New_Request_Quote',
+                        'Dokan_Email_Accept_Request_Quote',
+                        'Dokan_Email_Vendor_Coupon_Updated',
+                        'Dokan_Email_Marked_Order_Received',
+                        'Dokan_Email_Staff_Add_Notification',
                     ]
                 ),
                 'slug_name'              => [ 'dokan-lite', 'dokan-pro' ],
