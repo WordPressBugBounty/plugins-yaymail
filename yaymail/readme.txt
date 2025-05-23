@@ -234,6 +234,18 @@ We offer single-site licenses and also unlimited site licenses to better support
 
 == Changelog ==
 
+= May 23, 2025 - Version 4.0.3 =
+- Updated: Manage template recipients display
+- Updated: Turn Germanized Invoice PDF templates into order-type, they now support order-type elements & shortcodes.
+Updated: YayMail Addon License Manager – Added support for License Manager shortcodes and elements in the Order Completed - and Customer Details email templates.
+- Updated: Replaced all REST API PATCH methods with POST methods for better compatibility.
+- Fixed: Undefined function yaymail_get_email_recipient.
+- Fixed: Style conflicts with other plugins.
+- Fixed: Element container not full width on Gmail mobile
+- Fixed: Save pattern incorrectly when select 1 element (Pro)
+- Fixed: Width Issue of Per Item of Featured Product When Show Up Outlook Mail
+- Fixed: Break layout (YayMail Addon for Smart Coupons)
+
 = May 22, 2025 - Version 4.0.2 =
 - Added: Support dokan new templates
 - Added: payment_url_string shortcode when migrating

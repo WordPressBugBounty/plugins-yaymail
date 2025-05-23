@@ -367,3 +367,31 @@ if ( ! function_exists( 'yaymail_get_email_direction' ) ) {
         return isset( $yaymail_settings['direction'] ) && 'rtl' === $yaymail_settings['direction'] ? 'rtl' : 'ltr';
     }
 }
+
+/**
+ * Get email recipient zone
+ *
+ * @param \WC_Email $email
+ * @since 4.0.3
+ *
+ * @return string
+ */
+function yaymail_get_email_recipient_zone( $email ) {
+    $is_customer_email = $email->is_customer_email();
+    if ( $is_customer_email ) {
+        return __( 'Customer', 'woocommerce' );
+    }
+    $recipient  = $email->get_recipient();
+    $recipients = array_map(
+        function( $email_recipient ) {
+            $recipient_user = get_user_by( 'email', $email_recipient );
+            if ( $recipient_user && user_can( $recipient_user, 'manage_options' ) ) {
+                    return __( 'Admin', 'woocommerce' );
+            }
+            return $email_recipient;
+        },
+        explode( ',', $recipient )
+    );
+    $recipients = array_unique( $recipients );
+    return implode( ', ', $recipients );
+}

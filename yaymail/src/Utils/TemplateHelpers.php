@@ -204,4 +204,17 @@ class TemplateHelpers {
         $result .= 'px';
         return $result;
     }
+
+    /**
+     * Remove empty shortcodes from the content
+     *
+     * @param string $content The content to remove empty shortcodes from
+     * @return string The content with empty shortcodes removed
+     * @since 4.0.2
+     */
+    public static function remove_empty_shortcodes( $content ) {
+        $content = preg_replace( '/<p\b[^>]*>\[yaymail_[^\]]*\]<\/p>/i', '', $content );
+        $content = preg_replace( '/\[yaymail_[^\]]*\]/', '', $content );
+        return $content;
+    }
 }

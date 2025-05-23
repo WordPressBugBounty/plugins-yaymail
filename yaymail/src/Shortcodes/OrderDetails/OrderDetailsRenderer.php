@@ -242,7 +242,9 @@ class OrderDetailsRenderer {
         $product_name          = __( 'Happy YayCommerce', 'yaymail' );
         $product_permalink     = '#';
         $product_hyper_link    = "<a href='{$product_permalink}' target='_blank'>{$product_name}</a>";
-        $product_regular_price = '10';
+        $product_cost          = 9;
+        $product_quantity      = 2;
+        $product_regular_price = 10;
         ?>
         <tr class="order_item">
             <?php foreach ( $structure_items as $key => $structure_item ) : ?>
@@ -301,19 +303,19 @@ class OrderDetailsRenderer {
                             <?php
                             break;
                         case 'cost':
-                            echo wp_kses_post( wc_price( 9 ) );
+                            echo wp_kses_post( wc_price( $product_cost ) );
                             break;
                         case 'quantity':
-                            esc_html_e( '2', 'yaymail' );
+                            esc_html_e( $product_quantity, 'yaymail' );
                             break;
                         case 'price':
                             // Show product regular price.
                             if ( ( $show_regular_price ) ) {
                                 ?>
-                                <del class="yaymail-product-regular-price" style="padding-right:5px"> <?php echo wp_kses_post( wc_price( 20 ) ); ?> </del>
+                                <del class="yaymail-product-regular-price" style="padding-right:5px"> <?php echo wp_kses_post( wc_price( $product_regular_price * $product_quantity ) ); ?> </del>
                                 <?php
                             }
-                            echo wp_kses_post( wc_price( 18 ) );
+                            echo wp_kses_post( wc_price( $product_cost * $product_quantity ) );
                             break;
                         default:
                             echo wp_kses_post( do_action( 'yaymail_order_details_item_' . $key . '_content', null, $this->order, $this->element_data, true ) );

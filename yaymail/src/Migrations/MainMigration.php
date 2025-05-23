@@ -47,7 +47,7 @@ class MainMigration {
             $filtered_migrations = MigrationHelper::filter_migrations( $core_migrations, $this->old_version, $this->new_version );
 
             if ( ! empty( $filtered_migrations ) ) {
-                MigrationHelper::perform_migrations( $core_migrations );
+                MigrationHelper::perform_migrations( $filtered_migrations );
                 update_option( 'yaymail_version', $this->new_version );
             }
 

@@ -112,7 +112,7 @@ ob_start();
                 <td style="<?php echo esc_attr( $column_style ); ?>">
                     <div style="<?php echo esc_attr( $column_1_style ); ?>">
                         <a href="<?php echo esc_html( $data_column_1['url'] ); ?>" target="_blank" rel="noreferrer">
-                            <img alt="<?php echo esc_attr( $data_column_1['alt'] ?? 'YayMail Image' ); ?>" src="<?php echo esc_html( $data_column_1['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_1['width'] ) ); ?>"/>
+                            <img alt="<?php echo esc_attr( $data_column_1['alt'] ?? '' ); ?>" src="<?php echo esc_html( $data_column_1['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_1['width'] ) ); ?>"/>
                         </a>
                     </div>
                 </td>
@@ -120,7 +120,7 @@ ob_start();
                 <td style="<?php echo esc_attr( $column_style ); ?>">
                     <div style="<?php echo esc_attr( $column_2_style ); ?>">
                         <a href="<?php echo esc_html( $data_column_2['url'] ); ?>" target="_blank" rel="noreferrer">
-                            <img alt="<?php echo esc_attr( $data_column_2['alt'] ?? 'YayMail Image' ); ?>" src="<?php echo esc_html( $data_column_2['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_2['width'] ) ); ?>"/>
+                            <img alt="<?php echo esc_attr( $data_column_2['alt'] ?? '' ); ?>" src="<?php echo esc_html( $data_column_2['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_2['width'] ) ); ?>"/>
                         </a>
                     </div>
                 </td>
@@ -129,7 +129,7 @@ ob_start();
                 <td style="<?php echo esc_attr( $column_style ); ?>">
                     <div style="<?php echo esc_attr( $column_3_style ); ?>">
                         <a href="<?php echo esc_html( $data_column_3['url'] ); ?>" target="_blank" rel="noreferrer">
-                            <img alt="<?php echo esc_attr( $data_column_3['alt'] ?? 'YayMail Image' ); ?>" src="<?php echo esc_html( $data_column_3['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_3['width'] ) ); ?>"/>
+                            <img alt="<?php echo esc_attr( $data_column_3['alt'] ?? '' ); ?>" src="<?php echo esc_html( $data_column_3['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_3['width'] ) ); ?>"/>
                         </a>
                     </div>
                 </td>

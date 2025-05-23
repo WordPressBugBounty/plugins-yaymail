@@ -245,5 +245,7 @@ class SettingsPage {
     public function fix_conflict_plugins_styles() {
         wp_dequeue_style( 'real-media-library-lite-rml' );
         wp_dequeue_script( 'real-media-library-lite-rml' );
+        wp_dequeue_style( 'real-media-library-rml' );
+        wp_dequeue_script( 'real-media-library-rml' );
     }
 }

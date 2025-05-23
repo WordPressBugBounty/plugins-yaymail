@@ -20,9 +20,10 @@ class CustomerFailedOrder extends BaseEmail {
         if ( ! $email ) {
             return;
         }
-        $this->id        = $email->id;
-        $this->title     = $email->get_title();
-        $this->recipient = __( 'Customer', 'woocommerce' );
+        $this->id         = $email->id;
+        $this->title      = $email->get_title();
+        $this->root_email = $email;
+        $this->recipient  = function_exists( 'yaymail_get_email_recipient_zone' ) ? yaymail_get_email_recipient_zone( $email ) : '';
 
         add_filter( 'wc_get_template', [ $this, 'get_template_file' ], 10, 3 );
     }

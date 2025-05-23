@@ -41,7 +41,7 @@ class Logo extends BaseElement {
                     [
                         'value_path'    => 'alt',
                         'title'         => __( 'ALT text', 'yaymail' ),
-                        'default_value' => __( 'Email Logo', 'yaymail' ),
+                        'default_value' => '',
                     ]
                 ),
             ],

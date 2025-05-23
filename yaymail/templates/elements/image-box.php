@@ -83,7 +83,7 @@ ob_start();
                 <td align=<?php echo esc_attr( $data_column_1['align'] ); ?> width="50%" style="<?php echo esc_attr( $column_1_style ); ?>">
                     <div>
                         <a href="<?php echo esc_html( $data_column_1['url'] ); ?>" target="_blank" rel="noreferrer">
-                            <img alt="<?php echo esc_attr( $data_column_1['alt'] ?? 'YayMail Image' ); ?>" src="<?php echo esc_html( $data_column_1['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_1['width'] ) ); ?>"/>
+                            <img alt="<?php echo esc_attr( $data_column_1['alt'] ?? '' ); ?>" src="<?php echo esc_html( $data_column_1['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_1['width'] ) ); ?>"/>
                         </a>
                     </div>
                 </td>

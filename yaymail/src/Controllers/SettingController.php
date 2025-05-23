@@ -31,7 +31,7 @@ class SettingController extends BaseController {
                     'permission_callback' => [ $this, 'permission_callback' ],
                 ],
                 [
-                    'methods'             => 'PATCH',
+                    'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => [ $this, 'exec_update_settings' ],
                     'permission_callback' => [ $this, 'permission_callback' ],
                 ],

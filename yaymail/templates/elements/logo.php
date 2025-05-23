@@ -27,7 +27,7 @@ $wrapper_style = TemplateHelpers::get_style(
 ob_start();
 ?>
     <a href="<?php echo esc_url( $data['url'] ); ?>" target="_blank" rel="noreferrer">
-        <img alt="<?php echo isset( $data['alt'] ) ? esc_attr( $data['alt'] ) : esc_attr__( 'Email Logo', 'yaymail' ); ?>" src="<?php echo esc_url( $data['src'] ); ?>" style="max-width: 100%; width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data['width'] ) ); ?>" />
+        <img alt="<?php echo esc_attr( $data['alt'] ?? '' ); ?>" src="<?php echo esc_url( $data['src'] ); ?>" style="max-width: 100%; width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data['width'] ) ); ?>" />
     </a>
 <?php
 $element_content = ob_get_clean();

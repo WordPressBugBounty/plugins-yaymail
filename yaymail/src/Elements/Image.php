@@ -79,7 +79,7 @@ class Image extends BaseElement {
                     [
                         'value_path'    => 'alt',
                         'title'         => __( 'ALT text', 'yaymail' ),
-                        'default_value' => __( 'YayMail Image', 'yaymail' ),
+                        'default_value' => '',
                     ]
                 ),
             ],

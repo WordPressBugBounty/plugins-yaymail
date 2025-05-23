@@ -359,10 +359,4 @@ class Helpers {
 
         $current = $value;
     }
-
-    public static function remove_shortcodes_empty( $content ) {
-        $content = preg_replace( '/<p\b[^>]*>\[yaymail_[^\]]*\]<\/p>/i', '', $content );
-        $content = preg_replace( '/\[yaymail_[^\]]*\]/', '', $content );
-        return $content;
-    }
 }

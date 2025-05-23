@@ -51,7 +51,7 @@ class TemplateController extends BaseController {
                     'args'                => $template_id_args,
                 ],
                 [
-                    'methods'             => 'PATCH',
+                    'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => [ $this, 'exec_update_template' ],
                     'permission_callback' => [ $this, 'permission_callback' ],
                     'args'                => $template_id_args,
@@ -82,7 +82,7 @@ class TemplateController extends BaseController {
             '/templates/change-status',
             [
                 [
-                    'methods'             => 'PATCH',
+                    'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => [ $this, 'exec_change_status' ],
                     'permission_callback' => [ $this, 'permission_callback' ],
                 ],
@@ -94,7 +94,7 @@ class TemplateController extends BaseController {
             '/templates/reset',
             [
                 [
-                    'methods'             => 'PATCH',
+                    'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => [ $this, 'exec_reset_templates' ],
                     'permission_callback' => [ $this, 'permission_callback' ],
                 ],
@@ -106,7 +106,7 @@ class TemplateController extends BaseController {
             '/templates/copy-template',
             [
                 [
-                    'methods'             => 'PATCH',
+                    'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => [ $this, 'exec_copy_template' ],
                     'permission_callback' => [ $this, 'permission_callback' ],
                 ],

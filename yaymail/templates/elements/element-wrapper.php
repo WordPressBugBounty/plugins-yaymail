@@ -24,6 +24,7 @@ $wrapper_style .= TemplateHelpers::get_style(
         'border-spacing' => '0',
         'width'          => '100%',
         'direction'      => $container_direction,
+        'min-width'      => '100%',
     ]
 );
 

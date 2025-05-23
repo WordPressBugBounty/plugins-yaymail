@@ -15,11 +15,16 @@ class FailedOrder extends BaseEmail {
     use SingletonTrait;
 
     protected function __construct() {
-        $emails          = \WC_Emails::instance()->get_emails();
-        $email           = $emails['WC_Email_Failed_Order'];
-        $this->id        = $email->id;
-        $this->title     = $email->get_title();
-        $this->recipient = $email->is_customer_email() ? __( 'Customer', 'woocommerce' ) : __( 'Admin', 'woocommerce' );
+        $emails = \WC_Emails::instance()->get_emails();
+        $email  = $emails['WC_Email_Failed_Order'];
+        if ( ! $email ) {
+            return;
+        }
+
+        $this->id         = $email->id;
+        $this->title      = $email->get_title();
+        $this->root_email = $email;
+        $this->recipient  = function_exists( 'yaymail_get_email_recipient_zone' ) ? yaymail_get_email_recipient_zone( $email ) : '';
 
         add_filter( 'wc_get_template', [ $this, 'get_template_file' ], 10, 3 );
     }
