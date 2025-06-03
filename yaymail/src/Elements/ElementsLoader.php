@@ -59,6 +59,15 @@ class ElementsLoader {
         return $this->elements;
     }
 
+    public function get_element_instance_by_type( $type ) {
+        foreach ( $this->elements as $element ) {
+            if ( $element->get_type() === $type ) {
+                return $element;
+            }
+        }
+        return null;
+    }
+
     public static function load_elements( $elements ) {
         $content = [];
         if ( ! is_array( $elements ) ) {

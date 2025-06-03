@@ -112,6 +112,20 @@ class SettingsPage {
             unset( $reflector );
         }
 
+        $_wc_emails = array_map(
+            function( $email ) {
+                return (object) [
+                    'id'            => $email->id,
+                    'title'         => $email->title,
+                    'enabled'       => $email->enabled,
+                    'description'   => $email->description,
+                    'template_base' => $email->template_base,
+                    'recipient'     => $email->recipient,
+                ];
+            },
+            $_wc_emails
+        );
+
         wp_localize_script(
             'module/yaymail/yaymail-main.tsx',
             'yaymailData',
@@ -243,9 +257,15 @@ class SettingsPage {
     }
 
     public function fix_conflict_plugins_styles() {
-        wp_dequeue_style( 'real-media-library-lite-rml' );
-        wp_dequeue_script( 'real-media-library-lite-rml' );
-        wp_dequeue_style( 'real-media-library-rml' );
-        wp_dequeue_script( 'real-media-library-rml' );
+        if ( !function_exists( 'get_current_screen' ) ) {
+            return;
+        }
+        $screen = get_current_screen();
+        if ( $this->yaymail_hook_surfix === $screen->id ) {
+            wp_dequeue_style( 'real-media-library-lite-rml' );
+            wp_dequeue_script( 'real-media-library-lite-rml' );
+            wp_dequeue_style( 'real-media-library-rml' );
+            wp_dequeue_script( 'real-media-library-rml' );
+        }
     }
 }

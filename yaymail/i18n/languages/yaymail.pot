@@ -2,1377 +2,1387 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: YayMail - WooCommerce Email Customizer\n"
-"POT-Creation-Date: 2025-04-24 09:31+0700\n"
-"PO-Revision-Date: 2025-04-24 09:30+0700\n"
+"POT-Creation-Date: 2025-05-28 15:37+0700\n"
+"PO-Revision-Date: 2025-05-28 15:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
-"X-Generator: Poedit 3.6\n"
+"X-Generator: Poedit 3.5\n"
 "X-Poedit-Basepath: ../..\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
 "X-Poedit-WPHeader: yaymail.php\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-KeywordsList: "
-"__;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;esc_attr__;"
+"esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c;_n_noop:1,2;"
+"_nx_noop:3c,1,2;__ngettext_noop:1,2\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: *.min.js\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgctxt "text direction"
 msgid "ltr"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Emails/CancelledOrder.php:22 src/Emails/CustomerCompletedOrder.php:22
-#: src/Emails/CustomerFailedOrder.php:25 src/Emails/CustomerInvoice.php:22
-#: src/Emails/CustomerNewAccount.php:24 src/Emails/CustomerNote.php:22
-#: src/Emails/CustomerOnHoldOrder.php:23
-#: src/Emails/CustomerProcessingOrder.php:22
-#: src/Emails/CustomerRefundedOrder.php:22
-#: src/Emails/CustomerResetPassword.php:24 src/Emails/FailedOrder.php:22
-#: src/Emails/NewOrder.php:22
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Emails/CustomerPartialShippedOrder.php:28
-#: src/Integrations/BackInStockNotifier/Emails/NotifierInstockMail.php:23
-#: src/Integrations/BackInStockNotifier/Emails/NotifierSubscribeMail.php:23
-#: src/Integrations/CustomOrderStatusForWcByNuggethon/Emails/CustomOrderStatusForWcByNuggethon.php:27
-#: src/Integrations/CustomOrderStatusManagerByBrightPlugins/Emails/CustomOrderStatusEmail.php:29
-#: src/Integrations/WooCommerceOrderStatusManagerBySkyVer/Emails/WooCommerceOrderStatusManagerBySkyVer.php:28
-#: src/Utils/TemplateHelpers.php:164
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1 src/Functions.php:382
+#: src/Utils/TemplateHelpers.php:165
 msgid "Customer"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "You have unsaved changes. Are you sure you want to leave?"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid ""
 " This email template can be fully customized with YayMail Premium Addon. "
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Buy Now"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid " This template is unavailable at the moment. "
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Contact us"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid " to see if it can be customized with "
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "YayMail Addon."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "this"
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#, javascript-format
+msgid "We already support several other emails for %s plugin."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Please contact us to request features."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid " This email template can be fully customized with YayMail Pro. "
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Upgrade Now"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Cancel"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Saved Pattern "
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Pattern saved"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Failed to save pattern"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Save pattern failed!"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Save new pattern"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Save"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:108
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/sample.php:42
-#: src/Shortcodes/CommonShortcodes.php:83
-msgid "Name"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Tags"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Are you sure you want to remove this element?"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Duplicate"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Copy this element"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Paste element"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Copy styles"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Paste styles"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "This feature is available in the PRO version"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Save to library"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Remove"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Select parent"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/Divider.php:33 src/Elements/ElementsHelper.php:34
-#: src/Elements/Image.php:33 src/Elements/SocialIcon.php:32
-#: src/Elements/Title.php:32
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "New feature"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#, javascript-format
+msgid ""
+"You can now select multiple elements by holding %s key while clicking on an "
+"element"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Select"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/Divider.php:35 src/Elements/ElementsHelper.php:34
+#: src/Elements/Image.php:33 src/Elements/SocialIcon.php:34
+#: src/Elements/Title.php:34
 msgid "Align"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Select a media"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Use this image"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 #: src/Elements/ElementsHelper.php:117 src/Elements/Image.php:52
 msgid "Image URL"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Background Image URL"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Background Image Position"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Background Image Position X"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Background Image Position Y"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Background Image Position Repeat"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Background Image Size"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Background Image Position Repeat"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Background Image Custom Size"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Background position"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "X Position"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Y Position"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Background repeat"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Background size"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/Divider.php:52 src/Elements/ElementsHelper.php:144
-#: src/Elements/Image.php:59 src/Elements/SocialIcon.php:58
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/Divider.php:54 src/Elements/ElementsHelper.php:144
+#: src/Elements/Image.php:59 src/Elements/SocialIcon.php:60
 #: src/Elements/Video.php:59
 msgid "Width"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Items"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Column"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Selecting column:"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Copy content"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "You are selecting column"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Copy column"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "To"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "From"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Column 1"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Column 2"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Column 3"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Dimension"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Default"
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Note: You can edit the heading content wherever it is used."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Info"
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid ""
+"This is the global header or footer element, you can customize it by go to "
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Success"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Warning"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Danger"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Inherit"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Normal"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Bold"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Bolder"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Lighter"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Small"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Medium"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Large"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "XL"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "XXL"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/Divider.php:94 src/Elements/SimpleOffer.php:96
-msgid "Solid"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/Divider.php:98 src/Elements/SimpleOffer.php:100
-msgid "Double"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/Divider.php:102 src/Elements/SimpleOffer.php:104
-msgid "Dotted"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/Divider.php:106 src/Elements/SimpleOffer.php:108
-msgid "Dashed"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/FeaturedProducts.php:153
-msgid "None"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/FeaturedProducts.php:157
-msgid "Name A-Z"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/FeaturedProducts.php:161
-msgid "Name Z-A"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Price ascending"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Price descending"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/FeaturedProducts.php:173
-#: src/Shortcodes/BillingShortcodes.php:336
-#: src/Shortcodes/ShippingShortcodes.php:298
-msgid "Random"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Newest"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "On sale"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Featured"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Category selections"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Tag selections"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Product selections"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/FeaturedProducts.php:86
-msgid "Top content"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Product image"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Product name"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Product price"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Product original price"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Buy button"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Border"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/Button.php:23
-msgid "Button"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/ColumnLayout.php:58 src/Elements/SingleBanner.php:94
-msgid "Background image"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Select"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/FeaturedProducts.php:141
-msgid "Product type"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Categories"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/FeaturedProducts.php:204
-#: src/Migrations/Versions/Ver_4_0_0.php:837
-#: templates/shortcodes/order-details-download-product/main.php:15
-#: templates/shortcodes/order-details-download-product/sample.php:14
-msgid "Products"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1 src/Elements/Text.php:25
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1 src/Elements/Text.php:25
 msgid "Text"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Custom"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Custom Hook"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1 src/Elements/Hook.php:26
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1 src/Elements/Hook.php:26
 msgid "Hook"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Image src"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Choose"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Number Input"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Feauted products number of products"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Number of showing products"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "View products"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Close"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1 src/Elements/Image.php:24
-msgid "Image"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/OrderDetails.php:123 src/Migrations/Versions/Ver_4_0_0.php:804
-#: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:49
-msgid "Price"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/BillingAddress.php:70 src/Elements/ElementsHelper.php:260
-#: src/Elements/Footer.php:73 src/Elements/GlobalHeader.php:41
-#: src/Elements/Heading.php:84 src/Elements/OrderDetails.php:80
-#: src/Elements/OrderDetailsDownload.php:83 src/Elements/ShippingAddress.php:86
-#: src/Elements/SimpleOffer.php:125 src/Elements/SingleBanner.php:71
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/BillingAddress.php:76 src/Elements/ElementsHelper.php:260
+#: src/Elements/Footer.php:69 src/Elements/GlobalHeader.php:45
+#: src/Elements/Heading.php:93 src/Elements/OrderDetails.php:87
+#: src/Elements/OrderDetailsDownload.php:90 src/Elements/ShippingAddress.php:88
 #: src/Elements/Text.php:67
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:102
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Elements/TrackingInformationElement.php:92
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:103
-#: src/Integrations/WcAdminCustomOrderFieldBySkyverge/Elements/AdminCustomOrderFields.php:89
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:111
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:105
-#: src/Integrations/WooCommerceSoftwareAddon/Elements/SoftwareLicenseElement.php:84
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Elements/TrackingInformationElement.php:82
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Elements/YITHTrackingInformationElement.php:90
 msgid "Content"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Media Image Library"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Shortcode"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Select number column"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Spacing"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/ColumnLayout.php:41 src/Elements/Divider.php:40
-#: src/Elements/ElementsHelper.php:83 src/Elements/FeaturedProducts.php:46
-#: src/Elements/Footer.php:40 src/Elements/Heading.php:51
-#: src/Elements/Hook.php:35 src/Elements/Image.php:40
-#: src/Elements/OrderDetails.php:33 src/Elements/OrderDetailsDownload.php:36
-#: src/Elements/ShippingAddress.php:32 src/Elements/SimpleOffer.php:47
-#: src/Elements/SingleBanner.php:45 src/Elements/SocialIcon.php:39
-#: src/Elements/Text.php:34 src/Elements/Title.php:67 src/Elements/Video.php:33
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:34
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Elements/TrackingInformationElement.php:38
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:35
-#: src/Integrations/WcAdminCustomOrderFieldBySkyverge/Elements/AdminCustomOrderFields.php:35
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:36
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:37
-#: src/Integrations/WooCommerceSoftwareAddon/Elements/SoftwareLicenseElement.php:37
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Elements/TrackingInformationElement.php:35
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Elements/YITHTrackingInformationElement.php:43
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Default"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Info"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Success"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Warning"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Danger"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Inherit"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Normal"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Bold"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Bolder"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Lighter"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/PreviewEmail/PreviewEmailWoo.php:123
+msgid "Small"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Medium"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Large"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "XL"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "XXL"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/Divider.php:96
+msgid "Solid"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/Divider.php:100
+msgid "Double"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/Divider.php:104
+msgid "Dotted"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/Divider.php:108
+msgid "Dashed"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/ColumnLayout.php:41 src/Elements/Divider.php:42
+#: src/Elements/ElementsHelper.php:83 src/Elements/Footer.php:36
+#: src/Elements/Heading.php:60 src/Elements/Hook.php:35
+#: src/Elements/Image.php:40 src/Elements/OrderDetails.php:40
+#: src/Elements/OrderDetailsDownload.php:43 src/Elements/ShippingAddress.php:34
+#: src/Elements/SocialIcon.php:41 src/Elements/Text.php:34
+#: src/Elements/Title.php:69 src/Elements/Video.php:33
 msgid "Padding"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 #: src/Elements/ElementsHelper.php:198 src/Elements/Image.php:73
 msgid "URL"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/ElementsHelper.php:231 src/Elements/FeaturedProducts.php:72
-#: src/Elements/Footer.php:66 src/Elements/Heading.php:77
-#: src/Elements/Hook.php:68 src/Elements/OrderDetails.php:73
-#: src/Elements/OrderDetailsDownload.php:76 src/Elements/ShippingAddress.php:72
-#: src/Elements/SimpleOffer.php:73 src/Elements/SingleBanner.php:64
-#: src/Elements/Text.php:60 src/Elements/Title.php:93
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:74
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Elements/TrackingInformationElement.php:71
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:75
-#: src/Integrations/WcAdminCustomOrderFieldBySkyverge/Elements/AdminCustomOrderFields.php:75
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:76
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:77
-#: src/Integrations/WooCommerceSoftwareAddon/Elements/SoftwareLicenseElement.php:70
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Elements/TrackingInformationElement.php:68
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Elements/YITHTrackingInformationElement.php:76
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1 src/Elements/Image.php:81
+#: src/Elements/Logo.php:43
+msgid "ALT text"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/ElementsHelper.php:231 src/Elements/Footer.php:62
+#: src/Elements/Heading.php:86 src/Elements/Hook.php:68
+#: src/Elements/OrderDetails.php:80 src/Elements/OrderDetailsDownload.php:83
+#: src/Elements/ShippingAddress.php:74 src/Elements/Text.php:60
+#: src/Elements/Title.php:95
 msgid "Font family"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Sortable List"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Add social"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Icon List"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "add"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Show/Hide button"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Show button in column:"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 #: src/Elements/ElementsHelper.php:292
 msgid "Type"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Button Type"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/Button.php:36
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/Button.php:44
 msgid "Border radius"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/Button.php:53 src/Elements/SimpleOffer.php:133
-#: src/Elements/SingleBanner.php:108
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Elements/TrackingInformationElement.php:85
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/Button.php:61
 msgid "Button text"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/Button.php:54 src/Elements/TextList.php:109
-#: src/Elements/TextList.php:210 src/Elements/TextList.php:311
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/Button.php:62 src/Elements/TextList.php:122
+#: src/Elements/TextList.php:223 src/Elements/TextList.php:324
 msgid "Click me"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/Button.php:84
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/Button.php:92
 msgid "Font size"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/Button.php:96 src/Elements/Divider.php:64
-#: src/Elements/Space.php:39 src/Elements/Video.php:66
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/Button.php:104 src/Elements/Divider.php:66
+#: src/Elements/Space.php:47 src/Elements/Video.php:66
 msgid "Height"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 #: src/Elements/ElementsHelper.php:324
 msgid "Weight"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "No Billing address set."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/FeaturedProducts.php:110
-#: templates/elements/featured-products.php:217
-#: templates/shortcodes/yaydp-on-sale-products/main.php:137
-msgid "BUY NOW"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "No Shipping address set."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Are you sure you want to empty this template?"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Your template content will be empty, but it isn't saved yet."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Empty layout"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "active"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Can't change status template"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Disable this template"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Enable this template"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Import template from"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Language"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid ""
 "All your current configurations for this template will be lost after you "
 "import data."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "From template"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Email preview"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "No subject"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Are you sure you want to reset this template?"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Template reset successfully."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Reset failed"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Reset"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "All changes you made won't be saved."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Reset template"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Save success"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Save failed"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Saving..."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Save"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1 src/Functions.php:384
+msgid "Recipient"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Send Email"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Email address for testing"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Thank you for using YayMail."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid ""
 "We need your support to keep updating and improving the plugin. Please, "
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "help us by leaving a good review"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid " :) Thanks!"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "To send emails to inbox, we recommend:"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Send test email"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Undo"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Redo"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Template Not Found"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Get recent editing revisions"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Custom fields & meta support"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Save custom blocks for reuse"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#, javascript-format
+msgid "%s plugin integrations"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "30+ third-party"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Multilingual support"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Fast updates"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "VIP live chat support"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "YayMail Pro!"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Models/TemplateModel.php:182
+msgid "Pro"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Get all features when you upgrade to YayMail Pro."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Get YayMail Pro"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Smart move — you’re going to love what’s next."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Save template?"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "No, don't save"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Do you want to save before moving to another template?"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Not available in this template"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Are you sure you want to permanently delete pattern "
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Pattern deleted"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Failed to delete pattern"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Yes, sure!"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Delete Pattern"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Search patterns"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "No pattern found."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "PATTERNS"
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "This feature available in PRO version."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "LIBRARY"
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Pattern"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Patterns"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Library"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "DRAG TO USE"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "CSS classes"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Eg: classname-a classname-b"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "No element found."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Search elements"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Basic"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "General"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "WooCommerce"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Blocks"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 #: src/TemplatePatterns/SectionTemplates/Header.php:18
 msgid "Header"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/Footer.php:31
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/Footer.php:27
 #: src/TemplatePatterns/SectionTemplates/Footer.php:18
 msgid "Footer"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 #: src/TemplatePatterns/SectionTemplates/Banner.php:18
 msgid "Banner"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Are you sure you want to clear all revisions?"
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "saved by"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Clear all revisions"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "All revisions will be deleted."
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "You have no revision"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Elements/ColumnLayout.php:52 src/Elements/Divider.php:75
-#: src/Elements/ElementsHelper.php:171 src/Elements/FeaturedProducts.php:58
-#: src/Elements/Footer.php:52 src/Elements/Heading.php:63
-#: src/Elements/Hook.php:47 src/Elements/Image.php:66
-#: src/Elements/ImageBox.php:33 src/Elements/ImageList.php:39
-#: src/Elements/OrderDetails.php:45 src/Elements/OrderDetailsDownload.php:48
-#: src/Elements/ShippingAddress.php:44 src/Elements/SimpleOffer.php:59
-#: src/Elements/SingleBanner.php:57 src/Elements/SocialIcon.php:51
-#: src/Elements/Space.php:32 src/Elements/Text.php:46
-#: src/Elements/TextList.php:32 src/Elements/Title.php:79
-#: src/Elements/Video.php:45
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:46
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Elements/TrackingInformationElement.php:50
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:47
-#: src/Integrations/WcAdminCustomOrderFieldBySkyverge/Elements/AdminCustomOrderFields.php:47
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:48
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:49
-#: src/Integrations/WooCommerceSoftwareAddon/Elements/SoftwareLicenseElement.php:49
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Elements/TrackingInformationElement.php:47
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Elements/YITHTrackingInformationElement.php:55
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Elements/ColumnLayout.php:52 src/Elements/Divider.php:77
+#: src/Elements/ElementsHelper.php:171 src/Elements/Footer.php:48
+#: src/Elements/Heading.php:72 src/Elements/Hook.php:47
+#: src/Elements/Image.php:66 src/Elements/ImageBox.php:39
+#: src/Elements/ImageList.php:41 src/Elements/OrderDetails.php:52
+#: src/Elements/OrderDetailsDownload.php:55 src/Elements/ShippingAddress.php:46
+#: src/Elements/SocialIcon.php:53 src/Elements/Space.php:40
+#: src/Elements/Text.php:46 src/Elements/TextList.php:45
+#: src/Elements/Title.php:81 src/Elements/Video.php:45
 msgid "Background color"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Content background color"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Text link color"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "This will make a change to all elements in this email"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Save settings"
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Save template"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Direction"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Container width (px)"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Email width must be 480px (min) - 900px (max)"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Display payment instruction and details"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Show product image"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Product image position"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Product image height (px)"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Image height must be 30px (min) - 300px (max)"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Image width (px)"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Product image width must be 30px (min) - 300px (max)"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Show product SKU"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Show product description"
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Show product short description"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Show product Hyperlinks"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Show product item cost"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Show product regular price"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Use custom CSS"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Change email subject and form name"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Click here"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Save global settings"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "This will affect the current email settings"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Elements"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Patterns"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Settings"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Actions"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Revisions"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "WooCommerce Email Customizer"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+#: src/Engine/Backend/SettingsPage.php:211
+msgid "Go Pro"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Back to dashboard"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "View History"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Search template name"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Loading data"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Template"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "are"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "reseted"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Activate Templates"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Deactivate Templates"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Reset Templates"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Template Name"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/main.php:79
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/sample.php:59
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/sample.php:60
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Status"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Recipient(s)"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Source"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Last Updated"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Email Templates"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Welcome to Global Header and Footer Guidance"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid ""
+"Design once, apply everywhere! Save time by setting up a global header and "
+"footer for all your emails."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Let's start"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Open the Editor"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid ""
+"Here, you can access the Global Header & Footer editor. You'll see two "
+"sections: one for the header and one for the footer."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "View footer section"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Footer section"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Here, you can add your footer content."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Next"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Design Your Header"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid ""
+"Drag elements from the left panel into the ‘Header’ area. Add logos, menus, "
+"text, or social icons."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Design Your Footer"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid ""
+"Now do the same for the Footer area. Include company info, phone number, "
+"shop links, or anything else you need."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Save and Apply Globally"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid ""
+"Click ‘Save’ to keep your designs as the ‘Global Header’ and ‘Global "
+"Footer’. You can then add them to any email template later."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "You're All Set!"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid ""
+"Your Global Header and Footer are saved! To use them, just open any email "
+"template and drag them in from the Elements panel."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Got it!"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "General Features"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "11 standard WooCommerce emails"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Full customizability"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Global styling options"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Live preview editor"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Send test emails"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Export/Import templates"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Shortcode for WooCommerce data"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Predesigned patterns"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Developer API"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Advanced blocks with dynamic data"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Full edit history"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Fast updates & bug fixes"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "1-1 live chat VIP support"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Third-Party Plugins Supported"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Shipment & order tracking"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Custom order status"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Checkout field editor"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Payments & payment gateways"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Custom shipping plugins"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Multi-language & translation plugins"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Multi Language"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "WPML"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Polylang"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "TranslatePress"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "GTranslate"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Weglot"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Loco Translate"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Compare Plans & Features"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Explore our clear comparison table to see the features of each plan."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "YayMail Free"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "YayMail Pro"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Your current"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Upgrade to YayMail Pro"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid ""
+"Consider upgrading to YayMail Pro? It would be the best move you can make "
+"for your ecommerce store."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "OOPS! PAGE NOT FOUND"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "WE ARE SORRY, BUT THE PAGE YOU REQUESTED WAS NOT FOUND"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Go to dashboard"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Invalid email address"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Leave this empty to preview email only"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "No results found"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Select Email"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Search Order"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Email To"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "No data to preview"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Send & Preview"
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Preview Email"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Please choose order to preview email"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Migration Required to Continue"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Yes, sure!"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Migration failed! Please contact our support for help!"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Migration succeeded!"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Reset succeeded!"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Reset failed!"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Proceed to migrate YayMail's data to the latest version, are you sure?"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Proceed to reset YayMail's data, are you sure?"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Migration"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid ""
 "Transfers data between different YayMail versions, ensuring compatibility "
 "whether you're upgrading to the latest release or reverting to a previous "
 "version"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid ""
-"Resetting to a previous version of a feature or software update allows you "
-"to return to a familiar interface or functionality that was present before "
-"recent changes were made"
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Reverting to an earlier version of YayMail's data."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "No backup available"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Patched in"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Migrate"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid ""
-"Migrating version data into a new version feature involves transferring "
-"existing information, settings, and configurations seamlessly from the "
-"previous iteration to the updated version"
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Migrating version data to the updated one."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Migration is needed for: "
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "No migration needed"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Export templates"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Choose templates you want to export."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Import/Export"
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Select templates"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid ""
-"Simplifies managing your YayMail templates. Easily import existing templates "
-"from compatible formats or export them for backup or sharing purposes. "
-"Streamline your workflow by seamlessly transferring templates between "
-"accounts or applications, ensuring consistency and efficiency in your "
-"communications."
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "All templates"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Export"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid "Import/Export"
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
+msgid ""
+"Easily manage YayMail templates by importing from compatible formats or "
+"exporting for backup or sharing."
+msgstr ""
+
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid ""
 "Allows you to securely download all created YayMail templates in a "
 "convenient file format"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Export Templates"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Import Templates"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Empowers you to seamlessly upload single or multiple YayMail templates"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Choose File"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Import"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "No file chosen."
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Change priority successfully."
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Change priority failed"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "ON"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "OFF"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
+#: assets/dist/yaymail/yaymail-main.tsx-637c4088.js:1
 msgid "Import/Export Templates"
 msgstr ""
 
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Translate Integration Priority"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Global Header & Footer"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Preview Email"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Documentation"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-#: src/Engine/Backend/SettingsPage.php:206
-msgid "Support"
-msgstr ""
-
-#: assets/dist/yaymail/yaymail-main.tsx-4fbbfd61.js:1
-msgid "Email Customizer"
-msgstr ""
-
 #: src/Abstracts/BaseController.php:28 src/Ajax.php:91 src/Ajax.php:122
-#: src/Ajax.php:181 src/Ajax.php:234 src/Ajax.php:270 src/Ajax.php:315
-#: src/Ajax.php:338 src/Ajax.php:392 src/Ajax.php:496 src/Ajax.php:535
-#: src/Ajax.php:578 src/Notices/Ajax.php:25
+#: src/Ajax.php:183 src/Ajax.php:256 src/Ajax.php:296 src/Ajax.php:341
+#: src/Ajax.php:397 src/Ajax.php:538 src/Ajax.php:577 src/Ajax.php:617
+#: src/Ajax.php:639 src/Ajax.php:661 src/Notices/Ajax.php:26
+#: src/Notices/Ajax.php:42
 msgid "Verify nonce failed"
 msgstr ""
 
-#: src/Ajax.php:130 src/Ajax.php:188
+#: src/Ajax.php:130 src/Ajax.php:191
 msgid "Can't find template"
 msgstr ""
 
-#: src/Ajax.php:134 src/Ajax.php:192
+#: src/Ajax.php:134 src/Ajax.php:195
 msgid "Can't find order"
 msgstr ""
 
@@ -1380,141 +1390,135 @@ msgstr ""
 msgid "Can't find email"
 msgstr ""
 
-#: src/Ajax.php:162
+#: src/Ajax.php:160
 msgid "Email Test"
 msgstr ""
 
-#: src/Ajax.php:249
+#: src/Ajax.php:164 src/Ajax.php:274
+msgid "Can't send email"
+msgstr ""
+
+#: src/Ajax.php:271
 msgid "Email Preview"
 msgstr ""
 
-#: src/Ajax.php:255
+#: src/Ajax.php:280
 msgid "No email content found"
 msgstr ""
 
-#: src/Ajax.php:256
+#: src/Ajax.php:281
 msgid "No template found"
 msgstr ""
 
-#: src/Ajax.php:377
+#: src/Ajax.php:282
+msgid "No subject found"
+msgstr ""
+
+#: src/Ajax.php:382
 msgid "Export successfully"
 msgstr ""
 
-#: src/Ajax.php:398
+#: src/Ajax.php:403
 msgid "Imported successfully "
 msgstr ""
 
-#: src/Ajax.php:398
+#: src/Ajax.php:403
 msgid " templates"
 msgstr ""
 
-#: src/Ajax.php:400
+#: src/Ajax.php:405
 msgid "Import failed."
 msgstr ""
 
-#: src/Ajax.php:403
+#: src/Ajax.php:408
 msgid "Not found import files."
 msgstr ""
 
-#: src/Ajax.php:501
+#: src/Ajax.php:543
 msgid "Attributes empty"
 msgstr ""
 
-#: src/Elements/BillingAddress.php:24 src/Elements/BillingAddress.php:64
-#: src/Elements/BillingShippingAddress.php:67
-#: src/Migrations/Versions/Ver_4_0_0.php:828
+#: src/Elements/BillingAddress.php:30 src/Elements/BillingAddress.php:70
+#: src/Elements/BillingShippingAddress.php:90
+#: src/Migrations/Versions/Ver_4_0_0.php:597
 #: src/Shortcodes/BillingShortcodes.php:19
 #: templates/shortcodes/billing-shipping-address/main.php:53
 #: templates/shortcodes/billing-shipping-address/sample.php:39
 msgid "Billing Address"
 msgstr ""
 
-#: src/Elements/BillingAddress.php:36
-#: src/Elements/BillingShippingAddress.php:41 src/Elements/OrderDetails.php:52
-#: src/Elements/OrderDetailsDownload.php:55 src/Elements/ShippingAddress.php:51
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:53
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Elements/TrackingInformationElement.php:57
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:54
-#: src/Integrations/WcAdminCustomOrderFieldBySkyverge/Elements/AdminCustomOrderFields.php:54
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:55
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:56
-#: src/Integrations/WooCommerceSoftwareAddon/Elements/SoftwareLicenseElement.php:56
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Elements/TrackingInformationElement.php:54
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Elements/YITHTrackingInformationElement.php:62
+#: src/Elements/BillingAddress.php:42
+#: src/Elements/BillingShippingAddress.php:64 src/Elements/OrderDetails.php:59
+#: src/Elements/OrderDetailsDownload.php:62 src/Elements/ShippingAddress.php:53
 msgid "Title color"
 msgstr ""
 
-#: src/Elements/BillingAddress.php:45
-#: src/Elements/BillingShippingAddress.php:49 src/Elements/Button.php:76
-#: src/Elements/FeaturedProducts.php:65 src/Elements/Footer.php:59
-#: src/Elements/Heading.php:70 src/Elements/Hook.php:54
-#: src/Elements/ImageBox.php:40 src/Elements/OrderDetails.php:59
-#: src/Elements/OrderDetailsDownload.php:62 src/Elements/ShippingAddress.php:58
-#: src/Elements/SimpleOffer.php:66 src/Elements/Text.php:53
-#: src/Elements/TextList.php:39 src/Elements/Title.php:86
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:60
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Elements/TrackingInformationElement.php:64
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:61
-#: src/Integrations/WcAdminCustomOrderFieldBySkyverge/Elements/AdminCustomOrderFields.php:61
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:69
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:63
-#: src/Integrations/WooCommerceSoftwareAddon/Elements/SoftwareLicenseElement.php:63
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Elements/TrackingInformationElement.php:61
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Elements/YITHTrackingInformationElement.php:69
+#: src/Elements/BillingAddress.php:51
+#: src/Elements/BillingShippingAddress.php:72 src/Elements/Button.php:84
+#: src/Elements/Footer.php:55 src/Elements/Heading.php:79
+#: src/Elements/Hook.php:54 src/Elements/ImageBox.php:46
+#: src/Elements/OrderDetails.php:66 src/Elements/OrderDetailsDownload.php:69
+#: src/Elements/ShippingAddress.php:60 src/Elements/Text.php:53
+#: src/Elements/TextList.php:52 src/Elements/Title.php:88
 msgid "Text color"
 msgstr ""
 
-#: src/Elements/BillingAddress.php:54
-#: src/Elements/BillingShippingAddress.php:57 src/Elements/OrderDetails.php:66
-#: src/Elements/OrderDetailsDownload.php:69 src/Elements/ShippingAddress.php:65
-#: src/Elements/SimpleOffer.php:118
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:67
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:68
-#: src/Integrations/WcAdminCustomOrderFieldBySkyverge/Elements/AdminCustomOrderFields.php:68
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:62
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:70
+#: src/Elements/BillingAddress.php:60
+#: src/Elements/BillingShippingAddress.php:80 src/Elements/OrderDetails.php:73
+#: src/Elements/OrderDetailsDownload.php:76 src/Elements/ShippingAddress.php:67
 msgid "Border color"
 msgstr ""
 
-#: src/Elements/BillingAddress.php:63
-#: src/Elements/BillingShippingAddress.php:66
+#: src/Elements/BillingAddress.php:69
+#: src/Elements/BillingShippingAddress.php:89
 msgid "Billing title"
 msgstr ""
 
-#: src/Elements/BillingShippingAddress.php:24
+#: src/Elements/BillingShippingAddress.php:47
 #: src/Shortcodes/BillingShortcodes.php:91
 msgid "Billing Shipping Address"
 msgstr ""
 
-#: src/Elements/BillingShippingAddress.php:74 src/Elements/OrderDetails.php:157
-#: src/Elements/ShippingAddress.php:79
+#: src/Elements/BillingShippingAddress.php:98 src/Elements/OrderDetails.php:164
+#: src/Elements/ShippingAddress.php:81
 msgid "Shipping title"
 msgstr ""
 
-#: src/Elements/BillingShippingAddress.php:75
-#: src/Elements/ShippingAddress.php:23 src/Elements/ShippingAddress.php:80
-#: src/Migrations/Versions/Ver_4_0_0.php:829
+#: src/Elements/BillingShippingAddress.php:99
+#: src/Elements/ShippingAddress.php:25 src/Elements/ShippingAddress.php:82
+#: src/Migrations/Versions/Ver_4_0_0.php:598
 #: src/Shortcodes/ShippingShortcodes.php:19
 #: templates/shortcodes/billing-shipping-address/main.php:80
 #: templates/shortcodes/billing-shipping-address/sample.php:53
 msgid "Shipping Address"
 msgstr ""
 
-#: src/Elements/BillingShippingAddress.php:81
+#: src/Elements/BillingShippingAddress.php:106
 msgid "Shipping Content"
 msgstr ""
 
-#: src/Elements/BillingShippingAddress.php:88
+#: src/Elements/BillingShippingAddress.php:113
 msgid "Billing Content"
 msgstr ""
 
-#: src/Elements/Button.php:68 src/Elements/SimpleOffer.php:147
-#: src/Elements/SingleBanner.php:129
+#: src/Elements/Button.php:26
+msgid "Button"
+msgstr ""
+
+#: src/Elements/Button.php:37
+msgid "Container padding"
+msgstr ""
+
+#: src/Elements/Button.php:76
 msgid "Button background color"
 msgstr ""
 
 #: src/Elements/ColumnLayout.php:36
 msgid "Column width (%)"
+msgstr ""
+
+#: src/Elements/ColumnLayout.php:58
+msgid "Background image"
 msgstr ""
 
 #: src/Elements/ColumnLayout.php:71
@@ -1541,15 +1545,15 @@ msgstr ""
 msgid "Four Columns"
 msgstr ""
 
-#: src/Elements/Divider.php:24
+#: src/Elements/Divider.php:26
 msgid "Divider"
 msgstr ""
 
-#: src/Elements/Divider.php:82
+#: src/Elements/Divider.php:84
 msgid "Line color"
 msgstr ""
 
-#: src/Elements/Divider.php:89
+#: src/Elements/Divider.php:91
 msgid "Line type"
 msgstr ""
 
@@ -1557,93 +1561,41 @@ msgstr ""
 msgid "Featured Products"
 msgstr ""
 
-#: src/Elements/FeaturedProducts.php:79 src/Elements/SimpleOffer.php:161
-#: src/Elements/SingleBanner.php:143
-msgid "Showing items"
-msgstr ""
-
-#: src/Elements/FeaturedProducts.php:95
-msgid "Product price color"
-msgstr ""
-
-#: src/Elements/FeaturedProducts.php:102
-msgid "Product original price color"
-msgstr ""
-
-#: src/Elements/FeaturedProducts.php:109
-msgid "Buy button text"
-msgstr ""
-
-#: src/Elements/FeaturedProducts.php:116
-msgid "Buy button background color"
-msgstr ""
-
-#: src/Elements/FeaturedProducts.php:123
-msgid "Buy button text color"
-msgstr ""
-
-#: src/Elements/FeaturedProducts.php:130
-msgid "Number of products per row"
-msgstr ""
-
-#: src/Elements/FeaturedProducts.php:148
-msgid "Sorted by"
-msgstr ""
-
-#: src/Elements/FeaturedProducts.php:165
-msgid "Ascending Price"
-msgstr ""
-
-#: src/Elements/FeaturedProducts.php:169
-msgid "Descending Price"
-msgstr ""
-
-#: src/Elements/FeaturedProducts.php:183
-msgid "Number of featured products"
-msgstr ""
-
-#: src/Elements/FeaturedProducts.php:190
-msgid "Product categories"
-msgstr ""
-
-#: src/Elements/FeaturedProducts.php:197
-msgid "Product tags"
-msgstr ""
-
-#: src/Elements/Footer.php:80 src/Elements/Heading.php:91
+#: src/Elements/Footer.php:76 src/Elements/Heading.php:100
 msgid "Hide text"
 msgstr ""
 
-#: src/Elements/GlobalFooter.php:24
+#: src/Elements/GlobalFooter.php:27
 msgid "Global Footer"
 msgstr ""
 
-#: src/Elements/GlobalFooter.php:33
+#: src/Elements/GlobalFooter.php:37
 msgid "Global footer"
 msgstr ""
 
-#: src/Elements/GlobalHeader.php:25 src/Elements/Heading.php:33
-#: src/Elements/Heading.php:42 src/Emails/GlobalHeaderFooter.php:33
+#: src/Elements/GlobalHeader.php:28 src/Elements/Heading.php:33
+#: src/Elements/Heading.php:44 src/Elements/Heading.php:53
+#: src/Emails/GlobalHeaderFooter.php:33
 msgid "Email Heading"
 msgstr ""
 
-#: src/Elements/GlobalHeader.php:32
+#: src/Elements/GlobalHeader.php:35
 msgid "Global Header"
 msgstr ""
 
-#: src/Elements/GlobalHeader.php:48
+#: src/Elements/GlobalHeader.php:52
 msgid "Global header"
 msgstr ""
 
-#: src/Elements/HTML.php:23
+#: src/Elements/HTML.php:39
 msgid "HTML"
 msgstr ""
 
-#: src/Elements/HTML.php:32
+#: src/Elements/HTML.php:48
 msgid "HTML code"
 msgstr ""
 
-#: src/Elements/HTML.php:35
+#: src/Elements/HTML.php:51
 msgid "Import HTML code"
 msgstr ""
 
@@ -1651,240 +1603,209 @@ msgstr ""
 msgid "Hook shortcode"
 msgstr ""
 
-#: src/Elements/ImageBox.php:24
+#: src/Elements/Image.php:24
+msgid "Image"
+msgstr ""
+
+#: src/Elements/ImageBox.php:30
 msgid "Image Box"
 msgstr ""
 
-#: src/Elements/ImageList.php:30
+#: src/Elements/ImageList.php:32
 msgid "Image List"
 msgstr ""
 
-#: src/Elements/ImageList.php:46 src/Elements/TextList.php:46
+#: src/Elements/ImageList.php:48 src/Elements/TextList.php:59
 msgid "Number of columns:"
 msgstr ""
 
-#: src/Elements/Logo.php:23
+#: src/Elements/Logo.php:27
 msgid "Logo"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:24
-#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:165
+#: src/Elements/OrderDetails.php:31
+#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:177
 msgid "Order Details"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:87
+#: src/Elements/OrderDetails.php:94
 msgid "Payment instructions"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:94
+#: src/Elements/OrderDetails.php:101
 msgid "Order item title"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:101 src/Elements/OrderDetailsDownload.php:97
+#: src/Elements/OrderDetails.php:108 src/Elements/OrderDetailsDownload.php:104
 msgid "Product title"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:102 src/Elements/OrderDetailsDownload.php:98
-#: src/Migrations/Versions/Ver_4_0_0.php:801
+#: src/Elements/OrderDetails.php:109 src/Elements/OrderDetailsDownload.php:105
+#: src/Migrations/Versions/Ver_4_0_0.php:570
 #: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:46
 msgid "Product"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:108
+#: src/Elements/OrderDetails.php:115
 msgid "Cost title"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:109 src/Migrations/Versions/Ver_4_0_0.php:802
+#: src/Elements/OrderDetails.php:116 src/Migrations/Versions/Ver_4_0_0.php:571
 #: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:47
 msgid "Cost"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:115
+#: src/Elements/OrderDetails.php:122
 msgid "Quantity title"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:116 src/Migrations/Versions/Ver_4_0_0.php:803
+#: src/Elements/OrderDetails.php:123 src/Migrations/Versions/Ver_4_0_0.php:572
 #: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:48
 msgid "Quantity"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:122
+#: src/Elements/OrderDetails.php:129
 msgid "Price title"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:129
+#: src/Elements/OrderDetails.php:130 src/Migrations/Versions/Ver_4_0_0.php:573
+#: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:49
+msgid "Price"
+msgstr ""
+
+#: src/Elements/OrderDetails.php:136
 msgid "Subtotal title"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:130 src/Migrations/Versions/Ver_4_0_0.php:805
+#: src/Elements/OrderDetails.php:137 src/Migrations/Versions/Ver_4_0_0.php:574
 #: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:50
 msgid "Subtotal:"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:136
+#: src/Elements/OrderDetails.php:143
 msgid "Payment method title"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:137 src/Migrations/Versions/Ver_4_0_0.php:806
+#: src/Elements/OrderDetails.php:144 src/Migrations/Versions/Ver_4_0_0.php:575
 #: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:53
 msgid "Payment method:"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:143
+#: src/Elements/OrderDetails.php:150
 msgid "Total title"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:144 src/Migrations/Versions/Ver_4_0_0.php:807
+#: src/Elements/OrderDetails.php:151 src/Migrations/Versions/Ver_4_0_0.php:576
 #: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:54
 msgid "Total:"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:150
+#: src/Elements/OrderDetails.php:157
 msgid "Note title"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:151 src/Migrations/Versions/Ver_4_0_0.php:808
+#: src/Elements/OrderDetails.php:158 src/Migrations/Versions/Ver_4_0_0.php:577
 #: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:55
 msgid "Note:"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:158 src/Migrations/Versions/Ver_4_0_0.php:809
+#: src/Elements/OrderDetails.php:165 src/Migrations/Versions/Ver_4_0_0.php:578
 #: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:51
 msgid "Shipping:"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:164
+#: src/Elements/OrderDetails.php:171
 msgid "Discount title"
 msgstr ""
 
-#: src/Elements/OrderDetails.php:165 src/Migrations/Versions/Ver_4_0_0.php:810
+#: src/Elements/OrderDetails.php:172 src/Migrations/Versions/Ver_4_0_0.php:579
 #: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:52
 msgid "Discount:"
 msgstr ""
 
-#: src/Elements/OrderDetailsDownload.php:27
+#: src/Elements/OrderDetailsDownload.php:34
 msgid "Order Details Download"
 msgstr ""
 
-#: src/Elements/OrderDetailsDownload.php:90
+#: src/Elements/OrderDetailsDownload.php:97
 msgid "Header title"
 msgstr ""
 
-#: src/Elements/OrderDetailsDownload.php:91
-#: src/Migrations/Versions/Ver_4_0_0.php:836
-msgid "Downloads"
-msgstr ""
-
-#: src/Elements/OrderDetailsDownload.php:104
+#: src/Elements/OrderDetailsDownload.php:111
 msgid "Expires title"
 msgstr ""
 
-#: src/Elements/OrderDetailsDownload.php:105
-#: src/Migrations/Versions/Ver_4_0_0.php:838
-#: templates/shortcodes/order-details-download-product/main.php:16
-#: templates/shortcodes/order-details-download-product/sample.php:15
+#: src/Elements/OrderDetailsDownload.php:112
+#: src/Migrations/Versions/Ver_4_0_0.php:607
+#: templates/shortcodes/order-details-download-product/main.php:19
+#: templates/shortcodes/order-details-download-product/sample.php:18
 msgid "Expires"
 msgstr ""
 
-#: src/Elements/OrderDetailsDownload.php:111
+#: src/Elements/OrderDetailsDownload.php:118
 msgid "Download title"
 msgstr ""
 
-#: src/Elements/OrderDetailsDownload.php:112
-#: src/Migrations/Versions/Ver_4_0_0.php:839
-#: templates/shortcodes/order-details-download-product/main.php:17
-#: templates/shortcodes/order-details-download-product/sample.php:16
+#: src/Elements/OrderDetailsDownload.php:119
+#: src/Migrations/Versions/Ver_4_0_0.php:608
+#: templates/shortcodes/order-details-download-product/main.php:20
+#: templates/shortcodes/order-details-download-product/sample.php:19
 msgid "Download"
 msgstr ""
 
-#: src/Elements/SimpleOffer.php:38
+#: src/Elements/SimpleOffer.php:26
 msgid "Simple Offer"
 msgstr ""
 
-#: src/Elements/SimpleOffer.php:80
-msgid "Border width"
-msgstr ""
-
-#: src/Elements/SimpleOffer.php:91
-msgid "Border style"
-msgstr ""
-
-#: src/Elements/SimpleOffer.php:134 src/Elements/SingleBanner.php:109
-#: templates/elements/simple-offer.php:77
-#: templates/elements/single-banner.php:115
-msgid "ORDER NOW"
-msgstr ""
-
-#: src/Elements/SimpleOffer.php:140 src/Elements/SingleBanner.php:115
-msgid "Button URL"
-msgstr ""
-
-#: src/Elements/SimpleOffer.php:154 src/Elements/SingleBanner.php:136
-msgid "Button text color"
-msgstr ""
-
-#: src/Elements/SingleBanner.php:36
+#: src/Elements/SingleBanner.php:32
 msgid "Single Banner"
-msgstr ""
-
-#: src/Elements/SingleBanner.php:80
-msgid "Content width"
-msgstr ""
-
-#: src/Elements/SingleBanner.php:87
-msgid "Content align"
-msgstr ""
-
-#: src/Elements/SingleBanner.php:122
-msgid "Button align"
 msgstr ""
 
 #: src/Elements/SkeletonDivider.php:23
 msgid "Skeleton Divider"
 msgstr ""
 
-#: src/Elements/SocialIcon.php:23
+#: src/Elements/SocialIcon.php:25
 msgid "Social Icon"
 msgstr ""
 
-#: src/Elements/SocialIcon.php:69
+#: src/Elements/SocialIcon.php:71
 msgid "Icon spacing"
 msgstr ""
 
-#: src/Elements/SocialIcon.php:80
+#: src/Elements/SocialIcon.php:82
 msgid "Styles theme"
 msgstr ""
 
-#: src/Elements/SocialIcon.php:87
+#: src/Elements/SocialIcon.php:89
 msgid "Socials"
 msgstr ""
 
-#: src/Elements/Space.php:23
+#: src/Elements/Space.php:31
 msgid "Space"
 msgstr ""
 
-#: src/Elements/TextList.php:23
+#: src/Elements/TextList.php:36
 msgid "Text List"
 msgstr ""
 
-#: src/Elements/Title.php:23 src/Elements/Title.php:39
-#: src/Integrations/WcAdminCustomOrderFieldBySkyverge/Elements/AdminCustomOrderFields.php:82
+#: src/Elements/Title.php:25 src/Elements/Title.php:41
 msgid "Title"
 msgstr ""
 
-#: src/Elements/Title.php:40
+#: src/Elements/Title.php:42
 msgid "Enter your title here"
 msgstr ""
 
-#: src/Elements/Title.php:46
+#: src/Elements/Title.php:48
 msgid "Title size"
 msgstr ""
 
-#: src/Elements/Title.php:53 src/Elements/Title.php:54
+#: src/Elements/Title.php:55 src/Elements/Title.php:56
 msgid "Subtitle"
 msgstr ""
 
-#: src/Elements/Title.php:60
+#: src/Elements/Title.php:62
 msgid "Subtitle size"
 msgstr ""
 
@@ -1904,38 +1825,24 @@ msgstr ""
 msgid "Change video"
 msgstr ""
 
-#: src/Emails/CancelledOrder.php:22 src/Emails/CustomerCompletedOrder.php:22
-#: src/Emails/CustomerInvoice.php:22 src/Emails/CustomerNewAccount.php:24
-#: src/Emails/CustomerNote.php:22 src/Emails/CustomerOnHoldOrder.php:23
-#: src/Emails/CustomerProcessingOrder.php:22
-#: src/Emails/CustomerRefundedOrder.php:22
-#: src/Emails/CustomerResetPassword.php:24 src/Emails/FailedOrder.php:22
-#: src/Emails/NewOrder.php:22
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Emails/CustomerPartialShippedOrder.php:28
-#: src/Integrations/CustomOrderStatusForWcByNuggethon/Emails/CustomOrderStatusForWcByNuggethon.php:27
-#: src/Integrations/CustomOrderStatusManagerByBrightPlugins/Emails/CustomOrderStatusEmail.php:29
-#: src/Integrations/WooCommerceOrderStatusManagerBySkyVer/Emails/WooCommerceOrderStatusManagerBySkyVer.php:28
-msgid "Admin"
-msgstr ""
-
-#: src/Emails/CancelledOrder.php:28
+#: src/Emails/CancelledOrder.php:32
 msgid "Order Cancelled: #{order_number}"
 msgstr ""
 
 #. translators: %1$s: order id, %2$s: customer name.
-#: src/Emails/CancelledOrder.php:31
+#: src/Emails/CancelledOrder.php:35
 #, php-format
 msgid ""
 "Notification to let you know &mdash; order #%1$s belonging to %2$s has been "
 "cancelled:"
 msgstr ""
 
-#: src/Emails/CancelledOrder.php:32 src/Emails/CustomerNote.php:33
-#: src/Emails/CustomerResetPassword.php:37
+#: src/Emails/CancelledOrder.php:36 src/Emails/CustomerNote.php:37
+#: src/Emails/CustomerResetPassword.php:42
 msgid "Thanks for reading."
 msgstr ""
 
-#: src/Emails/CustomerCompletedOrder.php:28
+#: src/Emails/CustomerCompletedOrder.php:32
 msgid "Thanks for shopping with us"
 msgstr ""
 
@@ -1943,70 +1850,68 @@ msgstr ""
 #. translators: customer username.
 #. translators: customer name.
 #. translators: customer username.
-#. translators: customer name.
-#: src/Emails/CustomerCompletedOrder.php:30 src/Emails/CustomerInvoice.php:31
-#: src/Emails/CustomerNewAccount.php:33 src/Emails/CustomerNote.php:30
-#: src/Emails/CustomerOnHoldOrder.php:31
-#: src/Emails/CustomerProcessingOrder.php:30
-#: src/Emails/CustomerRefundedOrder.php:30
-#: src/Emails/CustomerResetPassword.php:32
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Emails/CustomerPartialShippedOrder.php:36
+#: src/Emails/CustomerCompletedOrder.php:34 src/Emails/CustomerInvoice.php:35
+#: src/Emails/CustomerNewAccount.php:37 src/Emails/CustomerNote.php:34
+#: src/Emails/CustomerOnHoldOrder.php:36
+#: src/Emails/CustomerProcessingOrder.php:35
+#: src/Emails/CustomerRefundedOrder.php:36
+#: src/Emails/CustomerResetPassword.php:37
 #, php-format
 msgid "Hi %s,"
 msgstr ""
 
-#: src/Emails/CustomerCompletedOrder.php:31
+#: src/Emails/CustomerCompletedOrder.php:35
 msgid "We have finished processing your order."
 msgstr ""
 
-#: src/Emails/CustomerCompletedOrder.php:32
+#: src/Emails/CustomerCompletedOrder.php:36
 msgid "Thanks for shopping with us."
 msgstr ""
 
-#: src/Emails/CustomerFailedOrder.php:31
+#: src/Emails/CustomerFailedOrder.php:32
 msgid "Sorry, your order was unsuccessful"
 msgstr ""
 
-#: src/Emails/CustomerFailedOrder.php:32
+#: src/Emails/CustomerFailedOrder.php:33
 msgid "Hi [yaymail_billing_first_name]"
 msgstr ""
 
-#: src/Emails/CustomerFailedOrder.php:33
+#: src/Emails/CustomerFailedOrder.php:34
 msgid ""
 "Unfortunately, we couldn't complete your order due to an issue with your "
 "payment method."
 msgstr ""
 
-#: src/Emails/CustomerFailedOrder.php:34
+#: src/Emails/CustomerFailedOrder.php:35
 msgid ""
 "If you'd like to continue with your purchase, please return to "
 "[yaymail_site_name] and try a different method of payment."
 msgstr ""
 
-#: src/Emails/CustomerFailedOrder.php:35
+#: src/Emails/CustomerFailedOrder.php:36
 msgid "Your order details are as follows:"
 msgstr ""
 
-#: src/Emails/CustomerInvoice.php:28
+#: src/Emails/CustomerInvoice.php:32
 msgid "Details for order: #{order_number}"
 msgstr ""
 
 #. translators: order date.
-#: src/Emails/CustomerInvoice.php:33
+#: src/Emails/CustomerInvoice.php:37
 #, php-format
 msgid "Here are the details of your order placed on  %s,"
 msgstr ""
 
-#: src/Emails/CustomerInvoice.php:34
+#: src/Emails/CustomerInvoice.php:38
 msgid "Thanks for using {site_url}!"
 msgstr ""
 
-#: src/Emails/CustomerNewAccount.php:30
+#: src/Emails/CustomerNewAccount.php:34
 msgid "Welcome to {site_title}"
 msgstr ""
 
 #. translators: %1$s: site name, %2$s: customer username, %3$s: account url .
-#: src/Emails/CustomerNewAccount.php:35
+#: src/Emails/CustomerNewAccount.php:39
 #, php-format
 msgid ""
 "Thanks for creating an account on %1$s. Your username is %2$s. You can "
@@ -2014,100 +1919,99 @@ msgid ""
 "%3$s"
 msgstr ""
 
-#: src/Emails/CustomerNewAccount.php:36
+#: src/Emails/CustomerNewAccount.php:40
 msgid "We look forward to seeing you soon."
 msgstr ""
 
-#: src/Emails/CustomerNote.php:28
+#: src/Emails/CustomerNote.php:32
 msgid "A note has been added to your order"
 msgstr ""
 
-#: src/Emails/CustomerNote.php:31
+#: src/Emails/CustomerNote.php:35
 msgid "The following note has been added to your order:"
 msgstr ""
 
-#: src/Emails/CustomerNote.php:32
+#: src/Emails/CustomerNote.php:36
 msgid "As a reminder, here are your order details:"
 msgstr ""
 
-#: src/Emails/CustomerOnHoldOrder.php:29
+#: src/Emails/CustomerOnHoldOrder.php:34
 msgid "Thank you for your order"
 msgstr ""
 
-#: src/Emails/CustomerOnHoldOrder.php:32
+#: src/Emails/CustomerOnHoldOrder.php:37
 msgid ""
 "Thanks for your order. It's on-hold until we confirm that payment has been "
 "received. In the meantime, here's a reminder of what you ordered:"
 msgstr ""
 
-#: src/Emails/CustomerOnHoldOrder.php:33
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Emails/CustomerPartialShippedOrder.php:38
+#: src/Emails/CustomerOnHoldOrder.php:38
 msgid "We look forward to fulfilling your order soon."
 msgstr ""
 
-#: src/Emails/CustomerProcessingOrder.php:28
+#: src/Emails/CustomerProcessingOrder.php:33
 msgid "Thank you for your order "
 msgstr ""
 
 #. translators: order id.
-#: src/Emails/CustomerProcessingOrder.php:32
+#: src/Emails/CustomerProcessingOrder.php:37
 #, php-format
 msgid ""
 "Just to let you know &mdash; we've received your order #%s,  and it is now "
 "being processed:"
 msgstr ""
 
-#: src/Emails/CustomerProcessingOrder.php:33
+#: src/Emails/CustomerProcessingOrder.php:38
 msgid "Thanks for using [yaymail_site_url]!"
 msgstr ""
 
 #. translators: site name.
-#: src/Emails/CustomerRefundedOrder.php:32
+#: src/Emails/CustomerRefundedOrder.php:38
 #, php-format
 msgid ""
 "Your order on %s has been refunded. There are more details below for your "
 "reference:"
 msgstr ""
 
-#: src/Emails/CustomerRefundedOrder.php:33
+#: src/Emails/CustomerRefundedOrder.php:39
 msgid "We hope to see you again soon."
 msgstr ""
 
-#: src/Emails/CustomerResetPassword.php:30
+#: src/Emails/CustomerResetPassword.php:35
 msgid "Password Reset Request"
 msgstr ""
 
 #. translators: site name.
-#: src/Emails/CustomerResetPassword.php:34
+#: src/Emails/CustomerResetPassword.php:39
 #, php-format
 msgid "Someone has requested a new password for the following account on %s:,"
 msgstr ""
 
-#: src/Emails/CustomerResetPassword.php:35
+#: src/Emails/CustomerResetPassword.php:40
 msgid ""
 "If you didn't make this request, just ignore this email. If you'd like to "
 "proceed:"
 msgstr ""
 
-#: src/Emails/CustomerResetPassword.php:36
+#: src/Emails/CustomerResetPassword.php:41
 #: src/Shortcodes/CommonShortcodes.php:77
 msgid "Username"
 msgstr ""
 
-#: src/Emails/FailedOrder.php:28
+#: src/Emails/FailedOrder.php:33
 msgid "Order Failed: #{order_number}"
 msgstr ""
 
 #. translators: order_id and customer name.
-#: src/Emails/FailedOrder.php:31
+#: src/Emails/FailedOrder.php:36
 #, php-format
 msgid "Payment for order #%1$s from %2$s has failed. The order was as follows:"
 msgstr ""
 
-#: src/Emails/FailedOrder.php:32
+#: src/Emails/FailedOrder.php:37
 msgid ""
-"Hopefully they'll be back. Read more about <a href=\\\"https://"
-"docs.woocommerce.com/document/managing-orders/\\\">troubleshooting failed "
+"Hopefully they'll be back. Read more about <a href=\\\"https://docs."
+"woocommerce.com/document/managing-orders/\\\">troubleshooting failed "
 "payments</a>."
 msgstr ""
 
@@ -2119,637 +2023,52 @@ msgstr ""
 msgid "Global header footer recipient placeholder"
 msgstr ""
 
-#: src/Emails/NewOrder.php:28
+#: src/Emails/NewOrder.php:33
 msgid "New order"
 msgstr ""
 
 #. translators: customer name.
-#: src/Emails/NewOrder.php:30
+#: src/Emails/NewOrder.php:35
 #, php-format
 msgid "You’ve received the following order from %s:"
 msgstr ""
 
-#: src/Emails/NewOrder.php:31
+#: src/Emails/NewOrder.php:36
 msgid "Congratulations on the sale."
 msgstr ""
 
-#: src/Engine/Backend/SettingsPage.php:53
-#: src/YayCommerceMenu/RegisterMenu.php:148
+#: src/Engine/Backend/SettingsPage.php:54
+#: src/YayCommerceMenu/RegisterMenu.php:172
 msgid "Email Builder Settings"
 msgstr ""
 
-#: src/Engine/Backend/SettingsPage.php:54
-#: src/Integrations/BackInStockNotifier/Shortcodes/BackInStockNotifierShortcodes.php:113
-#: src/Integrations/BackInStockNotifier/Shortcodes/BackInStockNotifierShortcodes.php:240
-#: src/Integrations/BackInStockNotifier/Shortcodes/BackInStockNotifierShortcodes.php:259
-#: src/YayCommerceMenu/RegisterMenu.php:148
+#: src/Engine/Backend/SettingsPage.php:55
+#: src/YayCommerceMenu/RegisterMenu.php:172
 msgid "YayMail"
 msgstr ""
 
-#: src/Engine/Backend/SettingsPage.php:195
+#: src/Engine/Backend/SettingsPage.php:209
 msgid "View WooCommerce Email Builder"
 msgstr ""
 
-#: src/Engine/Backend/SettingsPage.php:195
+#: src/Engine/Backend/SettingsPage.php:209
 msgid "Start Customizing"
 msgstr ""
 
-#: src/Engine/Backend/SettingsPage.php:205
+#: src/Engine/Backend/SettingsPage.php:221
 msgid "Docs"
 msgstr ""
 
-#: src/Engine/Backend/SettingsPage.php:240
+#: src/Engine/Backend/SettingsPage.php:222
+msgid "Support"
+msgstr ""
+
+#: src/Engine/Backend/SettingsPage.php:256
 msgid "Customize with YayMail"
 msgstr ""
 
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:24
-#: src/Integrations/AdvancedLocalPickupByZorem/Shortcodes/AdvancedLocalPickupShortcodes.php:35
-msgid "Advanced Local Pickup Instruction"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:81
-msgid "Pickup information title"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:82
-msgid "Pickup information"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:88
-msgid "Pickup address title"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:89
-#: src/Migrations/Versions/Ver_4_0_0.php:971
-msgid "Pickup Address"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:95
-msgid "Pickup hours title"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Elements/AdvancedLocalPickupInstructionElement.php:96
-#: src/Migrations/Versions/Ver_4_0_0.php:972
-msgid "Pickup Hours"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Shortcodes/AdvancedLocalPickupShortcodes.php:56
-msgid "Sunday"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Shortcodes/AdvancedLocalPickupShortcodes.php:57
-msgid "Monday"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Shortcodes/AdvancedLocalPickupShortcodes.php:58
-msgid "Tuesday"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Shortcodes/AdvancedLocalPickupShortcodes.php:59
-msgid "Wednesday"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Shortcodes/AdvancedLocalPickupShortcodes.php:60
-msgid "Thursday"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Shortcodes/AdvancedLocalPickupShortcodes.php:61
-msgid "Friday"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Shortcodes/AdvancedLocalPickupShortcodes.php:62
-msgid "Saturday"
-msgstr ""
-
-#: src/Integrations/AdvancedLocalPickupByZorem/Templates/Shortcodes/advanced-local-pickup-instruction/main.php:214
-msgid " To "
-msgstr ""
-
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Elements/TrackingInformationElement.php:28
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Elements/TrackingInformationElement.php:79
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Shortcodes/TrackingInformationShortcodes.php:19
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:83
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:26
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:84
-#: src/Integrations/WooCommerceShipmentTracking/Shortcodes/TrackingInformationShortcodes.php:19
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Elements/TrackingInformationElement.php:76
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Elements/YITHTrackingInformationElement.php:84
-#: src/Migrations/Versions/Ver_4_0_0.php:959
-#: src/Migrations/Versions/Ver_4_0_0.php:964
-#: src/Migrations/Versions/Ver_4_0_0.php:967
-msgid "Tracking Information"
-msgstr ""
-
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Elements/TrackingInformationElement.php:78
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:82
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:83
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:84
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Elements/TrackingInformationElement.php:75
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Elements/YITHTrackingInformationElement.php:83
-msgid "Tracking title"
-msgstr ""
-
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Elements/TrackingInformationElement.php:86
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Templates/Shortcodes/tracking-information/main.php:23
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Templates/Shortcodes/tracking-information/sample.php:21
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:90
-#: src/Migrations/Versions/Ver_4_0_0.php:960
-msgid "Track Your Order"
-msgstr ""
-
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Emails/CustomerPartialShippedOrder.php:34
-msgid "Your Order is Partially Shipped"
-msgstr ""
-
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Emails/CustomerPartialShippedOrder.php:37
-msgid "Hi there. we thought you'd like to know that your recent order from "
-msgstr ""
-
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Emails/CustomerPartialShippedOrder.php:37
-msgid " has been partially shipped."
-msgstr ""
-
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Shortcodes/TrackingInformationShortcodes.php:55
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Shortcodes/TrackingInformationShortcodes.php:75
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Shortcodes/TrackingInformationShortcodes.php:106
-#: src/Integrations/WcAdminCustomOrderFieldBySkyverge/Shortcodes/AdminCustomOrderFieldsShortcodes.php:157
-#: src/Integrations/WooCommerceShipmentTracking/Shortcodes/TrackingInformationShortcodes.php:53
-#: src/Integrations/WooCommerceShippingTax/Templates/Shortcodes/tracking-information/main.php:16
-#: src/Integrations/WooCommerceSoftwareAddon/Templates/Shortcodes/license-info/main.php:18
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Shortcodes/TrackingInformationByPluginHiveShortcodes.php:58
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Shortcodes/TrackingInformationByPluginHiveShortcodes.php:96
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Shortcodes/TrackingInformationByPluginHiveShortcodes.php:158
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:112
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:150
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:178
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:274
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:301
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:378
-msgid "No order found"
-msgstr ""
-
-#. translators: %1$s: search number, %2$s: search total trackings
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Templates/Shortcodes/tracking-information-pro-tpi/main.php:74
-#, php-format
-msgid "Shipment %1$s (out of %2$s):"
-msgstr ""
-
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Templates/Shortcodes/tracking-information/main.php:91
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Templates/Shortcodes/tracking-information/sample.php:77
-msgid "Shipped"
-msgstr ""
-
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Templates/Shortcodes/tracking-information/main.php:98
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Templates/Shortcodes/tracking-information/sample.php:84
-msgid "Shipped on"
-msgstr ""
-
-#: src/Integrations/AdvancedShipmentTrackingByZorem/Templates/Shortcodes/tracking-information/main.php:258
-msgid "No tracking found"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Emails/NotifierInstockMail.php:22
-msgid "Notifier Instock Mail"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Emails/NotifierInstockMail.php:36
-msgid "Product [yaymail_notifier_product_name] is back in stock"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Emails/NotifierInstockMail.php:37
-msgid "Hello [yaymail_notifier_subscriber_name],"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Emails/NotifierInstockMail.php:38
-msgid "Thanks for your patience and finally the wait is over! "
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Emails/NotifierInstockMail.php:39
-msgid ""
-"Your Subscribed Product [yaymail_notifier_product_name] is now back in "
-"stock! "
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Emails/NotifierInstockMail.php:40
-msgid ""
-"We only have a limited amount of stock, and this email is not a guarantee "
-"you'll get one, so hurry to be one of the lucky shoppers who do Add this "
-"product [yaymail_notifier_product_name] directly to your cart "
-"[yaymail_notifier_cart_link]"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Emails/NotifierSubscribeMail.php:22
-msgid "Notifier Subscribe Mail"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Emails/NotifierSubscribeMail.php:34
-msgid ""
-"You subscribed to [yaymail_notifier_product_name] at "
-"[yaymail_notifier_shopname]"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Emails/NotifierSubscribeMail.php:35
-msgid "Dear [yaymail_notifier_subscriber_name] ,"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Emails/NotifierSubscribeMail.php:36
-msgid ""
-"Thank you for subscribing to the #[yaymail_notifier_product_name]. We will "
-"email you once product back in stock"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Shortcodes/BackInStockNotifierShortcodes.php:25
-msgid "Notifier Product ID"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Shortcodes/BackInStockNotifierShortcodes.php:31
-msgid "Notifier Product Name"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Shortcodes/BackInStockNotifierShortcodes.php:37
-msgid "Notifier Product Sku"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Shortcodes/BackInStockNotifierShortcodes.php:43
-msgid "Notifier Product Link"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Shortcodes/BackInStockNotifierShortcodes.php:49
-msgid "Notifier Product Image"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Shortcodes/BackInStockNotifierShortcodes.php:55
-msgid "Notifier Shop Name"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Shortcodes/BackInStockNotifierShortcodes.php:61
-msgid "Notifier Cart Link"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Shortcodes/BackInStockNotifierShortcodes.php:67
-msgid "Notifier Subscriber Email"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Shortcodes/BackInStockNotifierShortcodes.php:73
-msgid "Notifier Subscriber Name"
-msgstr ""
-
-#: src/Integrations/BackInStockNotifier/Shortcodes/BackInStockNotifierShortcodes.php:79
-msgid "Notifier Only Product Name"
-msgstr ""
-
-#: src/Integrations/CustomOrderStatusForWcByNuggethon/Emails/CustomOrderStatusForWcByNuggethon.php:45
-msgid "Order status for order [yaymail_order_id] has been changed."
-msgstr ""
-
-#: src/Integrations/CustomOrderStatusForWcByNuggethon/Emails/CustomOrderStatusForWcByNuggethon.php:61
-msgid "Pay with cash upon delivery."
-msgstr ""
-
-#: src/Integrations/CustomOrderStatusManagerByBrightPlugins/Emails/CustomOrderStatusEmail.php:47
-msgid "Order status changed to {order_status}"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Shortcodes/FooEventsShortcodes.php:25
-msgid "FooEvents Ticket Details"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Shortcodes/FooEventsShortcodes.php:174
-msgid "Slot"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Shortcodes/FooEventsShortcodes.php:185
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:68
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:79
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/sample.php:38
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:105
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/main.php:29
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/sample.php:17
-msgid "Date"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:50
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/sample.php:36
-msgid "Ticket Details"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:71
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:85
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:99
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/sample.php:39
-msgid "Start time"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:74
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:88
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:102
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/sample.php:40
-msgid "End time"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:82
-msgid "End date"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:95
-msgid "Day "
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:109
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/sample.php:43
-#: src/Integrations/WooCommerceOrderStatusManagerBySkyVer/Emails/WooCommerceOrderStatusManagerBySkyVer.php:93
-msgid "Email"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:111
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/sample.php:44
-msgid "Telephone"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:114
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/sample.php:45
-msgid "Company"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:117
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/sample.php:46
-msgid "Designation"
-msgstr ""
-
-#. translators:  booking options
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:124
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:130
-#, php-format
-msgid "Booking %s"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:136
-msgid "Row"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/main.php:137
-msgid "Seat"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/sample.php:37
-msgid "Sample Event"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/sample.php:45
-msgid "Sample Company"
-msgstr ""
-
-#: src/Integrations/FooEventsforWooCommerce/Templates/Shortcodes/ticket-details/sample.php:46
-msgid "Manager"
-msgstr ""
-
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:25
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Shortcodes/TrackingInformationShortcodes.php:49
-msgid "TrackingMore Tracking Information"
-msgstr ""
-
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:89
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:91
-msgid "Courier title"
-msgstr ""
-
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:96
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:97
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:98
-msgid "Tracking number title"
-msgstr ""
-
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Elements/TrackingInformationElement.php:97
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:98
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:99
-#: src/Migrations/Versions/Ver_4_0_0.php:961
-#: src/Migrations/Versions/Ver_4_0_0.php:977
-msgid "Tracking number"
-msgstr ""
-
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Shortcodes/TrackingInformationShortcodes.php:35
-msgid "TrackingMore Tracking Number"
-msgstr ""
-
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Shortcodes/TrackingInformationShortcodes.php:42
-msgid "TrackingMore Courier"
-msgstr ""
-
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Shortcodes/TrackingInformationShortcodes.php:80
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Shortcodes/TrackingInformationShortcodes.php:84
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Shortcodes/TrackingInformationShortcodes.php:111
-#: src/Integrations/TrackingMoreOrderTrackingForWc/Shortcodes/TrackingInformationShortcodes.php:115
-msgid "No data"
-msgstr ""
-
-#: src/Integrations/WcAdminCustomOrderFieldBySkyverge/Elements/AdminCustomOrderFields.php:25
-msgid "Admin Custom Order Fields By SkyVerge"
-msgstr ""
-
-#: src/Integrations/WcAdminCustomOrderFieldBySkyverge/Elements/AdminCustomOrderFields.php:83
-msgid "Additional Order Details"
-msgstr ""
-
-#: src/Integrations/WcAdminCustomOrderFieldBySkyverge/Shortcodes/AdminCustomOrderFieldsShortcodes.php:47
-msgid "SkyVerge's WoocCommerce Admin Custom Order Field: "
-msgstr ""
-
-#: src/Integrations/WcAdminCustomOrderFieldBySkyverge/Shortcodes/AdminCustomOrderFieldsShortcodes.php:64
-msgid "WooCommerce Admin Custom Order Field by SkyVerge"
-msgstr ""
-
-#: src/Integrations/WooCommerceOrderStatusManagerBySkyVer/Emails/WooCommerceOrderStatusManagerBySkyVer.php:46
-msgid "Order has been updated"
-msgstr ""
-
-#: src/Integrations/WooCommerceOrderStatusManagerBySkyVer/Emails/WooCommerceOrderStatusManagerBySkyVer.php:62
-msgid "Your order is now [yaymail_order_status]. Order details are as follows:"
-msgstr ""
-
-#: src/Integrations/WooCommerceOrderStatusManagerBySkyVer/Emails/WooCommerceOrderStatusManagerBySkyVer.php:71
-msgid "Customer details"
-msgstr ""
-
-#: src/Integrations/WooCommerceOrderStatusManagerBySkyVer/Emails/WooCommerceOrderStatusManagerBySkyVer.php:105
-msgid "Tel"
-msgstr ""
-
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:90
-msgid "Provider title"
-msgstr ""
-
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:91
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/main.php:27
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/main.php:73
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/sample.php:15
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/sample.php:53
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/sample.php:54
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:92
-#: src/Migrations/Versions/Ver_4_0_0.php:976
-msgid "Provider"
-msgstr ""
-
-#: src/Integrations/WooCommerceShipmentTracking/Elements/TrackingInformationElement.php:104
-msgid "Date title"
-msgstr ""
-
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/main.php:28
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/main.php:76
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/sample.php:16
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/sample.php:56
-msgid "Tracking Number"
-msgstr ""
-
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/main.php:83
-#: src/Integrations/WooCommerceShipmentTracking/Templates/Shortcodes/tracking-information-by-wc-shipment-tracking/sample.php:63
-msgid "Track"
-msgstr ""
-
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:27
-msgid "WC Shipping Tax Shipment Tracking"
-msgstr ""
-
-#: src/Integrations/WooCommerceShippingTax/Elements/ShipmentTrackingElement.php:85
-#: src/Migrations/Versions/Ver_4_0_0.php:975
-msgid "Tracking"
-msgstr ""
-
-#: src/Integrations/WooCommerceShippingTax/Shortcodes/ShipmentTrackingShortcodes.php:25
-msgid "Shipment Tracking Details"
-msgstr ""
-
-#: src/Integrations/WooCommerceShippingTax/Templates/Shortcodes/tracking-information/main.php:22
-#: src/Integrations/WooCommerceShippingTax/Templates/Shortcodes/tracking-information/main.php:65
-msgid "No tracking data"
-msgstr ""
-
-#: src/Integrations/WooCommerceSoftwareAddon/Elements/SoftwareLicenseElement.php:27
-msgid "WC Software License Information"
-msgstr ""
-
-#: src/Integrations/WooCommerceSoftwareAddon/Elements/SoftwareLicenseElement.php:77
-msgid "License title"
-msgstr ""
-
-#: src/Integrations/WooCommerceSoftwareAddon/Elements/SoftwareLicenseElement.php:78
-#: src/Migrations/Versions/Ver_4_0_0.php:980
-msgid "License Keys"
-msgstr ""
-
-#: src/Integrations/WooCommerceSoftwareAddon/Shortcodes/SoftwareLicenseShortcodes.php:25
-msgid "Software License Info"
-msgstr ""
-
-#: src/Integrations/WooCommerceSoftwareAddon/Templates/Shortcodes/license-info/main.php:25
-msgid "No license data"
-msgstr ""
-
-#. translators: Version.
-#: src/Integrations/WooCommerceSoftwareAddon/Templates/Shortcodes/license-info/main.php:53
-#: src/Integrations/WooCommerceSoftwareAddon/Templates/Shortcodes/license-info/sample.php:29
-#, php-format
-msgid "Version %s"
-msgstr ""
-
-#: src/Integrations/WooCommerceSoftwareAddon/Templates/Shortcodes/license-info/main.php:58
-#: src/Integrations/WooCommerceSoftwareAddon/Templates/Shortcodes/license-info/sample.php:34
-msgid "License Email:"
-msgstr ""
-
-#: src/Integrations/WooCommerceSoftwareAddon/Templates/Shortcodes/license-info/main.php:59
-#: src/Integrations/WooCommerceSoftwareAddon/Templates/Shortcodes/license-info/sample.php:35
-msgid "License Key:"
-msgstr ""
-
-#. translators: activations remaining.
-#: src/Integrations/WooCommerceSoftwareAddon/Templates/Shortcodes/license-info/main.php:64
-#, php-format
-msgid "%d activations remaining"
-msgstr ""
-
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Elements/TrackingInformationElement.php:25
-msgid "Tracking Information by PluginHive"
-msgstr ""
-
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Elements/TrackingInformationElement.php:83
-msgid ""
-"Your order was shipped on "
-"[yaymail_order_tracking_information_by_pluginhive_date] via "
-"[yaymail_order_tracking_information_by_pluginhive_service]. To track "
-"shipment, please follow the link of shipment ID(s) "
-"[yaymail_order_tracking_information_by_pluginhive_tracking_id]"
-msgstr ""
-
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Shortcodes/TrackingInformationByPluginHiveShortcodes.php:20
-msgid "PluginHive's Tracking Information - Shipment Service"
-msgstr ""
-
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Shortcodes/TrackingInformationByPluginHiveShortcodes.php:26
-msgid "PluginHive's Tracking Information - Shipment Date"
-msgstr ""
-
-#: src/Integrations/WoocommerceShipmentTrackingProByPluginHive/Shortcodes/TrackingInformationByPluginHiveShortcodes.php:32
-msgid "PluginHive's Tracking Information - Shipment Tracking ID"
-msgstr ""
-
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Elements/YITHTrackingInformationElement.php:22
-msgid ""
-"Your order has been picked up by "
-"<strong>[yaymail_yith_tracking_carrier_name]</strong> on "
-"<strong>[yaymail_yith_tracking_pickup_date]</strong>"
-msgstr ""
-
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Elements/YITHTrackingInformationElement.php:25
-msgid ""
-"Estimated delivery date: <strong>[yaymail_yith_tracking_estimated_delivery]</"
-"strong>"
-msgstr ""
-
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Elements/YITHTrackingInformationElement.php:28
-msgid "Your tracking code is: <strong>[yaymail_yith_tracking_code]</strong>"
-msgstr ""
-
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Elements/YITHTrackingInformationElement.php:33
-msgid "YITH Tracking Information"
-msgstr ""
-
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:31
-msgid "YITH Tracking Information - Carrier Name"
-msgstr ""
-
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:37
-msgid "YITH Tracking Information - Pickup Date"
-msgstr ""
-
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:43
-msgid "YITH Tracking Information - Track Code"
-msgstr ""
-
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:51
-msgid "YITH Tracking Information - Estimated Delivery"
-msgstr ""
-
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:57
-msgid "YITH Tracking Information - Track Link"
-msgstr ""
-
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:59
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:78
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:132
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:238
-msgid "Live track your order"
-msgstr ""
-
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:67
-msgid "YITH Tracking Information - Track URL"
-msgstr ""
-
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:76
-msgid "YITH Tracking Information - Carrier Link"
-msgstr ""
-
-#: src/Integrations/YITHWooCommerceOrderShipmentTracking/Shortcodes/YITHTrackingInformationShortcodes.php:86
-msgid "YITH Tracking Information - Carrier URL (String)"
+#: src/Functions.php:390
+msgid "Admin"
 msgstr ""
 
 #: src/License/EDD_SL_Plugin_Updater.php:501
@@ -2760,85 +2079,112 @@ msgstr ""
 msgid "Error"
 msgstr ""
 
-#. translators: %s: search WooCommerce plugin link
-#: src/License/LicenseHandler.php:84
-#, php-format
+#: src/License/views/expired-admin-notice.php:18
 msgid ""
-"%1$s license key is required. %2$sPlease enter your license key to start "
-"using the plugin%3$s."
+"Please click here to renew your license key and continue receiving automatic "
+"updates."
 msgstr ""
 
-#: src/Migrations/Versions/Ver_4_0_0.php:970
-msgid "Pick up information"
+#: src/License/views/expired-license-notification.php:3
+msgid "Your license has expired, please "
 msgstr ""
 
-#: src/Migrations/Versions/Ver_4_0_0.php:998
-msgid "Tracking information"
+#: src/License/views/expired-license-notification.php:4
+msgid "renew this license"
+msgstr ""
+
+#: src/License/views/expired-license-notification.php:5
+msgid " to download this update. "
+msgstr ""
+
+#: src/License/views/information-card.php:38
+msgid "Deactivate"
+msgstr ""
+
+#: src/License/views/information-card.php:54
+msgid "Expiration Date:"
+msgstr ""
+
+#: src/License/views/information-card.php:78
+msgid "Need more licenses?"
+msgstr ""
+
+#: src/License/views/information-card.php:78
+msgid "Upgrade to unlimited"
+msgstr ""
+
+#: src/License/views/not-activate-license-notification.php:3
+msgid ""
+"Please activate your license for access to premium features and automatic "
+"updates"
+msgstr ""
+
+#: src/Migrations/Versions/Ver_4_0_0.php:605
+msgid "Downloads"
+msgstr ""
+
+#: src/Migrations/Versions/Ver_4_0_0.php:606
+#: templates/shortcodes/order-details-download-product/main.php:18
+#: templates/shortcodes/order-details-download-product/sample.php:17
+msgid "Products"
 msgstr ""
 
 #: src/Models/MigrationModel.php:35
 msgid "Migration failed, please contact our Customer Support for help!"
 msgstr ""
 
-#: src/Models/MigrationModel.php:199
+#: src/Models/MigrationModel.php:201
 msgid "Restoration failed"
 msgstr ""
 
-#: src/Models/TemplateModel.php:158 src/Models/TemplateModel.php:197
+#: src/Models/TemplateModel.php:150 src/Models/TemplateModel.php:184
+#: src/Models/TemplateModel.php:196
 msgid "N/A"
 msgstr ""
 
-#: src/Models/TemplateModel.php:186
-msgid " (Pro)"
+#: src/Models/TemplateModel.php:183
+msgid "Addon"
 msgstr ""
 
-#: src/Models/TemplateModel.php:188
-msgid " (Addon)"
-msgstr ""
-
-#: src/Models/TemplateModel.php:190
-msgid " (N/A)"
-msgstr ""
-
-#: src/Notices/NoticeMain.php:119
+#: src/Notices/NoticeMain.php:125
 msgid ""
 "Please update the YayMail Addons to version 4.0 or later to ensure "
 "compatibility and optimal performance."
 msgstr ""
 
-#: src/PostTypes/TemplatePostType.php:35 src/PostTypes/TemplatePostType.php:36
+#: src/PostTypes/TemplatePostType.php:34 src/PostTypes/TemplatePostType.php:35
 msgid "Email Template"
 msgstr ""
 
-#: src/PostTypes/TemplatePostType.php:37
+#: src/PostTypes/TemplatePostType.php:36
 msgid "Add New Email Template"
 msgstr ""
 
-#: src/PostTypes/TemplatePostType.php:38
+#: src/PostTypes/TemplatePostType.php:37
 msgid "Add a new Email Template"
 msgstr ""
 
-#: src/PostTypes/TemplatePostType.php:39
+#: src/PostTypes/TemplatePostType.php:38
 msgid "Edit Email Template"
 msgstr ""
 
-#: src/PostTypes/TemplatePostType.php:40
+#: src/PostTypes/TemplatePostType.php:39
 msgid "New Email Template"
 msgstr ""
 
-#: src/PostTypes/TemplatePostType.php:41
+#: src/PostTypes/TemplatePostType.php:40
 msgid "View Email Template"
 msgstr ""
 
-#: src/PostTypes/TemplatePostType.php:42
+#: src/PostTypes/TemplatePostType.php:41
 msgid "Search Email Template"
 msgstr ""
 
-#: src/PostTypes/TemplatePostType.php:43
+#: src/PostTypes/TemplatePostType.php:42
 msgid "No Email Template found"
 msgstr ""
 
-#: src/PostTypes/TemplatePostType.php:44
+#: src/PostTypes/TemplatePostType.php:43
 msgid "No Email Template currently trashed"
 msgstr ""
 
@@ -2849,8 +2195,35 @@ msgid ""
 "order ID. <br><br>Go to orders page to check %s."
 msgstr ""
 
-#: src/PreviewEmail/PreviewEmailWoo.php:90
-msgid "This is a test email preview."
+#: src/PreviewEmail/PreviewEmailWoo.php:114
+msgid "Dummy Product"
+msgstr ""
+
+#: src/PreviewEmail/PreviewEmailWoo.php:118
+msgid "Dummy Product Variation"
+msgstr ""
+
+#: src/PreviewEmail/PreviewEmailWoo.php:122
+msgid "Color"
+msgstr ""
+
+#: src/PreviewEmail/PreviewEmailWoo.php:122
+msgid "Red"
+msgstr ""
+
+#: src/PreviewEmail/PreviewEmailWoo.php:123
+msgid "Size"
+msgstr ""
+
+#: src/PreviewEmail/PreviewEmailWoo.php:142
+#: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:71
+#: src/Shortcodes/PaymentsShortcodes.php:62
+#: templates/shortcodes/payment-instruction/main.php:31
+msgid "Direct bank transfer"
+msgstr ""
+
+#: src/PreviewEmail/PreviewEmailWoo.php:143
+msgid "This is a customer note."
 msgstr ""
 
 #: src/Shortcodes/BillingShortcodes.php:25
@@ -2914,7 +2287,7 @@ msgstr ""
 
 #. Author of the plugin/theme
 #: src/Shortcodes/BillingShortcodes.php:269
-#: src/Shortcodes/ShippingShortcodes.php:231
+#: src/Shortcodes/ShippingShortcodes.php:231 src/WooHandler.php:120
 msgid "YayCommerce"
 msgstr ""
 
@@ -2925,6 +2298,11 @@ msgstr ""
 #: src/Shortcodes/BillingShortcodes.php:313
 #: src/Shortcodes/ShippingShortcodes.php:275
 msgid "United States"
+msgstr ""
+
+#: src/Shortcodes/BillingShortcodes.php:336
+#: src/Shortcodes/ShippingShortcodes.php:298
+msgid "Random"
 msgstr ""
 
 #: src/Shortcodes/BillingShortcodes.php:358
@@ -2983,6 +2361,10 @@ msgstr ""
 msgid "User ID"
 msgstr ""
 
+#: src/Shortcodes/CommonShortcodes.php:83
+msgid "Name"
+msgstr ""
+
 #: src/Shortcodes/CommonShortcodes.php:89
 msgid "First Name"
 msgstr ""
@@ -3009,7 +2391,7 @@ msgid "YayMail custom hook"
 msgstr ""
 
 #. translators: %s: The formatted shortcode name
-#: src/Shortcodes/LegacyCustomShortcodes.php:90
+#: src/Shortcodes/LegacyCustomShortcodes.php:89
 #, php-format
 msgid "Custom shortcode for %s"
 msgstr ""
@@ -3040,18 +2422,16 @@ msgstr ""
 msgid "Free shipping"
 msgstr ""
 
-#: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:71
-#: src/Shortcodes/PaymentsShortcodes.php:62
-#: templates/shortcodes/payment-instruction/main.php:31
-msgid "Direct bank transfer"
+#: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:240
+msgid "sku"
 msgstr ""
 
-#: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:170
+#: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:241
+msgid "Product short description"
+msgstr ""
+
+#: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:242
 msgid "Happy YayCommerce"
-msgstr ""
-
-#: src/Shortcodes/OrderDetails/OrderDetailsRenderer.php:178
-msgid "2"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:20
@@ -3071,7 +2451,7 @@ msgid "Order URL"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:47
-#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:326
+#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:338
 msgid "Order"
 msgstr ""
 
@@ -3084,7 +2464,7 @@ msgid "View Order Link"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:62
-#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:392
+#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:404
 msgid "Your Order"
 msgstr ""
 
@@ -3113,7 +2493,7 @@ msgid "Order Total"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:105
-msgid "Order Total Numbers"
+msgid "Order Total Value"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:111
@@ -3121,54 +2501,62 @@ msgid "Order Coupon Codes"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:117
-msgid "Orders Count"
+msgid "Number of line items in the order"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:123
-msgid "Orders Count Double"
+msgid "Number of line items in the order (double)"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:129
-msgid "Orders Quantity Count"
+msgid "Total quantity of all items in the order"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:135
-msgid "Customer Roles"
+msgid "Number of base products in the order"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:141
-msgid "Customer Last Note"
+msgid "Number of product variations in the order"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:147
-msgid "All Customer Note"
+msgid "Customer Roles"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:153
-msgid "Customer Provided Note"
+msgid "Customer Last Note"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:159
-msgid "Order Meta Content"
+msgid "All Customer Note"
+msgstr ""
+
+#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:165
+msgid "Customer Provided Note"
 msgstr ""
 
 #: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:171
+msgid "Order Meta Content"
+msgstr ""
+
+#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:183
 msgid "Order Details Download Product"
 msgstr ""
 
-#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:484
+#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:496
 msgid "sample status"
 msgstr ""
 
-#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:787
+#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:859
 msgid "customer note"
 msgstr ""
 
-#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:813
+#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:885
 msgid "customer notes"
 msgstr ""
 
-#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:842
+#: src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php:914
 msgid "customer provided notes"
 msgstr ""
 
@@ -3368,16 +2756,59 @@ msgstr ""
 msgid "Header 7"
 msgstr ""
 
-#: src/Utils/Localize.php:26
+#: src/Utils/Localize.php:22
 msgid "Sample order"
 msgstr ""
 
-#: src/Utils/Logger.php:108
+#: src/Utils/Localize.php:38
+msgid "Unknown"
+msgstr ""
+
+#: src/Utils/Logger.php:118
 msgid "WARNING:"
 msgstr ""
 
-#: src/Utils/Logger.php:108
+#: src/Utils/Logger.php:118
 msgid "SYSTEM ERROR:"
+msgstr ""
+
+#: src/WooHandler.php:50
+msgid "YayMail Template Preview"
+msgstr ""
+
+#: src/WooHandler.php:51
+msgid ""
+"This is one of your WooCommerce email templates customized with YayMail. You "
+"can modify its colors, layout, and content in the YayMail editor."
+msgstr ""
+
+#: src/WooHandler.php:52
+msgid "Customized Template"
+msgstr ""
+
+#: src/WooHandler.php:76
+msgid "WooCommerce Email Designer"
+msgstr ""
+
+#: src/WooHandler.php:81
+msgid "Customize WooCommerce Emails"
+msgstr ""
+
+#: src/WooHandler.php:118
+msgid "Open YayMail"
+msgstr ""
+
+#: src/WooHandler.php:120
+msgid "Make Woocommerce Emails match your brand. "
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+#: src/WooHandler.php:120
+msgid "YayMail - WooCommerce Email Customizer"
+msgstr ""
+
+#: src/WooHandler.php:120
+msgid " plugin by "
 msgstr ""
 
 #: src/YayCommerceMenu/OtherPluginsMenu.php:122
@@ -3418,15 +2849,15 @@ msgstr ""
 msgid "Update success"
 msgstr ""
 
-#: src/YayCommerceMenu/RegisterMenu.php:87
+#: src/YayCommerceMenu/RegisterMenu.php:80
 msgid "Help"
 msgstr ""
 
-#: src/YayCommerceMenu/RegisterMenu.php:94
+#: src/YayCommerceMenu/RegisterMenu.php:115
 msgid "Licenses"
 msgstr ""
 
-#: src/YayCommerceMenu/RegisterMenu.php:101
+#: src/YayCommerceMenu/RegisterMenu.php:124
 msgid "Other plugins"
 msgstr ""
 
@@ -3565,37 +2996,41 @@ msgid ""
 "WordPress version %1$s."
 msgstr ""
 
-#: templates/notices/upgrade.php:2
+#: templates/notices/suggest-addons.php:2
 msgid "Recommended: You can use YayMail to customize all email templates of:"
 msgstr ""
 
-#: templates/notices/upgrade.php:9
+#: templates/notices/suggest-addons.php:9
 #, php-format
 msgid "%s (Addon)"
 msgstr ""
 
-#: templates/notices/upgrade.php:19
-#, php-format
-msgid "%s (Pro)"
-msgstr ""
-
-#: templates/notices/upgrade.php:27
+#: templates/notices/suggest-addons.php:17
 msgid "See Addons"
 msgstr ""
 
-#: templates/notices/upgrade.php:28
+#: templates/notices/suggest-addons.php:18 templates/notices/upgrade.php:18
 msgid "No, thanks"
 msgstr ""
 
-#: templates/shortcodes/order-details-download-product/main.php:56
+#: templates/notices/upgrade.php:2
+msgid "Recommended: You can use YayMail Pro to integrate with:"
+msgstr ""
+
+#: templates/notices/upgrade.php:17
+msgid "Upgrade to Pro"
+msgstr ""
+
+#: templates/shortcodes/order-details-download-product/main.php:108
 msgid "Never"
 msgstr ""
 
-#: templates/shortcodes/order-details-download-product/sample.php:45
+#: templates/shortcodes/order-details-download-product/sample.php:76
+#: templates/shortcodes/order-details-download-product/sample.php:88
 msgid "Downloadable Product"
 msgstr ""
 
-#: templates/shortcodes/order-details-download-product/sample.php:51
+#: templates/shortcodes/order-details-download-product/sample.php:96
 msgid "Download.doc"
 msgstr ""
 
@@ -3619,16 +3054,16 @@ msgstr ""
 msgid "BIC"
 msgstr ""
 
+#: templates/shortcodes/yaydp-on-sale-products/main.php:137
+msgid "BUY NOW"
+msgstr ""
+
 #. translators: %s: search WooCommerce plugin link
-#: yaymail.php:99
+#: yaymail.php:95
 #, php-format
 msgid ""
 "is enabled but not effective. It requires %1$sWooCommerce%2$s in order to "
 "work."
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "YayMail - WooCommerce Email Customizer"
 msgstr ""
 
 #. Plugin URI of the plugin/theme

@@ -62,8 +62,14 @@ abstract class BaseElement {
         }
 
         if ( is_string( $email ) ) {
+
             $email = yaymail_get_email( $email );
+
+            if ( empty( $email ) || ! $email instanceof BaseEmail ) {
+                return false;
+            }
         }
+
 
         $available_email_ids = (array) $this->available_email_ids;
         $available_email_ids = apply_filters( 'yaymail_element_available_email_ids', $available_email_ids, $this );

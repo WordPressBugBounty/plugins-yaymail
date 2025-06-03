@@ -3,6 +3,7 @@
 namespace YayMail\Models;
 
 use YayMail\Abstracts\BaseElement;
+use YayMail\Elements\ElementsHelper;
 use YayMail\Elements\Heading;
 use YayMail\Elements\Logo;
 use YayMail\Elements\Text;
@@ -12,6 +13,7 @@ use YayMail\Utils\SingletonTrait;
 use YayMail\PostTypes\TemplatePostType;
 use YayMail\Shortcodes\ShortcodesExecutor;
 use YayMail\SupportedPlugins;
+use YayMail\Elements\ElementsLoader;
 
 /**
  * Template Model
@@ -141,7 +143,9 @@ class TemplateModel {
         if ( ! $template->is_exists() || empty( $email_data ) ) {
             return null;
         }
+
         $template_data                   = $template->get_data();
+        $template_data['elements']       = $template->get_elements();
         $template_data['key']            = $template_data['id'];
         $template_data['template_title'] = $email_data->get_title();
         $template_data['status']         = $template_data['status'];
@@ -203,7 +207,7 @@ class TemplateModel {
             'addon_info'     => $support_info['addon'],
             'template_title' => $template_title,
             'status'         => 'inactive',
-            'recipient'      => $wc_email->recipient,
+            'recipient'      => yaymail_get_email_recipient_zone( $wc_email ),
             'source'         => $source,
             'last_updated'   => $last_updated,
         ];
@@ -386,7 +390,7 @@ class TemplateModel {
             'id'                       => $template_post_id,
             'key'                      => $template_post_id,
             'name'                     => $template_name,
-            'elements'                 => $template_elements,
+            'elements'                 => ElementsHelper::filter_available_elements( $template_elements, $template_name ),
             'status'                   => $status,
             'background_color'         => $background_color ?? YAYMAIL_COLOR_BACKGROUND_DEFAULT,
             'text_link_color'          => $text_link_color ?? YAYMAIL_COLOR_WC_DEFAULT,

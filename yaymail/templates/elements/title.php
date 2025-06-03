@@ -20,7 +20,6 @@ $data    = $element['data'];
 $wrapper_style = TemplateHelpers::get_style(
     [
         'line-height'      => 'normal',
-        'text-align'       => $data['align'],
         'background-color' => $data['background_color'],
         'padding'          => TemplateHelpers::get_spacing_value( isset( $data['padding'] ) ? $data['padding'] : [] ),
     ]
@@ -32,6 +31,7 @@ $common_font_family = TemplateHelpers::get_font_family_value( $data['font_family
 $title_size  = TemplateHelpers::get_font_size( $data['title_size'] );
 $title_style = TemplateHelpers::get_style(
     [
+        'text-align'  => $data['align'],
         'margin'      => '0',
         'color'       => $data['text_color'],
         'font-size'   => $title_size,
@@ -43,6 +43,7 @@ $title_style = TemplateHelpers::get_style(
 $subtitle_size  = TemplateHelpers::get_font_size( $data['subtitle_size'], true );
 $subtitle_style = TemplateHelpers::get_style(
     [
+        'text-align'  => $data['align'],
         'font-family' => $common_font_family,
         'color'       => $data['text_color'],
         'font-size'   => $subtitle_size,

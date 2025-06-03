@@ -98,13 +98,13 @@ class ShippingShortcodes extends BaseShortcode {
 
     /**
      * Render order shipping shortcode
+     *
      * @param $args includes
      * $render_data
      * $element
      * $settings
      * $is_placeholder
      */
-
     public function yaymail_shipping_address( $data ) {
 
         $render_data = isset( $data['render_data'] ) ? $data['render_data'] : [];
@@ -381,7 +381,7 @@ class ShippingShortcodes extends BaseShortcode {
             /**
              * Is sample order
              */
-            return '0';
+            return wc_price( 0 );
         }
 
         $order = Helpers::get_order_from_shortcode_data( $render_data );
@@ -390,9 +390,13 @@ class ShippingShortcodes extends BaseShortcode {
             /**
              * Not having order_id
              */
-            return '0';
+            return wc_price( 0 );
         }
 
-        return $order->calculate_shipping();
+        if ( isset( $order->get_data()['shipping_total'] ) && ! empty( $order->get_data()['shipping_total'] ) ) {
+            return wc_price( $order->get_data()['shipping_total'] + $order->get_data()['shipping_tax'], [ 'currency' => $order->get_currency() ] );
+        } else {
+            return wc_price( 0, [ 'currency' => $order->get_currency() ] );
+        }
     }
 }

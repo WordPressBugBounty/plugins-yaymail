@@ -16,6 +16,11 @@ class MainMigration {
     private $old_version;
     private $new_version;
 
+    const CORE_MIGRATIONS = [
+        '4.0.0' => '\YayMail\Migrations\Versions\Ver_4_0_0',
+        // '4.1.0' => '\YayMail\Migrations\Versions\Ver_4_1_0',
+    ];
+
     private function __construct() {
         if ( ! defined( 'YAYMAIL_VERSION' ) ) {
             return;
@@ -28,8 +33,8 @@ class MainMigration {
         $this->old_version = MigrationHelper::format_version_number( $old_version ?? '3.9.9' );
     }
 
-    public function migrate() {
-        if ( empty( $this->old_version ) ) {
+    public function migrate( $skip_check_migration = false ) {
+        if ( ! $skip_check_migration && empty( $this->old_version ) ) {
             $this->logger->log( 'YayMail is freshly installed, no migrations needed!' );
             return false;
         }
@@ -38,17 +43,19 @@ class MainMigration {
         $wpdb->query( 'START TRANSACTION' );
 
         try {
-            $core_migrations = [
-                '4.0.0' => '\YayMail\Migrations\Versions\Ver_4_0_0',
-                // '4.1.0' => '\YayMail\Migrations\Versions\Ver_4_1_0',
-            ];
+            $core_migrations = self::CORE_MIGRATIONS;
             $this->logger->log( 'Start core migrations' );
 
-            $filtered_migrations = MigrationHelper::filter_migrations( $core_migrations, $this->old_version, $this->new_version );
+            if ( $skip_check_migration ) {
+                $filtered_migrations = $core_migrations;
+            } else {
+                $filtered_migrations = MigrationHelper::filter_migrations( $core_migrations, $this->old_version, $this->new_version );
+            }
 
             if ( ! empty( $filtered_migrations ) ) {
-                MigrationHelper::perform_migrations( $filtered_migrations );
+                MigrationHelper::perform_migrations( $filtered_migrations, $skip_check_migration );
                 update_option( 'yaymail_version', $this->new_version );
+                wp_cache_delete( 'yaymail_version', 'options' );
             }
 
             $this->logger->log( 'Finish core migrations' );

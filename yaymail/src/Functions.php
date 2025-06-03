@@ -8,6 +8,7 @@ use YayMail\Elements\ElementsLoader;
 use YayMail\Integrations\TranslationModule;
 use YayMail\YayMailEmails;
 use YayMail\Utils\Logger;
+use YayMail\Utils\StyleInline;
 if ( ! function_exists( 'yaymail_get_emails' ) ) {
 
     /**
@@ -117,6 +118,7 @@ if ( ! function_exists( 'yaymail_kses_post' ) ) {
      */
     function yaymail_kses_post( $html ) {
         $allowed_html = TemplateHelpers::wp_kses_allowed_html();
+        $html         = StyleInline::get_instance()->convert_style_inline( $html );
         return wp_kses( $html, $allowed_html );
     }
 }
@@ -134,6 +136,7 @@ if ( ! function_exists( 'yaymail_kses_post_e' ) ) {
     function yaymail_kses_post_e( $html ) {
         if ( ! empty( $html ) ) {
             $allowed_html = TemplateHelpers::wp_kses_allowed_html();
+            $html         = StyleInline::get_instance()->convert_style_inline( $html );
             echo wp_kses( $html, $allowed_html );
         } else {
             echo '';
@@ -377,16 +380,27 @@ if ( ! function_exists( 'yaymail_get_email_direction' ) ) {
  * @return string
  */
 function yaymail_get_email_recipient_zone( $email ) {
-    $is_customer_email = $email->is_customer_email();
+    $is_customer_email = $email instanceof \WC_Email && method_exists( $email, 'is_customer_email' ) ? $email->is_customer_email() : true;
     if ( $is_customer_email ) {
         return __( 'Customer', 'woocommerce' );
     }
-    $recipient  = $email->get_recipient();
+
+    $recipient = '';
+    if ( $email instanceof \WC_Email ) {
+        $recipient = ! empty( $email->recipient ) ? $email->recipient : $email->get_recipient();
+        if ( empty( $recipient ) ) {
+            $recipient = __( 'Recipient', 'yaymail' );
+        }
+    }
+
     $recipients = array_map(
         function( $email_recipient ) {
             $recipient_user = get_user_by( 'email', $email_recipient );
             if ( $recipient_user && user_can( $recipient_user, 'manage_options' ) ) {
                     return __( 'Admin', 'woocommerce' );
+            }
+            if ( empty( $email_recipient ) ) {
+                return __( 'Recipient', 'yaymail' );
             }
             return $email_recipient;
         },

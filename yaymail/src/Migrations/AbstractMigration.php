@@ -52,18 +52,21 @@ abstract class AbstractMigration {
         $this->logger = new Logger();
     }
 
-    public function perform_migration() {
+    public function perform_migration( $skip_check_migration = false ) {
         $this->logger->log( "Attempt to migrate data from [$this->old_version] to [$this->new_version]." );
 
-        if ( $this->has_migration_been_performed() ) {
+        if ( ! $skip_check_migration && $this->has_migration_been_performed() ) {
             $this->logger->log( 'Migration aborted. Data had been successfully migrated before.' );
             return;
         }
+
         $this->backup();
 
         $this->up();
 
-        $this->log_succeeded_migration();
+        if ( ! $skip_check_migration ) {
+            $this->log_succeeded_migration();
+        }
     }
 
 

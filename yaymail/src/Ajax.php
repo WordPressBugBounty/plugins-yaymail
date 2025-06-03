@@ -5,6 +5,8 @@ namespace YayMail;
 use YayMail\Utils\SingletonTrait;
 use YayMail\Models\SettingModel;
 use YayMail\Models\TemplateModel;
+use YayMail\Migrations\MainMigration;
+use YayMail\Utils\Helpers;
 
 /**
  * I18n Logic
@@ -226,6 +228,13 @@ class Ajax {
             foreach ( $emails as $email ) {
                 if ( $email->id === $template_data['name'] ) {
                     $current_email = $email;
+                    if ( method_exists( $current_email, 'set_object' ) ) {
+                        if ( ! empty( $render_data['order'] ) && is_a( $render_data['order'], '\WC_Order' ) ) {
+                            $current_email->set_object( $render_data['order'] );
+                        } else {
+                            $current_email->set_object( Helpers::get_dummy_order() );
+                        }
+                    }
                     break;
                 }
             }
@@ -259,10 +268,11 @@ class Ajax {
             $search_order_id = isset( $_POST['search_order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['search_order_id'] ) ) : null;
             $email_address   = isset( $_POST['email_address'] ) ? sanitize_text_field( wp_unslash( $_POST['email_address'] ) ) : '';
 
-            $email_preview_output = apply_filters( 'yaymail_preview_email', [], $search_order_id, $template_name, $email_address );
-            if ( empty( $email_preview_output ) ) {
-                $email_preview_output = PreviewEmail\PreviewEmailWoo::email_preview_output( $search_order_id, $template_name, $email_address );
-            }
+            $email_preview_output = PreviewEmail\PreviewEmailWoo::email_preview_output( $search_order_id, $template_name, $email_address );
+
+            $email_preview_output = apply_filters( 'yaymail_preview_email', $email_preview_output, $search_order_id, $template_name, $email_address );
+
+            $send_mail = false;
 
             if ( ! empty( $email_address ) && ! empty( $email_preview_output['html'] ) ) {
                 $headers        = "Content-Type: text/html\r\n";
@@ -276,10 +286,10 @@ class Ajax {
 
             wp_send_json_success(
                 [
-                    'html'              => ! empty( $email_preview_output['html'] ) ? $email_preview_output['html'] : __( 'No email content found', 'yaymail' ),
-                    'current_template'  => ! empty( $email_preview_output['current_template'] ) ? $email_preview_output['current_template'] : __( 'No template found', 'yaymail' ),
-                    'subject'           => ! empty( $email_preview_output['subject'] ) ? $email_preview_output['subject'] : __( 'No subject found', 'yaymail' ),
-                    'send_mail_success' => $send_mail,
+                    'html'                  => ! empty( $email_preview_output['html'] ) ? $email_preview_output['html'] : __( 'No email content found', 'yaymail' ),
+                    'subject'               => ! empty( $email_preview_output['subject'] ) ? $email_preview_output['subject'] : __( 'No subject found', 'yaymail' ),
+                    'is_disabled_send_mail' => ! empty( $email_preview_output['is_disabled_send_mail'] ) ? $email_preview_output['is_disabled_send_mail'] : false,
+                    'send_mail_success'     => $send_mail,
                 ]
             );
         } catch ( \Error $error ) {
@@ -420,6 +430,7 @@ class Ajax {
             WP_Filesystem();
         }
         $import_count = 0;
+        $is_legacy    = false;
         foreach ( $files as $file ) {
             if ( isset( $file['type'] ) ) {
                 if ( 'application/json' === $file['type'] ) {
@@ -428,46 +439,82 @@ class Ajax {
                         $file_content  = $wp_filesystem->get_contents( $file_tmp_name );
                         $file_content  = json_decode( $file_content, true );
                         if ( ! isset( $file_content['template'] ) ) {
-                            continue;
-                        }
-                        $import_template = $file_content['template'];
-                        $import_elements = $file_content['elements'];
-                        $import_language = $file_content['language'];
-                        if ( ! empty( $import_template ) ) {
-                            $query_args = [
-                                'post_type'      => 'yaymail_template',
-                                'post_status'    => [ 'publish', 'pending', 'future' ],
-                                'posts_per_page' => '-1',
-                                'meta_query'     => [
-                                    'relation' => 'AND',
-                                    [
-                                        'key'     => '_yaymail_template',
-                                        'value'   => $import_template,
-                                        'compare' => '=',
-                                    ],
-                                    [
-                                        'key'     => '_yaymail_template_language',
-                                        'value'   => ( empty( $import_language ) || 'en' === $import_language ) ? '' : $import_language,
-                                        'compare' => ( empty( $import_language ) || 'en' === $import_language ) ? 'NOT EXISTS' : '=',
-                                    ],
-                                ],
-                            ];
-
-                            $query = new \WP_Query( $query_args );
-                            if ( $query->have_posts() ) {
-                                $posts = $query->get_posts();
-                                foreach ( $posts as $post ) {
-                                    update_post_meta( $post->ID, '_yaymail_elements', $import_elements );
-                                }
+                            if ( isset( $file_content['yaymailTemplateExport'] ) ) {
+                                $is_legacy     = true;
+                                $import_count += $this->process_import_legacy( $file_content );
+                            } else {
+                                continue;
                             }
+                        } else {
+                            $import_template = $file_content['template'];
+                            $import_elements = $file_content['elements'];
+                            $import_language = $file_content['language'];
+
+                            $this->processing_import_update_data( $import_template, $import_elements, $import_language );
                             ++$import_count;
-                            wp_reset_postdata();
-                        }//end if
+                        }
                     }//end if
                 }//end if
             }//end if
         }//end foreach
+        if ( $is_legacy ) {
+            MainMigration::get_instance()->migrate( true );
+        }
         return $import_count;
+    }
+
+    public function process_import_legacy( $file_content ) {
+        $import_count = 0;
+        // Import templates
+        foreach ( $file_content['yaymailTemplateExport'] as $template ) {
+            $import_template = $template['_yaymail_template'];
+            $import_elements = $template['_yaymail_elements'];
+            $import_language = $template['_yaymail_template_language'];
+
+            $this->processing_import_update_data( $import_template, $import_elements, $import_language, true );
+            ++$import_count;
+        }//end foreach
+        // Import settings
+        $import_settings = isset( $file_content['yaymail_settings'] ) ? $file_content['yaymail_settings'] : [];
+        if ( ! empty( $import_settings ) ) {
+            update_option( 'yaymail_settings', $import_settings );
+        }
+        return $import_count;
+    }
+
+    public function processing_import_update_data( $template_name, $elements, $language, $is_legacy = false ) {
+        if ( ! empty( $template_name ) ) {
+            $query_args = [
+                'post_type'      => 'yaymail_template',
+                'post_status'    => [ 'publish', 'pending', 'future' ],
+                'posts_per_page' => '-1',
+                'meta_query'     => [
+                    'relation' => 'AND',
+                    [
+                        'key'     => '_yaymail_template',
+                        'value'   => $template_name,
+                        'compare' => '=',
+                    ],
+                    [
+                        'key'     => '_yaymail_template_language',
+                        'value'   => ( empty( $language ) || 'en' === $language ) ? '' : $language,
+                        'compare' => ( empty( $language ) || 'en' === $language ) ? 'NOT EXISTS' : '=',
+                    ],
+                ],
+            ];
+
+            $query = new \WP_Query( $query_args );
+            if ( $query->have_posts() ) {
+                $posts = $query->get_posts();
+                foreach ( $posts as $post ) {
+                    update_post_meta( $post->ID, '_yaymail_elements', $elements );
+                    if ( $is_legacy ) {
+                        update_post_meta( $post->ID, '_yaymail_status', 'inactive' );
+                    }
+                }
+            }
+            wp_reset_postdata();
+        }//end if
     }
 
     /**

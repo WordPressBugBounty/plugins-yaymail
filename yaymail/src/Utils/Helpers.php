@@ -243,7 +243,7 @@ class Helpers {
     }
 
     public static function get_order_from_shortcode_data( $data ) {
-        $order = apply_filters( 'yaymail_order_from_shortcode_data', $data['order'] ?? null, $data );
+        $order = $data['order'] ?? null;
 
         if ( self::is_woocommerce_order( $order ) ) {
             return $order;
@@ -358,5 +358,41 @@ class Helpers {
         }
 
         $current = $value;
+    }
+
+    public static function get_dummy_order( $order_status = \Automattic\WooCommerce\Enums\OrderStatus::COMPLETED ) {
+        $product = new \WC_Product();
+        $product->set_name( __( 'Happy YayCommerce', 'yaymail' ) );
+        $product->set_price( 18 );
+
+        $order = new \WC_Order();
+        if ( $product ) {
+            $order->add_product( $product, 2 );
+        }
+        $order->set_id( 1 );
+        $order->set_status( $order_status );
+        $order->set_date_created( time() );
+        $order->set_currency( 'USD' );
+        $order->set_discount_total( 18 );
+        $order->set_shipping_total( 0 );
+        $order->set_total( 18 );
+        $order->set_payment_method_title( __( 'Direct bank transfer', 'woocommerce' ) );
+        $order->set_customer_note( __( "This is a customer note. Customers can add a note to their order on checkout.\n\nIt can be multiple lines. If there’s no note, this section is hidden.", 'woocommerce' ) );
+
+        $address = [
+            'first_name' => 'John',
+            'last_name'  => 'Doe',
+            'company'    => 'YayCommerce',
+            'email'      => 'johndoe@gmail.com',
+            'phone'      => '(910) 529-1147',
+            'address_1'  => '7400 Edwards Rd',
+            'city'       => 'Mayville, Michigan',
+            'postcode'   => '7400',
+            'country'    => 'US',
+            'state'      => 'CA',
+        ];
+        $order->set_billing_address( $address );
+        $order->set_shipping_address( $address );
+        return $order;
     }
 }

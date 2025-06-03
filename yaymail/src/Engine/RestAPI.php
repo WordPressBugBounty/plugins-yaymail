@@ -5,6 +5,7 @@ use YayMail\Controllers\MigrationController;
 use YayMail\Utils\SingletonTrait;
 use YayMail\Controllers\SettingController;
 use YayMail\Controllers\TemplateController;
+use YayMail\Controllers\ProductController;
 
 /**
  * YayMail Rest API
@@ -28,6 +29,7 @@ class RestAPI {
         TemplateController::get_instance();
         SettingController::get_instance();
         MigrationController::get_instance();
+        ProductController::get_instance();
         do_action( 'yaymail_init_rest_controllers' );
     }
 }

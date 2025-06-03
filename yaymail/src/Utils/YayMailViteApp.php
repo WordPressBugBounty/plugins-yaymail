@@ -144,7 +144,7 @@ class YayMailViteApp {
         $this->manifest = json_decode( $content, true );
     }
 
-    private function get_module_opts( $key ): array {
+    private function get_module_opts( $key ) {
         return $this->manifest[ $key ] ?? null;
     }
 

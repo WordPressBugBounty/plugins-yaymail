@@ -24,7 +24,7 @@ $content_style = TemplateHelpers::get_style(
 if ( ! empty( $data['hook_shortcode'] ) ) {
     ob_start();
     ?>
-        <div style="<?php echo esc_attr( $content_style ); ?>"><?php echo wp_kses_post( do_shortcode( $data['hook_shortcode'] ) ); ?></div>
+        <div style="<?php echo esc_attr( $content_style ); ?>"><?php yaymail_kses_post_e( do_shortcode( $data['hook_shortcode'] ) ); ?></div>
     <?php
     $element_content = ob_get_clean();
 

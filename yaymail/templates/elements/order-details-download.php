@@ -24,8 +24,6 @@ $title_style = TemplateHelpers::get_style(
         'color'         => isset( $data['title_color'] ) ? $data['title_color'] : 'inherit',
         'margin-top'    => '0',
         'margin-bottom' => '7px',
-        'font-size'     => '18px',
-        'font-weight'   => '600',
         'font-family'   => TemplateHelpers::get_font_family_value( isset( $data['font_family'] ) ? $data['font_family'] : 'inherit' ),
     ]
 );

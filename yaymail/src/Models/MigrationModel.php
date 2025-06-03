@@ -170,6 +170,7 @@ class MigrationModel {
 
             // Restore core version
             update_option( 'yaymail_version', $version );
+            wp_cache_delete( 'yaymail_version', 'options' );
 
             // Restore addon versions
             $addon_versions          = get_option( 'yaymail_addon_versions', [] );
@@ -186,6 +187,8 @@ class MigrationModel {
                 ARRAY_FILTER_USE_BOTH
             );
             update_option( 'yaymail_addon_versions', $restored_addon_versions );
+
+            do_action( 'yaymail_before_reset_migration_commit', $backup_name, $removed_migrations );
 
             $wpdb->query( 'COMMIT' );
             $this->logger->log( '***** Finish reset transaction ****' );
@@ -211,20 +214,25 @@ class MigrationModel {
     private function get_required_migration_names() {
         $old_version           = MigrationHelper::format_version_number( get_option( 'yaymail_version' ) );
         $new_version           = MigrationHelper::format_version_number( YAYMAIL_VERSION );
-        $successful_migrations = get_option( '_yaymail_successful_migrations', [] );
+        $successful_migrations = get_option( AbstractMigration::SUCCESSFUL_MIGRATIONS, [] );
 
-        $needed_migrations = [ 'YayMail' ];
+        // If freshly installed or already on latest version with no migrations needed
         if ( empty( $old_version ) || ( version_compare( $old_version, $new_version, '>=' ) && empty( $successful_migrations ) ) ) {
-            // When Yaymail was freshly installed
-            $needed_migrations = [];
-        } else {
-            foreach ( $successful_migrations as $migration ) {
-                if ( version_compare( $migration['to_version'], YAYMAIL_VERSION, '>=' ) ) {
-                    $needed_migrations = [];
-                    break;
-                }
+            return apply_filters( 'yaymail_required_migration_names', [] );
+        }
+
+        // Check if any migrations have already been run up to current version
+        foreach ( $successful_migrations as $migration ) {
+            if ( empty( $migration['addon_namespace'] ) && version_compare( $migration['to_version'], YAYMAIL_VERSION, '>=' ) ) {
+                return apply_filters( 'yaymail_required_migration_names', [] );
             }
         }
+
+        // Get available migrations that need to be run
+        $core_migrations     = MainMigration::CORE_MIGRATIONS;
+        $filtered_migrations = MigrationHelper::filter_migrations( $core_migrations, $old_version, $new_version );
+
+        $needed_migrations = empty( $filtered_migrations ) ? [] : [ 'YayMail' ];
 
         return apply_filters( 'yaymail_required_migration_names', $needed_migrations );
     }

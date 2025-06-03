@@ -78,9 +78,7 @@ final class Ver_4_0_0 extends AbstractMigration {
              */
             // Template status
             $old_activation_status = get_post_meta( $this->current_template_id, '_yaymail_status', true );
-            if ( ! in_array( $old_activation_status, [ 'active', 'inactive' ] ) ) {
-                $new_activation_status = $old_activation_status == 1 ? 'active' : 'inactive';
-            }
+            $new_activation_status = in_array( $old_activation_status, [ 'active', 'inactive' ], true ) ? $old_activation_status : ( '1' === $old_activation_status ? 'active' : 'inactive' );
             update_post_meta( $this->current_template_id, '_yaymail_status', $new_activation_status );
 
             // Template outer background color

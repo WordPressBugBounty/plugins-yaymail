@@ -2,7 +2,6 @@
 namespace YayMail;
 
 use YayMail\Utils\SingletonTrait;
-use YayMail\Utils\Logger;
 /**
  * YayMail SupportedPlugins
  *
@@ -12,15 +11,11 @@ class SupportedPlugins {
 
     use SingletonTrait;
 
-    private $logger;
-
     private $wc_emails               = [];
     private $addon_supported_plugins = [];
     private $pro_supported_plugins   = [];
 
     private function __construct() {
-        $this->logger = new Logger();
-
         $this->wc_emails = \WC_Emails::instance()->get_emails();
 
         $this->addon_supported_plugins = [
@@ -1307,7 +1302,7 @@ class SupportedPlugins {
                 ),
                 'slug_name'              => 'woocommerce-contact-for-shipping-quote',
                 'link_upgrade'           => 'https://yaycommerce.com/yaymail-addons/yaymail-addon-for-woocommerce-contact-for-shipping-quote',
-                'is_3rd_party_installed' => function_exists( 'woothemes_queue_update' ),
+                'is_3rd_party_installed' => is_plugin_active( 'woocommerce-contact-for-shipping-quote/plugin.php' ),
 
             ],
             'YayMailAddonDepositsPartialPayment'           => [
@@ -1567,9 +1562,8 @@ class SupportedPlugins {
     /**
      * Get the plugin name based on a specific template ID.
      *
-     * @param array  $addons       The array of addons, each containing plugin_name and template_ids.
      * @param string $template_id The template ID to search for.
-     * @return string|null        The plugin name if the template ID is found, or null if not found.
+     * @return array|null The addon info if the template ID is found, or null if not found.
      */
     private function get_addon_info( string $template_id ): ?array {
 
@@ -1586,7 +1580,7 @@ class SupportedPlugins {
     /**
      * Retrieves support information for a given template.
      *
-     * @param string $template_id Template id
+     * @param string $template_id Template id.
      *
      * @return array An associative array containing:
      *               - 'support_status' (string): 'already_supported', 'addon_needed' if supported by an addon, 'pro_needed' if supported by pro, or 'not_supported'.
@@ -1659,7 +1653,8 @@ class SupportedPlugins {
             ];
         }
 
-        if ( class_exists( 'Zorem_Woocommerce_Advanced_Shipment_Tracking' ) || ( class_exists( 'Ast_Pro' ) && ast_pro()->license->check_subscription_status() ) ) {
+        if ( class_exists( 'Zorem_Woocommerce_Advanced_Shipment_Tracking' )
+        || ( class_exists( 'Ast_Pro' ) ) ) {
             $this->pro_supported_plugins['ast_by_zorem'] = [
                 'plugin_name'  => 'Advanced Shipment Tracking by Zorem',
                 'template_ids' => $this->get_template_ids(
@@ -1803,11 +1798,11 @@ class SupportedPlugins {
             ];
         }
 
-        if ( class_exists( 'AST_PRO_Install' ) ) {
-            $this->pro_supported_plugins['ast_pro'] = [
-                'plugin_name' => 'Advanced Shipment Tracking Pro',
-            ];
-        }
+        // if ( class_exists( 'AST_PRO_Install' ) ) {
+        // $this->pro_supported_plugins['ast_pro'] = [
+        // 'plugin_name' => 'Advanced Shipment Tracking Pro',
+        // ];
+        // }
 
         // if ( class_exists( 'PH_Shipment_Tracking_API_Manager' ) ) {
         // $this->pro_supported_plugins['ph_shipment_tracking'] = [

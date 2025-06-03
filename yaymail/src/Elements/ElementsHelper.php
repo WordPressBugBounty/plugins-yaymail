@@ -351,4 +351,20 @@ class ElementsHelper {
     private static function get_default_value( $attributes, $value_path, $fallback_value ) {
         return isset( $attributes[ $value_path ] ) ? $attributes[ $value_path ] : $fallback_value;
     }
+
+    public static function filter_available_elements( $elements, $email_id = '' ): array {
+
+        $email = yaymail_get_email( $email_id );
+        // Optimize this to call get_email only once
+
+        $available_elements = [];
+
+        foreach ( $elements as $element ) {
+            $element_instance = ElementsLoader::get_instance()->get_element_instance_by_type( $element['type'] );
+            if ( ! empty( $element_instance ) && $element_instance->is_available_in_email( $email ) ) {
+                $available_elements[] = $element;
+            }
+        }
+        return $available_elements;
+    }
 }

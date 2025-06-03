@@ -68,7 +68,7 @@ class MigrationHelper {
      *
      * @return void
      */
-    public static function perform_migrations( $migrations ) {
+    public static function perform_migrations( $migrations, $skip_check_migration = false ) {
         foreach ( $migrations as $version => $class ) {
             if ( ! class_exists( $class ) ) {
                 throw new \Exception( esc_html( "Class $class for version $version does not exist." ), 500 );
@@ -84,7 +84,7 @@ class MigrationHelper {
                 throw new \Exception( esc_html( "Instance of class $class for version $version does not have a callable perform_migration method." ), 500 );
             }
 
-            $migration_instance->perform_migration();
+            $migration_instance->perform_migration( $skip_check_migration );
         }
     }
 }

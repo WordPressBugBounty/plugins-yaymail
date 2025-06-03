@@ -4,7 +4,7 @@ Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: email customizer, email templates, marketing, woocommerce emails, design
 Requires at least: 3.0
 Tested up to: 6.8
-Stable tag: 4.0
+Stable tag: 4.0.4
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -223,16 +223,31 @@ We offer single-site licenses and also unlimited site licenses to better support
 
 == Screenshots ==
 1. Overview of YayMail email builder with element panel, email template selector, toolbar, and editing area
-2. Editing WooCommerce email design and content
-3. One-click to send a test email to your email address
-4. Quickly preview your email within the same interface of WooCommerce email template editor
-5. List of shortcodes to personalize your WooCommerce order emails
-6. Add block visibility based on your conditions (Premium Addon required)
-7. Example of an order completed email template
-8. Example of an order confirmation with shipment tracking information, image gallery, coupon, trust badges, and more
-9. Example of a multi-vendor marketplace WooCommerce html email template
+2. Build your header and footer once, apply it in any email templates you want
+3. Drop in beautifully prebuilt sections — headers, product blocks, footers & more!
+4. One-click to send a test email to your email address
+5. Accurately preview your emails using actual WooCommerce order data
+6. Auto-fill your emails with real values, such as order info, customer details, shipping, coupon used, & more!
+7. Add block visibility based on your conditions (Premium Addon Required)
+8. Add custom sections like trust badges, guarantees, coupons, social links and more highlights that look great & build trust
+9. Break free from default WooCommerce styles, go bold with dark theme email templates
 
 == Changelog ==
+
+= Jun 3, 2025 - Version 4.0.4 =
+- Fixed: 'Migrate' button remains available after migrations have succeeded
+- Fixed: Change the recipient zone in the template list
+- Fixed: Don't show template post to the frontend
+- Fixed: Preview email when not supporting third-party
+- Fixed: Import templates from legacy JSON not working
+- Fixed: Tracking Information element layout issue
+- Fixed: Shortcode for order taxes
+- Fixed: Element is disabled, but if there is data in the template, it still shows up
+- Fixed: Small bugs
+- YayMail Addon for Germanized for WooCommerce
+-- Added: Shortcode [yaymail_germanized_shipment_tracking_id] 
+- YayMail Addon for Conditional Logic
+-- Fixed: Bug in product categories conditions not working after migration
 
 = May 23, 2025 - Version 4.0.3 =
 - Updated: Manage template recipients display

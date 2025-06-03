@@ -70,5 +70,4 @@ class WcSubscriptions {
         ];
         return in_array( $class_email, $array, true );
     }
-
 }

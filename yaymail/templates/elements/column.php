@@ -19,8 +19,9 @@ $data    = $element['data'];
 
 $wrapper_style = TemplateHelpers::get_style(
     [
-        'width'     => "{$data['width']}%",
-        'max-width' => "{$data['width']}%",
+        'width'          => "{$data['width']}%",
+        'max-width'      => "{$data['width']}%",
+        'vertical-align' => 'top',
     ]
 );
 

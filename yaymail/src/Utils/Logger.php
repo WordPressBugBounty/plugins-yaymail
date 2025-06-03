@@ -25,13 +25,15 @@ class Logger {
         $this->max_log_files = $max_log_files;
         $this->initialize_filesystem();
 
-        // Ensure the log directory exists
-        if ( ! $this->wp_filesystem->is_dir( $this->log_directory ) ) {
+        // Ensure the log directory exists (only if filesystem is available)
+        if ( $this->wp_filesystem && ! $this->wp_filesystem->is_dir( $this->log_directory ) ) {
             $this->wp_filesystem->mkdir( $this->log_directory, 0755 );
         }
 
-        // Clean up old log files
-        $this->cleanup_old_logs();
+        // Clean up old log files (only if filesystem is available)
+        if ( $this->wp_filesystem ) {
+            $this->cleanup_old_logs();
+        }
     }
 
     private function initialize_filesystem() {
@@ -39,12 +41,23 @@ class Logger {
 
         // Initialize the WordPress filesystem
         require_once ABSPATH . 'wp-admin/includes/file.php';
-        WP_Filesystem();
 
-        $this->wp_filesystem = $wp_filesystem;
+        // Try to initialize WP_Filesystem, fallback to direct method if failed
+        if ( ! WP_Filesystem() || ! $wp_filesystem ) {
+            // Fallback to direct filesystem access
+            require_once ABSPATH . 'wp-admin/includes/class-wp-filesystem-direct.php';
+            $this->wp_filesystem = new \WP_Filesystem_Direct( null );
+        } else {
+            $this->wp_filesystem = $wp_filesystem;
+        }
     }
 
     private function cleanup_old_logs() {
+        // Return early if filesystem is not available
+        if ( ! $this->wp_filesystem ) {
+            return;
+        }
+
         // Get all log files in the directory
         $files = $this->wp_filesystem->dirlist( $this->log_directory );
 
@@ -75,6 +88,11 @@ class Logger {
     }
 
     public function log( $message ) {
+        // Return early if filesystem is not available
+        if ( ! $this->wp_filesystem ) {
+            return;
+        }
+
         // Get the current date to create a log file for each day, based on local time
         $date     = current_time( 'Y-m-d' );
         $log_file = $this->log_directory . '/' . $date . '.log';

@@ -16,8 +16,7 @@ class PreviewEmailsLoader {
     protected function __construct() {
         // TODO: inject hooks for addon
         if ( class_exists( 'WC_Subscriptions' ) ) {
-            WcSubscriptions::get_instance();
+            // WcSubscriptions::get_instance();
         }
     }
-
 }

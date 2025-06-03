@@ -28,6 +28,7 @@ $float_value         = in_array( $data['align'], [ 'left', 'right' ], true ) ? $
 $button_holder_style = TemplateHelpers::get_style(
     [
         'width'          => $data['width'] . '%',
+        'min-width'      => $data['width'] . '%',
         'margin'         => $margin_value,
         'padding'        => TemplateHelpers::get_spacing_value( isset( $data['padding'] ) ? $data['padding'] : [] ),
         'float'          => $float_value,

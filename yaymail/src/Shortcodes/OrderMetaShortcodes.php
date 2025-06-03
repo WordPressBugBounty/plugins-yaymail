@@ -17,6 +17,46 @@ class OrderMetaShortcodes {
     protected function __construct() {
         $this->logger = new Logger();
         add_filter( 'yaymail_extra_shortcodes', [ $this, 'get_order_meta_shortcodes' ], 10, 2 );
+        add_filter( 'yaymail_extra_shortcodes', [ $this, 'get_order_tax_shortcodes' ], 10, 2 );
+    }
+
+    public function get_order_tax_shortcodes( $shortcodes, $data ) {
+        $order = $data['render_data']['order'] ?? null;
+
+        if ( ! $order ) {
+            return $shortcodes;
+        }
+
+        $tax_items = $order->get_items( 'tax' );
+
+        foreach ( $tax_items as $item_id => $item_tax ) {
+            $tax_rate_id   = $item_tax->get_rate_id();
+            $new_shortcode = [
+                'name'          => "yaymail_order_taxes_{$tax_rate_id}",
+                'description'   => $item_tax->get_label(),
+                'group'         => 'order_taxes',
+                'callback'      => [ $this, 'order_tax_callback' ],
+                'callback_args' => [
+                    'item_tax' => $item_tax,
+                ],
+            ];
+            $shortcodes[]  = $new_shortcode;
+        }
+
+        return $shortcodes;
+    }
+
+    public function order_tax_callback( $data, $shortcode_attrs = [] ) {
+        $item_tax = $data['item_tax'] ?? '';
+
+        if ( empty( $item_tax ) || ! is_object( $item_tax ) ) {
+            return '';
+        }
+
+        $tax_amount_total   = $item_tax->get_tax_total();
+        $tax_shipping_total = $item_tax->get_shipping_tax_total();
+        $totals_taxes       = $tax_amount_total + $tax_shipping_total;
+        return wc_price( $totals_taxes );
     }
 
     /**

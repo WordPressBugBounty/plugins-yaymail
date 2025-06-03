@@ -30,20 +30,28 @@ class ProductModel {
      *   - 'page_num' (number): The page number for paginating results. Default is "1".
      *   - 'page_size' (number): The number of terms to retrieve per page. Default is "20".
      *   - 'term_type' (string): The type of terms to retrieve. Could be "product_cat" | "product_tag" | null | ''. (null | '' is for Product)
+     * @param array $field_mapping An associative array of field mapping for the term retrieval.
+     *   - 'id' (string): The field name for the term ID. Default is "id".
+     *   - 'name' (string): The field name for the term name. Default is "name".
      *
      * @return array An associative array containing the retrieved terms.
      *   - 'list' (array): An array of term data, each with 'id' and 'name' fields.
      *   - 'next_page' (number|false): The token for the next page of results, if available.
      */
-    public function get_terms( $params ) {
+    public function get_terms( $params, $field_mapping = [
+        'id'   => 'id',
+        'name' => 'name',
+    ] ) {
         $page_data = $this->get_terms_page( isset( $params['term_type'] ) ? $params['term_type'] : '', $params['search_string'] ?? '', $params['page_num'] ?? 1, $params['page_size'] ?? 20 );
 
         $result = [
             'list'      => array_map(
-                function( $item ) {
+                function( $item ) use ( $field_mapping ) {
+                    $id_field   = $field_mapping['id'] ?? 'id';
+                    $name_field = $field_mapping['name'] ?? 'name';
                     return [
-                        'id'   => isset( $item->category_nicename ) ? $item->category_nicename : $item->id,
-                        'name' => $item->name,
+                        'id'   => strval( isset( $item->{$id_field} ) ? $item->{$id_field} : $item->id ),
+                        'name' => isset( $item->{$name_field} ) ? $item->{$name_field} : $item->name,
                     ];
                 },
                 $page_data['list']

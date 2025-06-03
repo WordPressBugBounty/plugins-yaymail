@@ -69,8 +69,19 @@ class NoticeMain {
 
         $yaymail_addons = array_filter(
             $plugins,
-            function ( $key ) {
-                return strpos( $key, 'yaymail-addon' ) !== false || strpos( $key, 'email-customizer' ) !== false || strpos( $key, 'yaymail-premium-addon' ) !== false || strpos( $key, 'yaymail-conditional-logic' ) !== false;
+            function ( $key ) use ( $plugins ) {
+                if ( ! is_string( $key ) ) {
+                    return false;
+                }
+                $plugin_data           = $plugins[ $key ];
+                $is_yaycommerce_author = isset( $plugin_data['Author'] ) && strpos( $plugin_data['Author'], 'YayCommerce' ) !== false;
+
+                return $is_yaycommerce_author && (
+                    strpos( $key, 'yaymail-addon' ) !== false ||
+                    strpos( $key, 'email-customizer' ) !== false ||
+                    strpos( $key, 'yaymail-premium-addon' ) !== false ||
+                    strpos( $key, 'yaymail-conditional-logic' ) !== false
+                );
             },
             ARRAY_FILTER_USE_KEY
         );

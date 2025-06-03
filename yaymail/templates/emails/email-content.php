@@ -40,11 +40,11 @@ $style_container_wrap = TemplateHelpers::get_style(
 if ( ! empty( $template ) ) :
     ?>
 
-    <?php do_action( 'yaymail_before_email_content', $template ); ?>
+    <?php do_action( 'yaymail_before_email_content', $template, $render_data ); ?>
     <table style="<?php echo esc_attr( $style_container_wrap ); ?>" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
         <tr>
             <td style="padding: 0;">
-                <table class="yaymail-template-content-container" style="width: <?php echo esc_attr( $container_width ); ?>px; margin: auto;border-spacing: 0;padding: 50px 0 20px;">
+                <table class="yaymail-template-content-container" style="width: <?php echo esc_attr( $container_width ); ?>px; margin: auto;border-spacing: 0;">
                     <tr>
                         <td style="padding: 0;">
                             <table style="<?php echo esc_attr( $style_container ); ?>" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" class="yaymail-customizer-email-template-container <?php echo esc_attr( 'yaymail-template-' . $template->get_name() ); ?>">
@@ -56,5 +56,5 @@ if ( ! empty( $template ) ) :
             </td>
         </tr>
     </table>
-    <?php do_action( 'yaymail_after_email_content', $template ); ?>
+    <?php do_action( 'yaymail_after_email_content', $template, $render_data ); ?>
 <?php endif; ?>

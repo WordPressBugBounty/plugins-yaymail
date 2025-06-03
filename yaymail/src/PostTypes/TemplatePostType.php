@@ -27,7 +27,6 @@ class TemplatePostType {
     protected function init_hooks() {
         // Register Custom Post Type for YayMail Template
         add_action( 'init', [ $this, 'register_template_post_type' ], 20 );
-
     }
 
     public function register_template_post_type() {
@@ -46,8 +45,8 @@ class TemplatePostType {
         ];
         $args   = [
             'labels'              => $labels,
-            'public'              => true,
-            'publicly_queryable'  => true,
+            'public'              => false,
+            'publicly_queryable'  => false,
             'show_ui'             => false,
             'query_var'           => true,
             'rewrite'             => true,
@@ -60,5 +59,4 @@ class TemplatePostType {
         ];
         register_post_type( self::POST_TYPE, $args );
     }
-
 }

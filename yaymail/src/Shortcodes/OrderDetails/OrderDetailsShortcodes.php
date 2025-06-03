@@ -176,12 +176,34 @@ class OrderDetailsShortcodes extends BaseShortcode {
             'name'        => 'yaymail_order_details',
             'description' => __( 'Order Details', 'yaymail' ),
             'group'       => 'order_details',
+            'attributes'  => [
+                'product_title'          => 'Product',
+                'quantity_title'         => 'Quantity',
+                'price_title'            => 'Price',
+                'total_title'            => 'Total',
+                'cart_subtotal_title'    => 'Subtotal',
+                'shipping_title'         => 'Shipping',
+                'payment_method_title'   => 'Payment method',
+                'order_total_title'      => 'Total',
+                'show_product_item_cost' => 'false',
+            ],
             'callback'    => [ $this, 'yaymail_order_details' ],
         ];
         $shortcodes[] = [
             'name'        => 'yaymail_order_details_download_product',
             'description' => __( 'Order Details Download Product', 'yaymail' ),
             'group'       => '',
+            'attributes'  => [
+                'product_title'          => 'Product',
+                'quantity_title'         => 'Quantity',
+                'price_title'            => 'Price',
+                'total_title'            => 'Total',
+                'cart_subtotal_title'    => 'Subtotal',
+                'shipping_title'         => 'Shipping',
+                'payment_method_title'   => 'Payment method',
+                'order_total_title'      => 'Total',
+                'show_product_item_cost' => 'false',
+            ],
             'callback'    => [ $this, 'yaymail_order_details_download_product' ],
         ];
 
@@ -560,7 +582,7 @@ class OrderDetailsShortcodes extends BaseShortcode {
             /**
              * Is sample order
              */
-            return 0;
+            return wc_price( 0 );
         }
 
         $order = Helpers::get_order_from_shortcode_data( $render_data );
@@ -584,7 +606,7 @@ class OrderDetailsShortcodes extends BaseShortcode {
             }
         }
 
-        return $refund;
+        return wc_price( $refund, [ 'currency' => $order->get_currency() ] );
     }
 
     public function yaymail_order_subtotal( $data ) {
@@ -638,7 +660,7 @@ class OrderDetailsShortcodes extends BaseShortcode {
             return '';
         }
 
-        return wc_price( $order->get_total() );
+        return wc_price( $order->get_total(), [ 'currency' => $order->get_currency() ] );
     }
 
     public function yaymail_order_total_value( $data ) {

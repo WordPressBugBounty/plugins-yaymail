@@ -1,8 +1,10 @@
 <?php
 namespace YayMail;
 
+use YayMail\Elements\ElementsHelper;
 use YayMail\Models\TemplateModel;
 use YayMail\Utils\Helpers;
+use YayMail\Utils\TemplateHelpers;
 use YayMail\Utils\TemplateRenderer;
 
 /**
@@ -68,6 +70,7 @@ class YayMailTemplate {
             }
             $this->set_id( $template_data['id'] );
             $this->set_props( $template_data );
+            // TODO: Consider filter available elements before pass to props
             $this->renderer = new TemplateRenderer( $this );
         }
     }
@@ -121,7 +124,8 @@ class YayMailTemplate {
     }
 
     public function get_elements( $context = 'view' ) {
-        return $this->get_prop( 'elements', $context );
+        $elements = $this->get_prop( 'elements', $context );
+        return ElementsHelper::filter_available_elements( $elements, $this->get_name() );
     }
 
     public function get_status( $context = 'view' ) {
@@ -137,7 +141,8 @@ class YayMailTemplate {
     }
 
     public function get_background_color( $context = 'view' ) {
-        return $this->get_prop( 'background_color', $context );
+        $color = $this->get_prop( 'background_color', $context );
+        return TemplateHelpers::convert_rgb_to_hex( $color );
     }
 
     public function get_text_link_color( $context = 'view' ) {
