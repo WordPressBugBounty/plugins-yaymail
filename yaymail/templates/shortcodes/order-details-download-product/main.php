@@ -43,13 +43,13 @@ if ( ! empty( $order_data ) ) :
         ?>
     <tbody style="<?php echo esc_attr( $table_td_style ); ?>">
         <tr style="<?php echo esc_attr( $table_td_style ); ?>">
-            <th class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>"><?php yaymail_kses_post_e( $product_title ); ?></th>
-            <th class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>"><?php yaymail_kses_post_e( $expires_title ); ?></th>
-            <th class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>"><?php yaymail_kses_post_e( $download_title ); ?></th>
+            <th class="td yaymail-order-details-download-title--product" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>"><?php yaymail_kses_post_e( $product_title ); ?></th>
+            <th class="td yaymail-order-details-download-title--expires" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>"><?php yaymail_kses_post_e( $expires_title ); ?></th>
+            <th class="td yaymail-order-details-download-title--download" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>"><?php yaymail_kses_post_e( $download_title ); ?></th>
         </tr>
         <?php foreach ( $downloads as $download ) : ?>
         <tr style="<?php echo esc_attr( $table_td_style ); ?>">
-            <td class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
+            <td class="td yaymail-order-details-download-content--product" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
             <?php
             if ( $show_product_image ) :
                 $product        = wc_get_product( $download['product_id'] );
@@ -101,14 +101,14 @@ if ( ! empty( $order_data ) ) :
 
                 
             </td>
-            <td class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
+            <td class="td yaymail-order-details-download-content--expires" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
                 <?php if ( ! empty( $download['access_expires'] ) ) : ?>
                     <time datetime="<?php echo esc_attr( gmdate( 'Y-m-d', strtotime( $download['access_expires'] ) ) ); ?>" title="<?php echo esc_attr( strtotime( $download['access_expires'] ) ); ?>"><?php echo esc_html( date_i18n( get_option( 'date_format' ), strtotime( $download['access_expires'] ) ) ); ?></time>
                 <?php else : ?>
                     <span><?php esc_html_e( 'Never', 'woocommerce' ); ?></span>
                 <?php endif; ?>
             </td>
-            <td class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
+            <td class="td yaymail-order-details-download-content--download" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
                 <a href="<?php echo esc_url( $download['download_url'] ); ?>" style="<?php echo esc_attr( $table_link_style ); ?>" ><?php echo esc_html( $download['download_name'] ); ?></a>
             </td>
         </tr>

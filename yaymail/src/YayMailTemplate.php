@@ -6,6 +6,7 @@ use YayMail\Models\TemplateModel;
 use YayMail\Utils\Helpers;
 use YayMail\Utils\TemplateHelpers;
 use YayMail\Utils\TemplateRenderer;
+use YayMail\Utils\StyleInline;
 
 /**
  * YayMail Template
@@ -239,7 +240,7 @@ class YayMailTemplate {
     public function get_content( $data ) {
         try {
             if ( ! empty( $this->renderer ) ) {
-                return $this->renderer->generate_content( $data );
+                return StyleInline::get_instance()->convert_style_inline( $this->renderer->generate_content( $data ) );
             }
         } catch ( \Exception $e ) {
             yaymail_get_logger( $e->getMessage() );

@@ -34,6 +34,7 @@ class ProductController extends BaseController {
                 ],
             ]
         );
+
         register_rest_route(
             YAYMAIL_REST_NAMESPACE,
             '/product/tags',
@@ -61,10 +62,20 @@ class ProductController extends BaseController {
 
     /**
      * Handle get product categories
+     *
+     * @param \WP_REST_Request $request The request object.
+     * @return array The response data.
      */
     public function exec_get_categories( \WP_REST_Request $request ) {
         return $this->exec( [ $this, 'get_categories' ], $request );
     }
+
+    /**
+     * Get product categories
+     *
+     * @param \WP_REST_Request $request The request object.
+     * @return array The product categories data.
+     */
     public function get_categories( \WP_REST_Request $request ) {
         $params['search_string'] = sanitize_text_field( $request->get_param( 'search_string' ) );
         $params['page_num']      = sanitize_text_field( $request->get_param( 'page_num' ) );
@@ -76,12 +87,23 @@ class ProductController extends BaseController {
         return $result;
     }
 
+
     /**
      * Handle get product tags
+     *
+     * @param \WP_REST_Request $request The request object.
+     * @return array The response data.
      */
     public function exec_get_tags( \WP_REST_Request $request ) {
         return $this->exec( [ $this, 'get_tags' ], $request );
     }
+
+    /**
+     * Get product tags
+     *
+     * @param \WP_REST_Request $request The request object.
+     * @return array The product tags data.
+     */
     public function get_tags( \WP_REST_Request $request ) {
         $params['search_string'] = sanitize_text_field( $request->get_param( 'search_string' ) );
         $params['page_num']      = sanitize_text_field( $request->get_param( 'page_num' ) );
@@ -94,10 +116,20 @@ class ProductController extends BaseController {
 
     /**
      * Handle get products
+     *
+     * @param \WP_REST_Request $request The request object.
+     * @return array The response data.
      */
     public function exec_get_products( \WP_REST_Request $request ) {
         return $this->exec( [ $this, 'get_products' ], $request );
     }
+
+    /**
+     * Get products
+     *
+     * @param \WP_REST_Request $request The request object.
+     * @return array The products data.
+     */
     public function get_products( \WP_REST_Request $request ) {
         $params['search_string'] = sanitize_text_field( $request->get_param( 'search_string' ) );
         $params['page_num']      = sanitize_text_field( $request->get_param( 'page_num' ) );

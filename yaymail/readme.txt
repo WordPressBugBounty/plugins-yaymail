@@ -4,7 +4,7 @@ Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: email customizer, email templates, marketing, woocommerce emails, design
 Requires at least: 3.0
 Tested up to: 6.8
-Stable tag: 4.0.4
+Stable tag: 4.0.5
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -233,6 +233,15 @@ We offer single-site licenses and also unlimited site licenses to better support
 9. Break free from default WooCommerce styles, go bold with dark theme email templates
 
 == Changelog ==
+
+= Jun 6, 2025 - Version 4.0.5 =
+- Added: Hooks for controlling priority when getting YayMail template (yaymail_email_render_priority)
+- Added: Classes for Order Items Download children, easily custom CSS styling
+- Fixed: Addons not getting update automatically
+- Fixed: Some inline styles not applying to email content
+- Fixed: Missing close tag for td tag in order items template
+- Fixed: Getting order id wrong way in order items template
+- Updated: Add whitelist email template for Tracking Information by Zorem element
 
 = Jun 3, 2025 - Version 4.0.4 =
 - Fixed: 'Migrate' button remains available after migrations have succeeded

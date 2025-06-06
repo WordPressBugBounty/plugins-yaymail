@@ -4,10 +4,11 @@ defined( 'ABSPATH' ) || exit;
 
 use YayMail\Utils\TemplateHelpers;
 
-$text_align         = yaymail_get_text_align();
-$margin_side        = is_rtl() ? 'left' : 'right';
-$order_id           = isset( $args['order'] ) ? $args['order']->id : '';
-$order_data         = isset( $order_id ) ? wc_get_order( $order_id ) : '';
+$text_align  = yaymail_get_text_align();
+$margin_side = is_rtl() ? 'left' : 'right';
+$order_id    = isset( $args['order'] ) ? $args['order']->get_id() : '';
+$order_data  = isset( $order_id ) ? wc_get_order( $order_id ) : '';
+
 $element_data       = isset( $args['element']['data'] ) ? $args['element']['data'] : [];
 $text_style         = isset( $args['text_style'] ) ? $args['text_style'] : '';
 $image_style        = isset( $args['styles_product_image'] ) ? $args['styles_product_image'] : '';
@@ -156,6 +157,7 @@ foreach ( $order_items as $item_id => $item ) :
                     break;
             endswitch;
             ?>
+            </td>
         <?php endforeach; ?>
     </tr>
     <?php

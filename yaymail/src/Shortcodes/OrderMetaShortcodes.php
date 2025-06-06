@@ -83,7 +83,7 @@ class OrderMetaShortcodes {
         foreach ( $metadata as $meta_item ) {
             $data = $meta_item->get_data();
 
-            $field = $data['key'];
+            $field = Helpers::to_snake_case( $data['key'] );
 
             $description = Helpers::snake_case_to_capitalized_words( $field ) . ' (' . $field . ')';
 

@@ -14,7 +14,6 @@ if ( empty( $args['element'] ) ) {
 }
 
 $element = $args['element'];
-$data    = $element['data'];
 
 $template_model       = TemplateModel::get_instance();
 $global_header_footer = $template_model->get_global_header_and_footer();

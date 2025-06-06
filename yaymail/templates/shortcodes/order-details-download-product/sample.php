@@ -39,12 +39,12 @@ $table_link_style = TemplateHelpers::get_style(
 
 <tbody style="<?php echo esc_attr( $table_td_style ); ?>">
     <tr style="<?php echo esc_attr( $table_td_style ); ?>">
-        <th class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>"><?php yaymail_kses_post_e( $product_title ); ?></th>
-        <th class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>"><?php yaymail_kses_post_e( $expires_title ); ?></th>
-        <th class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>"><?php yaymail_kses_post_e( $download_title ); ?></th>
+        <th class="td yaymail-order-details-download-title--product" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>"><?php yaymail_kses_post_e( $product_title ); ?></th>
+        <th class="td yaymail-order-details-download-title--expires" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>"><?php yaymail_kses_post_e( $expires_title ); ?></th>
+        <th class="td yaymail-order-details-download-title--download" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>"><?php yaymail_kses_post_e( $download_title ); ?></th>
     </tr>
     <tr style="<?php echo esc_attr( $table_td_style ); ?>">
-        <td class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
+        <td class="td yaymail-order-details-download-content--product" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
         <?php
         if ( $show_product_image ) :
             $image_url      = wc_placeholder_img_src();
@@ -89,10 +89,10 @@ $table_link_style = TemplateHelpers::get_style(
             </a>
             <?php endif; ?>
         </td>
-        <td class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
+        <td class="td yaymail-order-details-download-content--expires" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
             <time datetime="2021-02-13" title="1613174400"> <?php echo wp_kses_post( wc_format_datetime( new WC_DateTime() ) ); ?></time>
         </td>
-        <td class="td" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
+        <td class="td yaymail-order-details-download-content--download" colspan="1" scope="col" style="<?php echo esc_attr( $table_td_style ); ?>">
             <a href="" style="<?php echo esc_attr( $table_link_style ); ?>" ><?php esc_html_e( 'Download.doc', 'yaymail' ); ?></a>
         </td>
     </tr>

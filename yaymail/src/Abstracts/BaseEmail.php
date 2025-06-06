@@ -57,6 +57,13 @@ abstract class BaseEmail {
     public $template = null;
 
     /**
+     * Render priority
+     *
+     * @var int
+     */
+    protected $render_priority = YAYMAIL_EMAIL_RENDER_PRIORITY;
+
+    /**
      * Callback for yaymail_emails hook
      * Return this email data
      */

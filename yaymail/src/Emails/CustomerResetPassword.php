@@ -28,7 +28,8 @@ class CustomerResetPassword extends BaseEmail {
         $this->root_email = $email;
         $this->recipient  = function_exists( 'yaymail_get_email_recipient_zone' ) ? yaymail_get_email_recipient_zone( $email ) : '';
 
-        add_filter( 'wc_get_template', [ $this, 'get_template_file' ], 10, 3 );
+        $this->render_priority = apply_filters( 'yaymail_email_render_priority', $this->render_priority, $this->id );
+        add_filter( 'wc_get_template', [ $this, 'get_template_file' ], $this->render_priority ?? 10, 3 );
     }
 
     public function get_default_elements() {

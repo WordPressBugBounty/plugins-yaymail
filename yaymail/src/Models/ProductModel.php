@@ -29,7 +29,7 @@ class ProductModel {
      *   - 'search_string' (string): The search string to filter terms. Default is an empty string.
      *   - 'page_num' (number): The page number for paginating results. Default is "1".
      *   - 'page_size' (number): The number of terms to retrieve per page. Default is "20".
-     *   - 'term_type' (string): The type of terms to retrieve. Could be "product_cat" | "product_tag" | null | ''. (null | '' is for Product)
+     *   - 'term_type' (string): The type of terms to retrieve. Could be "product_cat" | "product_tag" | null | ''. (null | '' is for Product).
      * @param array $field_mapping An associative array of field mapping for the term retrieval.
      *   - 'id' (string): The field name for the term ID. Default is "id".
      *   - 'name' (string): The field name for the term name. Default is "name".
@@ -508,12 +508,13 @@ class ProductModel {
          * @param string $search_string The search string to filter terms or products by name. Default is an empty string.
          * @param int    $page_num The page number for paginating results. Default is 1.
          * @param int    $page_size The number of terms to retrieve per page. Default is 10.
+         * @param array  $optional_args Optional WP_Query arguments to merge with default arguments.
          *
          * @return array An associative array containing the retrieved terms or products.
          *   - 'list' (array): An array of term or product data, each with 'id' and 'name' fields.
          *   - 'next_page' (int|false): The page number for the next page of results, or false if no more pages are available.
          */
-    private function get_terms_page( $taxonomy, $search_string = '', $page_num = 1, $page_size = 10 ) {
+    private function get_terms_page( $taxonomy, $search_string = '', $page_num = 1, $page_size = 10, $optional_args = [] ) {
 
         // if ( class_exists( 'SitePress' ) ) {
         // do_action( 'wpml_switch_language', $active_language );

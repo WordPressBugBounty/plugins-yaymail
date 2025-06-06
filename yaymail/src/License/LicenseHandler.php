@@ -121,10 +121,10 @@ class LicenseHandler {
         }
     }
 
-    public static function get_plugin_data( $plugin_info ) {
+    public static function get_plugin_data( $plugin_info = [] ) {
         $plugin_data = [
-            'Name'       => 'YayMail - WooCommerce Email Customizer',
-            'Version'    => YAYMAIL_VERSION,
+            'Name'       => $plugin_info['name'] ?? 'YayMail - WooCommerce Email Customizer',
+            'Version'    => $plugin_info['version'] ?? YAYMAIL_VERSION,
             'AuthorName' => 'YayCommerce',
         ];
         return $plugin_data;
@@ -171,7 +171,7 @@ class LicenseHandler {
         }
     }
 
-    public function plugin_notifications( $file, $plugin_info ) {
+    public function plugin_notifications( $file ) {
         $licensing_plugins = $this->get_licensing_plugins();
         $match_position    = array_search( $file, array_column( $licensing_plugins, 'basename' ) );
         if ( false === $match_position ) {

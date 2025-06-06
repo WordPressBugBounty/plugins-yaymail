@@ -118,7 +118,6 @@ if ( ! function_exists( 'yaymail_kses_post' ) ) {
      */
     function yaymail_kses_post( $html ) {
         $allowed_html = TemplateHelpers::wp_kses_allowed_html();
-        $html         = StyleInline::get_instance()->convert_style_inline( $html );
         return wp_kses( $html, $allowed_html );
     }
 }
@@ -136,7 +135,6 @@ if ( ! function_exists( 'yaymail_kses_post_e' ) ) {
     function yaymail_kses_post_e( $html ) {
         if ( ! empty( $html ) ) {
             $allowed_html = TemplateHelpers::wp_kses_allowed_html();
-            $html         = StyleInline::get_instance()->convert_style_inline( $html );
             echo wp_kses( $html, $allowed_html );
         } else {
             echo '';
