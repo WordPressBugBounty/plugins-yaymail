@@ -3,12 +3,12 @@
  * Plugin Name: YayMail - WooCommerce Email Customizer
  * Plugin URI: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
  * Description: Create awesome transactional emails with a drag and drop email builder
- * Version: 4.0.6
+ * Version: 4.0.7
  * Author: YayCommerce
  * Author URI: https://yaycommerce.com
  * Text Domain: yaymail
  * WC requires at least: 3.0.0
- * WC tested up to: 9.9.3
+ * WC tested up to: 9.9
  * Domain Path: /i18n/languages/
  *
  * @package YayMail
@@ -27,7 +27,7 @@ if ( ! defined( 'YAYMAIL_DEBUG' ) ) {
 }
 
 if ( ! defined( 'YAYMAIL_VERSION' ) ) {
-    define( 'YAYMAIL_VERSION', '4.0.6' );
+    define( 'YAYMAIL_VERSION', '4.0.7' );
 }
 
 if ( ! defined( 'YAYMAIL_PLUGIN_URL' ) ) {
@@ -110,10 +110,23 @@ if ( ! function_exists( 'YayMail\\init' ) ) {
             add_action( 'before_woocommerce_init', 'YayMail\\yaymail_enable_compatible_hpos' );
             do_action( 'yaymail_before_init' );
 
+            $version_current        = YAYMAIL_VERSION;
+            $version_old            = get_option( 'yaymail_version' );
+            $version_current_backup = get_option( 'yaymail_version_backup' );
+
+            if ( $version_current !== $version_old ) {
+                if ( $version_current_backup !== $version_current ) {
+                    \YayMail\Migrations\MainMigration::get_instance()->migrate();
+
+                    update_option( 'yaymail_version', YAYMAIL_VERSION );
+                    update_option( 'yaymail_version_backup', YAYMAIL_VERSION );
+                }
+            }
+
             \YayMail\Initialize::get_instance();
-        }
+        }//end if
     }
-}
+}//end if
 
 if ( ! function_exists( 'yaymail_enable_compatible_hpos' ) ) {
     function yaymail_enable_compatible_hpos() {
@@ -138,17 +151,3 @@ if ( ! wp_installing() ) {
 
 register_activation_hook( __FILE__, [ \YayMail\Engine\ActDeact::class, 'activate' ] );
 register_deactivation_hook( __FILE__, [ \YayMail\Engine\ActDeact::class, 'deactivate' ] );
-
-if ( ! function_exists( 'YayMail\\on_update' ) ) {
-    function on_update( $upgrader_object, $options ) {
-        // The path to our plugin's main file
-        $our_plugin = plugin_basename( __FILE__ );
-        // If an update has taken place and the updated type is plugins and the plugins element exists
-        if ( $options['action'] === 'update' && $options['type'] === 'plugin' && isset( $options['plugins'] ) ) {
-            if ( in_array( $our_plugin, $options['plugins'], true ) ) {
-                \YayMail\Migrations\MainMigration::get_instance()->migrate();
-            }
-        }
-    }
-}
-add_action( 'upgrader_process_complete', 'YayMail\\on_update', 10, 2 );

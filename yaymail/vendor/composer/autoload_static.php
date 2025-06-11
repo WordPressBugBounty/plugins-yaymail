@@ -129,6 +129,7 @@ class ComposerStaticInitYayMail
         'YayMail\\Migrations\\MainMigration' => __DIR__ . '/../..' . '/src/Migrations/MainMigration.php',
         'YayMail\\Migrations\\MigrationHelper' => __DIR__ . '/../..' . '/src/Migrations/MigrationHelper.php',
         'YayMail\\Migrations\\Versions\\Ver_4_0_0' => __DIR__ . '/../..' . '/src/Migrations/Versions/Ver_4_0_0.php',
+        'YayMail\\Migrations\\Versions\\Ver_4_0_7' => __DIR__ . '/../..' . '/src/Migrations/Versions/Ver_4_0_7.php',
         'YayMail\\Models\\MigrationModel' => __DIR__ . '/../..' . '/src/Models/MigrationModel.php',
         'YayMail\\Models\\ProductModel' => __DIR__ . '/../..' . '/src/Models/ProductModel.php',
         'YayMail\\Models\\SettingModel' => __DIR__ . '/../..' . '/src/Models/SettingModel.php',

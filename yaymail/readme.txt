@@ -4,7 +4,7 @@ Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: email customizer, email templates, marketing, woocommerce emails, design
 Requires at least: 3.0
 Tested up to: 6.8
-Stable tag: 4.0.6
+Stable tag: 4.0.7
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -233,6 +233,11 @@ We offer single-site licenses and also unlimited site licenses to better support
 9. Break free from default WooCommerce styles, go bold with dark theme email templates
 
 == Changelog ==
+
+= Jun 11, 2025 - Version 4.0.7 =
+- Fixed: Breaking page issue when adding pattern which has column element
+- Fixed: Error when running class migration
+- Added: Remove payment instruction option and switch to shortcode
 
 = Jun 10, 2025 - Version 4.0.6 =
 - Added: Template for Customer POS Completed email

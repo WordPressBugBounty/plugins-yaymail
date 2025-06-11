@@ -50,10 +50,6 @@ $payment_instructions_style = TemplateHelpers::get_style(
 
 ob_start();
 ?>
-
-<?php if ( TemplateHelpers::is_show_payment_instructions( $payment_display_mode, $template_name ) ) : ?>
-<div class="yaymail-order-payment-instructions" style="<?php echo esc_attr( $payment_instructions_style ); ?>"> <span><?php echo wp_kses_post( do_shortcode( $data['payment_instructions'] ) ); ?></span> </div>
-<?php endif; ?>
 <div class="yaymail-order-details-title" style="<?php echo esc_attr( $table_title_style ); ?>" > <?php echo wp_kses_post( do_shortcode( $data['title'] ) ); ?> </div>
 <?php
 $element_content = ob_get_contents();

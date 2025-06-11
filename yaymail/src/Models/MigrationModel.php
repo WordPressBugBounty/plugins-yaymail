@@ -217,8 +217,21 @@ class MigrationModel {
         $successful_migrations = get_option( AbstractMigration::SUCCESSFUL_MIGRATIONS, [] );
 
         // If freshly installed or already on latest version with no migrations needed
-        if ( empty( $old_version ) || ( version_compare( $old_version, $new_version, '>=' ) && empty( $successful_migrations ) ) ) {
+        if ( ( version_compare( $old_version, $new_version, '>=' ) && empty( $successful_migrations ) ) ) {
             return apply_filters( 'yaymail_required_migration_names', [] );
+        }
+
+        $args = [
+            'post_type'      => 'yaymail_template',
+            'post_status'    => 'any',
+            'posts_per_page' => -1,
+        ];
+
+        $query = new \WP_Query( $args );
+
+        $has_yaymail_template = $query->have_posts();
+        if ( ( $old_version == null && ! $has_yaymail_template ) && empty( $successful_migrations ) ) {
+            return [];
         }
 
         // Check if any migrations have already been run up to current version

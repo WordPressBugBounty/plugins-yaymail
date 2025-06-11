@@ -145,40 +145,6 @@ class TemplateHelpers {
         return $is_placeholder && ! empty( $key ) ? "[[{$key}]]" : $default;
     }
 
-    public static function is_show_payment_instructions( $payment_display_mode, $email_id ) {
-        $all_emails = \YayMail\Models\TemplateModel::find_all();
-
-        $all_emails_ids = array_map(
-            function( $email ) {
-                return $email['name'];
-            },
-            $all_emails
-        );
-
-        $customer_emails_ids = array_map(
-            function( $email ) {
-                return $email['name'];
-            },
-            array_filter(
-                $all_emails,
-                function( $email ) {
-                    return $email['recipient'] === __( 'Customer', 'yaymail' );
-                }
-            )
-        );
-
-        switch ( $payment_display_mode ) {
-            case 'no':
-                return false;
-            case 'yes':
-                return in_array( $email_id, $all_emails_ids, true );
-            case 'customer':
-                return in_array( $email_id, $customer_emails_ids, true );
-            default:
-                return false;
-        }
-    }
-
     public static function get_booking_from_order( $order ) {
         $booking_ids = [];
 

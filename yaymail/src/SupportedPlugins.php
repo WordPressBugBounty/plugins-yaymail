@@ -1385,6 +1385,7 @@ class SupportedPlugins {
                 'WC_Email_Customer_Refunded_Order',
                 'WC_Email_Customer_Reset_Password',
                 'WC_Email_Failed_Order',
+                'WC_Email_Customer_Failed_Order',
                 'WC_Email_New_Order',
             ]
         );

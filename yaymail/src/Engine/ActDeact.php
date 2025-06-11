@@ -13,7 +13,6 @@ class ActDeact {
     protected function __construct() {}
 
     public static function activate() {
-        MainMigration::get_instance()->migrate();
     }
 
     public static function deactivate() {

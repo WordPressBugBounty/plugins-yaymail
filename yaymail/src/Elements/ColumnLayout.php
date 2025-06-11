@@ -30,7 +30,7 @@ class ColumnLayout extends BaseElement {
                     'value_path'    => 'amount_of_columns',
                     'default_value' => $amount,
                 ],
-                'column_width'           => [
+                'column_width'           => 1 == $amount ? [] : [
                     'value_path' => 'column_width',
                     'component'  => 'ColumnWidth',
                     'title'      => __( 'Column width (%)', 'yaymail' ),

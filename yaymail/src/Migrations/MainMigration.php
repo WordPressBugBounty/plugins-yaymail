@@ -18,7 +18,7 @@ class MainMigration {
 
     const CORE_MIGRATIONS = [
         '4.0.0' => '\YayMail\Migrations\Versions\Ver_4_0_0',
-        // '4.1.0' => '\YayMail\Migrations\Versions\Ver_4_1_0',
+        '4.0.7' => '\YayMail\Migrations\Versions\Ver_4_0_7',
     ];
 
     private function __construct() {
@@ -34,10 +34,20 @@ class MainMigration {
     }
 
     public function migrate( $skip_check_migration = false ) {
-        if ( ! $skip_check_migration && empty( $this->old_version ) ) {
+        $args = [
+            'post_type'      => 'yaymail_template',
+            'post_status'    => 'any',
+            'posts_per_page' => -1,
+        ];
+
+        $query = new \WP_Query( $args );
+
+        $has_yaymail_template = $query->have_posts();
+        if ( ! $skip_check_migration && ( empty( $this->old_version ) && ! $has_yaymail_template ) ) {
             $this->logger->log( 'YayMail is freshly installed, no migrations needed!' );
             return false;
         }
+
         $this->logger->log( '***** Start migration transaction *****' );
         global $wpdb;
         $wpdb->query( 'START TRANSACTION' );

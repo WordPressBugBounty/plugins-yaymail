@@ -102,7 +102,11 @@ abstract class BaseElement {
         $data           = $element['data'];
         $formatted_data = [];
         foreach ( $data as $key => $value ) {
-            $formatted_data[ $key ] = $value['default_value'] ?? $value;
+            $fallback_value = $value;
+            if ( isset( $value['value_path'] ) ) {
+                $fallback_value = '';
+            }
+            $formatted_data[ $key ] = $value['default_value'] ?? $fallback_value;
         }
 
         $element['data'] = $formatted_data;

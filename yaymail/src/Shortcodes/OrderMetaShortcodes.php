@@ -87,11 +87,16 @@ class OrderMetaShortcodes {
 
             $description = Helpers::snake_case_to_capitalized_words( $field ) . ' (' . $field . ')';
 
+            $callback = 'order_meta_callback';
+            if ( $field === 'pickup_date' || $field === 'delivery_date' ) {
+                $callback = 'date_meta_callback';
+            }
+
             $new_shortcode = [
                 'name'          => "yaymail_order_meta:{$field}",
                 'description'   => $description,
                 'group'         => 'order_meta',
-                'callback'      => [ $this, 'order_meta_callback' ],
+                'callback'      => [ $this, $callback ],
                 'callback_args' => [
                     'meta_item' => $meta_item,
                     'field'     => $field,
@@ -139,6 +144,27 @@ class OrderMetaShortcodes {
             ? $value['extra']
                 : implode( ', ', array_map( 'strval', $value ) );
             return str_replace( '|', '<br />', $str );
+        }
+
+        return $value;
+    }
+
+    public function date_meta_callback( $data ) {
+        $meta_item = $data['meta_item'] ?? '';
+
+        if ( empty( $meta_item ) || ! method_exists( $meta_item, 'get_data' ) ) {
+            return '';
+        }
+
+        $meta_data = $meta_item->get_data();
+        $value     = $meta_data['value'];
+
+        if ( ! is_string( $value ) ) {
+            return $value;
+        }
+
+        if ( strtotime( $value ) ) {
+            return date_i18n( wc_date_format(), strtotime( $value ) );
         }
 
         return $value;

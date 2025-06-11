@@ -97,6 +97,7 @@ return array(
     'YayMail\\Migrations\\MainMigration' => $baseDir . '/src/Migrations/MainMigration.php',
     'YayMail\\Migrations\\MigrationHelper' => $baseDir . '/src/Migrations/MigrationHelper.php',
     'YayMail\\Migrations\\Versions\\Ver_4_0_0' => $baseDir . '/src/Migrations/Versions/Ver_4_0_0.php',
+    'YayMail\\Migrations\\Versions\\Ver_4_0_7' => $baseDir . '/src/Migrations/Versions/Ver_4_0_7.php',
     'YayMail\\Models\\MigrationModel' => $baseDir . '/src/Models/MigrationModel.php',
     'YayMail\\Models\\ProductModel' => $baseDir . '/src/Models/ProductModel.php',
     'YayMail\\Models\\SettingModel' => $baseDir . '/src/Models/SettingModel.php',
