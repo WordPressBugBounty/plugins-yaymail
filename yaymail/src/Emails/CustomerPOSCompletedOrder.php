@@ -7,20 +7,21 @@ use YayMail\Elements\ElementsLoader;
 use YayMail\Utils\SingletonTrait;
 
 /**
- * CustomerProcessingOrder Class
+ * CustomerPOSCompletedOrder Class
+ * From WC 9.9.3
  *
- * @method static CustomerProcessingOrder get_instance()
+ * @since 4.0.6
+ * @method static CustomerPOSCompletedOrder get_instance()
  */
-class CustomerProcessingOrder extends BaseEmail {
+class CustomerPOSCompletedOrder extends BaseEmail {
     use SingletonTrait;
 
     protected function __construct() {
         $emails = \WC_Emails::instance()->get_emails();
-        $email  = $emails['WC_Email_Customer_Processing_Order'];
+        $email  = $emails['WC_Email_Customer_POS_Completed_Order'] ?? null;
         if ( ! $email ) {
             return;
         }
-
         $this->id         = $email->id;
         $this->title      = $email->get_title();
         $this->root_email = $email;
@@ -32,12 +33,12 @@ class CustomerProcessingOrder extends BaseEmail {
     }
 
     public function get_default_elements() {
-        $email_title = __( 'Thank you for your order ', 'woocommerce' );
+        $email_title = __( 'Thanks for shopping with us', 'woocommerce' );
         // translators: customer name.
-        $email_hi = sprintf( esc_html__( 'Hi %s,', 'woocommerce' ), '[yaymail_billing_first_name]' );
-        // translators: order id.
-        $email_text      = sprintf( esc_html__( 'Just to let you know &mdash; we\'ve received your order #%s,  and it is now being processed:', 'woocommerce' ), '[yaymail_order_number]' );
-        $additional_text = __( 'Thanks for using [yaymail_site_url]!', 'woocommerce' );
+        $email_hi        = sprintf( esc_html__( 'Hi %s,', 'woocommerce' ), '[yaymail_billing_first_name]' );
+        $email_text      = esc_html__( 'We have finished processing your order.', 'woocommerce' );
+        $additional_text = __( 'Thanks for shopping with us.', 'woocommerce' );
+        $additional_text = str_replace( '{site_url}!', '', $additional_text );
 
         $default_elements = ElementsLoader::load_elements(
             [
@@ -53,8 +54,11 @@ class CustomerProcessingOrder extends BaseEmail {
                 [
                     'type'       => 'Text',
                     'attributes' => [
-                        'rich_text' => '<p><span>' . $email_hi . '<br><br>' . $email_text . '</span></p>',
+                        'rich_text' => '<p><span>' . $email_hi . '<br /><br /></span></p><p><span>' . $email_text . '</span></p>',
                     ],
+                ],
+                [
+                    'type' => 'OrderDetailsDownload',
                 ],
                 [
                     'type' => 'OrderDetails',
@@ -79,11 +83,10 @@ class CustomerProcessingOrder extends BaseEmail {
                 ],
             ]
         );
-
         return $default_elements;
     }
 
     public function get_template_path() {
-        return YAYMAIL_PLUGIN_PATH . 'templates/emails/customer-processing-order.php';
+        return YAYMAIL_PLUGIN_PATH . 'templates/emails/customer-pos-completed-order.php';
     }
 }

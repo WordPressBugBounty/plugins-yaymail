@@ -31,13 +31,7 @@ $table_style = TemplateHelpers::get_style(
         'width'           => '100%',
         'text-align'      => yaymail_get_text_align(),
         'border-collapse' => 'separate',
-        'border-spacing'  => '5px !important',
-    ]
-);
-
-$column_wrap_style = TemplateHelpers::get_style(
-    [
-        'border' => 'solid 1px ' . $data['border_color'],
+        'border-spacing'  => '5px',
     ]
 );
 
@@ -47,6 +41,7 @@ $column_style = TemplateHelpers::get_style(
         'padding'     => '12px',
         'font-size'   => '14px',
         'font-family' => TemplateHelpers::get_font_family_value( isset( $data['font_family'] ) ? $data['font_family'] : 'inherit' ),
+        'border'      => 'solid 1px ' . $data['border_color'],
     ]
 );
 
@@ -62,27 +57,63 @@ $title_style = TemplateHelpers::get_style(
 
 ob_start();
 ?>
-<table class="yaymail-table-billing-shipping-address" style="<?php echo esc_attr( $table_style ); ?>">
+<table class="yaymail-table-billing-shipping-address" cellpadding="0" cellspacing="0" border="0" style="<?php echo esc_attr( $table_style ); ?>">
     <tbody>
         <tr>
             <?php if ( ! empty( $billing_address_html ) ) : ?>
             <td style="width: <?php echo esc_attr( $width ); ?>; vertical-align: top;">
-                <div class="yaymail-billing-title" style="<?php echo esc_attr( $title_style ); ?>" > <?php echo wp_kses_post( do_shortcode( $data['billing_title'] ) ); ?> </div>
-                <div class="yaymail-billing-address-wrap" style="<?php echo esc_attr( $column_wrap_style ); ?>">
-                    <div style="<?php echo esc_attr( $column_style ); ?>">
-                        <?php echo wp_kses_post( do_shortcode( '[yaymail_billing_address]' ) ); ?>
-                    </div>
-                </div>
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-spacing: 0;">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="yaymail-billing-title" style="<?php echo esc_attr( $title_style ); ?>"><?php echo wp_kses_post( do_shortcode( $data['billing_title'] ) ); ?></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td class="yaymail-billing-address-wrap" style="<?php echo esc_attr( $column_style ); ?>">
+                                            <div>
+                                                <?php echo wp_kses_post( do_shortcode( '[yaymail_billing_address]' ) ); ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </td>
             <?php endif; ?>
             <?php if ( ! empty( $shipping_address_html ) ) : ?>
             <td style="width: <?php echo esc_attr( $width ); ?>; vertical-align: top;">
-                <div class="yaymail-shipping-title" style="<?php echo esc_attr( $title_style ); ?>" > <?php echo wp_kses_post( do_shortcode( $data['shipping_title'] ) ); ?> </div>
-                <div class="yaymail-shipping-address-wrap" style="<?php echo esc_attr( $column_wrap_style ); ?>">
-                    <div style="<?php echo esc_attr( $column_style ); ?>">
-                        <?php echo wp_kses_post( do_shortcode( '[yaymail_shipping_address]' ) ); ?>
-                    </div>
-                </div>
+                <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-spacing: 0;">
+                    <tbody>
+                    <tr>
+                        <td>
+                            <div class="yaymail-shipping-title" style="<?php echo esc_attr( $title_style ); ?>"><?php echo wp_kses_post( do_shortcode( $data['shipping_title'] ) ); ?></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table cellpadding="0" cellspacing="0" border="0" width="100%">
+                                <tbody>
+                                    <tr>
+                                        <td class="yaymail-shipping-address-wrap" style="<?php echo esc_attr( $column_style ); ?>">
+                                            <div>
+                                                <?php echo wp_kses_post( do_shortcode( '[yaymail_shipping_address]' ) ); ?>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
             </td>
             <?php endif; ?>
         </tr>

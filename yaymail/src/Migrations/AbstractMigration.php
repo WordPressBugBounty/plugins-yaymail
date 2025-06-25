@@ -135,7 +135,7 @@ abstract class AbstractMigration {
 
         if ( ! $backup_response ) {
             // When update_option failes, throw exception
-            throw new \Exception( 'Yaymail failed to save backup option' );
+            throw new \Exception( 'YayMail failed to save backup option' );
         }
         $this->logger->log( $this->backup_option_name . ' saved!' );
     }

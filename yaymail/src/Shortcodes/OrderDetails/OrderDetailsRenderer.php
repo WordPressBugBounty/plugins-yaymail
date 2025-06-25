@@ -209,7 +209,7 @@ class OrderDetailsRenderer {
         ?>
         <tbody class="yaymail_element_body_order_details yaymail_element_body_order_item">
         <?php
-        if ( null === $this->order ) {
+        if ( null === $this->order || ! ( $this->order instanceof \WC_Order ) || 12345 === $this->order->get_id() ) {
             $this->render_sample_items( $structure_items );
         } else {
             $this->render_real_items( $structure_items );
@@ -220,6 +220,12 @@ class OrderDetailsRenderer {
     }
 
     public function render_sample_items( $structure_items ) {
+        $style_image_position_left = TemplateHelpers::get_style(
+            [
+                'float' => 'left',
+            ]
+        );
+
         $yaymail_settings = yaymail_settings();
         $style            = $this->get_styles();
         $is_placeholder   = $this->is_placeholder;
@@ -234,9 +240,10 @@ class OrderDetailsRenderer {
         $show_des           = isset( $yaymail_settings['show_product_description'] ) ? boolval( $yaymail_settings['show_product_description'] ) : false;
         $show_hyper_links   = isset( $yaymail_settings['show_product_hyper_links'] ) ? boolval( $yaymail_settings['show_product_hyper_links'] ) : false;
         $show_regular_price = isset( $yaymail_settings['show_product_regular_price'] ) ? boolval( $yaymail_settings['show_product_regular_price'] ) : false;
+        $image_style        = isset( yaymail_settings()['product_image_position'] ) & 'left' === yaymail_settings()['product_image_position'] ? $this->get_styles_product_image() . $style_image_position_left : $this->get_styles_product_image();
 
         $image_url             = wc_placeholder_img_src();
-        $image                 = $is_placeholder ? "<img width='{{product_image_width}}px' height='{{product_image_height}}px' src='{$image_url}' alt='product image'/>" : "<img width='{$image_width}px' height='{$image_height}px' src='{$image_url}' alt='product image'/>";
+        $image                 = $is_placeholder ? "<img style='margin-right:0;' width='{{product_image_width}}px' height='{{product_image_height}}px' src='{$image_url}' alt='product image'/>" : "<img style='margin-right: 0; width: {$image_width}px; height: {$image_height}px;' src='{$image_url}' alt='product image'/>";
         $sku                   = __( 'sku', 'yaymail' );
         $short_description     = __( 'Product short description', 'yaymail' );
         $product_name          = __( 'Happy YayCommerce', 'yaymail' );
@@ -268,7 +275,7 @@ class OrderDetailsRenderer {
                         case 'product':
                             // Show title/image etc.
                             if ( ( $show_image && 'bottom' !== $image_position ) || $is_placeholder ) {
-                                echo wp_kses_post( "<div class='yaymail-product_image_position__top'>" );
+                                echo wp_kses_post( "<div class='yaymail-product_image_position__top' style='{$image_style}'>" );
                                 require YAYMAIL_PLUGIN_PATH . 'templates/shortcodes/order-details/order-items/image-content.php';
                                 echo ( '</div>' );
                             }
@@ -293,7 +300,7 @@ class OrderDetailsRenderer {
 
                             // Show title/image etc in bottom.
                             if ( ( $show_image && 'bottom' === $image_position ) || $is_placeholder ) {
-                                echo wp_kses_post( "<div class='yaymail-product_image_position__bottom'>" );
+                                echo wp_kses_post( "<div class='yaymail-product_image_position__bottom' style='{$image_style}'>" );
                                 require YAYMAIL_PLUGIN_PATH . 'templates/shortcodes/order-details/order-items/image-content.php';
                                 echo ( '</div>' );
                             }
@@ -306,7 +313,7 @@ class OrderDetailsRenderer {
                             echo wp_kses_post( wc_price( $product_cost ) );
                             break;
                         case 'quantity':
-                            esc_html_e( $product_quantity, 'yaymail' );
+                            echo wp_kses_post( $product_quantity );
                             break;
                         case 'price':
                             // Show product regular price.

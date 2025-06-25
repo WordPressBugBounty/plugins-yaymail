@@ -23,24 +23,54 @@ $wrapper_style = TemplateHelpers::get_style(
     ]
 );
 
-$margin               = isset( $data['align'] ) && 'center' === $data['align'] ? '0 auto' : 'auto';
-$float                = isset( $data['align'] ) && ( 'left' === $data['align'] || 'right' === $data['align'] ) ? $data['align'] : 'unset';
-$divider_holder_style = TemplateHelpers::get_style(
+// Handle table alignment
+$table_margin = '0 auto';
+if ( isset( $data['align'] ) ) {
+    switch ( $data['align'] ) {
+        case 'center':
+            $table_margin = '0 auto';
+            break;
+        case 'right':
+            $table_margin = '0 0 0 auto';
+            break;
+        case 'left':
+        default:
+            $table_margin = '0';
+            break;
+    }
+}
+
+$table_style = TemplateHelpers::get_style(
     [
-        'width'            => "{$data['width']}%",
-        'margin'           => $margin,
-        'float'            => $float,
-        'border-top-width' => "{$data['height']}px",
+        'border-collapse' => 'collapse',
+        'width'           => TemplateHelpers::get_dimension_value( $data['width'], '%' ),
+        'margin'          => $table_margin,
+    ]
+);
+
+$cell_style = TemplateHelpers::get_style(
+    [
+        'width'            => TemplateHelpers::get_dimension_value( $data['width'], '%' ),
+        'border-top-width' => TemplateHelpers::get_dimension_value( $data['height'] ),
         'border-top-color' => $data['divider_color'],
         'border-top-style' => $data['divider_type'],
+        'padding'          => '0',
+        'margin'           => '0',
+        'line-height'      => '0',
     ]
 );
 
 ob_start();
 ?>
-
-    <div style="<?php echo esc_attr( $divider_holder_style ); ?>"></div>
-
+<table class="yaymail-customizer-element-divider" cellpadding="0" cellspacing="0" role="presentation" style="<?php echo esc_attr( $table_style ); ?>">
+    <tbody>
+        <tr>
+            <td style="<?php echo esc_attr( $cell_style ); ?>">
+                &nbsp;
+            </td>
+        </tr>
+    </tbody>
+</table>
 <?php
 $element_content = ob_get_clean();
 

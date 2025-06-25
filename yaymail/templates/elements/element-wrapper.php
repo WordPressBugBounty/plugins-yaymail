@@ -21,10 +21,11 @@ $container_direction = yaymail_get_email_direction();
 
 $wrapper_style .= TemplateHelpers::get_style(
     [
-        'border-spacing' => '0',
-        'width'          => '100%',
-        'direction'      => $container_direction,
-        'min-width'      => '100%',
+        'border-spacing'  => '0',
+        'width'           => '100%',
+        'direction'       => $container_direction,
+        'min-width'       => '100%',
+        'border-collapse' => 'separate',
     ]
 );
 

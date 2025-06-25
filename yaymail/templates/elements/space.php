@@ -23,13 +23,23 @@ $wrapper_style = TemplateHelpers::get_style(
 
 $space_style = TemplateHelpers::get_style(
     [
-        'height' => "{$data['height']}px",
+        'height'           => TemplateHelpers::get_dimension_value( $data['height'] ),
+        'font-size'        => '0',
+        'background-color' => $data['background_color'],
     ]
 );
 
 ob_start();
 ?>
-    <div style="<?php echo esc_attr( $space_style ); ?>"></div>
+<table class="yaymail-customizer-element-space" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse: collapse; width: 100%;">
+    <tbody>
+        <tr>
+            <td style="<?php echo esc_attr( $space_style ); ?>">
+                &nbsp;
+            </td>
+        </tr>
+    </tbody>
+</table>
 <?php
 $element_content = ob_get_clean();
 

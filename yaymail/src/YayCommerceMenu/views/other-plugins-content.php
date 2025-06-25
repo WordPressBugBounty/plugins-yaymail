@@ -90,8 +90,8 @@ foreach ( (array) $recommended_plugins as $recommended_plugin ) {
                             '<button type="button" class="button button-disabled" disabled="disabled">%s</button>',
                             _x( 'Cannot Install', 'plugin', 'ninjateam-whatsapp' )
                         );
-                    }
-                }
+                    }//end if
+                }//end if
                 $plugin_status = '<span class="plugin-status-not-install" data-plugin-url="' . esc_attr( $download_link ) . '">Not installed</span>';
                 break;
 
@@ -120,14 +120,14 @@ foreach ( (array) $recommended_plugins as $recommended_plugin ) {
                                 esc_attr( $name ),
                                 __( 'Update Now', 'ninjateam-whatsapp' )
                             );
-                        }
+                        }//end if
                     } else {
                         $action_links[] = sprintf(
                             '<button type="button" class="button button-disabled" disabled="disabled">%s</button>',
                             _x( 'Cannot Update', 'plugin', 'ninjateam-whatsapp' )
                         );
-                    }
-                }
+                    }//end if
+                }//end if
                 if ( is_plugin_active( $install_status['file'] ) ) {
                     $plugin_status = '<span class="plugin-status-active">Active</span>';
                 } else {
@@ -176,16 +176,16 @@ foreach ( (array) $recommended_plugins as $recommended_plugin ) {
                             '<button type="button" class="button button-disabled" disabled="disabled">%s</button>',
                             _x( 'Cannot Activate', 'plugin', 'ninjateam-whatsapp' )
                         );
-                    }
+                    }//end if
                 } else {
                     $action_links[] = sprintf(
                         '<button type="button" class="button button-disabled" disabled="disabled">%s</button>',
                         _x( 'Installed', 'plugin', 'ninjateam-whatsapp' )
                     );
-                }
+                }//end if
                 break;
-        }
-    }
+        }//end switch
+    }//end if
 
         $details_link = self_admin_url(
             'plugin-install.php?tab=plugin-information&amp;plugin=' . $recommended_plugin['slug'] .
@@ -232,7 +232,7 @@ foreach ( (array) $recommended_plugins as $recommended_plugin ) {
                         esc_url( wp_get_update_php_url() )
                     );
                     wp_update_php_annotation( '</p><p><em>', '</em>' );
-                }
+                }//end if
             } elseif ( ! $compatible_wp ) {
                 echo esc_html__( 'This plugin doesn&#8217;t work with your version of WordPress.', 'ninjateam-whatsapp' );
                 if ( current_user_can( 'update_core' ) ) {
@@ -252,9 +252,9 @@ foreach ( (array) $recommended_plugins as $recommended_plugin ) {
                     );
                     wp_update_php_annotation( '</p><p><em>', '</em>' );
                 }
-            }
+            }//end if
             echo '</p></div>';
-        }
+        }//end if
         ?>
         <div class="plugin-card-top">
             <div class="name column-name">
@@ -271,7 +271,7 @@ foreach ( (array) $recommended_plugins as $recommended_plugin ) {
         </div>
         <div class="plugin-card-bottom">
             <div class="vers column-rating">
-                <?php echo sprintf( '<span class="plugin-status" >%s: %s</span>', esc_html( 'Status' ), wp_kses_post( $plugin_status ) ); ?>
+                <?php printf( '<span class="plugin-status" >%s: %s</span>', esc_html( 'Status' ), wp_kses_post( $plugin_status ) ); ?>
             </div>
             <div class="column-updated">
                 <?php
@@ -282,4 +282,5 @@ foreach ( (array) $recommended_plugins as $recommended_plugin ) {
             </div>
         </div>
     </div>
-<?php } ?>
+<?php }//end foreach
+?>

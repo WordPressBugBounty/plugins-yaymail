@@ -59,7 +59,7 @@ class YayMailTemplate {
 
         if ( is_string( $template_name ) && ! empty( $template_name ) && Helpers::is_yaymail_email( $template_name ) ) {
             $template_data = $this->model::find_by_name( $template_name, $language );
-            if ( empty( $template_data['id'] ) && $template_data['support_status'] === 'already_supported' ) {
+            if ( empty( $template_data['id'] ) && SupportedPlugins::get_instance()->get_support_info( $template_name )['status'] === 'already_supported' ) {
                 /** Insert new template when not exists */
                 $template_data = $this->model::insert(
                     [

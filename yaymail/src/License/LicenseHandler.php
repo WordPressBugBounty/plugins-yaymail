@@ -276,4 +276,21 @@ class LicenseHandler {
         }
         return $value;
     }
+
+    public static function is_any_core_license_inactive() {
+        $licensing_plugins = self::get_licensing_plugins();
+        $result            = false;
+        foreach ( $licensing_plugins as $plugin_info ) {
+            if ( strpos( strtolower( $plugin_info['name'] ), 'addon' ) !== false ) {
+                continue;
+            }
+            $license = new License( $plugin_info['slug'] );
+            if ( ! $license->is_active() ) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
 }

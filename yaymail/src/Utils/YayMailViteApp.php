@@ -140,7 +140,13 @@ class YayMailViteApp {
         require_once ABSPATH . '/wp-admin/includes/file.php';
         WP_Filesystem();
 
-        $content        = $wp_filesystem->get_contents( YAYMAIL_PLUGIN_PATH . 'assets/dist/yaymail/manifest.json' );
+        $content = $wp_filesystem->get_contents( YAYMAIL_PLUGIN_PATH . 'assets/dist/yaymail/manifest.json' );
+
+        // when $wp_filesystem is not available, use file_get_contents
+        if ( ! $content ) {
+            $content = file_get_contents( YAYMAIL_PLUGIN_PATH . 'assets/dist/yaymail/manifest.json' );
+        }
+
         $this->manifest = json_decode( $content, true );
     }
 

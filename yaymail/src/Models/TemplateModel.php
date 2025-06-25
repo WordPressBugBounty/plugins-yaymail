@@ -225,6 +225,13 @@ class TemplateModel {
                 'name' => $name,
             ]
         );
+        if ( empty( $template_id ) ) {
+            $support_info = SupportedPlugins::get_instance()->get_support_info( $name );
+            return [
+                'support_status' => $support_info['status'] ?? '',
+                'addon_info'     => $support_info['addon'] ?? '',
+            ];
+        }
         return self::get_meta_data( $template_id, $name );
     }
 
@@ -371,7 +378,7 @@ class TemplateModel {
         $post          = isset( $template_post_id ) ? get_post( $template_post_id ) : null;
         $post_modified = isset( $post ) ? $post->post_modified : '';
 
-        /** For editable templates */
+        // /** For editable templates */
         $template_elements = self::query_meta_data( $template_post_id, self::$meta_keys['elements'], [] );
 
         $support_info = SupportedPlugins::get_instance()->get_support_info( $template_name );
@@ -469,5 +476,16 @@ class TemplateModel {
             return $elements;
         }
         return yaymail_get_email_elements_data( $template_id );
+    }
+
+    public static function get_short_data_by_name( $name ) {
+        $template_id = self::query_template( [ 'name' => $name ] );
+        if ( empty( $template_id ) ) {
+            return null;
+        }
+        return [
+            'id'     => $template_id,
+            'status' => self::query_meta_data( $template_id, self::$meta_keys['status'], 'inactive' ),
+        ];
     }
 }

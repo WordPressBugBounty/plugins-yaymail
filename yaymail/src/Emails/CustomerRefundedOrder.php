@@ -29,6 +29,7 @@ class CustomerRefundedOrder extends BaseEmail {
 
         $this->render_priority = apply_filters( 'yaymail_email_render_priority', $this->render_priority, $this->id );
         add_filter( 'wc_get_template', [ $this, 'get_template_file' ], $this->render_priority ?? 10, 3 );
+        $this->maybe_disable_block_email_editor();
     }
 
     public function get_default_elements() {
@@ -36,7 +37,7 @@ class CustomerRefundedOrder extends BaseEmail {
         // translators: customer name.
         $email_hi = sprintf( esc_html__( 'Hi %s,', 'woocommerce' ), '[yaymail_billing_first_name]' );
         // translators: site name.
-        $email_text      = sprintf( esc_html__( 'Your order on %s has been refunded. There are more details below for your reference:', 'woocommerce' ), '[yaymail_site_name]' );
+        $email_text      = sprintf( esc_html__( 'Your order on %s has been %s. There are more details below for your reference:', 'woocommerce' ), '[yaymail_site_name]', '[yaymail_refund_type]' );
         $additional_text = __( 'We hope to see you again soon.', 'woocommerce' );
 
         $default_elements = ElementsLoader::load_elements(

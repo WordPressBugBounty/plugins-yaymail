@@ -59,7 +59,7 @@ final class Ver_4_0_0 extends AbstractMigration {
              */
             $this->current_template_id = $template->ID;
 
-            $elements = get_post_meta( $this->current_template_id, '_yaymail_elements', true );
+            $elements = get_post_meta( $this->current_template_id, \YayMail\YayMailTemplate::META_KEYS['elements'], true );
 
             if ( empty( $elements ) ) {
                 continue;
@@ -67,7 +67,7 @@ final class Ver_4_0_0 extends AbstractMigration {
 
             $elements = array_map( [ $this, 'convert_element' ], $elements );
 
-            update_post_meta( $this->current_template_id, '_yaymail_elements', $elements );
+            update_post_meta( $this->current_template_id, \YayMail\YayMailTemplate::META_KEYS['elements'], $elements );
             /**
              * ==========================
              */
@@ -77,13 +77,13 @@ final class Ver_4_0_0 extends AbstractMigration {
              * Start Template settings migrations
              */
             // Template status
-            $old_activation_status = get_post_meta( $this->current_template_id, '_yaymail_status', true );
+            $old_activation_status = get_post_meta( $this->current_template_id, \YayMail\YayMailTemplate::META_KEYS['status'], true );
             $new_activation_status = in_array( $old_activation_status, [ 'active', 'inactive' ], true ) ? $old_activation_status : ( '1' === $old_activation_status ? 'active' : 'inactive' );
-            update_post_meta( $this->current_template_id, '_yaymail_status', $new_activation_status );
+            update_post_meta( $this->current_template_id, \YayMail\YayMailTemplate::META_KEYS['status'], $new_activation_status );
 
             // Template outer background color
             $old_outer_bg_color = get_post_meta( $this->current_template_id, '_email_backgroundColor_settings', true );
-            update_post_meta( $this->current_template_id, '_yaymail_email_backgroundColor_settings', $old_outer_bg_color );
+            update_post_meta( $this->current_template_id, \YayMail\YayMailTemplate::META_KEYS['background_color'], $old_outer_bg_color );
 
             $this->may_mark_template_as_v4_supported( $this->current_template_id );
 
@@ -168,7 +168,7 @@ final class Ver_4_0_0 extends AbstractMigration {
         // Update yaymail settings to db
         $update_yaymail_setting_options_result = update_option( 'yaymail_settings', $yaymail_settings );
         if ( ! $update_yaymail_setting_options_result ) {
-            $this->logger->log( 'Failed to update new Yaymail settings to db' );
+            $this->logger->log( 'Failed to update new YayMail settings to db' );
         }
         $this->logger->log( 'Done migrating YayMail settings' );
     }
@@ -713,21 +713,21 @@ final class Ver_4_0_0 extends AbstractMigration {
 
     private function migrate_shortcodes( &$data, $element_type = '' ) {
         $shortcodes_map = [
-            '[yaymail_items_border_content]'           => '[yaymail_order_details]',
-            '[yaymail_items_border_title]'             => '[Order #[yaymail_order_number]] ([yaymail_order_date])',
-            '[yaymail_items_downloadable_product]'     => '[yaymail_order_details_download_product]',
-            '[yaymail_user_account_url_string]'        => '[yaymail_user_account_url]',
-            '[yaymail_quantity_count]'                 => '[yaymail_order_product_item_count]',
-            '[yaymail_orders_count]'                   => '[yaymail_order_product_line_item_count]',
-            '[yaymail_orders_count_double]'            => '[yaymail_order_product_line_item_count_double]',
-            '[yaymail_order_total_numbers]'            => '[yaymail_order_total_value]',
-            '[yaymail_order_sub_total]'                => '[yaymail_order_subtotal]',
-            '[yaymail_order_shipping]'                 => '[yaymail_shipping_total]',
-            '[yaymail_payment_instruction]'            => '[yaymail_payment_instructions]',
-            '[yaymail_payment_method]'                 => '[yaymail_order_payment_method]',
-            '[yaymail_transaction_id]'                 => '[yaymail_payment_transaction_id]',
-            '[yaymail_set_password_url_string]'        => '[yaymail_set_password_url]',
-            '[yaymail_order_payment_url_string]'       => '[yaymail_order_payment_url]',
+            '[yaymail_items_border_content]'         => '[yaymail_order_details]',
+            '[yaymail_items_border_title]'           => '[Order #[yaymail_order_number]] ([yaymail_order_date])',
+            '[yaymail_items_downloadable_product]'   => '[yaymail_order_details_download_product]',
+            '[yaymail_user_account_url_string]'      => '[yaymail_user_account_url]',
+            '[yaymail_quantity_count]'               => '[yaymail_order_product_item_count]',
+            '[yaymail_orders_count]'                 => '[yaymail_order_product_line_item_count]',
+            '[yaymail_orders_count_double]'          => '[yaymail_order_product_line_item_count_double]',
+            '[yaymail_order_total_numbers]'          => '[yaymail_order_total_value]',
+            '[yaymail_order_sub_total]'              => '[yaymail_order_subtotal]',
+            '[yaymail_order_shipping]'               => '[yaymail_shipping_total]',
+            '[yaymail_payment_instruction]'          => '[yaymail_payment_instructions]',
+            '[yaymail_payment_method]'               => '[yaymail_order_payment_method]',
+            '[yaymail_transaction_id]'               => '[yaymail_payment_transaction_id]',
+            '[yaymail_set_password_url_string]'      => '[yaymail_set_password_url]',
+            '[yaymail_order_payment_url_string]'     => '[yaymail_order_payment_url]',
 
             // Turn the shortcode into a plain hook name
             '[woocommerce_email_before_order_table]' => '[yaymail_custom_hook hook="woocommerce_email_before_order_table"]',

@@ -48,6 +48,13 @@ class EmailsLoader {
         $yaymail_emails->register( \YayMail\Emails\CustomerNewAccount::get_instance() );
         $yaymail_emails->register( \YayMail\Emails\GlobalHeaderFooter::get_instance() );
 
+        /**
+         * POS emails, WC 9.9.3
+         * @since 4.0.6
+         */
+        $yaymail_emails->register( \YayMail\Emails\CustomerPOSCompletedOrder::get_instance() );
+        $yaymail_emails->register( \YayMail\Emails\CustomerPOSRefundedOrder::get_instance() );
+
         do_action( 'yaymail_register_emails', $yaymail_emails );
     }
 

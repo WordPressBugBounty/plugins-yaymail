@@ -33,6 +33,11 @@ class ShortcodesLoader {
             ResetPasswordsShortcodes::get_instance(),
             OrderMetaShortcodes::get_instance(),
             LegacyCustomShortcodes::get_instance(),
+
+            /**
+             * @since 4.0.6
+             */
+            RefundShortcodes::get_instance(),
         ];
 
         do_action( 'yaymail_register_shortcodes', $this );

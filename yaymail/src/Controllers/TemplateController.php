@@ -24,7 +24,7 @@ class TemplateController extends BaseController {
     protected function init_hooks() {
         $template_id_args = [
             'template_id' => [
-                'type'     => 'number',
+                'type'     => 'string',
                 'required' => true,
             ],
         ];
@@ -295,11 +295,19 @@ class TemplateController extends BaseController {
         $template_id        = sanitize_text_field( $request->get_param( 'template_id' ) );
         $from_template      = sanitize_text_field( $request->get_param( 'from_template' ) );
         $copy_template_data = $this->model::find_by_name( $from_template );
-        $update_data        = [
-            'elements'                 => null !== $copy_template_data && ! empty( $copy_template_data['elements'] ) ? $copy_template_data['elements'] : yaymail_get_default_elements( $from_template ),
-            'background_color'         => null !== $copy_template_data ? $copy_template_data['background_color'] : YAYMAIL_COLOR_BACKGROUND_DEFAULT,
-            'content_background_color' => null !== $copy_template_data ? $copy_template_data['content_background_color'] : '#ffffff',
-            'text_link_color'          => null !== $copy_template_data ? $copy_template_data['text_link_color'] : YAYMAIL_COLOR_WC_DEFAULT,
+
+        if ( empty( $copy_template_data ) || empty( $copy_template_data['id'] ) ) {
+            return [
+                'success' => false,
+                'message' => 'Template not found',
+            ];
+        }
+
+        $update_data = [
+            'elements'                 => $copy_template_data['elements'] ?? [],
+            'background_color'         => $copy_template_data['background_color'] ?? YAYMAIL_COLOR_BACKGROUND_DEFAULT,
+            'content_background_color' => $copy_template_data['content_background_color'] ?? '#ffffff',
+            'text_link_color'          => $copy_template_data['text_link_color'] ?? YAYMAIL_COLOR_WC_DEFAULT,
         ];
 
         $this->model::update( $template_id, $update_data, true );

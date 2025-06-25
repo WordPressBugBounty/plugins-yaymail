@@ -70,7 +70,8 @@ class RestAPI {
             $html = ob_get_contents();
             ob_end_clean();
 
-            $return_result['html'] = $html;
+            $return_result['html']                        = $html;
+            $return_result['core_plugin_licese_inactive'] = LicenseHandler::is_any_core_license_inactive();
         } else {
             $return_result['message'] = LicenseAPI::get_error_message( $activate_response['message'] );
         }
@@ -106,7 +107,8 @@ class RestAPI {
             $html = ob_get_contents();
             ob_end_clean();
         }
-        $return_result['html'] = $html;
+        $return_result['html']                        = $html;
+        $return_result['core_plugin_licese_inactive'] = LicenseHandler::is_any_core_license_inactive();
         return new \WP_REST_Response( $return_result );
     }
     public function remove_license( $request_data ) {
@@ -132,7 +134,8 @@ class RestAPI {
         include plugin_dir_path( __FILE__ ) . 'views/activate-card.php';
         $html = ob_get_contents();
         ob_end_clean();
-        $return_result['html'] = $html;
+        $return_result['html']                        = $html;
+        $return_result['core_plugin_licese_inactive'] = LicenseHandler::is_any_core_license_inactive();
         return new \WP_REST_Response( $return_result );
     }
 

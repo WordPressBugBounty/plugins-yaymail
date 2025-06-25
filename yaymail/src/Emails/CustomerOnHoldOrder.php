@@ -29,6 +29,7 @@ class CustomerOnHoldOrder extends BaseEmail {
 
         $this->render_priority = apply_filters( 'yaymail_email_render_priority', $this->render_priority, $this->id );
         add_filter( 'wc_get_template', [ $this, 'get_template_file' ], $this->render_priority ?? 10, 3 );
+        $this->maybe_disable_block_email_editor();
     }
 
     public function get_default_elements() {

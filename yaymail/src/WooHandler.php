@@ -17,6 +17,15 @@ class WooHandler {
         add_filter( 'woocommerce_prepare_email_for_preview', [ $this, 'display_preview_notice' ] );
         // Add settings to WooCommerce email options section
         add_filter( 'woocommerce_get_settings_email', [ $this, 'add_settings' ], 10, 2 );
+        add_filter( 'woocommerce_get_settings_advanced', function($settings) {
+            foreach ($settings as $index => $setting) {
+                if ( $setting['id'] === 'woocommerce_feature_block_email_editor_enabled' ) {
+                    $introduction_text = sprintf( __( 'You can customize WooCommerce emails with <a href="%s" target="_blank">YayMail - WooCommerce Email Customizer</a>', 'yaymail' ), esc_url( admin_url( 'admin.php?page=yaymail-settings#' ), 'yaymail' ) );
+                    $settings[$index]['desc'] .= '<br/><br/>' . $introduction_text . '<br/>';
+                }
+            }
+            return $settings;
+        } );
     }
 
     public function display_preview_notice( $email ) {

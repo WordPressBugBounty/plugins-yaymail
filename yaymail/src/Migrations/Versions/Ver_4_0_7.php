@@ -56,7 +56,7 @@ final class Ver_4_0_7 extends AbstractMigration {
              */
             $this->current_template_id = $template->ID;
 
-            $elements = get_post_meta( $this->current_template_id, '_yaymail_elements', true );
+            $elements = get_post_meta( $this->current_template_id, \YayMail\YayMailTemplate::META_KEYS['elements'], true );
 
             if ( empty( $elements ) ) {
                 continue;
@@ -108,7 +108,7 @@ final class Ver_4_0_7 extends AbstractMigration {
                 }
             }//end if
 
-            update_post_meta( $this->current_template_id, '_yaymail_elements', $elements );
+            update_post_meta( $this->current_template_id, \YayMail\YayMailTemplate::META_KEYS['elements'], $elements );
 
             /**
              * Finish Template settings migrations

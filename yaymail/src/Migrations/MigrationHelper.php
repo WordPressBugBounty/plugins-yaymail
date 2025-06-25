@@ -9,6 +9,7 @@ class MigrationHelper {
     /**
      * Append third number to version if it does not exist yet
      *
+     * @param string $version The version string to format.
      * @return string|null
      * @Example: 4.0 => 4.0.0
      */
@@ -29,7 +30,7 @@ class MigrationHelper {
         $filtered_migrations = array_filter(
             $migrations,
             function( $version ) use ( $old_version, $new_version ) {
-                return version_compare( $old_version, $version, '<' ) && version_compare( $new_version, $version, '>=' );
+                return version_compare( empty( $old_version ) ? '0.0.0' : $old_version, $version, '<' ) && version_compare( $new_version, $version, '>=' );
             },
             ARRAY_FILTER_USE_KEY
         );
@@ -63,6 +64,7 @@ class MigrationHelper {
      * Perform migrations for specified versions.
      *
      * @param array $migrations An associative array where keys are version numbers (e.g., '4.0.0') and values are fully qualified class names of the migration classes.
+     * @param bool  $skip_check_migration Whether to skip migration checks.
      *
      * @throws \Exception If the class for a version does not exist, or if the class or its instance does not have a callable `get_instance()` or `perform_migration()` method.
      *

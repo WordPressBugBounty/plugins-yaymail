@@ -5,18 +5,21 @@ namespace YayMail\Emails;
 use YayMail\Abstracts\BaseEmail;
 use YayMail\Elements\ElementsLoader;
 use YayMail\Utils\SingletonTrait;
+use YayMail\YayMailTemplate;
 
 /**
- * CustomerProcessingOrder Class
+ * CustomerPOSRefundedOrder Class
+ * From WC 9.9.3
  *
- * @method static CustomerProcessingOrder get_instance()
+ * @since 4.0.6
+ * @method static CustomerPOSRefundedOrder get_instance()
  */
-class CustomerProcessingOrder extends BaseEmail {
+class CustomerPOSRefundedOrder extends BaseEmail {
     use SingletonTrait;
 
     protected function __construct() {
         $emails = \WC_Emails::instance()->get_emails();
-        $email  = $emails['WC_Email_Customer_Processing_Order'];
+        $email  = $emails['WC_Email_Customer_POS_Refunded_Order'] ?? null;
         if ( ! $email ) {
             return;
         }
@@ -32,12 +35,12 @@ class CustomerProcessingOrder extends BaseEmail {
     }
 
     public function get_default_elements() {
-        $email_title = __( 'Thank you for your order ', 'woocommerce' );
+        $email_title = '[yaymail_get_heading]';
         // translators: customer name.
         $email_hi = sprintf( esc_html__( 'Hi %s,', 'woocommerce' ), '[yaymail_billing_first_name]' );
-        // translators: order id.
-        $email_text      = sprintf( esc_html__( 'Just to let you know &mdash; we\'ve received your order #%s,  and it is now being processed:', 'woocommerce' ), '[yaymail_order_number]' );
-        $additional_text = __( 'Thanks for using [yaymail_site_url]!', 'woocommerce' );
+        // translators: site name.
+        $email_text      = sprintf( esc_html__( 'Your order on %s has been %s. There are more details below for your reference:', 'woocommerce' ), '[yaymail_site_name]', '[yaymail_refund_type]' );
+        $additional_text = __( 'We hope to see you again soon.', 'woocommerce' );
 
         $default_elements = ElementsLoader::load_elements(
             [
@@ -53,7 +56,7 @@ class CustomerProcessingOrder extends BaseEmail {
                 [
                     'type'       => 'Text',
                     'attributes' => [
-                        'rich_text' => '<p><span>' . $email_hi . '<br><br>' . $email_text . '</span></p>',
+                        'rich_text' => '<p><span>' . $email_hi . '<br /></span></p><p><span>' . $email_text . '</span></p>',
                     ],
                 ],
                 [
@@ -83,7 +86,32 @@ class CustomerProcessingOrder extends BaseEmail {
         return $default_elements;
     }
 
+    public function get_template_file( $located, $template_name, $args ) {
+        if ( ! isset( $args['email'] ) ) {
+            return $located;
+        }
+        if ( ! $args['email'] instanceof \WC_Email || ! $args['email'] instanceof \WC_Email_Customer_POS_Refunded_Order ) {
+            return $located;
+        }
+        $template_path = $this->get_template_path();
+        if ( ! file_exists( $template_path ) ) {
+            return $located;
+        }
+
+        $order = apply_filters( 'yaymail_order_for_language', isset( $args['order'] ) ? $args['order'] : null, $args );
+
+        $language = $this->get_language( $order );
+
+        $this->template = new YayMailTemplate( $this->id, $language );
+
+        if ( ! $this->template->is_enabled() ) {
+            return $located;
+        }
+
+        return $template_path;
+    }
+
     public function get_template_path() {
-        return YAYMAIL_PLUGIN_PATH . 'templates/emails/customer-processing-order.php';
+        return YAYMAIL_PLUGIN_PATH . 'templates/emails/customer-pos-refunded-order.php';
     }
 }

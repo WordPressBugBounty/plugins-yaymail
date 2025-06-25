@@ -7,33 +7,40 @@
   overflow-x: hidden !important;
   min-height: calc(100vh - 32px);
 }
+
 @media (min-width: 783px) {
   #wpbody-content {
     padding-left: 0;
   }
 }
+
 :root {
   --large-gap: 40px;
   --main-gap: 24px;
 }
+
 @media (max-width: 960px) {
   :root {
     --large-gap: 24px;
   }
 }
+
 @media (max-width: 782px) {
   :root {
     --large-gap: 16px;
     --main-gap: 16px;
   }
 }
+
 @keyframes loading-fade {
   0% {
     opacity: 0.7;
   }
+
   50% {
     opacity: 1;
   }
+
   to {
     opacity: 0.7;
   }
@@ -90,6 +97,7 @@
   flex: 1;
   margin-top: 10px;
 }
+
 .yaycommerce-license-settings {
   display: grid;
   gap: 1rem;
@@ -100,6 +108,7 @@
 .yaycommerce-license-sidebar {
   width: 400px;
 }
+
 .yaycommerce-license-sidebar-sticky {
   margin-top: 10px;
   width: 400px;
@@ -115,20 +124,24 @@
   .yaycommerce-license-settings {
     grid-template-columns: 1fr 1fr;
   }
+
   .yaycommerce-license-settings .yaycommerce-license-no-license:last-child {
     grid-column: 1 / span 2 !important;
   }
 }
+
 @media screen and (max-width: 1500px) {
   .yaycommerce-license-settings {
     grid-template-columns: 100%;
     max-width: 600px;
     margin: auto;
   }
+
   .yaycommerce-license-settings .yaycommerce-license-no-license:last-child {
     grid-column: auto !important;
   }
 }
+
 @media screen and (max-width: 1100px) {
   .yaycommerce-license-layout {
     flex-direction: column;
@@ -136,31 +149,37 @@
     width: 70%;
     margin: auto;
   }
+
   .yaycommerce-license-sidebar {
     width: 100%;
   }
+
   .yaycommerce-license-sidebar-sticky {
     position: relative;
     top: 0;
     right: 0;
     width: 100%;
   }
+
   .yaycommerce-license-layout-main {
     order: 2;
     width: 100%;
     margin-top: 0 !important;
   }
+
   .yaycommerce-license-settings {
     grid-template-columns: 100%;
     max-width: none;
     width: 100%;
   }
 }
+
 @media screen and (max-width: 700px) {
   .yaycommerce-license-layout {
     width: 100%;
   }
 }
+
 .yaycommerce-license-card {
   background: #ffffff;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.15);
@@ -169,6 +188,7 @@
   display: flex;
   flex-direction: column;
 }
+
 .yaycommerce-license-card-header {
   padding: 1rem;
   border-bottom: 1px solid #e2e4e7;
@@ -176,19 +196,23 @@
   display: flex;
   align-items: center;
 }
+
 .yaycommerce-license-sidebar-sticky .yaycommerce-license-card-header {
   background: #fff;
 }
+
 .yaycommerce-license-card-header h3 {
   margin: 0;
   line-height: 1.6;
 }
+
 .yaycommerce-license-card-description {
   font-size: 14px;
   line-height: 20px;
   font-weight: 400;
   margin-top: 4px;
 }
+
 .yaycommerce-license-card .yaycommerce-license-card-body {
   padding: 8px 24px 12px;
 }
@@ -294,6 +318,7 @@ p.yaycommerce_expired_text::before {
   50% {
     rotate: 180deg;
   }
+
   100% {
     rotate: 360deg;
   }
@@ -338,12 +363,15 @@ p.yaycommerce_expired_text::before {
   font-size: 12px;
   color: #fff;
 }
+
 .yaycommerce-license-badge.error {
   background: #d63638;
 }
+
 .yaycommerce-license-badge.success {
   background: #52c41a;
 }
+
 .yaycommerce-license-button {
   height: 30px;
   display: flex;
@@ -359,19 +387,24 @@ p.yaycommerce_expired_text::before {
   transition: all 0.3s ease-in-out;
   color: #414141;
 }
+
 .yaycommerce-license-button:hover {
   box-shadow: 0px 2px 0px rgba(0, 0, 0, 0.063);
 }
+
 .yaycommerce-remove-license:hover {
   box-shadow: 0px 2px 0px rgba(177, 0, 0, 0.223);
 }
+
 .yaycommerce-remove-license {
   border-color: #d63638 !important;
   color: #d63638 !important;
 }
+
 .yaycommerce-license-settings .yaycommerce-license-no-license {
   display: none;
 }
+
 .yaycommerce-license-settings .yaycommerce-license-no-license:last-child {
   display: block !important;
   grid-column: 1 / span 3;
@@ -383,10 +416,12 @@ p.yaycommerce_expired_text::before {
   gap: 0.5rem;
   margin-bottom: 10px;
 }
-.yaycommerce-license__task-list li > span:first-child {
+
+.yaycommerce-license__task-list li>span:first-child {
   display: flex;
 }
-.yaycommerce-license__task-list li > span:first-child svg {
+
+.yaycommerce-license__task-list li>span:first-child svg {
   width: 20px;
   height: 20px;
 }
@@ -440,6 +475,7 @@ p.yaycommerce_expired_text::before {
 .message--success {
   color: #52c41a;
 }
+
 .message--error {
   color: #ff4d4f;
 }
@@ -448,4 +484,8 @@ p.yaycommerce_expired_text::before {
   margin: 0;
   font-size: 14px;
   color: rgba(0, 0, 0, 0.88);
+}
+
+.yaycommerce-license__important-notice[data-display="false"] {
+  display: none;
 }

@@ -27,14 +27,33 @@ class Initialize {
      * The Constructor that load the engine classes
      */
     protected function __construct() {
-        add_action( 'init', [ $this, 'yaymail_init' ] );
         I18n::get_instance();
+        add_action( 'woocommerce_init', [ $this, 'woocommerce_init' ] );
+        add_action( 'init', [ $this, 'yaymail_init' ] );
+    }
+
+    public function woocommerce_init() {
+        require_once YAYMAIL_PLUGIN_PATH . 'src/Functions.php';
+        do_action( 'yaymail_init_start' );
+        EmailsLoader::get_instance();
+        ElementsLoader::get_instance();
+        ShortcodesLoader::get_instance();
     }
 
     public static function yaymail_init() {
-        require_once YAYMAIL_PLUGIN_PATH . 'src/Functions.php';
 
-        do_action( 'yaymail_init_start' );
+        $version_current        = YAYMAIL_VERSION;
+        $version_old            = get_option( 'yaymail_version' );
+        $version_current_backup = get_option( 'yaymail_version_backup' );
+
+        if ( $version_current !== $version_old ) {
+            if ( $version_current_backup !== $version_current ) {
+                \YayMail\Migrations\MainMigration::get_instance()->migrate();
+
+                update_option( 'yaymail_version', YAYMAIL_VERSION );
+                update_option( 'yaymail_version_backup', YAYMAIL_VERSION );
+            }
+        }
 
         ActDeact::get_instance();
 
@@ -53,9 +72,6 @@ class Initialize {
         /**
          * Core core filters
          */
-        EmailsLoader::get_instance();
-        ElementsLoader::get_instance();
-        ShortcodesLoader::get_instance();
 
         SectionTemplatesLoader::get_instance();
         PatternsLoader::get_instance();

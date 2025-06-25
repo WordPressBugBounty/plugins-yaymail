@@ -48,7 +48,7 @@ foreach ( $order_items as $item_id => $item ) :
         $sku                   = $product->get_sku();
         $purchase_note         = $product->get_purchase_note();
         $image_url             = current( wp_get_attachment_image_src( $product->get_image_id(), 'full' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'full' ) : [] );
-        $image                 = $is_placeholder ? "<img width='{{product_image_width}}px' height='{{product_image_height}}px' src='{$image_url}' alt='product image'/>" : "<img width='{$image_width}' height='{$image_height}' src='{$image_url}' alt='product image'/>";
+        $image                 = $is_placeholder ? "<img style='margin-right:0;' width='{{product_image_width}}px' height='{{product_image_height}}px' src='{$image_url}' alt='product image'/>" : "<img style='margin-right:0; width: {$image_width}px; height: {$image_height}px;' src='{$image_url}' alt='product image'/>";
         $short_description     = $product->get_short_description();
         $product_permalink     = method_exists( $product, 'get_permalink' ) ? $product->get_permalink() : '#';
         $product_hyper_link    = "<a href='{$product_permalink}' target='_blank'>{$product_name}</a>";
@@ -121,7 +121,7 @@ foreach ( $order_items as $item_id => $item ) :
                     do_action( 'woocommerce_order_item_meta_end', $item_id, $item, $order_data, '' );
 
                     // Show title/image etc in bottom.
-                    if ( $show_image && 'bottom' === $image_position || $is_placeholder ) {
+                    if ( ( $show_image && 'bottom' === $image_position ) || $is_placeholder ) {
                         echo wp_kses_post( "<div class='yaymail-product_image_position__bottom' style='{$image_style}'>" );
                         require YAYMAIL_PLUGIN_PATH . 'templates/shortcodes/order-details/order-items/image-content.php';
                         echo ( '</div>' );

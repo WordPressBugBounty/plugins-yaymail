@@ -358,7 +358,7 @@ class Ajax {
                 'posts_per_page' => '-1',
                 'meta_query'     => [
                     [
-                        'key'     => '_yaymail_template',
+                        'key'     => YayMailTemplate::META_KEYS['name'],
                         'value'   => $templates,
                         'compare' => 'IN',
                     ],
@@ -369,22 +369,28 @@ class Ajax {
             if ( $query->have_posts() ) {
                 $posts = $query->get_posts();
                 foreach ( $posts as $post ) {
-                    $template_name = get_post_meta( $post->ID, '_yaymail_template', true );
-                    $elements      = get_post_meta( $post->ID, '_yaymail_elements', true );
-                    $language      = get_post_meta( $post->ID, '_yaymail_template_language', true );
-                    $file_name     = "{$template_name}.json";
+                    $template_name            = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['name'], true );
+                    $elements                 = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['elements'], true );
+                    $language                 = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['language'], true );
+                    $text_link_color          = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['text_link_color'], true );
+                    $background_color         = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['background_color'], true );
+                    $content_background_color = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['content_background_color'], true );
+                    $file_name                = "{$template_name}.json";
                     if ( empty( $language ) ) {
                         $export_data[] = [
                             'file_name'      => $file_name,
                             'templates_data' => [
-                                'template' => $template_name,
-                                'elements' => $elements,
-                                'language' => $language,
+                                'template'                 => $template_name,
+                                'elements'                 => $elements,
+                                'language'                 => '',
+                                'text_link_color'          => $text_link_color,
+                                'background_color'         => $background_color,
+                                'content_background_color' => $content_background_color,
                             ],
                         ];
                     }
-                }
-            }
+                }//end foreach
+            }//end if
             wp_reset_postdata();
             wp_send_json_success(
                 [
@@ -407,14 +413,14 @@ class Ajax {
         }
         try {
             if ( ! empty( $_FILES ) ) {
-                $import_count = $this->process_import( $_FILES );
-                if ( $import_count > 0 ) {
-                    wp_send_json_success( [ 'message' => __( 'Imported successfully ', 'yaymail' ) . $import_count . __( ' templates', 'yaymail' ) ] );
-                } else {
-                    wp_send_json_error( [ 'message' => __( 'Import failed.', 'yaymail' ) ] );
-                }
+                $result = $this->process_import( $_FILES );
+                wp_send_json_success(
+                    [
+                        'imported_data' => $result,
+                    ]
+                );
             } else {
-                wp_send_json_error( [ 'message' => __( 'Not found import files.', 'yaymail' ) ] );
+                wp_send_json_error( [ 'message' => __( 'Can\'t find import files.', 'yaymail' ) ] );
             }
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
@@ -429,8 +435,8 @@ class Ajax {
             require_once ABSPATH . '/wp-admin/includes/file.php';
             WP_Filesystem();
         }
-        $import_count = 0;
-        $is_legacy    = false;
+        $imported_templates = [];
+        $is_legacy          = false;
         foreach ( $files as $file ) {
             if ( isset( $file['type'] ) ) {
                 if ( 'application/json' === $file['type'] ) {
@@ -440,18 +446,16 @@ class Ajax {
                         $file_content  = json_decode( $file_content, true );
                         if ( ! isset( $file_content['template'] ) ) {
                             if ( isset( $file_content['yaymailTemplateExport'] ) ) {
-                                $is_legacy     = true;
-                                $import_count += $this->process_import_legacy( $file_content );
+                                $is_legacy          = true;
+                                $imported_templates = array_merge( $imported_templates, $this->process_import_legacy( $file_content ) );
                             } else {
                                 continue;
                             }
                         } else {
-                            $import_template = $file_content['template'];
-                            $import_elements = $file_content['elements'];
-                            $import_language = $file_content['language'];
-
-                            $this->processing_import_update_data( $import_template, $import_elements, $import_language );
-                            ++$import_count;
+                            $update_result = $this->processing_import_update_data( $file_content );
+                            if ( ! empty( $update_result ) ) {
+                                $imported_templates[] = $update_result;
+                            }
                         }
                     }//end if
                 }//end if
@@ -460,61 +464,56 @@ class Ajax {
         if ( $is_legacy ) {
             MainMigration::get_instance()->migrate( true );
         }
-        return $import_count;
+        return $imported_templates;
     }
 
     public function process_import_legacy( $file_content ) {
-        $import_count = 0;
+        $updated_templates = [];
         // Import templates
         foreach ( $file_content['yaymailTemplateExport'] as $template ) {
-            $import_template = $template['_yaymail_template'];
-            $import_elements = $template['_yaymail_elements'];
-            $import_language = $template['_yaymail_template_language'];
-
-            $this->processing_import_update_data( $import_template, $import_elements, $import_language, true );
-            ++$import_count;
+            $updated_result = $this->processing_import_update_data( $template, true );
+            if ( ! empty( $updated_result ) ) {
+                $updated_templates[] = $updated_result;
+            }
         }//end foreach
         // Import settings
         $import_settings = isset( $file_content['yaymail_settings'] ) ? $file_content['yaymail_settings'] : [];
         if ( ! empty( $import_settings ) ) {
             update_option( 'yaymail_settings', $import_settings );
         }
-        return $import_count;
+        return $updated_templates;
     }
 
-    public function processing_import_update_data( $template_name, $elements, $language, $is_legacy = false ) {
-        if ( ! empty( $template_name ) ) {
-            $query_args = [
-                'post_type'      => 'yaymail_template',
-                'post_status'    => [ 'publish', 'pending', 'future' ],
-                'posts_per_page' => '-1',
-                'meta_query'     => [
-                    'relation' => 'AND',
-                    [
-                        'key'     => '_yaymail_template',
-                        'value'   => $template_name,
-                        'compare' => '=',
-                    ],
-                    [
-                        'key'     => '_yaymail_template_language',
-                        'value'   => ( empty( $language ) || 'en' === $language ) ? '' : $language,
-                        'compare' => ( empty( $language ) || 'en' === $language ) ? 'NOT EXISTS' : '=',
-                    ],
-                ],
-            ];
+    public function processing_import_update_data( $data, $is_legacy = false ) {
+        $template_name    = $data['template'] ?? null;
+        $elements         = $data['elements'] ?? null;
+        $text_link_color  = $data['text_link_color'] ?? null;
+        $background_color = $data['background_color'] ?? null;
 
-            $query = new \WP_Query( $query_args );
-            if ( $query->have_posts() ) {
-                $posts = $query->get_posts();
-                foreach ( $posts as $post ) {
-                    update_post_meta( $post->ID, '_yaymail_elements', $elements );
-                    if ( $is_legacy ) {
-                        update_post_meta( $post->ID, '_yaymail_status', 'inactive' );
-                    }
-                }
-            }
-            wp_reset_postdata();
-        }//end if
+        if ( empty( $template_name ) ) {
+            return null;
+        }
+
+        $template = new YayMailTemplate( $template_name );
+        if ( ! $template->is_exists() ) {
+            return null;
+        }
+
+        $template->set_elements( $elements );
+        $template->set_text_link_color( $text_link_color );
+        $template->set_background_color( $background_color );
+
+        if ( $is_legacy ) {
+            $template->set_status( 'inactive' );
+        }
+
+        $template->save();
+
+        wp_reset_postdata();
+
+        return [
+            'template_name' => $template_name,
+        ];
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 namespace YayMail\Abstracts;
 
+use YayMail\Models\TemplateModel;
 use YayMail\YayMailTemplate;
 
 /**
@@ -154,5 +155,18 @@ abstract class BaseEmail {
 
     public function is_existed() {
         return ! empty( $this->id );
+    }
+
+    public function maybe_disable_block_email_editor() {
+        if ( ! \Automattic\WooCommerce\Utilities\FeaturesUtil::feature_is_enabled( 'block_email_editor' ) ) {
+            return;
+        }
+        if ( ! $this->root_email || ! $this->root_email instanceof \WC_Email ) {
+            return;
+        }
+        $find_yaymail_template = TemplateModel::get_short_data_by_name( $this->id );
+        if ( ! empty( $find_yaymail_template ) && $find_yaymail_template['status'] === 'active' ) {
+            $this->root_email->block_email_editor_enabled = false;
+        }
     }
 }
