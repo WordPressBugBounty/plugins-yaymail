@@ -141,7 +141,7 @@ class NoticeMain {
         /* List out the 3rd-party that need our addon*/
         $addon_needed_plugins = [];
         foreach ( $this->supported_plugins->get_addon_supported_plugins() as $addon_namespace => $addon ) {
-            if ( ! empty( $addon['is_3rd_party_installed'] ) && ! ( function_exists( $addon_namespace . '\init' ) || function_exists( $addon_namespace . '\addon_init' ) ) ) {
+            if ( ! empty( $addon['is_3rd_party_installed'] ) && empty( $addon['installation_status']['is_active'] ) ) {
                 $addon_needed_plugins[ $addon_namespace ] = $addon;
             }
         }

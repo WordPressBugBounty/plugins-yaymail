@@ -39,18 +39,44 @@ class YayMailTemplate {
         'language'                 => '_yaymail_template_language',
         'modified_by'              => '_yaymail_modified_by',
         'is_v4_supported'          => '_yaymail_is_v4_supported',
+        'global_header_settings'   => '_yaymail_global_header_settings',
+        'global_footer_settings'   => '_yaymail_global_footer_settings',
+    ];
+
+    public const DEFAULT_DATA = [
+        'name'                     => '',
+        'elements'                 => [],
+        'status'                   => 0,
+        'background_color'         => '',
+        'text_link_color'          => '',
+        'content_background_color' => '',
+        'language'                 => '',
+        'modified_by'              => '',
+        'is_v4_supported'          => false,
+        'global_header_settings'   => [
+            'content_override' => false,
+            'heading_content'  => '<h1 style="font-size: 30px; font-weight: 300; line-height: normal; margin: 0px; color: inherit;">Hello YayMail</h1>',
+            'hidden'           => false,
+        ],
+        'global_footer_settings'   => [
+            'content_override' => false,
+            'footer_content'   => '<p style="font-size: 14px; margin: 0px 0px 16px; text-align: center;">[yaymail_site_name] - Built with <a style="color: #873eff; font-weight: normal; text-decoration: underline;" href="https://woocommerce.com" target="_blank" rel="noopener">WooCommerce</a></p>',
+            'hidden'           => false,
+        ],
     ];
 
     /**
      * Contains template data
      */
     private $data = [
-        'name'             => '',
-        'elements'         => [],
-        'status'           => 0,
-        'background_color' => '',
-        'text_link_color'  => '',
-        'language'         => '',
+        'name'                   => self::DEFAULT_DATA['name'],
+        'elements'               => self::DEFAULT_DATA['elements'],
+        'status'                 => self::DEFAULT_DATA['status'],
+        'background_color'       => self::DEFAULT_DATA['background_color'],
+        'text_link_color'        => self::DEFAULT_DATA['text_link_color'],
+        'language'               => self::DEFAULT_DATA['language'],
+        'global_header_settings' => self::DEFAULT_DATA['global_header_settings'],
+        'global_footer_settings' => self::DEFAULT_DATA['global_footer_settings'],
     ];
 
     public function __construct( $template_name = '', $language = '' ) {
@@ -63,9 +89,14 @@ class YayMailTemplate {
                 /** Insert new template when not exists */
                 $template_data = $this->model::insert(
                     [
-                        'name'     => $template_name,
-                        'elements' => yaymail_get_default_elements( $template_name ),
-                        'language' => $language,
+                        'name'                     => $template_name,
+                        'elements'                 => yaymail_get_default_elements( $template_name ),
+                        'language'                 => $language,
+                        'background_color'         => self::DEFAULT_DATA['background_color'],
+                        'text_link_color'          => self::DEFAULT_DATA['text_link_color'],
+                        'content_background_color' => self::DEFAULT_DATA['content_background_color'],
+                        'global_header_settings'   => self::DEFAULT_DATA['global_header_settings'],
+                        'global_footer_settings'   => self::DEFAULT_DATA['global_footer_settings'],
                     ]
                 );
             }
@@ -73,7 +104,7 @@ class YayMailTemplate {
             $this->set_props( $template_data );
             // TODO: Consider filter available elements before pass to props
             $this->renderer = new TemplateRenderer( $this );
-        }
+        }//end if
     }
 
     public function is_exists() {
@@ -154,6 +185,30 @@ class YayMailTemplate {
         return $this->get_prop( 'language', $context );
     }
 
+    /**
+     * Get global header
+     *
+     * @since 4.1.0
+     *
+     * @param string $context
+     * @return array
+     */
+    public function get_global_header_settings( $context = 'view' ) {
+        return $this->get_prop( 'global_header_settings', $context );
+    }
+
+    /**
+     * Get global header
+     *
+     * @since 4.1.0
+     *
+     * @param string $context
+     * @return array
+     */
+    public function get_global_footer_settings( $context = 'view' ) {
+        return $this->get_prop( 'global_footer_settings', $context );
+    }
+
     // SETTER METHOD
 
     public function set_props( $props ) {
@@ -217,6 +272,32 @@ class YayMailTemplate {
     public function set_language( $value ) {
         if ( ! is_null( $value ) && is_string( $value ) ) {
             $this->set_prop( 'language', $value );
+        }
+    }
+
+    /**
+     * Set global header
+     *
+     * @since 4.1.0
+     *
+     * @param array $value
+     */
+    public function set_global_header_settings( $value ) {
+        if ( ! is_null( $value ) && is_array( $value ) ) {
+            $this->set_prop( 'global_header_settings', $value );
+        }
+    }
+
+    /**
+     * Set global footer
+     *
+     * @since 4.1.0
+     *
+     * @param array $value
+     */
+    public function set_global_footer_settings( $value ) {
+        if ( ! is_null( $value ) && is_array( $value ) ) {
+            $this->set_prop( 'global_footer_settings', $value );
         }
     }
 

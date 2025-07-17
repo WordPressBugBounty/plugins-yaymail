@@ -1,6 +1,8 @@
 <?php
 use YayMail\Elements\ElementsLoader;
+use YayMail\Models\TemplateModel;
 use YayMail\Utils\TemplateHelpers;
+use YayMail\GlobalHeaderFooter;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -37,6 +39,13 @@ $style_container_wrap = TemplateHelpers::get_style(
     ]
 );
 
+/**
+ * Get global header and footer elements
+ *
+ * @since 4.1.0
+ */
+$global_header_footer_elements = GlobalHeaderFooter::get_elements( $template );
+
 if ( ! empty( $template ) ) :
     ?>
 
@@ -48,7 +57,17 @@ if ( ! empty( $template ) ) :
                     <tr>
                         <td style="padding: 0;">
                             <table style="<?php echo esc_attr( $style_container ); ?>" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" class="yaymail-customizer-email-template-container <?php echo esc_attr( 'yaymail-template-' . $template->get_name() ); ?>">
+                                <?php
+                                if ( ! empty( $global_header_footer_elements['global_header_elements'] ) ) {
+                                    ElementsLoader::render_elements( $global_header_footer_elements['global_header_elements'], $args );
+                                }
+                                ?>
                                 <?php ElementsLoader::render_elements( $template->get_elements(), $args ); ?>
+                                <?php
+                                if ( ! empty( $global_header_footer_elements['global_footer_elements'] ) ) {
+                                    ElementsLoader::render_elements( $global_header_footer_elements['global_footer_elements'], $args );
+                                }
+                                ?>
                             </table>
                         </td>
                     </tr>

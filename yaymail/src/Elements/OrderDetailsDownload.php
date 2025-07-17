@@ -19,6 +19,9 @@ class OrderDetailsDownload extends BaseElement {
     }
 
     public static function get_data( $attributes = [] ) {
+        $is_email_improvements_enabled = get_option( 'woocommerce_feature_email_improvements_enabled', 'no' ) === 'yes';
+        $layout_type                   = $is_email_improvements_enabled ? 'modern' : 'legacy';
+
         self::$icon = '<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 20 20">
   <path d="M17.5,2.5v15H2.5V2.5h15M18,1H2c-.55,0-1,.45-1,1v16c0,.55.45,1,1,1h16c.55,0,1-.45,1-1V2c0-.55-.45-1-1-1h0Z"/>
   <path d="M18.05,8.1H1.82c-.41,0-.75-.34-.75-.75s.34-.75.75-.75h16.23c.41,0,.75.34.75.75s-.34.75-.75.75Z"/>
@@ -37,6 +40,25 @@ class OrderDetailsDownload extends BaseElement {
             'available' => true,
             'position'  => 200,
             'data'      => [
+                'layout_type'      => [
+                    'value_path'    => 'layout_type',
+                    'component'     => 'Selector',
+                    'title'         => __( 'Layout type', 'yaymail' ),
+                    'default_value' => isset( $attributes['layout_type'] ) ? $attributes['layout_type'] : $layout_type,
+                    'extras_data'   => [
+                        'options' => [
+                            [
+                                'label' => __( 'Legacy', 'yaymail' ),
+                                'value' => 'legacy',
+                            ],
+                            [
+                                'label' => __( 'Modern', 'yaymail' ),
+                                'value' => 'modern',
+                            ],
+                        ],
+                    ],
+                    'type'          => 'content',
+                ],
                 'padding'          => [
                     'value_path'    => 'padding',
                     'component'     => 'Spacing',

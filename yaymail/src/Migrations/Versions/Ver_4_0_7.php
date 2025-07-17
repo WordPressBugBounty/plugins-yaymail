@@ -5,6 +5,7 @@ namespace YayMail\Migrations\Versions;
 use Exception;
 use YayMail\Migrations\AbstractMigration;
 use YayMail\Utils\SingletonTrait;
+use YayMail\YayMailTemplate;
 
 /**
  * Script to migrate from YayMail legacy (pre 4.0.7) to 4.0.7
@@ -12,8 +13,6 @@ use YayMail\Utils\SingletonTrait;
 final class Ver_4_0_7 extends AbstractMigration {
 
     use SingletonTrait;
-
-    private $current_template_id;
 
     private function __construct() {
         parent::__construct( '3.9.9', '4.0.7' );
@@ -54,15 +53,14 @@ final class Ver_4_0_7 extends AbstractMigration {
              * ==========================
              * Start Elements migrations
              */
-            $this->current_template_id = $template->ID;
 
-            $elements = get_post_meta( $this->current_template_id, \YayMail\YayMailTemplate::META_KEYS['elements'], true );
+            $elements = get_post_meta( $template->ID, \YayMail\YayMailTemplate::META_KEYS['elements'], true );
 
             if ( empty( $elements ) ) {
                 continue;
             }
 
-            $yaymail_settings     = get_option( 'yaymail_settings' );
+            $yaymail_settings     = yaymail_settings();
             $payment_display_mode = $yaymail_settings['payment_display_mode'];
 
             $element_text = [
@@ -108,7 +106,7 @@ final class Ver_4_0_7 extends AbstractMigration {
                 }
             }//end if
 
-            update_post_meta( $this->current_template_id, \YayMail\YayMailTemplate::META_KEYS['elements'], $elements );
+            update_post_meta( $template->ID, \YayMail\YayMailTemplate::META_KEYS['elements'], $elements );
 
             /**
              * Finish Template settings migrations

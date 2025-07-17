@@ -40,10 +40,13 @@ if ( isset( $data['align'] ) ) {
     }
 }
 
+$width_value = TemplateHelpers::get_dimension_value( $data['width'], '%' );
+
 $table_style = TemplateHelpers::get_style(
     [
         'border-collapse' => 'collapse',
-        'width'           => TemplateHelpers::get_dimension_value( $data['width'], '%' ),
+        'width'           => $width_value,
+        'min-width'       => $width_value,
         'margin'          => $table_margin,
     ]
 );

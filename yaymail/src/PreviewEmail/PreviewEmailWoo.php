@@ -46,8 +46,11 @@ class PreviewEmailWoo {
 
         add_filter( 'woocommerce_email_recipient_' . $current_email->id, [ __CLASS__, 'no_recipient' ] );
         add_filter( 'woocommerce_new_order_email_allows_resend', '__return_true' );
+        add_filter( 'yaymail_is_preview_email', '__return_true' );
 
-        $supported_template_ids = SupportedPlugins::get_instance()->get_template_ids_from_core();
+        $core_template_ids      = SupportedPlugins::get_instance()->get_template_ids_from_core();
+        $addon_template_ids     = SupportedPlugins::get_instance()->get_all_addon_supported_template_ids();
+        $supported_template_ids = array_merge( $core_template_ids, $addon_template_ids );
 
         if ( in_array( $email_id, $supported_template_ids, true ) ) {
                 // Sample order fallback
@@ -138,13 +141,36 @@ class PreviewEmailWoo {
 
     private static function trigger_email( $email_class, $email, $order_id ) {
         try {
-            if ( $email_class === 'WC_Email_Customer_New_Account' ) {
-                $email->trigger( get_current_user_id() );
+            /**
+             * Filter: yaymail_trigger_to_preview_email
+             *
+             * Allows developers to control whether to use custom email trigger logic
+             * instead of the default WooCommerce email trigger.
+             *
+             * @param bool   $should_use_custom_trigger Whether to use custom trigger logic (default: false)
+             * @param object $email                     The email object instance
+             * @param int    $order_id                  The order ID
+             *
+             * @return bool True to use custom trigger via 'yaymail_trigger_email' action, false to use default WooCommerce trigger
+             */
+            if ( apply_filters( 'yaymail_trigger_to_preview_email', false, $email, $order_id ) ) {
+                /**
+                 * Action: yaymail_trigger_email
+                 *
+                 * Fired when custom email trigger logic should be used instead of
+                 * the default WooCommerce email trigger. This allows addons and
+                 * custom implementations to handle email triggering differently.
+                 *
+                 * @param object $email       The email object instance
+                 * @param int    $order_id    The order ID
+                 */
+                do_action( 'yaymail_trigger_email', $email, $order_id );
             } else {
+                // Default WooCommerce email trigger logic
                 $order = wc_get_order( $order_id );
                 $email->set_object( $order );
                 $email->trigger( $order_id );
-            }
+            }//end if
         } catch ( \Exception $e ) {
             return [ 'error' => $e ];
         }//end try

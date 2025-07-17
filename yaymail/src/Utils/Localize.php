@@ -52,45 +52,58 @@ class Localize {
     }
 
     public static function get_social_icons_data() {
-        $social_icons_folder = YAYMAIL_PLUGIN_PATH . 'assets/images/social-icons/';
 
-        $images = [];
-
-        if ( is_dir( $social_icons_folder ) ) {
-            $subfolders = array_diff( scandir( $social_icons_folder ), [ '.', '..' ] );
-
-            foreach ( $subfolders as $sub ) {
-                $sub_folder = $social_icons_folder . $sub;
-
-                if ( is_dir( $sub_folder ) ) {
-                    $png_files = array_diff( scandir( $sub_folder ), [ '.', '..' ] );
-
-                    $pngs = [];
-
-                    foreach ( $png_files as $file ) {
-                        $file_path = $sub_folder . '/' . $file;
-
-                        if ( is_file( $file_path ) ) {
-                            $base64 = base64_encode( file_get_contents( $file_path ) );
-
-                            $pngs[] = [
-                                'theme' => self::kebab_to_pascal( str_replace( '.png', '', $file ) ),
-                                'src'   => 'data: image/png;base64,' . $base64,
-                            ];
-                        }
-                    }
-
-                    $images[] = [
-                        'name' => str_replace( '.png', '', $sub ),
-                        'data' => $pngs,
-                    ];
-                }//end if
-            }//end foreach
-        }//end if
+        $socials             = [
+            'behance',
+            'discord',
+            'dribble',
+            'facebook',
+            'github',
+            'google',
+            'instagram',
+            'linkedin',
+            'medium',
+            'messenger',
+            'pinterest',
+            'reddit',
+            'skype',
+            'snapchat',
+            'spotify',
+            'telegram',
+            'tiktok',
+            'twitch',
+            'twitter',
+            'viber',
+            'vimeo',
+            'website',
+            'wechat',
+            'whatsapp',
+            'youtube',
+            'zillow',
+        ];
+        $resource_prefix_url = YAYMAIL_PLUGIN_URL . 'assets/images/social-icons/';
+        $themes              = [ 'colorful', 'line-dark', 'line-light', 'solid-dark', 'solid-light' ];
+        $themes_pascal       = array_map( [ self::class, 'kebab_to_pascal' ], $themes );
+        $images              = [];
+        foreach ( $socials as $social ) {
+            $pngs = [];
+            foreach ( $themes as $theme ) {
+                $theme_pascal = self::kebab_to_pascal( $theme );
+                $file_name    = $theme . '.png';
+                $file_url     = $resource_prefix_url . $social . '/' . $file_name;
+                $pngs[]       = [
+                    'theme' => $theme_pascal,
+                    'src'   => $file_url,
+                ];
+            }
+            $images[] = [
+                'name' => $social,
+                'data' => $pngs,
+            ];
+        }
 
         return [
-            'icons'  => [ 'discord', 'facebook', 'instagram', 'linkedin', 'messenger', 'pinterest', 'telegram', 'tiktok', 'twitter', 'vimeo', 'website', 'whatsapp', 'youtube' ],
-            'themes' => [ 'Colorful', 'LineDark', 'LineLight', 'SolidDark', 'SolidLight' ],
+            'themes' => $themes_pascal,
             'images' => $images,
         ];
     }

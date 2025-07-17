@@ -3,8 +3,10 @@
 namespace YayMail\Controllers;
 
 use YayMail\Abstracts\BaseController;
+use YayMail\Models\SettingModel;
 use YayMail\Models\TemplateModel;
 use YayMail\Utils\SingletonTrait;
+use YayMail\YayMailTemplate;
 
 /**
  * Template Controller
@@ -152,6 +154,18 @@ class TemplateController extends BaseController {
                 ],
             ]
         );
+
+        register_rest_route(
+            YAYMAIL_REST_NAMESPACE,
+            '/templates/global-header-footer/change-status',
+            [
+                [
+                    'methods'             => \WP_REST_Server::EDITABLE,
+                    'callback'            => [ $this, 'exec_change_global_header_footer_status' ],
+                    'permission_callback' => [ $this, 'permission_callback' ],
+                ],
+            ]
+        );
     }
 
     public function exec_get_all_templates( \WP_REST_Request $request ) {
@@ -185,11 +199,15 @@ class TemplateController extends BaseController {
         $background_color         = sanitize_text_field( $request->get_param( 'background_color' ) );
         $text_link_color          = sanitize_text_field( $request->get_param( 'text_link_color' ) );
         $content_background_color = sanitize_text_field( $request->get_param( 'content_background_color' ) );
+        $global_header_settings   = $request->get_param( 'global_header_settings' ) ?? YayMailTemplate::DEFAULT_DATA['global_header_settings'];
+        $global_footer_settings   = $request->get_param( 'global_footer_settings' ) ?? YayMailTemplate::DEFAULT_DATA['global_footer_settings'];
         $update_data              = [
             'elements'                 => $elements,
             'background_color'         => $background_color,
             'text_link_color'          => $text_link_color,
             'content_background_color' => $content_background_color,
+            'global_header_settings'   => $global_header_settings,
+            'global_footer_settings'   => $global_footer_settings,
         ];
         $updated_data             = $this->model::update( $id, $update_data, true );
         return $updated_data;
@@ -268,17 +286,32 @@ class TemplateController extends BaseController {
             $default_elements                          = yaymail_get_default_elements( $template_data['name'] );
             $update_data                               = [
                 'elements'                 => $default_elements,
-                'background_color'         => YAYMAIL_COLOR_BACKGROUND_DEFAULT,
-                'text_link_color'          => YAYMAIL_COLOR_WC_DEFAULT,
-                'content_background_color' => '#ffffff',
+                'background_color'         => YayMailTemplate::DEFAULT_DATA['background_color'],
+                'text_link_color'          => YayMailTemplate::DEFAULT_DATA['text_link_color'],
+                'content_background_color' => YayMailTemplate::DEFAULT_DATA['content_background_color'],
+                'global_header_settings'   => wp_parse_args(
+                    [
+                        'hidden' => true,
+                    ],
+                    $template_data['global_header_settings'] ?? YayMailTemplate::DEFAULT_DATA['global_header_settings'],
+                ),
+                'global_footer_settings'   => wp_parse_args(
+                    [
+                        'hidden' => true,
+                    ],
+                    $template_data['global_footer_settings'] ?? YayMailTemplate::DEFAULT_DATA['global_footer_settings'],
+                ),
             ];
             $template_data['elements']                 = $update_data['elements'];
             $template_data['background_color']         = $update_data['background_color'];
             $template_data['text_link_color']          = $update_data['text_link_color'];
             $template_data['content_background_color'] = $update_data['content_background_color'];
-            $list_template_data[]                      = $template_data;
+            $template_data['global_header_settings']   = $update_data['global_header_settings'];
+            $template_data['global_footer_settings']   = $update_data['global_footer_settings'];
+
+            $list_template_data[] = $template_data;
             $this->model::update( $id, $update_data, true );
-        }
+        }//end foreach
 
         return [
             'success'            => true,
@@ -304,10 +337,12 @@ class TemplateController extends BaseController {
         }
 
         $update_data = [
-            'elements'                 => $copy_template_data['elements'] ?? [],
+            'elements'                 => ! empty( $copy_template_data['elements'] ) ? $copy_template_data['elements'] : yaymail_get_default_elements( $from_template ),
             'background_color'         => $copy_template_data['background_color'] ?? YAYMAIL_COLOR_BACKGROUND_DEFAULT,
             'content_background_color' => $copy_template_data['content_background_color'] ?? '#ffffff',
             'text_link_color'          => $copy_template_data['text_link_color'] ?? YAYMAIL_COLOR_WC_DEFAULT,
+            'global_header_settings'   => ! empty( $copy_template_data['global_header_settings'] ) ? $copy_template_data['global_header_settings'] : YayMailTemplate::DEFAULT_DATA['global_header_settings'],
+            'global_footer_settings'   => ! empty( $copy_template_data['global_footer_settings'] ) ? $copy_template_data['global_footer_settings'] : YayMailTemplate::DEFAULT_DATA['global_footer_settings'],
         ];
 
         $this->model::update( $template_id, $update_data, true );
@@ -334,5 +369,14 @@ class TemplateController extends BaseController {
         $template_name = sanitize_text_field( $request->get_param( 'template_name' ) );
         $order_id      = sanitize_text_field( $request->get_param( 'order' ) );
         return $this->model->get_shortcodes_by_template_name_and_order_id( $template_name, $order_id );
+    }
+
+    public function exec_change_global_header_footer_status( \WP_REST_Request $request ) {
+        return $this->exec( [ $this, 'change_global_header_footer_status' ], $request );
+    }
+
+    public function change_global_header_footer_status( \WP_REST_Request $request ) {
+        $status = sanitize_text_field( $request->get_param( 'status' ) );
+        return SettingModel::update( [ 'global_header_footer_enabled' => $status ] );
     }
 }

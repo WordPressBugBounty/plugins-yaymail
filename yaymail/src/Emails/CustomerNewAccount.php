@@ -29,7 +29,20 @@ class CustomerNewAccount extends BaseEmail {
 
         $this->render_priority = apply_filters( 'yaymail_email_render_priority', $this->render_priority, $this->id );
         add_filter( 'wc_get_template', [ $this, 'get_template_file' ], $this->render_priority ?? 10, 3 );
+        add_filter( 'yaymail_trigger_to_preview_email', [ $this, 'trigger_to_preview_email' ], 10, 3 );
         $this->maybe_disable_block_email_editor();
+    }
+
+    public function trigger_to_preview_email( $is_permitted, $email, $order_id ) {
+        if ( $email->id === $this->id ) {
+            add_action( 'yaymail_trigger_email', [ $this, 'trigger_email' ], 10, 2 );
+            $is_permitted = true;
+        }
+        return $is_permitted;
+    }
+
+    public function trigger_email( $email, $order_id ) {
+        $email->trigger( get_current_user_id() );
     }
 
     public function get_default_elements() {

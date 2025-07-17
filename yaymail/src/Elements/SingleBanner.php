@@ -26,6 +26,22 @@ class SingleBanner extends BaseElement {
   </g>
 </svg>';
 
+        $background_conditions = [
+            [
+                'comparison' => 'contain',
+                'value'      => [ 'background_image' ],
+                'attribute'  => 'showing_items',
+            ],
+        ];
+
+        $button_conditions = [
+            [
+                'comparison' => 'contain',
+                'value'      => [ 'button' ],
+                'attribute'  => 'showing_items',
+            ],
+        ];
+
         return [
             'id'              => uniqid(),
             'type'            => self::$type,
@@ -35,7 +51,159 @@ class SingleBanner extends BaseElement {
             'available'       => false,
             'disabled_reason' => 'This element is available in YayMail Pro',
             'position'        => 240,
-            'data'            => [],
+            'data'            => [
+                'padding'                     => [
+                    'value_path'    => 'padding',
+                    'component'     => 'Spacing',
+                    'title'         => __( 'Padding', 'yaymail' ),
+                    'default_value' => isset( $attributes['padding'] ) ? $attributes['padding'] : [
+                        'top'    => '15',
+                        'right'  => '50',
+                        'bottom' => '15',
+                        'left'   => '50',
+                    ],
+                    'type'          => 'style',
+                ],
+                'background_color'            => [
+                    'value_path'    => 'background_color',
+                    'component'     => 'Color',
+                    'title'         => __( 'Background color', 'yaymail' ),
+                    'default_value' => isset( $attributes['background_color'] ) ? $attributes['background_color'] : '#fff',
+                    'type'          => 'style',
+                ],
+                'font_family'                 => [
+                    'value_path'    => 'font_family',
+                    'component'     => 'FontFamilySelector',
+                    'title'         => __( 'Font family', 'yaymail' ),
+                    'default_value' => isset( $attributes['font_family'] ) ? $attributes['font_family'] : YAYMAIL_DEFAULT_FAMILY,
+                    'type'          => 'style',
+                ],
+                'rich_text'                   => [
+                    'value_path'    => 'rich_text',
+                    'component'     => 'RichTextEditor',
+                    'title'         => __( 'Content', 'yaymail' ),
+                    'default_value' => isset( $attributes['rich_text'] ) ? $attributes['rich_text'] : '<p style="text-align: right;"><strong><span style="color: #ffff00; font-size: 24px;">Your Elegance Our Choice</span></strong></p>
+                    <p style="text-align: right;"><span style="color: #ffffff; font-size: 16px;"><strong><span style="color: #ffffff;"><span style="color: #ec4770;">BETTER PRODUCT AT THE RIGHT PRICE</span></span></strong></span></p>
+                    <p style="text-align: right;"><span style="font-size: 14px; color: #010101;">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</span></p>',
+                    'type'          => 'content',
+                ],
+                'content_breaker'             => [
+                    'component' => 'LineBreaker',
+                ],
+                'content_group_definition'    => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Content', 'yaymail' ),
+                    'description' => __( 'Handle content settings', 'yaymail' ),
+                ],
+                'content_width'               => [
+                    'value_path'    => 'content_width',
+                    'component'     => 'Dimension',
+                    'title'         => __( 'Content width', 'yaymail' ),
+                    'default_value' => isset( $attributes['content_width'] ) ? $attributes['content_width'] : '60',
+                    'type'          => 'style',
+                ],
+                'content_align'               => [
+                    'value_path'    => 'content_align',
+                    'component'     => 'Align',
+                    'title'         => __( 'Content align', 'yaymail' ),
+                    'default_value' => isset( $attributes['content_align'] ) ? $attributes['content_align'] : 'right',
+                    'type'          => 'style',
+                ],
+                'showing_items'               => [
+                    'value_path'    => 'showing_items',
+                    'component'     => 'CheckboxGroup',
+                    'title'         => __( 'Showing items', 'yaymail' ),
+                    'default_value' => isset( $attributes['showing_items'] ) ? $attributes['showing_items'] : [ 'button', 'background_image' ],
+                    'type'          => 'content',
+                    'extras_data'   => [
+                        'options' => [
+                            [
+                                'label' => __( 'Background image', 'yaymail' ),
+                                'value' => 'background_image',
+                            ],
+                            [
+                                'label' => __( 'Button', 'yaymail' ),
+                                'value' => 'button',
+                            ],
+                        ],
+                    ],
+                ],
+                'background_breaker'          => [
+                    'component'  => 'LineBreaker',
+                    'conditions' => $background_conditions,
+                ],
+                'background_group_definition' => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Background', 'yaymail' ),
+                    'description' => __( 'Handle background settings', 'yaymail' ),
+                    'conditions'  => $background_conditions,
+                ],
+                'background_image'            => [
+                    'value_path'    => 'background_image',
+                    'component'     => 'BackgroundImage',
+                    'title'         => __( 'Background image', 'yaymail' ),
+                    'default_value' => isset( $attributes['background_image'] ) ? $attributes['background_image'] : [
+                        'url'        => YAYMAIL_PLUGIN_URL . 'assets/images/shopping-image.jpeg',
+                        'position'   => 'center_center',
+                        'x_position' => 0,
+                        'y_position' => 0,
+                        'repeat'     => 'default',
+                        'size'       => 'cover',
+                    ],
+                    'type'          => 'style',
+                    'conditions'    => $background_conditions,
+                ],
+                'button_breaker'              => [
+                    'component'  => 'LineBreaker',
+                    'conditions' => $button_conditions,
+                ],
+                'button_group_definition'     => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Button', 'yaymail' ),
+                    'description' => __( 'Handle button settings', 'yaymail' ),
+                    'conditions'  => $button_conditions,
+                ],
+                'button_text'                 => [
+                    'value_path'    => 'button_text',
+                    'component'     => 'TextInput',
+                    'title'         => __( 'Button text', 'yaymail' ),
+                    'default_value' => isset( $attributes['button_text'] ) ? $attributes['button_text'] : __( 'ORDER NOW', 'yaymail' ),
+                    'type'          => 'content',
+                    'conditions'    => $button_conditions,
+                ],
+                'button_url'                  => [
+                    'value_path'    => 'button_url',
+                    'component'     => 'TextInput',
+                    'title'         => __( 'Button URL', 'yaymail' ),
+                    'default_value' => isset( $attributes['button_url'] ) ? $attributes['button_url'] : home_url(),
+                    'type'          => 'content',
+                    'conditions'    => $button_conditions,
+                ],
+                'button_align'                => [
+                    'value_path'    => 'button_align',
+                    'component'     => 'Align',
+                    'title'         => __( 'Button align', 'yaymail' ),
+                    'default_value' => isset( $attributes['button_align'] ) ? $attributes['button_align'] : 'right',
+                    'type'          => 'style',
+                    'conditions'    => $button_conditions,
+                ],
+                'button_background_color'     => [
+                    'value_path'    => 'button_background_color',
+                    'component'     => 'Color',
+                    'title'         => __( 'Button background color', 'yaymail' ),
+                    'default_value' => isset( $attributes['button_background_color'] ) ? $attributes['button_background_color'] : '#ec4770',
+                    'type'          => 'style',
+                    'conditions'    => $button_conditions,
+                ],
+                'button_text_color'           => [
+                    'value_path'    => 'button_text_color',
+                    'component'     => 'Color',
+                    'title'         => __( 'Button text color', 'yaymail' ),
+                    'default_value' => isset( $attributes['button_text_color'] ) ? $attributes['button_text_color'] : '#fff',
+                    'type'          => 'style',
+                    'conditions'    => $button_conditions,
+                ],
+            ],
         ];
     }
 }

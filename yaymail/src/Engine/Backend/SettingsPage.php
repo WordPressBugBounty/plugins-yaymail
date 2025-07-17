@@ -35,7 +35,7 @@ class SettingsPage {
 
         add_filter( 'plugin_action_links_' . YAYMAIL_PLUGIN_BASENAME, [ $this, 'plugin_action_links' ] );
         add_filter( 'plugin_row_meta', [ $this, 'add_support_and_docs_links' ], 10, 2 );
-        add_filter( 'mce_external_plugins', [ $this, 'register_wp_editor_plugins_script' ], 'yaymail-wp-editor-placeholder' );
+        add_filter( 'mce_external_plugins', [ $this, 'register_wp_editor_plugins_script' ] );
 
         // Add Column YayMail Customizer on Setting email of WooCommerce
         add_filter( 'woocommerce_email_setting_columns', [ $this, 'woocommerce_email_setting_columns' ] );
@@ -257,7 +257,7 @@ class SettingsPage {
     }
 
     public function fix_conflict_plugins_styles() {
-        if ( !function_exists( 'get_current_screen' ) ) {
+        if ( ! function_exists( 'get_current_screen' ) ) {
             return;
         }
         $screen = get_current_screen();

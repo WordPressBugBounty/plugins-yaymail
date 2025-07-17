@@ -70,13 +70,6 @@ class Footer extends BaseElement {
                     'default_value' => isset( $attributes['rich_text'] ) ? $attributes['rich_text'] : '<p style="font-size: 14px;margin: 0px 0px 16px; text-align: center;">[yaymail_site_name]&nbsp;- Built with <a style="color: ' . esc_attr( YAYMAIL_COLOR_WC_DEFAULT ) . '; font-weight: normal; text-decoration: underline;" href="https://woocommerce.com" target="_blank" rel="noopener">WooCommerce</a></p>',
                     'type'          => 'content',
                 ],
-                'hide_text_editor' => [
-                    'value_path'    => 'hide_text_editor',
-                    'component'     => '',
-                    'title'         => __( 'Hide text', 'yaymail' ),
-                    'default_value' => isset( $attributes['hide_text_editor'] ) ? $attributes['hide_text_editor'] : false,
-                    'type'          => 'content',
-                ],
             ],
         ];
     }

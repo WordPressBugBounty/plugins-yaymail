@@ -23,6 +23,7 @@ $wrapper_style = TemplateHelpers::get_style(
         'padding'          => TemplateHelpers::get_spacing_value( isset( $data['padding'] ) ? $data['padding'] : [] ),
     ]
 );
+
 if ( isset( $data['background_image'], $data['background_image']['url'] ) ) {
     $background_image = $data['background_image'];
     // Calculate background-position
@@ -57,7 +58,16 @@ if ( isset( $data['background_image'], $data['background_image']['url'] ) ) {
             'background-size'     => $background_size,
         ]
     );
-}
+}//end if
+
+if ( isset( $data['border_radius'] ) ) {
+    $wrapper_style .= TemplateHelpers::get_style(
+        [
+            'border-radius' => TemplateHelpers::get_border_radius_value( $data['border_radius'], 'px' ),
+            'overflow'      => 'hidden',
+        ]
+    );
+}//end if
 
 if ( ! empty( $element['children'] ) ) {
     $inner_styles = '';

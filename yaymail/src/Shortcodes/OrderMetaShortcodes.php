@@ -78,7 +78,7 @@ class OrderMetaShortcodes {
             return $shortcodes;
         }
 
-        $metadata = $order->get_meta_data();
+        $metadata = self::get_allowed_order_meta_data( $order );
 
         foreach ( $metadata as $meta_item ) {
             $data = $meta_item->get_data();
@@ -142,7 +142,7 @@ class OrderMetaShortcodes {
             }
             $str = isset( $value['extra'] ) && ( is_string( $value['extra'] ) || is_numeric( $value['extra'] ) )
             ? $value['extra']
-                : implode( ', ', array_map( 'strval', $value ) );
+                : $this->yaymail_flatten_to_string( $value );
             return str_replace( '|', '<br />', $str );
         }
 
@@ -168,5 +168,151 @@ class OrderMetaShortcodes {
         }
 
         return $value;
+    }
+
+    protected function yaymail_flatten_to_string( $value ) {
+        if ( is_array( $value ) || is_object( $value ) ) {
+            $result = [];
+            foreach ( (array) $value as $v ) {
+                $result[] = $this->yaymail_flatten_to_string( $v );
+            }
+            return implode( ', ', $result );
+        }
+        return strval( $value );
+    }
+
+    /**
+     * Get allowed order meta data
+     * Allow 3rd party to filter the which order meta data to be used in the email
+     *
+     * @since 4.1.0
+     */
+    public static function get_allowed_order_meta_data( $order ) {
+
+        if ( is_string( $order ) || is_numeric( $order ) ) {
+            $order = wc_get_order( $order );
+        }
+
+        if ( ! $order && ! ( $order instanceof \WC_Order ) ) {
+            return [];
+        }
+
+        $order_meta_data = $order->get_meta_data();
+
+        return $order_meta_data;
+
+        // Maybe we can use this in the future
+        // $order_id = $order->get_id();
+
+        // // ACF integration
+        // if ( function_exists( 'acf_is_field_key' ) ) {
+        // $order_meta_data = array_filter(
+        // $order_meta_data,
+        // function( $meta_item ) use ( $order_id ) {
+        // $data       = $meta_item->get_data();
+        // $search_key = strpos( $data['key'], '_' ) === 0 ? $data['key'] : '_' . $data['key'];
+
+        // $acf_ref = get_post_meta( $order_id, $search_key, true );
+
+        // if ( ! $acf_ref && strpos( $acf_ref, 'field_' ) !== 0 ) {
+        // return true;
+        // }
+
+        // return ! acf_is_field_key( $acf_ref );
+        // }
+        // );
+        // }
+
+        // // Checkout fields by ThemeHigh
+        // if ( class_exists( 'THWCFD_Utils' ) ) {
+
+        // $thwcfd_data = [
+        // \THWCFD_Utils::get_fields( 'billing' ),
+        // \THWCFD_Utils::get_fields( 'shipping' ),
+        // \THWCFD_Utils::get_fields( 'additional' ),
+        // ];
+
+        // $custom_fields_sets = [];
+
+        // foreach ( $thwcfd_data as $set ) {
+        // $custom_fields = [];
+        // foreach ( array_keys( $set ) as $field_name ) {
+        // $custom_fields[] = '_' . $field_name;
+        // $custom_fields[] = $field_name;
+        // }
+        // $custom_fields_sets[] = $custom_fields;
+        // }
+
+        // foreach ( $custom_fields_sets as $custom_fields ) {
+        // if ( empty( $custom_fields ) ) {
+        // continue;
+        // }
+        // $order_meta_data = array_filter(
+        // $order_meta_data,
+        // function( $meta_item ) use ( $custom_fields ) {
+        // $data = $meta_item->get_data();
+        // return ! in_array( $data['key'], $custom_fields );
+        // }
+        // );
+        // }
+        // }//end if
+
+        // // Checkout fields editor by WooCommerce
+        // if ( class_exists( 'WC_Checkout_Field_Editor' ) && method_exists( 'WC_Checkout_Field_Editor', 'get_fields' ) ) {
+        // $custom_fields_sets = [
+        // \WC_Checkout_Field_Editor::get_fields( 'billing' ),
+        // \WC_Checkout_Field_Editor::get_fields( 'shipping' ),
+        // \WC_Checkout_Field_Editor::get_fields( 'additional' ),
+        // ];
+
+        // foreach ( $custom_fields_sets as $custom_fields ) {
+        // if ( empty( $custom_fields ) ) {
+        // continue;
+        // }
+        // $custom_fields   = array_filter(
+        // $custom_fields,
+        // function( $field ) {
+        // return ! empty( $field['custom'] );
+        // }
+        // );
+        // $order_meta_data = array_filter(
+        // $order_meta_data,
+        // function( $meta_item ) use ( $custom_fields ) {
+        // $data = $meta_item->get_data();
+        // return ! in_array( $data['key'], array_keys( $custom_fields ) );
+        // }
+        // );
+        // }
+        // }//end if
+
+        // // Checkout fields by Acoweb
+        // if ( defined( 'AWCFE_ORDER_META_KEY' ) ) {
+        // $awcf_data          = $order->get_meta( AWCFE_ORDER_META_KEY, true );
+        // $custom_fields_sets = [];
+
+        // foreach ( $awcf_data as $set ) {
+        // $custom_fields = [];
+        // foreach ( $set as $field ) {
+        // $custom_fields[] = '_' . $field['name'];
+        // }
+        // $custom_fields[]      = AWCFE_ORDER_META_KEY;
+        // $custom_fields_sets[] = $custom_fields;
+        // }
+
+        // foreach ( $custom_fields_sets as $custom_fields ) {
+        // if ( empty( $custom_fields ) ) {
+        // continue;
+        // }
+        // $order_meta_data = array_filter(
+        // $order_meta_data,
+        // function( $meta_item ) use ( $custom_fields ) {
+        // $data = $meta_item->get_data();
+        // return ! in_array( $data['key'], $custom_fields );
+        // }
+        // );
+        // }
+        // }//end if
+
+        // return $order_meta_data;
     }
 }

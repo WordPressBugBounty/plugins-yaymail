@@ -16,6 +16,9 @@ class OrderDetails extends BaseElement {
     public $available_email_ids = [ YAYMAIL_WITH_ORDER_EMAILS ];
 
     public static function get_data( $attributes = [] ) {
+        $is_email_improvements_enabled = get_option( 'woocommerce_feature_email_improvements_enabled', 'no' ) === 'yes';
+        $layout_type                   = $is_email_improvements_enabled ? 'modern' : 'legacy';
+
         self::$icon = '<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 20 20">
   <path d="M17.5,2.5v15H2.5V2.5h15M18,1H2c-.55,0-1,.45-1,1v16c0,.55.45,1,1,1h16c.55,0,1-.45,1-1V2c0-.55-.45-1-1-1h0Z"/>
   <path d="M18.05,8.1H1.82c-.41,0-.75-.34-.75-.75s.34-.75.75-.75h16.23c.41,0,.75.34.75.75s-.34.75-.75.75Z"/>
@@ -24,6 +27,19 @@ class OrderDetails extends BaseElement {
   <path d="M12.75,18.8c-.41,0-.75-.34-.75-.75V1.82c0-.41.34-.75.75-.75s.75.34.75.75v16.23c0,.41-.34.75-.75.75Z"/>
   <path d="M7.27,18.8c-.41,0-.75-.34-.75-.75V1.82c0-.41.34-.75.75-.75s.75.34.75.75v16.23c0,.41-.34.75-.75.75Z"/>
 </svg>';
+
+        $title_conditions = [
+            [
+                'value'     => true,
+                'attribute' => 'show_table_header',
+                'operator'  => 'or',
+            ],
+            [
+                'value'     => '',
+                'attribute' => 'show_table_header',
+                'operator'  => 'or',
+            ],
+        ];
 
         return [
             'id'        => uniqid(),
@@ -34,6 +50,26 @@ class OrderDetails extends BaseElement {
             'available' => true,
             'position'  => 190,
             'data'      => [
+                'layout_type'          => [
+                    'value_path'    => 'layout_type',
+                    'component'     => 'Selector',
+                    'title'         => __( 'Layout type', 'yaymail' ),
+                    'default_value' => isset( $attributes['layout_type'] ) ? $attributes['layout_type'] : $layout_type,
+                    'extras_data'   => [
+                        'options' => [
+                            [
+                                'label' => __( 'Legacy', 'yaymail' ),
+                                'value' => 'legacy',
+                            ],
+                            [
+                                'label' => __( 'Modern', 'yaymail' ),
+                                'value' => 'modern',
+                            ],
+                        ],
+                    ],
+                    'type'          => 'content',
+                ],
+
                 'padding'              => [
                     'value_path'    => 'padding',
                     'component'     => 'Spacing',
@@ -95,11 +131,21 @@ class OrderDetails extends BaseElement {
                     'default_value' => '[yaymail_payment_instructions]',
                     'type'          => 'content',
                 ],
+                'line_breaker'         => [
+                    'component' => 'LineBreaker',
+                ],
                 'title'                => [
                     'value_path'    => 'title',
                     'component'     => 'RichTextEditor',
                     'title'         => __( 'Order item title', 'yaymail' ),
                     'default_value' => isset( $attributes['title'] ) ? $attributes['title'] : '<span style="font-size: 20px;">Order #[yaymail_order_number] <b>([yaymail_order_date])</b></span>',
+                    'type'          => 'content',
+                ],
+                'show_table_header'    => [
+                    'value_path'    => 'show_table_header',
+                    'component'     => 'Switcher',
+                    'title'         => __( 'Show table header', 'yaymail' ),
+                    'default_value' => isset( $attributes['show_table_header'] ) ? $attributes['show_table_header'] : true,
                     'type'          => 'content',
                 ],
                 'product_title'        => [
@@ -108,6 +154,7 @@ class OrderDetails extends BaseElement {
                     'title'         => __( 'Product title', 'yaymail' ),
                     'default_value' => esc_html__( 'Product', 'woocommerce' ),
                     'type'          => 'content',
+                    'conditions'    => $title_conditions,
                 ],
                 'cost_title'           => [
                     'value_path'    => 'cost_title',
@@ -115,6 +162,7 @@ class OrderDetails extends BaseElement {
                     'title'         => __( 'Cost title', 'yaymail' ),
                     'default_value' => esc_html__( 'Cost', 'woocommerce' ),
                     'type'          => 'content',
+                    'conditions'    => $title_conditions,
                 ],
                 'quantity_title'       => [
                     'value_path'    => 'quantity_title',
@@ -122,6 +170,7 @@ class OrderDetails extends BaseElement {
                     'title'         => __( 'Quantity title', 'yaymail' ),
                     'default_value' => esc_html__( 'Quantity', 'woocommerce' ),
                     'type'          => 'content',
+                    'conditions'    => $title_conditions,
                 ],
                 'price_title'          => [
                     'value_path'    => 'price_title',
@@ -129,6 +178,7 @@ class OrderDetails extends BaseElement {
                     'title'         => __( 'Price title', 'yaymail' ),
                     'default_value' => esc_html__( 'Price', 'woocommerce' ),
                     'type'          => 'content',
+                    'conditions'    => $title_conditions,
                 ],
                 'cart_subtotal_title'  => [
                     'value_path'    => 'cart_subtotal_title',

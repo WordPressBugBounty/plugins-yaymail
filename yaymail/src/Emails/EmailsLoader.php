@@ -36,6 +36,7 @@ class EmailsLoader {
 
         $yaymail_emails->register( \YayMail\Emails\NewOrder::get_instance() );
         $yaymail_emails->register( \YayMail\Emails\CancelledOrder::get_instance() );
+        $yaymail_emails->register( \YayMail\Emails\CustomerCancelledOrder::get_instance() );
         $yaymail_emails->register( \YayMail\Emails\FailedOrder::get_instance() );
         $yaymail_emails->register( \YayMail\Emails\CustomerFailedOrder::get_instance() );
         $yaymail_emails->register( \YayMail\Emails\CustomerOnHoldOrder::get_instance() );
@@ -50,6 +51,7 @@ class EmailsLoader {
 
         /**
          * POS emails, WC 9.9.3
+         *
          * @since 4.0.6
          */
         $yaymail_emails->register( \YayMail\Emails\CustomerPOSCompletedOrder::get_instance() );

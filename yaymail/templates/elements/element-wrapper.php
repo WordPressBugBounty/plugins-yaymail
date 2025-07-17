@@ -34,7 +34,7 @@ $settings            = yaymail_settings();
 
 if ( ! empty( trim( wp_kses_post( $content_html ) ) ) ) {
     ?>
-    <div class="yaymail-element <?php echo esc_attr( $user_custom_classes ); ?>" data-yaymail-element-type="<?php echo esc_attr( $element['type'] ); ?>" style="width: 100%; margin: 0 auto;" data-element-id="<?php echo esc_attr( $element['id'] ); ?>">
+    <div class="yaymail-element <?php echo esc_attr( $user_custom_classes ); ?>" data-yaymail-element-type="<?php echo esc_attr( $element['type'] ); ?>" style="width: 100%; margin: 0 auto;" data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>">
         <table cellpadding="0" cellspacing="0"  class="yaymail-element__content" style="<?php echo esc_attr( $wrapper_style ); ?>">
             <tbody>
                 <tr>

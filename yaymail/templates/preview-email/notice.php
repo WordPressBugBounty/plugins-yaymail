@@ -37,7 +37,7 @@ $is_template_enable = ! empty( $template_data ) ? $template_data->is_enabled() :
                                 <!-- Heading Section -->
                                 <tr>
                                     <td style="padding: 0;">
-                                        <div class="yaymail-element" data-yaymail-element-type="heading" data-element-id="68356fe0c983b" style="width: 100%; margin: 0 auto;" width="100%">
+                                        <div class="yaymail-element" data-yaymail-element-type="heading" data-yaymail-element-id="68356fe0c983b" style="width: 100%; margin: 0 auto;" width="100%">
                                             <table cellpadding="0" cellspacing="0" class="yaymail-element__content" style="background-color: #e1e1e1; padding: 40px 50px; border-spacing: 0; width: 100%; direction: ltr; min-width: 100%;" bgcolor="#873EFF" width="100%">
                                                 <tbody>
                                                     <tr>
@@ -56,7 +56,7 @@ $is_template_enable = ! empty( $template_data ) ? $template_data->is_enabled() :
                                 <!-- Content Section -->
                                 <tr>
                                     <td style="padding: 0;">
-                                        <div class="yaymail-element" data-yaymail-element-type="text" data-element-id="8e1e807c-532f-4c25-b85f-81777319f9ba" style="width: 100%; margin: 0 auto;" width="100%">
+                                        <div class="yaymail-element" data-yaymail-element-type="text" data-yaymail-element-id="8e1e807c-532f-4c25-b85f-81777319f9ba" style="width: 100%; margin: 0 auto;" width="100%">
                                             <table cellpadding="0" cellspacing="0" class="yaymail-element__content" style="background-color: #fff; padding: 15px 50px; border-spacing: 0; width: 100%; direction: ltr; min-width: 100%;" bgcolor="#fff" width="100%">
                                                 <tbody>
                                                     <tr>
@@ -81,7 +81,7 @@ $is_template_enable = ! empty( $template_data ) ? $template_data->is_enabled() :
                                 <!-- Footer Section -->
                                 <tr>
                                     <td style="padding: 0;">
-                                        <div class="yaymail-element" data-yaymail-element-type="footer" data-element-id="68356fe0c98b2" style="width: 100%; margin: 0 auto;" width="100%">
+                                        <div class="yaymail-element" data-yaymail-element-type="footer" data-yaymail-element-id="68356fe0c98b2" style="width: 100%; margin: 0 auto;" width="100%">
                                             <table cellpadding="0" cellspacing="0" class="yaymail-element__content" style="background-color: #e1e1e1; padding: 15px 50px; border-spacing: 0; width: 100%; direction: ltr; min-width: 100%;" bgcolor="#f9f9f9" width="100%">
                                                 <tbody>
                                                     <tr>

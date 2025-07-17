@@ -41,8 +41,34 @@ $table_style = TemplateHelpers::get_style(
 
 $shortcoded_title   = isset( $data['title'] ) ? do_shortcode( $data['title'] ) : '';
 $shortcoded_content = isset( $data['rich_text'] ) ? do_shortcode( $data['rich_text'] ) : '';
+
+
+$is_layout_type_modern = isset( $data['layout_type'] ) && 'modern' === $data['layout_type'];
+
 ob_start();
 ?>
+<style>
+    /* Modern layout */
+    <?php if ( $is_layout_type_modern ) { ?>
+    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-download-content {
+        border: 0 !important;
+    }
+    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-download-content th,
+    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-download-content td {
+        border: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+
+    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-download-title--download,
+    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-download-content--download {
+        text-align: right !important;
+    }
+        <?php
+    }//end if
+    ?>
+</style>
+
 <?php if ( ! empty( $shortcoded_content ) ) : ?>
 <div class="yaymail-order-details-download-title" style="<?php echo esc_attr( $title_style ); ?>" > <?php yaymail_kses_post_e( $shortcoded_title ); ?></div>
 <table class="yaymail-order-details-download-content" style="<?php echo esc_attr( $table_style ); ?>" border="0" cellpadding="6" cellspacing="0" width="100%" >

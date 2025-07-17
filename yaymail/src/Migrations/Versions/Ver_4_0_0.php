@@ -7,6 +7,8 @@ use YayMail\Elements\ColumnLayout;
 use YayMail\Migrations\AbstractMigration;
 use YayMail\Utils\Helpers;
 use YayMail\Utils\SingletonTrait;
+use YayMail\Models\SettingModel;
+
 /**
  * Script to migrate from YayMail legacy (pre 4.0.0) to 4.0.0
  */
@@ -98,25 +100,25 @@ final class Ver_4_0_0 extends AbstractMigration {
 
     private function migrate_yaymail_settings() {
         $this->logger->log( 'Start migrating YayMail settings' );
-        $yaymail_settings = get_option( 'yaymail_settings' );
+        $yaymail_settings = yaymail_settings();
 
         /**
          * ==============================
          * Start mapping attribute names
          */
         $attributes_map = [
-            'payment'               => 'payment_display_mode',
-            'product_image'         => 'show_product_image',
-            'image_position'        => 'product_image_position',
-            'image_width'           => 'product_image_width',
-            'image_height'          => 'product_image_height',
-            'product_sku'           => 'show_product_sku',
-            'product_des'           => 'show_product_description',
-            'product_regular_price' => 'show_product_regular_price',
-            'product_hyper_links'   => 'show_product_hyper_links',
-            'product_item_cost'     => 'show_product_item_cost',
-            'direction_rtl'         => 'direction',
-            'enable_css_custom'     => 'enable_custom_css',
+            'payment'               => SettingModel::META_KEYS['payment_display_mode'],
+            'product_image'         => SettingModel::META_KEYS['show_product_image'],
+            'image_position'        => SettingModel::META_KEYS['product_image_position'],
+            'image_width'           => SettingModel::META_KEYS['product_image_width'],
+            'image_height'          => SettingModel::META_KEYS['product_image_height'],
+            'product_sku'           => SettingModel::META_KEYS['show_product_sku'],
+            'product_des'           => SettingModel::META_KEYS['show_product_description'],
+            'product_regular_price' => SettingModel::META_KEYS['show_product_regular_price'],
+            'product_hyper_links'   => SettingModel::META_KEYS['show_product_hyper_links'],
+            'product_item_cost'     => SettingModel::META_KEYS['show_product_item_cost'],
+            'direction_rtl'         => SettingModel::META_KEYS['direction'],
+            'enable_css_custom'     => SettingModel::META_KEYS['enable_custom_css'],
         ];
         // Convert element data names
         foreach ( $attributes_map as $old_key => $new_key ) {
@@ -146,19 +148,19 @@ final class Ver_4_0_0 extends AbstractMigration {
          * ==============================
          * Start mapping settings values
          */
-        $payment_display_mode_map                 = [
+        $payment_display_mode_map = [
             '0' => 'no',
             '1' => 'yes',
             '2' => 'customer',
         ];
-        $yaymail_settings['payment_display_mode'] = $payment_display_mode_map[ $yaymail_settings['payment_display_mode'] ] ?? 'yes';
+        $yaymail_settings[ SettingModel::META_KEYS['payment_display_mode'] ] = $payment_display_mode_map[ $yaymail_settings[ SettingModel::META_KEYS['payment_display_mode'] ] ] ?? 'yes';
 
-        $yaymail_settings['product_image_position'] = strtolower( $yaymail_settings['product_image_position'] ?? 'top' );
-        $yaymail_settings['product_image_width']    = (int) str_replace( 'px', '', $yaymail_settings['product_image_width'] ?? '30' );
-        $yaymail_settings['product_image_height']   = (int) str_replace( 'px', '', $yaymail_settings['product_image_height'] ?? '30' );
-        $yaymail_settings['container_width']        = (int) str_replace( 'px', '', $yaymail_settings['container_width'] ?? '605' );
-        if ( empty( $yaymail_settings['container_width'] ) ) {
-            $yaymail_settings['container_width'] = 605;
+        $yaymail_settings[ SettingModel::META_KEYS['product_image_position'] ] = strtolower( $yaymail_settings[ SettingModel::META_KEYS['product_image_position'] ] ?? 'top' );
+        $yaymail_settings[ SettingModel::META_KEYS['product_image_width'] ]    = (int) str_replace( 'px', '', $yaymail_settings[ SettingModel::META_KEYS['product_image_width'] ] ?? '30' );
+        $yaymail_settings[ SettingModel::META_KEYS['product_image_height'] ]   = (int) str_replace( 'px', '', $yaymail_settings[ SettingModel::META_KEYS['product_image_height'] ] ?? '30' );
+        $yaymail_settings[ SettingModel::META_KEYS['container_width'] ]        = (int) str_replace( 'px', '', $yaymail_settings[ SettingModel::META_KEYS['container_width'] ] ?? '605' );
+        if ( empty( $yaymail_settings[ SettingModel::META_KEYS['container_width'] ] ) ) {
+            $yaymail_settings[ SettingModel::META_KEYS['container_width'] ] = 605;
         }
         /**
          * Finish mapping settings values
@@ -166,7 +168,7 @@ final class Ver_4_0_0 extends AbstractMigration {
          */
 
         // Update yaymail settings to db
-        $update_yaymail_setting_options_result = update_option( 'yaymail_settings', $yaymail_settings );
+        $update_yaymail_setting_options_result = update_option( SettingModel::OPTION_NAME, $yaymail_settings );
         if ( ! $update_yaymail_setting_options_result ) {
             $this->logger->log( 'Failed to update new YayMail settings to db' );
         }
@@ -567,6 +569,7 @@ final class Ver_4_0_0 extends AbstractMigration {
 
             // Headers of the table columns/rows
             $order_details_titles         = get_post_meta( $this->current_template_id, '_yaymail_email_order_item_title', true );
+            $data['title']                = $order_details_titles['order_title'] ?? '<span style="font-size: 20px;">Order #[yaymail_order_number] <b>([yaymail_order_date])</b></span>';
             $data['product_title']        = $order_details_titles['product_title'] ?? __( 'Product', 'yaymail' );
             $data['cost_title']           = $order_details_titles['cost_title'] ?? __( 'Cost', 'yaymail' );
             $data['quantity_title']       = $order_details_titles['quantity_title'] ?? __( 'Quantity', 'yaymail' );

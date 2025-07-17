@@ -30,7 +30,6 @@ class Footer3 extends BasePattern {
             ColumnLayout::get_object_data(
                 1,
                 [
-                    'column_width'           => 80,
                     'padding'                => [
                         'top'    => 40,
                         'left'   => 20,

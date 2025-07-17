@@ -13,7 +13,6 @@ use YayMail\Utils\SingletonTrait;
 use YayMail\PostTypes\TemplatePostType;
 use YayMail\Shortcodes\ShortcodesExecutor;
 use YayMail\SupportedPlugins;
-use YayMail\Elements\ElementsLoader;
 
 /**
  * Template Model
@@ -271,6 +270,12 @@ class TemplateModel {
         if ( ! empty( $args['content_background_color'] ) ) {
             update_post_meta( $new_template_id, self::$meta_keys['content_background_color'], '#ffffff' );
         }
+        if ( ! empty( $args['global_header_settings'] ) ) {
+            update_post_meta( $new_template_id, self::$meta_keys['global_header_settings'], $args['global_header_settings'] );
+        }
+        if ( ! empty( $args['global_footer_settings'] ) ) {
+            update_post_meta( $new_template_id, self::$meta_keys['global_footer_settings'], $args['global_footer_settings'] );
+        }
 
         // Hook insert data of integrations
 
@@ -296,6 +301,14 @@ class TemplateModel {
 
         if ( isset( $data['status'] ) && isset( self::$meta_keys['status'] ) ) {
             update_post_meta( $template_id, self::$meta_keys['status'], $data['status'] );
+        }
+
+        if ( ! empty( $data['global_header_settings'] ) && isset( self::$meta_keys['global_header_settings'] ) ) {
+            update_post_meta( $template_id, self::$meta_keys['global_header_settings'], $data['global_header_settings'] );
+        }
+
+        if ( ! empty( $data['global_footer_settings'] ) && isset( self::$meta_keys['global_footer_settings'] ) ) {
+            update_post_meta( $template_id, self::$meta_keys['global_footer_settings'], $data['global_footer_settings'] );
         }
 
         // Update post_modified
@@ -387,10 +400,11 @@ class TemplateModel {
             $template_elements = self::get_uneditable_template_placeholder_elements( $support_info );
         } elseif ( isset( $post ) ) {
             // TODO: how to store global default value
-            $background_color         = self::query_meta_data( $template_post_id, self::$meta_keys['background_color'], YAYMAIL_COLOR_BACKGROUND_DEFAULT );
-            $text_link_color          = self::query_meta_data( $template_post_id, self::$meta_keys['text_link_color'], YAYMAIL_COLOR_WC_DEFAULT );
-            $content_background_color = self::query_meta_data( $template_post_id, self::$meta_keys['content_background_color'], '#ffffff' );
-
+            $background_color         = self::query_meta_data( $template_post_id, self::$meta_keys['background_color'], YayMailTemplate::DEFAULT_DATA['background_color'] );
+            $text_link_color          = self::query_meta_data( $template_post_id, self::$meta_keys['text_link_color'], YayMailTemplate::DEFAULT_DATA['text_link_color'] );
+            $content_background_color = self::query_meta_data( $template_post_id, self::$meta_keys['content_background_color'], YayMailTemplate::DEFAULT_DATA['content_background_color'] );
+            $global_header_settings   = self::query_meta_data( $template_post_id, self::$meta_keys['global_header_settings'], YayMailTemplate::DEFAULT_DATA['global_header_settings'] );
+            $global_footer_settings   = self::query_meta_data( $template_post_id, self::$meta_keys['global_footer_settings'], YayMailTemplate::DEFAULT_DATA['global_footer_settings'] );
         }
 
         return [
@@ -405,6 +419,8 @@ class TemplateModel {
             'support_status'           => $support_info['status'] ?? 'already_supported',
             'addon_info'               => $support_info['addon'] ?? '',
             'post_modified'            => $post_modified,
+            'global_header_settings'   => $global_header_settings,
+            'global_footer_settings'   => $global_footer_settings,
         ];
     }
 

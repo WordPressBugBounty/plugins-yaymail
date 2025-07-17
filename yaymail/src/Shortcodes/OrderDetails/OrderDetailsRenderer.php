@@ -252,6 +252,8 @@ class OrderDetailsRenderer {
         $product_cost          = 9;
         $product_quantity      = 2;
         $product_regular_price = 10;
+
+        $is_layout_type_modern = isset( $this->element_data['layout_type'] ) && 'modern' === $this->element_data['layout_type'];
         ?>
         <tr class="order_item">
             <?php foreach ( $structure_items as $key => $structure_item ) : ?>
@@ -313,6 +315,11 @@ class OrderDetailsRenderer {
                             echo wp_kses_post( wc_price( $product_cost ) );
                             break;
                         case 'quantity':
+                            ?>
+                            <?php if ( $is_layout_type_modern || $is_placeholder ) : ?>
+                                <span class="yaymail-quantity-type-modern">x</span>
+                            <?php endif; ?>
+                            <?php
                             echo wp_kses_post( $product_quantity );
                             break;
                         case 'price':
@@ -351,8 +358,8 @@ class OrderDetailsRenderer {
         ];
 
         // Just has data when send mail
-        if ( isset( $args['element'] ) && ! empty( $args['element'] ) ) {
-            $args_data['element'] = $args['element'];
+        if ( ! empty( $this->element_data ) ) {
+            $args_data['element'] = $this->element_data;
         }
         $path_data    = apply_filters( 'yaymail_order_details_items', 'templates/shortcodes/order-details/order-items/main.php' );
         $html         = yaymail_get_content( $path_data, $args_data );

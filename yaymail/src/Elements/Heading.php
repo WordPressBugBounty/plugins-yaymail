@@ -47,13 +47,6 @@ class Heading extends BaseElement {
             'available' => true,
             'position'  => 20,
             'data'      => [
-                'global_header'    => [
-                    'value_path'    => 'heading',
-                    'component'     => 'GlobalHeaderFooterCustomizerLink',
-                    'title'         => __( 'Email Heading', 'yaymail' ),
-                    'default_value' => '',
-                    'type'          => 'content',
-                ],
                 'padding'          => [
                     'value_path'    => 'padding',
                     'component'     => 'Spacing',
@@ -92,13 +85,6 @@ class Heading extends BaseElement {
                     'component'     => 'RichTextEditor',
                     'title'         => __( 'Content', 'yaymail' ),
                     'default_value' => $content,
-                    'type'          => 'content',
-                ],
-                'hide_text_editor' => [
-                    'value_path'    => 'hide_text_editor',
-                    'component'     => '',
-                    'title'         => __( 'Hide text', 'yaymail' ),
-                    'default_value' => isset( $attributes['hide_text_editor'] ) ? $attributes['hide_text_editor'] : false,
                     'type'          => 'content',
                 ],
             ],

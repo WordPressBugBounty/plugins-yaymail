@@ -26,16 +26,38 @@ class ColumnLayout extends BaseElement {
             'position'  => 150,
             'children'  => isset( $attributes['children'] ) ? $attributes['children'] : self::get_nested_columns( $amount ),
             'data'      => [
-                'amount_of_columns'      => [
+                'amount_of_columns'                  => [
                     'value_path'    => 'amount_of_columns',
                     'default_value' => $amount,
                 ],
-                'column_width'           => 1 == $amount ? [] : [
-                    'value_path' => 'column_width',
-                    'component'  => 'ColumnWidth',
-                    'title'      => __( 'Column width (%)', 'yaymail' ),
+                'column_width'                       => [
+                    'value_path'    => 'column_width',
+                    'component'     => 1 == $amount ? '' : 'ColumnWidth',
+                    'title'         => __( 'Column width (%)', 'yaymail' ),
+                    'default_value' => [],
+                // Trick to bypass checking value_path
                 ],
-                'padding'                => [
+                'column_spacing'                     => [
+                    'value_path'    => 'column_spacing',
+                    'component'     => 'Dimension',
+                    'title'         => __( 'Column spacing', 'yaymail' ),
+                    'default_value' => isset( $attributes['column_spacing'] ) ? $attributes['column_spacing'] : '0',
+                    'extras_data'   => [
+                        'min'  => 0,
+                        'max'  => 100,
+                        'unit' => 'px',
+                    ],
+                    'type'          => 'style',
+                ],
+                'container_setting_breaker'          => [
+                    'component' => 'LineBreaker',
+                ],
+                'container_setting_group_definition' => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Container layout settings', 'yaymail' ),
+                    'description' => __( 'Handle container layout settings', 'yaymail' ),
+                ],
+                'padding'                            => [
                     'value_path'    => 'padding',
                     'component'     => 'Spacing',
                     'title'         => __( 'Padding', 'yaymail' ),
@@ -45,14 +67,32 @@ class ColumnLayout extends BaseElement {
                         'bottom' => '15',
                         'left'   => '0',
                     ],
+                    'type'          => 'style',
                 ],
-                'background_color'       => [
+                'border_radius'                      => [
+                    'value_path'    => 'border_radius',
+                    'component'     => 'Spacing',
+                    'title'         => __( 'Border radius', 'yaymail' ),
+                    'default_value' => [
+                        'top_left'     => isset( $attributes['border_radius']['top_left'] ) ? $attributes['border_radius']['top_left'] : '0',
+                        'top_right'    => isset( $attributes['border_radius']['top_right'] ) ? $attributes['border_radius']['top_right'] : '0',
+                        'bottom_left'  => isset( $attributes['border_radius']['bottom_left'] ) ? $attributes['border_radius']['bottom_left'] : '0',
+                        'bottom_right' => isset( $attributes['border_radius']['bottom_right'] ) ? $attributes['border_radius']['bottom_right'] : '0',
+                    ],
+                    'extras_data'   => [
+                        'is_border_radius' => true,
+                        'class_name'       => 'yaymail-border-radius',
+                    ],
+                    'type'          => 'style',
+                ],
+                'background_color'                   => [
                     'value_path'    => 'background_color',
                     'component'     => 'Color',
                     'title'         => __( 'Background color', 'yaymail' ),
                     'default_value' => isset( $attributes['background_color'] ) ? $attributes['background_color'] : '#fff',
+                    'type'          => 'style',
                 ],
-                'background_image'       => [
+                'background_image'                   => [
                     'value_path'    => 'background_image',
                     'component'     => 'BackgroundImage',
                     'title'         => __( 'Background image', 'yaymail' ),
@@ -64,8 +104,17 @@ class ColumnLayout extends BaseElement {
                         'repeat'     => 'default',
                         'size'       => 'default',
                     ],
+                    'type'          => 'style',
                 ],
-                'inner_border_radius'    => [
+                'inner_setting_breaker'              => [
+                    'component' => 'LineBreaker',
+                ],
+                'inner_setting_group_definition'     => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Inner layout settings', 'yaymail' ),
+                    'description' => __( 'Handle inner layout settings', 'yaymail' ),
+                ],
+                'inner_border_radius'                => [
                     'value_path'    => 'inner_border_radius',
                     'component'     => 'Spacing',
                     'title'         => __( 'Inner border radius', 'yaymail' ),
@@ -79,12 +128,14 @@ class ColumnLayout extends BaseElement {
                         'is_border_radius' => true,
                         'class_name'       => 'yaymail-border-radius',
                     ],
+                    'type'          => 'style',
                 ],
-                'inner_background_color' => [
+                'inner_background_color'             => [
                     'value_path'    => 'inner_background_color',
                     'component'     => 'Color',
                     'title'         => __( 'Inner background color', 'yaymail' ),
-                    'default_value' => isset( $attributes['inner_background_color'] ) ? $attributes['inner_background_color'] : '#fff',
+                    'default_value' => isset( $attributes['inner_background_color'] ) ? $attributes['inner_background_color'] : '#ffffff00',
+                    'type'          => 'style',
                 ],
             ],
         ];

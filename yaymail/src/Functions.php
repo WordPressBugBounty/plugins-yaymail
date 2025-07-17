@@ -231,10 +231,6 @@ if ( ! function_exists( 'yaymail_get_email_elements_data' ) ) {
             if ( $element->is_available_in_email( $find_email ) ) {
                 $element_data['available'] = true;
             }
-            // Hide text editor of Heading element for global header footer email
-            if ( $email_id === 'yaymail_global_header_footer' && in_array( $element->get_type(), [ 'heading', 'footer' ], true ) ) {
-                $element_data['data']['hide_text_editor']['default_value'] = true;
-            }
 
             $result[] = $element_data;
 

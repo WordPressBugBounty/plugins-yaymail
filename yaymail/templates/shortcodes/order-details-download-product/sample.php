@@ -64,7 +64,7 @@ $table_link_style = TemplateHelpers::get_style(
             $image       = $is_placeholder ? "<img width='{{product_image_width}}px' height='{{product_image_height}}px' src='{$image_url}' alt='product image' style='{$image_style}'/>" : "<img width='{$image_width}px' height='{$image_height}px' src='{$image_url}' alt='product image' style='{$image_style}'/>";
 
             ?>
-            <div class="yaymail-product-download-image" style="<?php echo esc_attr( $container_style ); ?>">
+            <div class="yaymail-product-download-image">
                 <a href="" style="<?php echo esc_attr( $table_link_style ); ?>">
                     <?php
                     if ( $is_placeholder || ( $image_position === 'top' || $image_position === 'left' ) ) {

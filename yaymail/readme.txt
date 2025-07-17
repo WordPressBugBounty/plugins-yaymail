@@ -4,7 +4,7 @@ Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: email customizer, email templates, marketing, woocommerce emails, design
 Requires at least: 3.0
 Tested up to: 6.8
-Stable tag: 4.0.8
+Stable tag: 4.1.0
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -233,6 +233,25 @@ We offer single-site licenses and also unlimited site licenses to better support
 9. Break free from default WooCommerce styles, go bold with dark theme email templates
 
 == Changelog ==
+
+= Jul 17, 2025 - Version 4.1.0 =
+- Added: Admin addons manager page
+- Added: Global Header/Footer as global settings (remove Elements)
+- Added: Rating stars element
+- Added: 20+ social icons
+- Added: Gallery patterns
+- Added: Shipping patterns
+- Added: Offer patterns
+- Added: Nested layout, drag & drop Columns element to another Columns element (PRO)
+- Added: Column border radius
+- Added: Moving group when multi-selecting elements
+- Added: Columns spacing setting
+- Added: Modern layout selection for Order details/Order downloads elements
+- Added: Allow user to hide header in Order details element
+- Added: Support template Cancelled order
+- Added: Conditional rendering property builder (Dev)
+- Improved: Hide shipping address when order doesn't need shipping & ship to billing address only
+- Fixed: Some bugs
 
 = Jun 25, 2025 - Version 4.0.8 =
 - Added: Integrate with MakeCommerce (PRO)

@@ -70,13 +70,8 @@ abstract class BaseElement {
             }
         }
 
-
         $available_email_ids = (array) $this->available_email_ids;
         $available_email_ids = apply_filters( 'yaymail_element_available_email_ids', $available_email_ids, $this );
-
-        if ( ( 'global_header' === $this->get_type() || 'global_footer' === $this->get_type() ) && 'yaymail_global_header_footer' === $email->get_id() ) {
-            return false;
-        }
 
         return ( in_array( YAYMAIL_ALL_EMAILS, $available_email_ids, true ) )
         || ( in_array( YAYMAIL_NON_ORDER_EMAILS, $available_email_ids, true ) && in_array( YAYMAIL_NON_ORDER_EMAILS, $email->email_types, true ) )

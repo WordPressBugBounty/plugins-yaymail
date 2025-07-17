@@ -9,7 +9,8 @@ $margin_side = is_rtl() ? 'left' : 'right';
 $order_id    = isset( $args['order'] ) ? $args['order']->get_id() : '';
 $order_data  = isset( $order_id ) ? wc_get_order( $order_id ) : '';
 
-$element_data       = isset( $args['element']['data'] ) ? $args['element']['data'] : [];
+$element_data       = isset( $args['element'] ) ? $args['element'] : [];
+$border_color       = isset( $element_data['border_color'] ) ? $element_data['border_color'] : 'inherit';
 $text_style         = isset( $args['text_style'] ) ? $args['text_style'] : '';
 $image_style        = isset( $args['styles_product_image'] ) ? $args['styles_product_image'] : '';
 $is_placeholder     = isset( $args['is_placeholder'] ) ? $args['is_placeholder'] : false;
@@ -27,6 +28,8 @@ $show_regular_price = isset( $yaymail_settings['show_product_regular_price'] ) ?
 
 $show_purchase_note = true;
 $purchase_note      = true;
+
+$is_layout_type_modern = isset( $element_data['layout_type'] ) && 'modern' === $element_data['layout_type'];
 
 foreach ( $order_items as $item_id => $item ) :
     $product               = $item->get_product();
@@ -54,8 +57,8 @@ foreach ( $order_items as $item_id => $item ) :
         $product_hyper_link    = "<a href='{$product_permalink}' target='_blank'>{$product_name}</a>";
         $product_regular_price = isset( $product->get_data()['regular_price'] ) ? (float) $product->get_data()['regular_price'] : '';
     }
-
     ?>
+   
     <tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order_item', $item, $order_data ) ); ?>" style="<?php echo esc_attr( $text_style ); ?>;">
         <?php
         foreach ( $structure_items as $key => $structure_item ) :
@@ -143,6 +146,11 @@ foreach ( $order_items as $item_id => $item ) :
                     } else {
                         $qty_display = esc_html( $qty );
                     }
+                    ?>
+                    <?php if ( $is_layout_type_modern || $is_placeholder ) : ?>
+                        <span class="yaymail-quantity-type-modern">x</span>
+                    <?php endif; ?>
+                    <?php
                     echo wp_kses_post( apply_filters( 'woocommerce_email_order_item_quantity', $qty_display, $item ) );
                     break;
                 case 'price':

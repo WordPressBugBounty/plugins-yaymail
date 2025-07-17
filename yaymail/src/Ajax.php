@@ -205,7 +205,8 @@ class Ajax {
 
             $template->set_background_color( $template_data['background_color'] );
             $template->set_text_link_color( $template_data['text_link_color'] );
-
+            $template->set_global_header_settings( $template_data['global_header_settings'] );
+            $template->set_global_footer_settings( $template_data['global_footer_settings'] );
             $template->set_elements( $template_data['elements'] );
 
             $render_data = [];
@@ -616,7 +617,10 @@ class Ajax {
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
             wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
-        }//end try
+        } catch ( \Throwable $throwable ) {
+            yaymail_get_logger( $throwable );
+            wp_send_json_error( [ 'mess' => $throwable->getMessage() ] );
+        }
     }
 
     public function yaymail_review() {

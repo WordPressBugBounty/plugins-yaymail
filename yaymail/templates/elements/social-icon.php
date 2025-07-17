@@ -50,10 +50,32 @@ if ( isset( $data['align'] ) ) {
     }
 }
 
+$item_style = TemplateHelpers::get_style(
+    [
+        'display'        => 'inline-block',
+        'vertical-align' => 'top',
+        'text-align'     => 'center',
+        'margin'         => '5px 0',
+        'padding-left'   => TemplateHelpers::get_dimension_value( max( ( $data['spacing'] ?? 0 ) - 2, 0 ) / 2 ),
+        'padding-right'  => TemplateHelpers::get_dimension_value( max( ( $data['spacing'] ?? 0 ) - 2, 0 ) / 2 ),
+        'padding-top'    => 0,
+        'padding-bottom' => 0,
+    ]
+);
+
+$a_style = TemplateHelpers::get_style(
+    [
+        'display'         => 'inline-block',
+        'border'          => 'none',
+        'text-decoration' => 'none',
+    ]
+);
+
 ob_start();
 ?>
 <table class="yaymail-customizer-element-social" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse: collapse; margin: <?php echo esc_attr( $table_margin ); ?>; width: auto;">
     <tr>
+        <td style="text-align: <?php echo esc_attr( $data['align'] ?? 'center' ); ?>;">
         <?php foreach ( $data['icon_list'] as $key => $el ) : ?>
             <?php
             $img_url     = YAYMAIL_PLUGIN_URL . 'assets/images/social-icons/' . $el['icon'] . '/' . $theme[ $data['theme'] ] . '.png';
@@ -61,12 +83,13 @@ ob_start();
             $spacing     = ( $first_index === $key ) ? '0px' : $data['spacing'] . 'px';
             $text_align  = isset( $data['align'] ) ? $data['align'] : 'center';
             ?>
-            <td style="padding-left: <?php echo esc_attr( $spacing ); ?>; padding-right: 0; padding-top: 0; padding-bottom: 0; vertical-align: top; text-align: <?php echo esc_attr( $text_align ); ?>;">
-                <a class="yaymail-social-icon-item" href="<?php echo esc_attr( $el['url'] ); ?>" target="_blank" style="border: none; text-decoration: none; display: inline-block;">
+            <span class="yaymail-social-icon-item" style="<?php echo esc_attr( $item_style ); ?>">
+                <a href="<?php echo esc_attr( $el['url'] ); ?>" target="_blank" style="<?php echo esc_attr( $a_style ); ?>">
                     <img border="0" tabindex="0" src="<?php echo esc_attr( $img_url ); ?>" height="<?php echo esc_attr( $data['width_icon'] ); ?>" width="<?php echo esc_attr( $data['width_icon'] ); ?>" style="display: block; border: 0; margin: 0; padding: 0; outline: none;" />
                 </a>
-            </td>
+            </span>
         <?php endforeach; ?>
+        </td>
     </tr>
 </table>
 <?php

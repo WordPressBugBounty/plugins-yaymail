@@ -30,18 +30,14 @@ class GlobalHeaderFooter extends BaseEmail {
                 [
                     'type'       => 'Heading',
                     'attributes' => [
-                        'rich_text'        => __( 'Email Heading', 'yaymail' ),
-                        'hide_text_editor' => true,
+                        'rich_text' => __( 'Email Heading', 'yaymail' ),
                     ],
                 ],
                 [
                     'type' => 'SkeletonDivider',
                 ],
                 [
-                    'type'       => 'Footer',
-                    'attributes' => [
-                        'hide_text_editor' => true,
-                    ],
+                    'type' => 'Footer',
                 ],
             ]
         );
@@ -50,14 +46,7 @@ class GlobalHeaderFooter extends BaseEmail {
     }
 
     public function get_all_elements() {
-        $elements = parent::get_elements();
-        /**
-         * Add flag to notify front-end to remove text editor of headers and footers
-         */
-        if ( isset( $elements['heading']['data'] ) ) {
-            $elements['heading']['data']['hide_text_editor'] = true;
-        }
-        return $elements;
+        return parent::get_elements();
     }
 
     public function get_template_file( $located, $template_name, $args ) {

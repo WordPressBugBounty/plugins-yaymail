@@ -1,6 +1,7 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 use YayMail\Utils\TemplateHelpers;
+use YayMail\GlobalHeaderFooter;
 
 /**
  * $args includes
@@ -30,10 +31,20 @@ $text_style = TemplateHelpers::get_style(
     ]
 );
 
+/**
+ * Get global footer override content
+ *
+ * @since 4.1.0
+ */
+$text_content = $data['rich_text'];
+if ( ! is_null( GlobalHeaderFooter::get_global_footer_override_content( $args['template'] ) ) && GlobalHeaderFooter::is_element_in_global_footer( $element, $args['template'] ) ) {
+    $text_content = GlobalHeaderFooter::get_global_footer_override_content( $args['template'] );
+}
+
 ob_start();
 ?>
 
-    <div style="<?php echo esc_attr( $text_style ); ?>"><?php echo wp_kses_post( do_shortcode( $data['rich_text'] ) ); ?></div>
+    <div style="<?php echo esc_attr( $text_style ); ?>"><?php echo wp_kses_post( do_shortcode( $text_content ) ); ?></div>
 
 <?php
 $element_content = ob_get_clean();

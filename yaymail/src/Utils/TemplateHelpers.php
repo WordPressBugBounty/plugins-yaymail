@@ -198,4 +198,58 @@ class TemplateHelpers {
             return $color;
         }
     }
+
+    /**
+     * Find element by id in the list of elements
+     *
+     * @param string $id The id of the element to find.
+     * @param array  $list_elements The list of elements to search in.
+     * @return array|null The element if found, null otherwise
+     * @since 4.1.0
+     */
+    public static function find_element_by_id( $id, $list_elements ) {
+        foreach ( $list_elements as $element ) {
+            if ( $element['id'] === $id ) {
+                return $element;
+            }
+            if ( $element['children'] && count( $element['children'] ) > 0 ) {
+                $result = self::find_element_by_id( $id, $element['children'] );
+                if ( $result ) {
+                    return $result;
+                }
+            }
+        }
+        return null;
+    }
+
+    public static function find_parent_element( $id, $list_elements ) {
+
+        foreach ( $list_elements as $element ) {
+            if ( empty( $element['children'] ) ) {
+                continue;
+            }
+            if ( in_array( $id, array_column( $element['children'], 'id' ) ) ) {
+                return $element;
+            }
+            $sub_query = self::find_parent_element( $id, $element['children'] );
+            if ( $sub_query ) {
+                return $sub_query;
+            }
+        }
+
+        return null;
+    }
+
+    public static function get_current_column_index( $id, $list_elements ) {
+        $element = self::find_element_by_id( $id, $list_elements );
+        if ( empty( $element ) ) {
+            return 0;
+        }
+        $parent_element = self::find_parent_element( $element['id'], $list_elements );
+        if ( empty( $parent_element ) ) {
+            return 0;
+        }
+        $current_column_index = array_search( $element['id'], array_column( $parent_element['children'], 'id' ) );
+        return $current_column_index;
+    }
 }

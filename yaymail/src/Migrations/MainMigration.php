@@ -19,6 +19,7 @@ class MainMigration {
     const CORE_MIGRATIONS = [
         '4.0.0' => '\YayMail\Migrations\Versions\Ver_4_0_0',
         '4.0.7' => '\YayMail\Migrations\Versions\Ver_4_0_7',
+        '4.1.0' => '\YayMail\Migrations\Versions\Ver_4_1_0',
     ];
 
     private function __construct() {

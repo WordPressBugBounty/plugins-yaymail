@@ -6,6 +6,7 @@ use YayMail\Emails\EmailsLoader;
 use YayMail\Engine\ActDeact;
 use YayMail\Engine\Backend\SettingsPage;
 use YayMail\Engine\RestAPI;
+use YayMail\Integrations\IntegrationsLoader;
 use YayMail\PostTypes\TemplatePostType;
 use YayMail\Shortcodes\ShortcodesLoader;
 use YayMail\Utils\SingletonTrait;
@@ -28,13 +29,22 @@ class Initialize {
      */
     protected function __construct() {
         I18n::get_instance();
-        add_action( 'woocommerce_init', [ $this, 'woocommerce_init' ] );
+
+        $yaymail_init = apply_filters( 'yaymail_temp_init_hook_name', 'init' );
+
+        add_action( $yaymail_init, [ $this, 'woocommerce_init' ] );
         add_action( 'init', [ $this, 'yaymail_init' ] );
     }
 
     public function woocommerce_init() {
         require_once YAYMAIL_PLUGIN_PATH . 'src/Functions.php';
         do_action( 'yaymail_init_start' );
+
+        /**
+         * Core Integrations
+         */
+        IntegrationsLoader::get_instance();
+
         EmailsLoader::get_instance();
         ElementsLoader::get_instance();
         ShortcodesLoader::get_instance();
