@@ -47,6 +47,9 @@ final class Ver_4_1_0 extends AbstractMigration {
         }
 
         $has_global_header_foter_in_templates = false;
+        $templates_need_to_hide_header        = [];
+        $templates_need_to_hide_footer        = [];
+
         $default_template_global_header_settings = YayMailTemplate::DEFAULT_DATA['global_header_settings'];
         $default_template_global_footer_settings = YayMailTemplate::DEFAULT_DATA['global_footer_settings'];
 
@@ -67,10 +70,10 @@ final class Ver_4_1_0 extends AbstractMigration {
 
             $has_global_header_in_template = false;
             $has_global_footer_in_template = false;
-            
+
             $template_global_header_override_content = null;
-            $template_global_header_settings = get_post_meta( $template->ID, YayMailTemplate::META_KEYS['global_header_settings'], true );
-            $template_global_footer_settings = get_post_meta( $template->ID, YayMailTemplate::META_KEYS['global_footer_settings'], true );
+            $template_global_header_settings         = get_post_meta( $template->ID, YayMailTemplate::META_KEYS['global_header_settings'], true );
+            $template_global_footer_settings         = get_post_meta( $template->ID, YayMailTemplate::META_KEYS['global_footer_settings'], true );
 
             $legacy_default_global_header_override_content = '<h1 style="font-size: 30px; font-weight: 300; line-height: normal; margin: 0px; color: inherit; text-align: left;">Email Heading</h1>';
 
@@ -101,14 +104,14 @@ final class Ver_4_1_0 extends AbstractMigration {
             }
 
             if ( ! $has_global_header_in_template ) {
-                $template_global_header_settings['hidden'] = true;
+                $templates_need_to_hide_header[] = $template->ID;
             } elseif ( ! empty( $template_global_header_override_content ) ) {
                 $template_global_header_settings['content_override'] = true;
-                $template_global_header_settings['heading_content'] = $template_global_header_override_content;
+                $template_global_header_settings['heading_content']  = $template_global_header_override_content;
             }
 
             if ( ! $has_global_footer_in_template ) {
-                $template_global_footer_settings['hidden'] = true;
+                $templates_need_to_hide_footer[] = $template->ID;
             }
 
             update_post_meta( $template->ID, YayMailTemplate::META_KEYS['global_header_settings'], $template_global_header_settings );
@@ -127,7 +130,23 @@ final class Ver_4_1_0 extends AbstractMigration {
                     'global_header_footer_enabled' => true,
                 ]
             );
-        }
+            foreach ( $templates_need_to_hide_header as $template_id ) {
+                $template_global_header_settings = get_post_meta( $template->ID, YayMailTemplate::META_KEYS['global_header_settings'], true );
+                if ( empty( $template_global_footer_settings ) ) {
+                    $template_global_footer_settings = $default_template_global_footer_settings;
+                }
+                $template_global_header_settings['hidden'] = true;
+                update_post_meta( $template_id, YayMailTemplate::META_KEYS['global_header_settings'], $template_global_header_settings );
+            }
+            foreach ( $templates_need_to_hide_footer as $template_id ) {
+                $template_global_footer_settings = get_post_meta( $template->ID, YayMailTemplate::META_KEYS['global_footer_settings'], true );
+                if ( empty( $template_global_header_settings ) ) {
+                    $template_global_header_settings = $default_template_global_header_settings;
+                }
+                $template_global_footer_settings['hidden'] = true;
+                update_post_meta( $template_id, YayMailTemplate::META_KEYS['global_footer_settings'], $template_global_footer_settings );
+            }
+        }//end if
 
         $this->logger->log( 'Done migrating templates to 4.0.7' );
     }

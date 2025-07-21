@@ -61,8 +61,9 @@ class TextList extends BaseElement {
                     'type'          => 'content',
                 ],
                 'text_list'        => [
-                    'component' => 'TextList',
-                    'column_1'  => [
+                    'component'  => 'TextList',
+                    'value_path' => 'text_list',
+                    'column_1'   => [
                         'padding'                 => [
                             'value' => isset( $attributes['column_1']['padding'] ) ? $attributes['column_1']['padding'] : [
                                 'top'    => '10',
@@ -163,7 +164,7 @@ class TextList extends BaseElement {
                             'type'  => 'style',
                         ],
                     ],
-                    'column_2'  => [
+                    'column_2'   => [
                         'padding'                 => [
                             'value' => isset( $attributes['column_2']['padding'] ) ? $attributes['column_2']['padding'] : [
                                 'top'    => '10',
@@ -264,7 +265,7 @@ class TextList extends BaseElement {
                             'type'  => 'style',
                         ],
                     ],
-                    'column_3'  => [
+                    'column_3'   => [
                         'padding'                 => [
                             'value' => isset( $attributes['column_3']['padding'] ) ? $attributes['column_3']['padding'] : [
                                 'top'    => '10',
