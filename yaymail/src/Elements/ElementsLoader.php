@@ -124,21 +124,22 @@ class ElementsLoader {
      */
     public static function render_elements( $elements, $args ) {
         $is_nested     = isset( $args['is_nested'] ) ? $args['is_nested'] : false;
+        $is_horizontal = isset( $args['is_horizontal'] ) ? $args['is_horizontal'] : false;
         $template_name = $args['template']->get_name();
 
         $shortcodes = yaymail_get_email_shortcodes( $template_name );
 
-        if ( ! empty( $args['render_data']['order'] ) ) {
-            $order = $args['render_data']['order'];
-            if ( $order instanceof \WC_Order ) {
-                $order_id = $order->get_id();
-            } elseif ( is_numeric( $order ) ) {
-                $order_id = $order;
-            } else {
-                $order_id = null;
-            }
-            // $shortcodes = apply_filters( 'yaymail_extra_shortcodes', $shortcodes, $template_name, $order_id );
-        }
+        // if ( ! empty( $args['render_data']['order'] ) ) {
+        // $order = $args['render_data']['order'];
+        // if ( $order instanceof \WC_Order ) {
+        // $order_id = $order->get_id();
+        // } elseif ( is_numeric( $order ) ) {
+        // $order_id = $order;
+        // } else {
+        // $order_id = null;
+        // }
+        // $shortcodes = apply_filters( 'yaymail_extra_shortcodes', $shortcodes, $template_name, $order_id );
+        // }
 
         $args = apply_filters( 'yaymail_template_rendering_args', $args, $template_name, $elements );
 
@@ -164,15 +165,29 @@ class ElementsLoader {
 
             $layout = TemplateHelpers::remove_empty_shortcodes( $layout );
 
+            /**
+             * Render Column content
+             */
             if ( 'column' === $element['type'] || $is_nested ) {
                 yaymail_kses_post_e( $layout );
-            } else {
+                continue;
+            }
+
+            /**
+             * Render Container content
+             */
+            if ( $is_horizontal ) {
+                $width = count( $elements ) > 1 ? round( 100 / count( $elements ), 2 ) : 100;
                 ?>
+                <td style="padding: 0; width: <?php echo esc_attr( $width ); ?>%; max-width: <?php echo esc_attr( $width ); ?>%;padding-left: 0;padding-right: 0;"><?php yaymail_kses_post_e( $layout ); ?></td>
+                <?php
+                continue;
+            }
+            ?>
             <tr>
                 <td style="padding: 0;"><?php yaymail_kses_post_e( $layout ); ?></td>
             </tr>
-                <?php
-            }
+            <?php
         }//end foreach
     }
 }

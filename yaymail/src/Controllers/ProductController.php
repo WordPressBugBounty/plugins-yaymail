@@ -22,7 +22,6 @@ class ProductController extends BaseController {
     }
 
     protected function init_hooks() {
-
         register_rest_route(
             YAYMAIL_REST_NAMESPACE,
             '/product/categories',
@@ -59,6 +58,32 @@ class ProductController extends BaseController {
         );
     }
 
+
+    /**
+     * Handle get cross up sells products
+     *
+     * @param \WP_REST_Request $request The request object.
+     * @return array The response data.
+     */
+    public function exec_get_cross_up_sells( \WP_REST_Request $request ) {
+        return $this->exec( [ $this, 'get_cross_up_sells' ], $request );
+    }
+
+    /**
+     * Get cross up sells products
+     *
+     * @param \WP_REST_Request $request The request object.
+     * @return array The cross up sells products data.
+     */
+    public function get_cross_up_sells( \WP_REST_Request $request ) {
+        $params['max_products_displayed'] = sanitize_text_field( $request->get_param( 'max_products_displayed' ) );
+        $params['linked_products_type']   = sanitize_text_field( $request->get_param( 'linked_products_type' ) );
+        $params['order_id']               = sanitize_text_field( $request->get_param( 'order_id' ) );
+
+        $result = $this->model->get_cross_up_sells_products( $params );
+
+        return $result;
+    }
 
     /**
      * Handle get product categories

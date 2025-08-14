@@ -39,10 +39,6 @@ class ResetPasswordsShortcodes extends BaseShortcode {
 
     public function yaymail_password_reset_link( $data ) {
 
-        $template = ! empty( $data['template'] ) ? $data['template'] : null;
-
-        $text_link_color = ! empty( $template ) ? $template->get_text_link_color() : YAYMAIL_COLOR_WC_DEFAULT;
-
         $render_data = isset( $data['render_data'] ) ? $data['render_data'] : [];
 
         $link_text = esc_html__( 'Click here to reset your password', 'woocommerce' );
@@ -54,7 +50,7 @@ class ResetPasswordsShortcodes extends BaseShortcode {
 
             $link_reset = get_home_url() . '/my-account/lost-password';
 
-            return wp_kses_post( "<a style='color:$text_link_color' href='$link_reset'> $link_text </a>" );
+            return wp_kses_post( "<a href='$link_reset'> $link_text </a>" );
         }
 
         $user = new \WP_User( intval( $render_data['email']->user_id ) );
@@ -67,7 +63,7 @@ class ResetPasswordsShortcodes extends BaseShortcode {
             wc_get_endpoint_url( 'lost-password', '', wc_get_page_permalink( 'myaccount' ) )
         );
 
-        return wp_kses_post( "<a style='color:$text_link_color' href='$link_reset'> $link_text </a>" );
+        return wp_kses_post( "<a href='$link_reset'> $link_text </a>" );
     }
 
     public function yaymail_password_reset_url( $data ) {

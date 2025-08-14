@@ -395,4 +395,8 @@ class Helpers {
         $order->set_shipping_address( $address );
         return $order;
     }
+
+    public static function is_true( $value ) {
+        return filter_var( $value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
+    }
 }

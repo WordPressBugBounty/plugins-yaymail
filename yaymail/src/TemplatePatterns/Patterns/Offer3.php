@@ -114,7 +114,7 @@ HTML;
                                             'button_background_color' => '#FFFFFF',
                                             'text_color' => '#323DC7',
                                             'align'      => 'left',
-                                            'width'      => 39,
+                                            'width'      => 43,
                                             'padding'    => [
                                                 'top'    => 10,
                                                 'bottom' => 20,

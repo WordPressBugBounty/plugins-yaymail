@@ -80,10 +80,6 @@ class PaymentsShortcodes extends BaseShortcode {
 
         $render_data = isset( $data['render_data'] ) ? $data['render_data'] : [];
 
-        $template = ! empty( $data['template'] ) ? $data['template'] : null;
-
-        $text_link_color = ! empty( $template ) ? $template->get_text_link_color() : YAYMAIL_COLOR_WC_DEFAULT;
-
         $is_placeholder = isset( $data['is_placeholder'] ) ? $data['is_placeholder'] : false;
 
         $text_link = isset( $shortcode_atts['text_link'] ) ? $shortcode_atts['text_link'] : TemplateHelpers::get_content_as_placeholder( 'text_link', __( 'Payment page', 'yaymail' ), $is_placeholder );
@@ -92,7 +88,7 @@ class PaymentsShortcodes extends BaseShortcode {
             /**
              * Is sample order
              */
-            return '<a href="#" style="color:' . esc_attr( $text_link_color ) . ';">' . $text_link . '</a>';
+            return '<a href="#">' . $text_link . '</a>';
         }
 
         $order = Helpers::get_order_from_shortcode_data( $render_data );
@@ -104,7 +100,7 @@ class PaymentsShortcodes extends BaseShortcode {
             return '';
         }
 
-        return '<a href="' . esc_url( $order->get_checkout_payment_url() ) . '" style="color:' . esc_attr( $text_link_color ) . ';">' . $text_link . '</a>';
+        return '<a href="' . esc_url( $order->get_checkout_payment_url() ) . '">' . $text_link . '</a>';
     }
 
     public function yaymail_order_payment_url( $data ) {

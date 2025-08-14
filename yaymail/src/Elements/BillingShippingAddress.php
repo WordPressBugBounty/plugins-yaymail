@@ -16,6 +16,9 @@ class BillingShippingAddress extends BaseElement {
     public $available_email_ids = [ YAYMAIL_WITH_ORDER_EMAILS ];
 
     public static function get_data( $attributes = [] ) {
+        $is_email_improvements_enabled = get_option( 'woocommerce_feature_email_improvements_enabled', 'no' ) === 'yes';
+        $layout_type                   = $is_email_improvements_enabled ? 'modern' : 'legacy';
+
         self::$icon = '<svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 20 20">
   <defs>
     <style>
@@ -50,14 +53,44 @@ class BillingShippingAddress extends BaseElement {
             'available' => true,
             'position'  => 180,
             'data'      => [
-                'padding'                  => ElementsHelper::get_spacing( $attributes ),
-                'background_color'         => ElementsHelper::get_color(
+                'container_group_definition' => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Container settings', 'yaymail' ),
+                    'description' => __( 'Handle container layout settings', 'yaymail' ),
+                ],
+                'padding'                    => ElementsHelper::get_spacing( $attributes ),
+                'background_color'           => ElementsHelper::get_color(
                     $attributes,
                     [
                         'default_value' => '#fff',
                     ]
                 ),
-                'title_color'              => ElementsHelper::get_color(
+                'content_breaker'            => [
+                    'component' => 'LineBreaker',
+                ],
+                'content_group_definition'   => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Content settings', 'yaymail' ),
+                    'description' => __( 'Handle content settings', 'yaymail' ),
+                ],
+                'layout_type'                => [
+                    'value_path'    => 'layout_type',
+                    'component'     => 'Selector',
+                    'title'         => __( 'Layout type', 'yaymail' ),
+                    'default_value' => isset( $attributes['layout_type'] ) ? $attributes['layout_type'] : $layout_type,
+                    'options'       => [
+                        [
+                            'label' => __( 'Legacy', 'yaymail' ),
+                            'value' => 'legacy',
+                        ],
+                        [
+                            'label' => __( 'Modern', 'yaymail' ),
+                            'value' => 'modern',
+                        ],
+                    ],
+                    'type'          => 'content',
+                ],
+                'title_color'                => ElementsHelper::get_color(
                     $attributes,
                     [
                         'value_path'    => 'title_color',
@@ -65,7 +98,7 @@ class BillingShippingAddress extends BaseElement {
                         'default_value' => YAYMAIL_COLOR_WC_DEFAULT,
                     ]
                 ),
-                'text_color'               => ElementsHelper::get_color(
+                'text_color'                 => ElementsHelper::get_color(
                     $attributes,
                     [
                         'value_path'    => 'text_color',
@@ -73,16 +106,16 @@ class BillingShippingAddress extends BaseElement {
                         'default_value' => YAYMAIL_COLOR_TEXT_DEFAULT,
                     ]
                 ),
-                'border_color'             => ElementsHelper::get_color(
+                'border_color'               => ElementsHelper::get_color(
                     $attributes,
                     [
                         'value_path'    => 'border_color',
-                        'title'         => __( 'Border color', 'yaymail' ),
+                        'title'         => __( 'Table border color', 'yaymail' ),
                         'default_value' => YAYMAIL_COLOR_BORDER_DEFAULT,
                     ]
                 ),
-                'font_family'              => ElementsHelper::get_font_family_selector( $attributes ),
-                'billing_title'            => ElementsHelper::get_rich_text(
+                'font_family'                => ElementsHelper::get_font_family_selector( $attributes ),
+                'billing_title'              => ElementsHelper::get_rich_text(
                     $attributes,
                     [
                         'value_path'    => 'billing_title',
@@ -91,7 +124,7 @@ class BillingShippingAddress extends BaseElement {
                         'editor_id'     => 'bsa_billing_title',
                     ]
                 ),
-                'shipping_title'           => ElementsHelper::get_rich_text(
+                'shipping_title'             => ElementsHelper::get_rich_text(
                     $attributes,
                     [
                         'value_path'    => 'shipping_title',
@@ -100,14 +133,14 @@ class BillingShippingAddress extends BaseElement {
                         'editor_id'     => 'bsa_shipping_title',
                     ]
                 ),
-                'shipping_address_content' => [
+                'shipping_address_content'   => [
                     'value_path'    => 'shipping_address_content',
                     'component'     => '',
                     'title'         => __( 'Shipping Content', 'yaymail' ),
                     'default_value' => '[yaymail_shipping_address]',
                     'type'          => 'content',
                 ],
-                'billing_address_content'  => [
+                'billing_address_content'    => [
                     'value_path'    => 'billing_address_content',
                     'component'     => '',
                     'title'         => __( 'Billing Content', 'yaymail' ),

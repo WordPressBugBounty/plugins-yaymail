@@ -19,6 +19,7 @@ if ( empty( $wrapper_style ) ) {
 $yaymail_settings    = yaymail_settings();
 $container_direction = yaymail_get_email_direction();
 
+
 $wrapper_style .= TemplateHelpers::get_style(
     [
         'border-spacing'  => '0',
@@ -28,6 +29,12 @@ $wrapper_style .= TemplateHelpers::get_style(
         'border-collapse' => 'separate',
     ]
 );
+
+$border_style = isset( $element['data']['border'] ) ? TemplateHelpers::get_border_css_value( $element['data']['border'] ) : '';
+
+if ( ! empty( $border_style ) && 'button' !== $element['type'] ) {
+    $wrapper_style .= $border_style;
+}
 
 $user_custom_classes = isset( $element['data']['custom_css_classes'] ) ? $element['data']['custom_css_classes'] : '';
 $settings            = yaymail_settings();

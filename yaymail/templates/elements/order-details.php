@@ -1,6 +1,7 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 
+use YayMail\Utils\Helpers;
 use YayMail\Utils\TemplateHelpers;
 
 /**
@@ -16,10 +17,12 @@ if ( empty( $args['element'] ) ) {
 $yaymail_settings     = yaymail_settings();
 $payment_display_mode = isset( $yaymail_settings['payment_display_mode'] ) ? $yaymail_settings['payment_display_mode'] : false;
 
-$element       = $args['element'];
-$data          = $element['data'];
-$template_name = isset( $args['template']->get_data()['name'] ) ? $args['template']->get_data()['name'] : '';
-$border_color  = isset( $element['data']['border_color'] ) ? $element['data']['border_color'] : 'inherit';
+$element                 = $args['element'];
+$data                    = $element['data'];
+$template_name           = isset( $args['template']->get_data()['name'] ) ? $args['template']->get_data()['name'] : '';
+$border_color            = isset( $element['data']['border_color'] ) ? $element['data']['border_color'] : 'inherit';
+$table_heading_font_size = isset( $data['table_heading_font_size'] ) ? $data['table_heading_font_size'] : 14;
+$table_content_font_size = isset( $data['table_content_font_size'] ) ? $data['table_content_font_size'] : 14;
 
 $wrapper_style = TemplateHelpers::get_style(
     [
@@ -50,7 +53,7 @@ $payment_instructions_style = TemplateHelpers::get_style(
 );
 
 $is_layout_type_modern = isset( $data['layout_type'] ) && 'modern' === $data['layout_type'];
-$show_table_header     = ! isset( $data['show_table_header'] ) || ( isset( $data['show_table_header'] ) && $data['show_table_header'] === true );
+$show_table_header     = ! isset( $data['show_table_header'] ) || Helpers::is_true( $data['show_table_header'] );
 
 ob_start();
 ?>
@@ -92,6 +95,15 @@ ob_start();
     [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-table .yaymail-order-detail-row-payment_method th {
         border-bottom: 1px solid <?php echo esc_attr( $border_color ); ?> !important;
     }
+
+    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-table th {
+        font-size: <?php echo esc_attr( $table_heading_font_size ); ?>px !important;
+    }
+
+    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-table td {
+        font-size: <?php echo esc_attr( $table_content_font_size ); ?>px !important;
+    }
+    
         <?php
     }//end if
     ?>

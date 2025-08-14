@@ -55,13 +55,28 @@ $title_style = TemplateHelpers::get_style(
     ]
 );
 
+$is_layout_type_modern = isset( $data['layout_type'] ) && 'modern' === $data['layout_type'];
+
 ob_start();
 ?>
+<style>
+    /* Modern layout */
+    <?php if ( $is_layout_type_modern ) { ?>
+    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-billing-address-wrap,
+    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-shipping-address-wrap {
+        border: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+        <?php
+    }//end if
+    ?>
+</style>
 <table class="yaymail-table-billing-shipping-address" cellpadding="0" cellspacing="0" border="0" style="<?php echo esc_attr( $table_style ); ?>">
     <tbody>
         <tr>
             <?php if ( ! empty( $billing_address_html ) ) : ?>
-            <td style="width: <?php echo esc_attr( $width ); ?>; vertical-align: top;">
+            <td class="yaymail-billing-address-column" style="width: <?php echo esc_attr( $width ); ?>; vertical-align: top;">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-spacing: 0;">
                     <tbody>
                     <tr>
@@ -89,7 +104,7 @@ ob_start();
             </td>
             <?php endif; ?>
             <?php if ( ! empty( $shipping_address_html ) ) : ?>
-            <td style="width: <?php echo esc_attr( $width ); ?>; vertical-align: top;">
+            <td class="yaymail-shipping-address-column" style="width: <?php echo esc_attr( $width ); ?>; vertical-align: top;">
                 <table cellpadding="0" cellspacing="0" border="0" width="100%" style="border-spacing: 0;">
                     <tbody>
                     <tr>

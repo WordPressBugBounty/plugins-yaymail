@@ -44,7 +44,6 @@ $shortcoded_content = isset( $data['rich_text'] ) ? do_shortcode( $data['rich_te
 
 
 $is_layout_type_modern = isset( $data['layout_type'] ) && 'modern' === $data['layout_type'];
-
 ob_start();
 ?>
 <style>

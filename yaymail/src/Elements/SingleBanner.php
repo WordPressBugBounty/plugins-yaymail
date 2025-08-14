@@ -115,16 +115,14 @@ class SingleBanner extends BaseElement {
                     'title'         => __( 'Showing items', 'yaymail' ),
                     'default_value' => isset( $attributes['showing_items'] ) ? $attributes['showing_items'] : [ 'button', 'background_image' ],
                     'type'          => 'content',
-                    'extras_data'   => [
-                        'options' => [
-                            [
-                                'label' => __( 'Background image', 'yaymail' ),
-                                'value' => 'background_image',
-                            ],
-                            [
-                                'label' => __( 'Button', 'yaymail' ),
-                                'value' => 'button',
-                            ],
+                    'options'       => [
+                        [
+                            'label' => __( 'Background image', 'yaymail' ),
+                            'value' => 'background_image',
+                        ],
+                        [
+                            'label' => __( 'Button', 'yaymail' ),
+                            'value' => 'button',
                         ],
                     ],
                 ],

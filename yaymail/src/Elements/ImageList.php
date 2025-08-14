@@ -35,22 +35,34 @@ class ImageList extends BaseElement {
             'available' => true,
             'position'  => 110,
             'data'      => [
-                'background_color' => [
+                'container_group_definition' => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Container settings', 'yaymail' ),
+                    'description' => __( 'Handle container layout settings', 'yaymail' ),
+                ],
+                'background_color'           => [
                     'value_path'    => 'background_color',
                     'component'     => 'Color',
                     'title'         => __( 'Background color', 'yaymail' ),
                     'default_value' => isset( $attributes['background_color'] ) ? $attributes['background_color'] : '#fff',
                     'type'          => 'style',
                 ],
-                'number_column'    => [
+                'number_column'              => [
                     'value_path'    => 'number_column',
                     'component'     => 'NumberColumn',
                     'title'         => __( 'Number of columns:', 'yaymail' ),
                     'default_value' => isset( $attributes['number_column'] ) ? $attributes['number_column'] : 3,
                     'type'          => 'content',
                 ],
-
-                'image_list'       => [
+                'column_breaker'             => [
+                    'component' => 'LineBreaker',
+                ],
+                'column_settings'            => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Column settings', 'yaymail' ),
+                    'description' => __( 'Handle column settings', 'yaymail' ),
+                ],
+                'image_list'                 => [
                     'value_path'    => 'image_list',
                     'component'     => 'ImageList',
                     'default_value' => [

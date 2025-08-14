@@ -96,32 +96,30 @@ class FeaturedProducts extends BaseElement {
                     'title'         => __( 'Showing items', 'yaymail' ),
                     'default_value' => isset( $attributes['showing_items'] ) ? $attributes['showing_items'] : [ 'top_content', 'product_image', 'product_name', 'product_price', 'product_original_price', 'buy_button' ],
                     'type'          => 'content',
-                    'extras_data'   => [
-                        'options' => [
-                            [
-                                'label' => __( 'Top content', 'yaymail' ),
-                                'value' => 'top_content',
-                            ],
-                            [
-                                'label' => __( 'Product image', 'yaymail' ),
-                                'value' => 'product_image',
-                            ],
-                            [
-                                'label' => __( 'Product name', 'yaymail' ),
-                                'value' => 'product_name',
-                            ],
-                            [
-                                'label' => __( 'Product price', 'yaymail' ),
-                                'value' => 'product_price',
-                            ],
-                            [
-                                'label' => __( 'Product original price', 'yaymail' ),
-                                'value' => 'product_original_price',
-                            ],
-                            [
-                                'label' => __( 'Buy button', 'yaymail' ),
-                                'value' => 'buy_button',
-                            ],
+                    'options'       => [
+                        [
+                            'label' => __( 'Top content', 'yaymail' ),
+                            'value' => 'top_content',
+                        ],
+                        [
+                            'label' => __( 'Product image', 'yaymail' ),
+                            'value' => 'product_image',
+                        ],
+                        [
+                            'label' => __( 'Product name', 'yaymail' ),
+                            'value' => 'product_name',
+                        ],
+                        [
+                            'label' => __( 'Product price', 'yaymail' ),
+                            'value' => 'product_price',
+                        ],
+                        [
+                            'label' => __( 'Product original price', 'yaymail' ),
+                            'value' => 'product_original_price',
+                        ],
+                        [
+                            'label' => __( 'Buy button', 'yaymail' ),
+                            'value' => 'buy_button',
                         ],
                     ],
                 ],
@@ -209,81 +207,134 @@ class FeaturedProducts extends BaseElement {
                     'component'     => 'NumberInput',
                     'title'         => __( 'Products per row', 'yaymail' ),
                     'default_value' => isset( $attributes['products_per_row'] ) ? $attributes['products_per_row'] : '3',
-                    'extras_data'   => [
-                        'min' => 1,
-                        'max' => 3,
-                    ],
+                    'min'           => 1,
+                    'max'           => 3,
                     'type'          => 'content',
                 ],
                 'product_type'                => [
                     'value_path'    => 'product_type',
-                    'component'     => 'FeaturedProductsProductType',
+                    'component'     => 'Selector',
                     'title'         => __( 'Product type', 'yaymail' ),
                     'default_value' => isset( $attributes['product_type'] ) ? $attributes['product_type'] : 'newest',
                     'type'          => 'content',
+                    'options'       => [
+                        [
+                            'label' => __( 'Newest', 'yaymail' ),
+                            'value' => 'newest',
+                        ],
+                        [
+                            'label' => __( 'On sale', 'yaymail' ),
+                            'value' => 'on_sale',
+                        ],
+                        [
+                            'label' => __( 'Featured', 'yaymail' ),
+                            'value' => 'featured',
+                        ],
+                        [
+                            'label' => __( 'Category selections', 'yaymail' ),
+                            'value' => 'category_selections',
+                        ],
+                        [
+                            'label' => __( 'Tag selections', 'yaymail' ),
+                            'value' => 'tag_selections',
+                        ],
+                        [
+                            'label' => __( 'Product selections', 'yaymail' ),
+                            'value' => 'product_selections',
+                        ],
+                    ],
+                ],
+                'categories'                  => [
+                    'value_path'    => 'categories',
+                    'component'     => 'EntitiesSelector',
+                    'title'         => __( 'Product categories', 'yaymail' ),
+                    'default_value' => isset( $attributes['categories'] ) ? $attributes['categories'] : [],
+                    'type'          => 'content',
+                    'entity_type'   => 'categories',
+                    'conditions'    => [
+                        [
+                            'value'     => 'category_selections',
+                            'attribute' => 'product_type',
+                        ],
+                    ],
+                ],
+                'tags'                        => [
+                    'value_path'    => 'tags',
+                    'component'     => 'EntitiesSelector',
+                    'title'         => __( 'Product tags', 'yaymail' ),
+                    'default_value' => isset( $attributes['tags'] ) ? $attributes['tags'] : [],
+                    'type'          => 'content',
+                    'entity_type'   => 'tags',
+                    'conditions'    => [
+                        [
+                            'value'     => 'tag_selections',
+                            'attribute' => 'product_type',
+                        ],
+                    ],
+                ],
+                'products'                    => [
+                    'value_path'    => 'products',
+                    'component'     => 'EntitiesSelector',
+                    'title'         => __( 'Products', 'yaymail' ),
+                    'default_value' => isset( $attributes['products'] ) ? $attributes['products'] : [],
+                    'type'          => 'content',
+                    'entity_type'   => 'products',
+                    'conditions'    => [
+                        [
+                            'value'     => 'product_selections',
+                            'attribute' => 'product_type',
+                        ],
+                    ],
                 ],
                 'sorted_by'                   => [
                     'value_path'    => 'sorted_by',
                     'component'     => 'Selector',
                     'title'         => __( 'Sorted by', 'yaymail' ),
                     'default_value' => isset( $attributes['sorted_by'] ) ? $attributes['sorted_by'] : 'none',
-                    'extras_data'   => [
-                        'options' => [
-                            [
-                                'label' => __( 'None', 'yaymail' ),
-                                'value' => 'none',
-                            ],
-                            [
-                                'label' => __( 'Name A-Z', 'yaymail' ),
-                                'value' => 'name_a_z',
-                            ],
-                            [
-                                'label' => __( 'Name Z-A', 'yaymail' ),
-                                'value' => 'name_z_a',
-                            ],
-                            [
-                                'label' => __( 'Ascending Price', 'yaymail' ),
-                                'value' => 'price_ascending',
-                            ],
-                            [
-                                'label' => __( 'Descending Price', 'yaymail' ),
-                                'value' => 'price_descending',
-                            ],
-                            [
-                                'label' => __( 'Random', 'yaymail' ),
-                                'value' => 'random',
-                            ],
+                    'options'       => [
+                        [
+                            'label' => __( 'None', 'yaymail' ),
+                            'value' => 'none',
+                        ],
+                        [
+                            'label' => __( 'Name A-Z', 'yaymail' ),
+                            'value' => 'name_a_z',
+                        ],
+                        [
+                            'label' => __( 'Name Z-A', 'yaymail' ),
+                            'value' => 'name_z_a',
+                        ],
+                        [
+                            'label' => __( 'Ascending Price', 'yaymail' ),
+                            'value' => 'price_ascending',
+                        ],
+                        [
+                            'label' => __( 'Descending Price', 'yaymail' ),
+                            'value' => 'price_descending',
+                        ],
+                        [
+                            'label' => __( 'Random', 'yaymail' ),
+                            'value' => 'random',
                         ],
                     ],
                     'type'          => 'content',
                 ],
                 'number_of_products'          => [
                     'value_path'    => 'number_of_products',
-                    'component'     => 'NumberOfFeaturedProducts',
+                    'component'     => 'NumberInput',
                     'title'         => __( 'Number of featured products', 'yaymail' ),
                     'default_value' => isset( $attributes['number_of_products'] ) ? $attributes['number_of_products'] : '5',
                     'type'          => 'content',
-                ],
-                'categories'                  => [
-                    'value_path'    => 'categories',
-                    'component'     => '',
-                    'title'         => __( 'Product categories', 'yaymail' ),
-                    'default_value' => isset( $attributes['categories'] ) ? $attributes['categories'] : [],
-                    'type'          => 'content',
-                ],
-                'tags'                        => [
-                    'value_path'    => 'tags',
-                    'component'     => '',
-                    'title'         => __( 'Product tags', 'yaymail' ),
-                    'default_value' => isset( $attributes['tags'] ) ? $attributes['tags'] : [],
-                    'type'          => 'content',
-                ],
-                'products'                    => [
-                    'value_path'    => 'products',
-                    'component'     => '',
-                    'title'         => __( 'Products', 'yaymail' ),
-                    'default_value' => isset( $attributes['products'] ) ? $attributes['products'] : [],
-                    'type'          => 'content',
+                    'min'           => 1,
+                    'max'           => 20,
+                    'is_debounce'   => true,
+                    'conditions'    => [
+                        [
+                            'comparison' => '!=',
+                            'value'      => 'product_selections',
+                            'attribute'  => 'product_type',
+                        ],
+                    ],
                 ],
             ],
         ];

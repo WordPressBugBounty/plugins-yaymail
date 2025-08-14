@@ -286,7 +286,7 @@ class OrderDetailsShortcodes extends BaseShortcode {
         }
 
         $sent_to_admin = isset( $render_data['sent_to_admin'] ) ? $render_data['sent_to_admin'] : false;
-        $is_plain      = isset( $shortcode_atts['is_plain'] ) ? $shortcode_atts['is_plain'] == 'true' : false;
+        $is_plain      = isset( $shortcode_atts['is_plain'] ) ? Helpers::is_true( $shortcode_atts['is_plain'] ) : false;
         if ( $is_plain || ! $sent_to_admin ) {
             return $order->get_id();
         }
@@ -351,10 +351,6 @@ class OrderDetailsShortcodes extends BaseShortcode {
 
         $render_data = isset( $data['render_data'] ) ? $data['render_data'] : [];
 
-        $template = ! empty( $data['template'] ) ? $data['template'] : null;
-
-        $text_link_color = ! empty( $template ) ? $template->get_text_link_color() : YAYMAIL_COLOR_WC_DEFAULT;
-
         $is_placeholder = isset( $data['is_placeholder'] ) ? $data['is_placeholder'] : false;
 
         $text_link = isset( $shortcode_atts['text_link'] ) ? $shortcode_atts['text_link'] : TemplateHelpers::get_content_as_placeholder( 'text_link', __( 'Order', 'yaymail' ), $is_placeholder );
@@ -363,7 +359,7 @@ class OrderDetailsShortcodes extends BaseShortcode {
             /**
              * Is sample order
              */
-            return '<a href="' . esc_url( get_home_url() ) . '" style="color:' . esc_attr( $text_link_color ) . ';">' . $text_link . '</a>';
+            return '<a href="' . esc_url( get_home_url() ) . '">' . $text_link . '</a>';
         }
 
         $order = Helpers::get_order_from_shortcode_data( $render_data );
@@ -381,7 +377,7 @@ class OrderDetailsShortcodes extends BaseShortcode {
             return '';
         }
 
-        return wp_kses_post( "<a style='color:$text_link_color' href='{$edit_order_url}'>" . $text_link . '</a>' );
+        return wp_kses_post( "<a href='{$edit_order_url}'>" . $text_link . '</a>' );
     }
 
     public function yaymail_order_url( $data ) {
@@ -413,15 +409,11 @@ class OrderDetailsShortcodes extends BaseShortcode {
         return esc_url( $edit_order_url );
     }
 
-    public function yaymail_view_order_link( $data ) {
+    public function yaymail_view_order_link( $data, $shortcode_atts = [] ) {
 
         $render_data = isset( $data['render_data'] ) ? $data['render_data'] : [];
 
-        $template = ! empty( $data['template'] ) ? $data['template'] : null;
-
         $is_placeholder = isset( $data['is_placeholder'] ) ? $data['is_placeholder'] : false;
-
-        $text_link_color = ! empty( $template ) ? $template->get_text_link_color() : YAYMAIL_COLOR_WC_DEFAULT;
 
         $text_link = isset( $shortcode_atts['text_link'] ) ? $shortcode_atts['text_link'] : TemplateHelpers::get_content_as_placeholder( 'text_link', __( 'Your Order', 'yaymail' ), $is_placeholder );
 
@@ -429,7 +421,7 @@ class OrderDetailsShortcodes extends BaseShortcode {
             /**
              * Is sample order
              */
-            return '<a href="' . esc_url( get_home_url() ) . '" style="color:' . esc_attr( $text_link_color ) . ';">' . $text_link . '</a>';
+            return '<a href="' . esc_url( get_home_url() ) . '">' . $text_link . '</a>';
         }
 
         $order = Helpers::get_order_from_shortcode_data( $render_data );
@@ -447,7 +439,7 @@ class OrderDetailsShortcodes extends BaseShortcode {
             return '';
         }
 
-        return wp_kses_post( "<a style='color:$text_link_color' href='{$view_order_url}'>" . $text_link . '</a>' );
+        return wp_kses_post( "<a href='{$view_order_url}'>" . $text_link . '</a>' );
     }
 
     public function yaymail_view_order_url( $data ) {

@@ -88,7 +88,6 @@ class OrderDetailsRenderer {
         return TemplateHelpers::get_style(
             [
                 'padding'      => '12px',
-                'font-size'    => '14px',
                 'text-align'   => yaymail_get_text_align(),
                 'font-family'  => TemplateHelpers::get_font_family_value( isset( $this->element_data['font_family'] ) ? $this->element_data['font_family'] : 'inherit' ),
                 'color'        => isset( $this->element_data['text_color'] ) ? $this->element_data['text_color'] : 'inherit',
@@ -100,10 +99,21 @@ class OrderDetailsRenderer {
     }
 
     public function get_styles_product_image() {
+        $direction = yaymail_get_email_direction();
+
+        if ( 'ltr' === $direction ) {
+            $margin_right = '5px';
+            $margin_left  = '0';
+        } else {
+            $margin_right = '0';
+            $margin_left  = '5px';
+        }
+
         return TemplateHelpers::get_style(
             [
                 'margin-bottom' => '5px',
-                'margin-right'  => '5px',
+                'margin-right'  => $margin_right,
+                'margin-left'   => $margin_left,
             ]
         );
     }
@@ -220,27 +230,28 @@ class OrderDetailsRenderer {
     }
 
     public function render_sample_items( $structure_items ) {
+        $yaymail_settings = yaymail_settings();
+        $direction        = yaymail_get_email_direction();
+        $image_position   = isset( $yaymail_settings['product_image_position'] ) ? $yaymail_settings['product_image_position'] : 'top';
+
         $style_image_position_left = TemplateHelpers::get_style(
             [
-                'float' => 'left',
+                'float' => 'left' === $image_position && 'rtl' === $direction ? 'right' : 'left',
             ]
         );
 
-        $yaymail_settings = yaymail_settings();
-        $style            = $this->get_styles();
-        $is_placeholder   = $this->is_placeholder;
+        $style          = $this->get_styles();
+        $is_placeholder = $this->is_placeholder;
 
-        $show_image     = isset( $yaymail_settings['show_product_image'] ) ? boolval( $yaymail_settings['show_product_image'] ) : false;
-        $image_position = isset( $yaymail_settings['product_image_position'] ) ? $yaymail_settings['product_image_position'] : 'top';
-        $image_height   = isset( $yaymail_settings['product_image_height'] ) ? $yaymail_settings['product_image_height'] : '30';
-        $image_width    = isset( $yaymail_settings['product_image_width'] ) ? $yaymail_settings['product_image_width'] : '30';
+        $show_image   = isset( $yaymail_settings['show_product_image'] ) ? boolval( $yaymail_settings['show_product_image'] ) : false;
+        $image_height = isset( $yaymail_settings['product_image_height'] ) ? $yaymail_settings['product_image_height'] : '30';
+        $image_width  = isset( $yaymail_settings['product_image_width'] ) ? $yaymail_settings['product_image_width'] : '30';
 
         $show_image         = isset( $yaymail_settings['show_product_image'] ) ? boolval( $yaymail_settings['show_product_image'] ) : false;
         $show_sku           = isset( $yaymail_settings['show_product_sku'] ) ? boolval( $yaymail_settings['show_product_sku'] ) : false;
         $show_des           = isset( $yaymail_settings['show_product_description'] ) ? boolval( $yaymail_settings['show_product_description'] ) : false;
-        $show_hyper_links   = isset( $yaymail_settings['show_product_hyper_links'] ) ? boolval( $yaymail_settings['show_product_hyper_links'] ) : false;
         $show_regular_price = isset( $yaymail_settings['show_product_regular_price'] ) ? boolval( $yaymail_settings['show_product_regular_price'] ) : false;
-        $image_style        = isset( yaymail_settings()['product_image_position'] ) & 'left' === yaymail_settings()['product_image_position'] ? $this->get_styles_product_image() . $style_image_position_left : $this->get_styles_product_image();
+        $image_style        = 'left' === $image_position ? $this->get_styles_product_image() . $style_image_position_left : $this->get_styles_product_image();
 
         $image_url             = wc_placeholder_img_src();
         $image                 = $is_placeholder ? "<img style='margin-right:0;' width='{{product_image_width}}px' height='{{product_image_height}}px' src='{$image_url}' alt='product image'/>" : "<img style='margin-right: 0; width: {$image_width}px; height: {$image_height}px;' src='{$image_url}' alt='product image'/>";
@@ -343,16 +354,20 @@ class OrderDetailsRenderer {
     }
 
     public function render_real_items( $structure_items ) {
+        $yaymail_settings = yaymail_settings();
+        $direction        = yaymail_get_email_direction();
+        $image_position   = isset( $yaymail_settings['product_image_position'] ) ? $yaymail_settings['product_image_position'] : 'top';
+
         $style_image_position_left = TemplateHelpers::get_style(
             [
-                'float' => 'left',
+                'float' => 'left' === $image_position && 'rtl' === $direction ? 'right' : 'left',
             ]
         );
 
         $args_data = [
             'order'                => $this->order,
             'text_style'           => $this->get_styles(),
-            'styles_product_image' => isset( yaymail_settings()['product_image_position'] ) & 'left' === yaymail_settings()['product_image_position'] ? $this->get_styles_product_image() . $style_image_position_left : $this->get_styles_product_image(),
+            'styles_product_image' => 'left' === $image_position ? $this->get_styles_product_image() . $style_image_position_left : $this->get_styles_product_image(),
             'is_placeholder'       => $this->is_placeholder,
             'structure_items'      => $structure_items,
         ];

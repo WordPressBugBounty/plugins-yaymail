@@ -13,4 +13,17 @@ class AttributesData {
         'xl'      => 39,
         'xxl'     => 59,
     ];
+
+    const BORDER_DEFAULT = [
+        'side'   => 'none',
+        'width'  => '1',
+        'style'  => 'solid',
+        'color'  => YAYMAIL_COLOR_BORDER_DEFAULT,
+        'custom' => [
+            'top'    => '1',
+            'right'  => '1',
+            'bottom' => '1',
+            'left'   => '1',
+        ],
+    ];
 }

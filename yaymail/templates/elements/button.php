@@ -1,7 +1,7 @@
 <?php
 defined( 'ABSPATH' ) || exit;
 use YayMail\Utils\TemplateHelpers;
-
+use YayMail\Constants\AttributesData;
 /**
  * $args includes
  * $element
@@ -14,6 +14,16 @@ if ( empty( $args['element'] ) ) {
 
 $element = $args['element'];
 $data    = $element['data'];
+
+$default_button_padding = [
+    'top'    => '12',
+    'right'  => '20',
+    'bottom' => '12',
+    'left'   => '20',
+];
+
+$border       = isset( $data['border'] ) ? $data['border'] : AttributesData::BORDER_DEFAULT;
+$border_style = TemplateHelpers::get_border_css_value( $border );
 
 $wrapper_style = TemplateHelpers::get_style(
     [
@@ -39,25 +49,33 @@ $button_holder_style = TemplateHelpers::get_style(
 
 
 $border_radius = $data['border_radius'];
-$link_style    = TemplateHelpers::get_style(
+
+$container_style = TemplateHelpers::get_style(
     [
-        'text-decoration'  => 'none',
-        'padding'          => '12px 20px',
-        'display'          => 'block',
+        'display'          => 'inline-block',
+        'width'            => '100%',
         'box-sizing'       => 'border-box',
         'border-radius'    => TemplateHelpers::get_border_radius_value( $border_radius, 'px' ),
-        'font-size'        => "{$data['font_size']}px",
-        'font-weight'      => $data['weight'],
         'background-color' => $data['button_background_color'],
         'word-break'       => 'break-word',
+    ]
+) . $border_style;
+
+$link_style = TemplateHelpers::get_style(
+    [
+        'text-decoration' => 'none',
     ]
 );
 
 $text_style = TemplateHelpers::get_style(
     [
+        'display'     => 'block',
         'font-family' => TemplateHelpers::get_font_family_value( $data['font_family'] ),
         'line-height' => "{$data['height']}px",
         'color'       => $data['text_color'],
+        'font-size'   => "{$data['font_size']}px",
+        'font-weight' => $data['weight'],
+        'padding'     => TemplateHelpers::get_spacing_value( isset( $data['button_padding'] ) ? $data['button_padding'] : $default_button_padding ),
     ]
 );
 
@@ -68,14 +86,16 @@ ob_start();
         <tbody>
             <tr>
                 <td style="padding: 0;">
-                    <a
-                        href="<?php echo esc_url( do_shortcode( $data['url'] ) ); ?>"
-                        style="<?php echo esc_attr( $link_style ); ?>"
-                        target="_blank"
-                        rel="noreferrer"
-                    >
-                        <span style="<?php echo esc_attr( $text_style ); ?>"><?php yaymail_kses_post_e( do_shortcode( $data['text'] ) ); ?></span>
-                    </a>
+                    <div style="<?php echo esc_attr( $container_style ); ?>">
+                        <a
+                            href="<?php echo esc_url( do_shortcode( $data['url'] ) ); ?>"
+                            style="<?php echo esc_attr( $link_style ); ?>"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <span style="<?php echo esc_attr( $text_style ); ?>"><?php yaymail_kses_post_e( do_shortcode( $data['text'] ) ); ?></span>
+                        </a>
+                    </div>
                 </td>
             </tr>
         </tbody>

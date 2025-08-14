@@ -46,10 +46,8 @@ class Space extends BaseElement {
                     'component'     => 'Dimension',
                     'title'         => __( 'Height', 'yaymail' ),
                     'default_value' => isset( $attributes['height'] ) ? $attributes['height'] : '40',
-                    'extras_data'   => [
-                        'min' => 8,
-                        'max' => 200,
-                    ],
+                    'min'           => 8,
+                    'max'           => 200,
                     'type'          => 'style',
                 ],
             ],

@@ -27,14 +27,12 @@ class Image extends BaseElement {
             'available' => true,
             'position'  => 30,
             'data'      => [
-                'align'            => [
-                    'value_path'    => 'align',
-                    'component'     => 'Align',
-                    'title'         => __( 'Align', 'yaymail' ),
-                    'default_value' => isset( $attributes['align'] ) ? $attributes['align'] : 'center',
-                    'type'          => 'style',
+                'container_group_definition' => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Container settings', 'yaymail' ),
+                    'description' => __( 'Handle container layout settings', 'yaymail' ),
                 ],
-                'padding'          => [
+                'padding'                    => [
                     'value_path'    => 'padding',
                     'component'     => 'Spacing',
                     'title'         => __( 'Padding', 'yaymail' ),
@@ -46,35 +44,50 @@ class Image extends BaseElement {
                     ],
                     'type'          => 'style',
                 ],
-                'src'              => [
-                    'value_path'    => 'src',
-                    'component'     => 'Image',
-                    'title'         => __( 'Image URL', 'yaymail' ),
-                    'default_value' => isset( $attributes['src'] ) ? $attributes['src'] : $default_src,
-                    'type'          => 'content',
-                ],
-                'width'            => [
-                    'value_path'    => 'width',
-                    'component'     => 'Dimension',
-                    'title'         => __( 'Width', 'yaymail' ),
-                    'default_value' => isset( $attributes['width'] ) ? $attributes['width'] : '252',
-                    'type'          => 'style',
-                ],
-                'background_color' => [
+                'background_color'           => [
                     'value_path'    => 'background_color',
                     'component'     => 'Color',
                     'title'         => __( 'Background color', 'yaymail' ),
                     'default_value' => isset( $attributes['background_color'] ) ? $attributes['background_color'] : '#fff',
                     'type'          => 'style',
                 ],
-                'url'              => [
+                'image_breaker'              => [
+                    'component' => 'LineBreaker',
+                ],
+                'image_group_definition'     => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Image settings', 'yaymail' ),
+                    'description' => __( 'Handle image settings', 'yaymail' ),
+                ],
+                'src'                        => [
+                    'value_path'    => 'src',
+                    'component'     => 'Media',
+                    'title'         => __( 'Source image', 'yaymail' ),
+                    'default_value' => isset( $attributes['src'] ) ? $attributes['src'] : $default_src,
+                    'type'          => 'content',
+                ],
+                'align'                      => [
+                    'value_path'    => 'align',
+                    'component'     => 'Align',
+                    'title'         => __( 'Image position', 'yaymail' ),
+                    'default_value' => isset( $attributes['align'] ) ? $attributes['align'] : 'center',
+                    'type'          => 'style',
+                ],
+                'width'                      => [
+                    'value_path'    => 'width',
+                    'component'     => 'Dimension',
+                    'title'         => __( 'Width', 'yaymail' ),
+                    'default_value' => isset( $attributes['width'] ) ? $attributes['width'] : '252',
+                    'type'          => 'style',
+                ],
+                'url'                        => [
                     'value_path'    => 'url',
                     'component'     => 'TextInput',
-                    'title'         => __( 'URL', 'yaymail' ),
+                    'title'         => __( 'Open link', 'yaymail' ),
                     'default_value' => isset( $attributes['url'] ) ? $attributes['url'] : '#',
                     'type'          => 'content',
                 ],
-                'alt'              => ElementsHelper::get_text_input(
+                'alt'                        => ElementsHelper::get_text_input(
                     $attributes,
                     [
                         'value_path'    => 'alt',

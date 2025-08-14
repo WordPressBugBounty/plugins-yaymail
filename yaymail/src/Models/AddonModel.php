@@ -375,6 +375,7 @@ class AddonModel {
                         'WC_SC_Combined_Email_Coupon',
                         'WC_SC_Acknowledgement_Email',
                         'WC_SC_Email_Coupon',
+                        'WC_SC_Expiry_Reminder_Email',
                     ]
                 ),
                 'slug_name'              => 'woocommerce-smart-coupons',

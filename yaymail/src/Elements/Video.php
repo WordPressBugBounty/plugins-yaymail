@@ -27,7 +27,12 @@ class Video extends BaseElement {
             'available' => true,
             'position'  => 100,
             'data'      => [
-                'padding'          => [
+                'container_group_definition' => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Container settings', 'yaymail' ),
+                    'description' => __( 'Handle container layout settings', 'yaymail' ),
+                ],
+                'padding'                    => [
                     'value_path'    => 'padding',
                     'component'     => 'Spacing',
                     'title'         => __( 'Padding', 'yaymail' ),
@@ -39,44 +44,50 @@ class Video extends BaseElement {
                     ],
                     'type'          => 'style',
                 ],
-                'background_color' => [
+                'background_color'           => [
                     'value_path'    => 'background_color',
                     'component'     => 'Color',
                     'title'         => __( 'Background color', 'yaymail' ),
                     'default_value' => isset( $attributes['background_color'] ) ? $attributes['background_color'] : '#fff',
                     'type'          => 'style',
                 ],
-                'src'              => [
+                'content_breaker'            => [
+                    'component' => 'LineBreaker',
+                ],
+                'content_group_definition'   => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Content settings', 'yaymail' ),
+                    'description' => __( 'Handle content settings', 'yaymail' ),
+                ],
+                'src'                        => [
                     'value_path'    => 'src',
-                    'component'     => 'Image',
+                    'component'     => 'Media',
                     'title'         => __( 'Thumbnail', 'yaymail' ),
                     'default_value' => isset( $attributes['src'] ) ? $attributes['src'] : $default_src,
                     'type'          => 'content',
                 ],
-                'width'            => [
+                'width'                      => [
                     'value_path'    => 'width',
                     'component'     => 'Dimension',
                     'title'         => __( 'Width', 'yaymail' ),
                     'default_value' => isset( $attributes['width'] ) ? $attributes['width'] : '400',
                     'type'          => 'style',
                 ],
-                'height'           => [
+                'height'                     => [
                     'value_path'    => 'height',
                     'component'     => 'Dimension',
                     'title'         => __( 'Height', 'yaymail' ),
                     'default_value' => isset( $attributes['height'] ) ? $attributes['height'] : '400',
                     'type'          => 'style',
                 ],
-                'url'              => [
+                'url'                        => [
                     'value_path'    => 'url',
-                    'component'     => 'Image',
+                    'component'     => 'Media',
                     'title'         => __( 'Video URL', 'yaymail' ),
                     'default_value' => isset( $attributes['url'] ) ? $attributes['url'] : '#',
-                    'extras_data'   => [
-                        'media_type'   => 'video',
-                        'button_title' => __( 'Change video', 'yaymail' ),
-                        'show_preview' => false,
-                    ],
+                    'media_type'    => 'video',
+                    'button_title'  => __( 'Change video', 'yaymail' ),
+                    'show_preview'  => false,
                     'type'          => 'content',
                 ],
             ],

@@ -33,22 +33,34 @@ class ImageBox extends BaseElement {
             'available' => true,
             'position'  => 120,
             'data'      => [
-                'background_color' => [
+                'container_group_definition' => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Container settings', 'yaymail' ),
+                    'description' => __( 'Handle container layout settings', 'yaymail' ),
+                ],
+                'background_color'           => [
                     'value_path'    => 'background_color',
                     'component'     => 'Color',
                     'title'         => __( 'Background color', 'yaymail' ),
                     'default_value' => isset( $attributes['background_color'] ) ? $attributes['background_color'] : '#fff',
                     'type'          => 'style',
                 ],
-                'text_color'       => [
+                'text_color'                 => [
                     'value_path'    => 'text_color',
                     'component'     => 'Color',
                     'title'         => __( 'Text color', 'yaymail' ),
                     'default_value' => isset( $attributes['text_color'] ) ? $attributes['text_color'] : YAYMAIL_COLOR_TEXT_DEFAULT,
                     'type'          => 'style',
                 ],
-
-                'image_box'        => [
+                'column_breaker'             => [
+                    'component' => 'LineBreaker',
+                ],
+                'column_settings'            => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Column settings', 'yaymail' ),
+                    'description' => __( 'Handle column settings', 'yaymail' ),
+                ],
+                'image_box'                  => [
                     'component'  => 'ImageBox',
                     'value_path' => 'image_box',
                     'column_1'   => [

@@ -3,6 +3,7 @@
 namespace YayMail;
 
 use YayMail\Models\TemplateModel;
+use YayMail\Utils\Helpers;
 
 /**
  * GlobalHeaderFooter Class
@@ -96,8 +97,10 @@ class GlobalHeaderFooter {
         }
 
         $global_header_settings = $template->get_global_header_settings();
+        $hidden_value           = $global_header_settings['hidden'];
 
-        return ! ( empty( $global_header_settings['hidden'] ) ); // phpcs:ignore
+        // validate boolean
+        return filter_var( $hidden_value, FILTER_VALIDATE_BOOLEAN ); // phpcs:ignore
     }
 
     /**
@@ -115,8 +118,10 @@ class GlobalHeaderFooter {
         }
 
         $global_footer_settings = $template->get_global_footer_settings();
+        $hidden_value           = $global_footer_settings['hidden'];
 
-        return ! ( empty( $global_footer_settings['hidden'] ) ); // phpcs:ignore
+        // validate boolean
+        return filter_var( $hidden_value, FILTER_VALIDATE_BOOLEAN ); // phpcs:ignore
     }
 
     /**
@@ -140,7 +145,7 @@ class GlobalHeaderFooter {
 
         $global_header_settings = $template->get_global_header_settings();
 
-        if ( 'true' != $global_header_settings['content_override'] ) { // phpcs:ignore
+        if ( ! Helpers::is_true( $global_header_settings['content_override'] ) ) {
             return null;
         }
 
@@ -168,7 +173,7 @@ class GlobalHeaderFooter {
 
         $global_footer_settings = $template->get_global_footer_settings();
 
-        if ( 'true' != $global_footer_settings['content_override'] ) { // phpcs:ignore
+        if ( ! Helpers::is_true( $global_footer_settings['content_override'] ) ) {
             return null;
         }
 

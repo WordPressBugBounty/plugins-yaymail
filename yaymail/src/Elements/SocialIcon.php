@@ -28,14 +28,12 @@ class SocialIcon extends BaseElement {
             'available' => true,
             'position'  => 90,
             'data'      => [
-                'align'            => [
-                    'value_path'    => 'align',
-                    'component'     => 'Align',
-                    'title'         => __( 'Align', 'yaymail' ),
-                    'default_value' => isset( $attributes['align'] ) ? $attributes['align'] : 'center',
-                    'type'          => 'style',
+                'container_group_definition' => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Container settings', 'yaymail' ),
+                    'description' => __( 'Handle container layout settings', 'yaymail' ),
                 ],
-                'padding'          => [
+                'padding'                    => [
                     'value_path'    => 'padding',
                     'component'     => 'Spacing',
                     'title'         => __( 'Padding', 'yaymail' ),
@@ -47,43 +45,54 @@ class SocialIcon extends BaseElement {
                     ],
                     'type'          => 'style',
                 ],
-                'background_color' => [
+                'background_color'           => [
                     'value_path'    => 'background_color',
                     'component'     => 'Color',
                     'title'         => __( 'Background color', 'yaymail' ),
                     'default_value' => isset( $attributes['background_color'] ) ? $attributes['background_color'] : '#fff',
                     'type'          => 'style',
                 ],
-                'width_icon'       => [
-                    'value_path'    => 'width_icon',
-                    'component'     => 'Dimension',
-                    'title'         => __( 'Width', 'yaymail' ),
-                    'default_value' => isset( $attributes['width_icon'] ) ? $attributes['width_icon'] : '24',
-                    'extras_data'   => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
+                'align'                      => [
+                    'value_path'    => 'align',
+                    'component'     => 'Align',
+                    'title'         => __( 'Alignment', 'yaymail' ),
+                    'default_value' => isset( $attributes['align'] ) ? $attributes['align'] : 'center',
                     'type'          => 'style',
                 ],
-                'spacing'          => [
+                'content_breaker'            => [
+                    'component' => 'LineBreaker',
+                ],
+                'content_group_definition'   => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Content settings', 'yaymail' ),
+                    'description' => __( 'Handle content settings', 'yaymail' ),
+                ],
+                'width_icon'                 => [
+                    'value_path'    => 'width_icon',
+                    'component'     => 'Dimension',
+                    'title'         => __( 'Icon size', 'yaymail' ),
+                    'default_value' => isset( $attributes['width_icon'] ) ? $attributes['width_icon'] : '24',
+                    'min'           => 0,
+                    'max'           => 100,
+                    'type'          => 'style',
+                ],
+                'spacing'                    => [
                     'value_path'    => 'spacing',
                     'component'     => 'Dimension',
                     'title'         => __( 'Icon spacing', 'yaymail' ),
                     'default_value' => isset( $attributes['spacing'] ) ? $attributes['spacing'] : '5',
-                    'extras_data'   => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
+                    'min'           => 0,
+                    'max'           => 100,
                     'type'          => 'style',
                 ],
-                'theme'            => [
+                'theme'                      => [
                     'value_path'    => 'theme',
                     'component'     => 'SocialIconThemeSelector',
                     'title'         => __( 'Styles theme', 'yaymail' ),
                     'default_value' => isset( $attributes['style'] ) ? $attributes['style'] : 'Colorful',
                     'type'          => 'style',
                 ],
-                'icon_list'        => [
+                'icon_list'                  => [
                     'value_path'    => 'icon_list',
                     'component'     => 'SocialList',
                     'title'         => __( 'Socials', 'yaymail' ),

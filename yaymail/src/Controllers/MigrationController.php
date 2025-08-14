@@ -2,6 +2,7 @@
 namespace YayMail\Controllers;
 
 use YayMail\Abstracts\BaseController;
+use YayMail\Migrations\AbstractMigration;
 use YayMail\Models\MigrationModel;
 use YayMail\Utils\SingletonTrait;
 /**
@@ -82,7 +83,20 @@ class MigrationController extends BaseController {
     }
     public function reset( \WP_REST_Request $request ) {
         $backup_name = sanitize_text_field( $request->get_param( 'backup_name' ) );
-        $response    = $this->model->reset( $backup_name );
+        $backup_data = get_option( $backup_name, null );
+
+        if ( ! $backup_data ) {
+            return [
+                'success' => false,
+                'message' => esc_html__( 'Backup not found', 'yaymail' ),
+            ];
+        }
+
+        $version                = str_replace( AbstractMigration::BACKUP_PREFIX, '', $backup_name );
+        $version                = str_replace( '_', '.', $version );
+        $backup_data['name']    = $backup_name;
+        $backup_data['version'] = $version;
+        $response               = $this->model->reset( $backup_data );
         return array_merge( [ 'success' => true ], $response );
     }
 }

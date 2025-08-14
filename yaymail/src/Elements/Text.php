@@ -2,7 +2,9 @@
 namespace YayMail\Elements;
 
 use YayMail\Abstracts\BaseElement;
+use YayMail\Constants\AttributesData;
 use YayMail\Utils\SingletonTrait;
+
 /**
  * Text Elements
  */
@@ -28,7 +30,12 @@ class Text extends BaseElement {
                 'available' => true,
                 'position'  => 70,
                 'data'      => [
-                    'padding'          => [
+                    'container_group_definition' => [
+                        'component'   => 'GroupDefinition',
+                        'title'       => __( 'Container settings', 'yaymail' ),
+                        'description' => __( 'Handle container layout settings', 'yaymail' ),
+                    ],
+                    'padding'                    => [
                         'value_path'    => 'padding',
                         'component'     => 'Spacing',
                         'title'         => __( 'Padding', 'yaymail' ),
@@ -40,28 +47,43 @@ class Text extends BaseElement {
                         ],
                         'type'          => 'style',
                     ],
-                    'background_color' => [
+                    'background_color'           => [
                         'value_path'    => 'background_color',
                         'component'     => 'Color',
                         'title'         => __( 'Background color', 'yaymail' ),
                         'default_value' => isset( $attributes['background_color'] ) ? $attributes['background_color'] : '#fff',
                         'type'          => 'style',
                     ],
-                    'text_color'       => [
-                        'value_path'    => 'text_color',
-                        'component'     => 'Color',
-                        'title'         => __( 'Text color', 'yaymail' ),
-                        'default_value' => isset( $attributes['text_color'] ) ? $attributes['text_color'] : YAYMAIL_COLOR_TEXT_DEFAULT,
+                    'border'                     => [
+                        'value_path'    => 'border',
+                        'component'     => 'Border',
+                        'title'         => __( 'Border', 'yaymail' ),
+                        'default_value' => isset( $attributes['border'] ) ? $attributes['border'] : AttributesData::BORDER_DEFAULT,
                         'type'          => 'style',
                     ],
-                    'font_family'      => [
+                    'content_breaker'            => [
+                        'component' => 'LineBreaker',
+                    ],
+                    'content_group_definition'   => [
+                        'component'   => 'GroupDefinition',
+                        'title'       => __( 'Content settings', 'yaymail' ),
+                        'description' => __( 'Handle content settings', 'yaymail' ),
+                    ],
+                    'font_family'                => [
                         'value_path'    => 'font_family',
                         'component'     => 'FontFamilySelector',
                         'title'         => __( 'Font family', 'yaymail' ),
                         'default_value' => isset( $attributes['font_family'] ) ? $attributes['font_family'] : YAYMAIL_DEFAULT_FAMILY,
                         'type'          => 'style',
                     ],
-                    'rich_text'        => [
+                    'text_color'                 => [
+                        'value_path'    => 'text_color',
+                        'component'     => 'Color',
+                        'title'         => __( 'Text color', 'yaymail' ),
+                        'default_value' => isset( $attributes['text_color'] ) ? $attributes['text_color'] : YAYMAIL_COLOR_TEXT_DEFAULT,
+                        'type'          => 'style',
+                    ],
+                    'rich_text'                  => [
                         'value_path'    => 'rich_text',
                         'component'     => 'RichTextEditor',
                         'title'         => __( 'Content', 'yaymail' ),

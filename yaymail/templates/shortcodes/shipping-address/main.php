@@ -10,7 +10,7 @@ if ( ! isset( $args['order'] ) || ! ( Helpers::is_woocommerce_order( $args['orde
 }
 
 $order_instance   = $args['order'];
-$shipping_address = $order_instance->get_formatted_shipping_address();
+$shipping_address = apply_filters( 'yaymail_shipping_address_content', $order_instance->get_formatted_shipping_address(), $order_instance );
 if ( ! wc_ship_to_billing_address_only() && $order_instance->needs_shipping_address() && ! empty( $shipping_address ) ) :
     $shipping_phone = $order_instance->get_shipping_phone();
     ?>

@@ -31,7 +31,7 @@ class SettingsPage {
     protected function init_hooks() {
         // Register Menu
         add_action( 'admin_menu', [ $this, 'add_yaymail_menu' ], YAYMAIL_MENU_PRIORITY );
-        add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ] );
+        add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ], 30 );
 
         add_filter( 'plugin_action_links_' . YAYMAIL_PLUGIN_BASENAME, [ $this, 'plugin_action_links' ] );
         add_filter( 'plugin_row_meta', [ $this, 'add_support_and_docs_links' ], 10, 2 );

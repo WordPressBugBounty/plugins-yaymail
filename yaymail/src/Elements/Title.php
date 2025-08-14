@@ -28,42 +28,12 @@ class Title extends BaseElement {
             'available' => true,
             'position'  => 80,
             'data'      => [
-                'align'            => [
-                    'value_path'    => 'align',
-                    'component'     => 'Align',
-                    'title'         => __( 'Align', 'yaymail' ),
-                    'default_value' => isset( $attributes['align'] ) ? $attributes['align'] : 'center',
-                    'type'          => 'style',
+                'container_group_definition' => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Container settings', 'yaymail' ),
+                    'description' => __( 'Handle container layout settings', 'yaymail' ),
                 ],
-                'title'            => [
-                    'value_path'    => 'title',
-                    'component'     => 'TextInput',
-                    'title'         => __( 'Title', 'yaymail' ),
-                    'default_value' => isset( $attributes['title'] ) ? $attributes['title'] : __( 'Enter your title here', 'yaymail' ),
-                    'type'          => 'content',
-                ],
-                'title_size'       => [
-                    'value_path'    => 'title_size',
-                    'component'     => 'FontSizeSelector',
-                    'title'         => __( 'Title size', 'yaymail' ),
-                    'default_value' => isset( $attributes['title_size'] ) ? $attributes['title_size'] : 'default',
-                    'type'          => 'style',
-                ],
-                'subtitle'         => [
-                    'value_path'    => 'subtitle',
-                    'component'     => 'TextInput',
-                    'title'         => __( 'Subtitle', 'yaymail' ),
-                    'default_value' => isset( $attributes['subtitle'] ) ? $attributes['subtitle'] : __( 'Subtitle', 'yaymail' ),
-                    'type'          => 'content',
-                ],
-                'subtitle_size'    => [
-                    'value_path'    => 'subtitle_size',
-                    'component'     => 'FontSizeSelector',
-                    'title'         => __( 'Subtitle size', 'yaymail' ),
-                    'default_value' => isset( $attributes['subtitle_size'] ) ? $attributes['subtitle_size'] : 'default',
-                    'type'          => 'style',
-                ],
-                'padding'          => [
+                'padding'                    => [
                     'value_path'    => 'padding',
                     'component'     => 'Spacing',
                     'title'         => __( 'Padding', 'yaymail' ),
@@ -75,28 +45,78 @@ class Title extends BaseElement {
                     ],
                     'type'          => 'style',
                 ],
-                'background_color' => [
+                'background_color'           => [
                     'value_path'    => 'background_color',
                     'component'     => 'Color',
                     'title'         => __( 'Background color', 'yaymail' ),
                     'default_value' => isset( $attributes['background_color'] ) ? $attributes['background_color'] : '#fff',
                     'type'          => 'style',
                 ],
-                'text_color'       => [
+                'text_color'                 => [
                     'value_path'    => 'text_color',
                     'component'     => 'Color',
                     'title'         => __( 'Text color', 'yaymail' ),
                     'default_value' => isset( $attributes['text_color'] ) ? $attributes['text_color'] : '#444444',
                     'type'          => 'style',
                 ],
-                'font_family'      => [
+                'font_family'                => [
                     'value_path'    => 'font_family',
                     'component'     => 'FontFamilySelector',
                     'title'         => __( 'Font family', 'yaymail' ),
                     'default_value' => isset( $attributes['font_family'] ) ? $attributes['font_family'] : YAYMAIL_DEFAULT_FAMILY,
                     'type'          => 'style',
                 ],
-
+                'align'                      => [
+                    'value_path'    => 'align',
+                    'component'     => 'Align',
+                    'title'         => __( 'Text align', 'yaymail' ),
+                    'default_value' => isset( $attributes['align'] ) ? $attributes['align'] : 'center',
+                    'type'          => 'style',
+                ],
+                'title_breaker'              => [
+                    'component' => 'LineBreaker',
+                ],
+                'title_group_definition'     => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Title settings', 'yaymail' ),
+                    'description' => __( 'Handle title settings', 'yaymail' ),
+                ],
+                'title'                      => [
+                    'value_path'    => 'title',
+                    'component'     => 'TextInput',
+                    'title'         => __( 'Text', 'yaymail' ),
+                    'default_value' => isset( $attributes['title'] ) ? $attributes['title'] : __( 'Enter your title here', 'yaymail' ),
+                    'type'          => 'content',
+                ],
+                'title_size'                 => [
+                    'value_path'    => 'title_size',
+                    'component'     => 'FontSizeSelector',
+                    'title'         => __( 'Font size', 'yaymail' ),
+                    'default_value' => isset( $attributes['title_size'] ) ? $attributes['title_size'] : 'default',
+                    'type'          => 'style',
+                ],
+                'subtitle_breaker'           => [
+                    'component' => 'LineBreaker',
+                ],
+                'subtitle_group_definition'  => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Subtitle settings', 'yaymail' ),
+                    'description' => __( 'Handle subtitle settings', 'yaymail' ),
+                ],
+                'subtitle'                   => [
+                    'value_path'    => 'subtitle',
+                    'component'     => 'TextInput',
+                    'title'         => __( 'Text', 'yaymail' ),
+                    'default_value' => isset( $attributes['subtitle'] ) ? $attributes['subtitle'] : __( 'Subtitle', 'yaymail' ),
+                    'type'          => 'content',
+                ],
+                'subtitle_size'              => [
+                    'value_path'    => 'subtitle_size',
+                    'component'     => 'FontSizeSelector',
+                    'title'         => __( 'Font size', 'yaymail' ),
+                    'default_value' => isset( $attributes['subtitle_size'] ) ? $attributes['subtitle_size'] : 'default',
+                    'type'          => 'style',
+                ],
             ],
         ];
     }

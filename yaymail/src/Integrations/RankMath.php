@@ -18,6 +18,15 @@ class RankMath {
             return;
         }
 
+        add_filter(
+            'rank_math/sitemap/exclude_post_type',
+            function( $excluded_post_types ) {
+                $excluded_post_types[] = TemplatePostType::POST_TYPE;
+                return $excluded_post_types;
+            }
+        );
+
+        // Trick to delete all the duplicate value in the previous version of the plugin
         add_action( 'init', [ $this, 'init' ], PHP_INT_MAX );
     }
 
@@ -33,9 +42,8 @@ class RankMath {
             $titles_settings[ $title_meta_key ] = [];
         }
 
-        $titles_settings[ $title_meta_key ][] = 'noindex';
+        $titles_settings[ $title_meta_key ] = array_unique( $titles_settings[ $title_meta_key ] );
 
         update_option( 'rank-math-options-titles', $titles_settings );
     }
-    
 }

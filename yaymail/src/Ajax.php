@@ -7,6 +7,7 @@ use YayMail\Models\SettingModel;
 use YayMail\Models\TemplateModel;
 use YayMail\Migrations\MainMigration;
 use YayMail\Utils\Helpers;
+use YayMail\Migrations\AbstractMigration;
 
 /**
  * I18n Logic
@@ -33,6 +34,144 @@ class Ajax {
         add_action( 'wp_ajax_yaymail_review', [ $this, 'yaymail_review' ] );
         add_action( 'wp_ajax_yaymail_change_ghf_tour', [ $this, 'change_ghf_tour' ] );
         add_action( 'wp_ajax_yaymail_dismiss_multi_select_notice', [ $this, 'dismiss_multi_select_notice' ] );
+        add_action( 'wp_ajax_yaymail_export_state', [ $this, 'export_state' ] );
+        add_action( 'wp_ajax_yaymail_import_state', [ $this, 'import_state' ] );
+    }
+
+    public function import_state() {
+        $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+        if ( ! wp_verify_nonce( $nonce, 'yaymail_frontend_nonce' ) ) {
+            return wp_send_json_error( [ 'mess' => __( 'Verify nonce failed', 'yaymail' ) ] );
+        }
+        try {
+            $import_file = isset( $_FILES['import_file'] ) ? $_FILES['import_file'] : null;
+            if ( ! $import_file ) {
+                return wp_send_json_error( [ 'mess' => __( 'Can\'t find import file', 'yaymail' ) ] );
+            }
+
+            if ( $import_file['type'] !== 'application/zip' ) {
+                return wp_send_json_error( [ 'mess' => __( 'Invalid file type. Please upload a ZIP file.', 'yaymail' ) ] );
+            }
+
+            $zip = new \ZipArchive();
+            if ( $zip->open( $import_file['tmp_name'] ) !== true ) {
+                return wp_send_json_error( [ 'mess' => __( 'Cannot open ZIP file.', 'yaymail' ) ] );
+            }
+
+            $state_data = null;
+            for ( $i = 0; $i < $zip->numFiles; $i++ ) {
+                $filename = $zip->getNameIndex( $i );
+                if ( $filename === 'yaymail_backup.json' ) {
+                    $state_data = $zip->getFromIndex( $i );
+                    break;
+                }
+            }
+
+            $zip->close();
+
+            if ( ! $state_data ) {
+                return wp_send_json_error( [ 'mess' => __( 'Cannot find yaymail_backup.json in the ZIP file.', 'yaymail' ) ] );
+            }
+
+            $imported_data = json_decode( $state_data );
+            if ( json_last_error() !== JSON_ERROR_NONE ) {
+                return wp_send_json_error( [ 'mess' => __( 'Invalid JSON data in the state file.', 'yaymail' ) ] );
+            }
+
+            if ( empty( $imported_data->posts ) || empty( $imported_data->postmeta ) || empty( $imported_data->options ) ) {
+                return wp_send_json_error( [ 'mess' => __( 'Invalid state file structure.', 'yaymail' ) ] );
+            }
+
+            $migration_model = \YayMail\Models\MigrationModel::get_instance();
+
+            $source_version = $imported_data->version;
+
+            $backup_data = [
+                'posts'        => $imported_data->posts,
+                'postmeta'     => $imported_data->postmeta,
+                'options'      => $imported_data->options,
+                'created_date' => $imported_data->created_date ?? current_datetime()->format( 'Y-m-d H:i:s' ),
+                'name'         => '_yaymail_import_backup_' . $source_version,
+                'version'      => $source_version,
+            ];
+
+            $migration_model->reset( $backup_data );
+
+            wp_send_json_success(
+                [
+                    'message' => __( 'Import state successfully', 'yaymail' ),
+                ]
+            );
+        } catch ( \Error $error ) {
+            yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => __( 'Import failed: ', 'yaymail' ) . $error->getMessage() ] );
+        } catch ( \Exception $exception ) {
+            yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => __( 'Import failed: ', 'yaymail' ) . $exception->getMessage() ] );
+        }//end try
+    }
+
+    public function export_state() {
+        $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+        if ( ! wp_verify_nonce( $nonce, 'yaymail_frontend_nonce' ) ) {
+            return wp_send_json_error( [ 'mess' => __( 'Verify nonce failed', 'yaymail' ) ] );
+        }
+
+        try {
+            global $wpdb;
+
+            /**
+             * Backup posts and postmeta
+             */
+            $query_posts            = "
+            SELECT *
+            FROM {$wpdb->posts}
+            WHERE post_type = 'yaymail_template'
+            ";
+            $yaymail_template_posts = $wpdb->get_results( $query_posts );// phpcs:ignore
+
+            $query_postmeta            = "
+                SELECT *
+                FROM {$wpdb->postmeta}
+                WHERE meta_key LIKE '%yaymail%'
+            ";
+            $yaymail_template_postmeta = $wpdb->get_results( $query_postmeta );// phpcs:ignore
+
+            $backup_data = [
+                'posts'    => $yaymail_template_posts,
+                'postmeta' => $yaymail_template_postmeta,
+            ];
+            /** ****************************** */
+
+            /**
+             * Backup options
+             */
+            $query_options          = "
+                SELECT *
+                FROM {$wpdb->options}
+                WHERE option_name LIKE '%yaymail%'
+            ";
+            $yaymail_options        = $wpdb->get_results( $query_options );
+            $backup_data['options'] = $yaymail_options;
+
+            $backup_data['created_date'] = current_datetime()->format( 'Y-m-d H:i:s' );
+            $backup_data['version']      = get_option( 'yaymail_version_backup' );
+
+            $backup_data = apply_filters( 'yaymail_backup_state_data', $backup_data );
+
+            wp_send_json_success(
+                [
+                    'message'   => 'success',
+                    'data'      => $backup_data,
+                    'file_name' => 'yaymail_export_backup_' . gmdate( 'm-d-Y' ),
+                ]
+            );
+
+        } catch ( \Error $error ) {
+            yaymail_get_logger( $error );
+        } catch ( \Exception $exception ) {
+            yaymail_get_logger( $exception );
+        }//end try
     }
 
     public function sanitize( $array ) {
@@ -620,7 +759,7 @@ class Ajax {
         } catch ( \Throwable $throwable ) {
             yaymail_get_logger( $throwable );
             wp_send_json_error( [ 'mess' => $throwable->getMessage() ] );
-        }
+        }//end try
     }
 
     public function yaymail_review() {

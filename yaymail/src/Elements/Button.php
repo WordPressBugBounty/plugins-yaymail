@@ -3,6 +3,7 @@ namespace YayMail\Elements;
 
 use YayMail\Abstracts\BaseElement;
 use YayMail\Utils\SingletonTrait;
+use YayMail\Constants\AttributesData;
 /**
  * Button Elements
  */
@@ -29,15 +30,93 @@ class Button extends BaseElement {
             'available' => true,
             'position'  => 60,
             'data'      => [
-                'button_type'             => ElementsHelper::get_button_type_selector( $attributes ),
-                'align'                   => ElementsHelper::get_align( $attributes ),
-                'padding'                 => ElementsHelper::get_spacing(
+                'container_group_definition'      => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Container settings', 'yaymail' ),
+                    'description' => __( 'Handle container layout settings', 'yaymail' ),
+                ],
+                'padding'                         => ElementsHelper::get_spacing(
                     $attributes,
                     [
-                        'title' => __( 'Container padding', 'yaymail' ),
+                        'title' => __( 'Padding', 'yaymail' ),
                     ]
                 ),
-                'border_radius'           => ElementsHelper::get_spacing(
+                'background_color'                => ElementsHelper::get_color(
+                    $attributes,
+                    [
+                        'default_value' => '#fff',
+                    ]
+                ),
+                'button_setting_breaker'          => [
+                    'component' => 'LineBreaker',
+                ],
+                'button_group_definition'         => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Button settings', 'yaymail' ),
+                    'description' => __( 'Handle button settings', 'yaymail' ),
+                ],
+                'button_type'                     => ElementsHelper::get_button_type_selector( $attributes ),
+                'align'                           => ElementsHelper::get_align(
+                    $attributes,
+                    [
+                        'title' => __( 'Button position', 'yaymail' ),
+                    ]
+                ),
+                'width'                           => ElementsHelper::get_dimension(
+                    $attributes,
+                    [
+                        'default_value' => '50',
+                        'min'           => 0,
+                        'max'           => 100,
+                        'unit'          => '%',
+                    ]
+                ),
+                'height'                          => ElementsHelper::get_dimension(
+                    $attributes,
+                    [
+                        'value_path'    => 'height',
+                        'title'         => __( 'Height', 'yaymail' ),
+                        'default_value' => '21',
+                        'min'           => 0,
+                        'max'           => 100,
+                    ]
+                ),
+                'button_padding'                  => [
+                    'value_path'    => 'button_padding',
+                    'component'     => 'Spacing',
+                    'title'         => __( 'Padding', 'yaymail' ),
+                    'default_value' => [
+                        'top'    => '12',
+                        'right'  => '20',
+                        'bottom' => '12',
+                        'left'   => '20',
+                    ],
+                    'type'          => 'style',
+                ],
+                'button_background_color'         => ElementsHelper::get_color(
+                    $attributes,
+                    [
+                        'value_path'    => 'button_background_color',
+                        'title'         => __( 'Background color', 'yaymail' ),
+                        'default_value' => YAYMAIL_COLOR_WC_DEFAULT,
+                    ]
+                ),
+                'text_color'                      => ElementsHelper::get_color(
+                    $attributes,
+                    [
+                        'value_path'    => 'text_color',
+                        'title'         => __( 'Text color', 'yaymail' ),
+                        'default_value' => '#ffffff',
+                    ]
+                ),
+                'border'                          => [
+                    'value_path'    => 'border',
+                    'component'     => 'Border',
+                    'title'         => __( 'Border', 'yaymail' ),
+                    'default_value' => isset( $attributes['border'] ) ? $attributes['border'] : AttributesData::BORDER_DEFAULT,
+                    'type'          => 'style',
+                ],
+                'border_radius'                   => ElementsHelper::get_border_radius(
                     $attributes,
                     [
                         'value_path'    => 'border_radius',
@@ -48,13 +127,14 @@ class Button extends BaseElement {
                             'bottom_right' => '5',
                             'bottom_left'  => '5',
                         ],
-                        'extras_data'   => [
-                            'is_border_radius' => true,
-                            'class_name'       => 'yaymail-border-radius',
-                        ],
                     ]
                 ),
-                'text'                    => ElementsHelper::get_text_input(
+                'button_content_group_definition' => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Button content', 'yaymail' ),
+                    'description' => __( 'Handle button content', 'yaymail' ),
+                ],
+                'text'                            => ElementsHelper::get_text_input(
                     $attributes,
                     [
                         'value_path'    => 'text',
@@ -62,66 +142,19 @@ class Button extends BaseElement {
                         'default_value' => __( 'Click me', 'yaymail' ),
                     ]
                 ),
-                'url'                     => ElementsHelper::get_text_input( $attributes ),
-                'background_color'        => ElementsHelper::get_color(
-                    $attributes,
-                    [
-                        'default_value' => '#fff',
-                    ]
-                ),
-                'button_background_color' => ElementsHelper::get_color(
-                    $attributes,
-                    [
-                        'value_path'    => 'button_background_color',
-                        'title'         => __( 'Button background color', 'yaymail' ),
-                        'default_value' => YAYMAIL_COLOR_WC_DEFAULT,
-                    ]
-                ),
-                'text_color'              => ElementsHelper::get_color(
-                    $attributes,
-                    [
-                        'value_path'    => 'text_color',
-                        'title'         => __( 'Text color', 'yaymail' ),
-                        'default_value' => '#ffffff',
-                    ]
-                ),
-                'font_size'               => ElementsHelper::get_dimension(
+                'url'                             => ElementsHelper::get_text_input( $attributes ),
+                'font_size'                       => ElementsHelper::get_dimension(
                     $attributes,
                     [
                         'value_path'    => 'font_size',
                         'title'         => __( 'Font size', 'yaymail' ),
                         'default_value' => '13',
-                        'extras_data'   => [
-                            'min' => 10,
-                            'max' => 40,
-                        ],
+                        'min'           => 10,
+                        'max'           => 40,
                     ]
                 ),
-                'height'                  => ElementsHelper::get_dimension(
-                    $attributes,
-                    [
-                        'value_path'    => 'height',
-                        'title'         => __( 'Height', 'yaymail' ),
-                        'default_value' => '21',
-                        'extras_data'   => [
-                            'min' => 0,
-                            'max' => 100,
-                        ],
-                    ]
-                ),
-                'width'                   => ElementsHelper::get_dimension(
-                    $attributes,
-                    [
-                        'default_value' => '50',
-                        'extras_data'   => [
-                            'min'  => 0,
-                            'max'  => 100,
-                            'unit' => '%',
-                        ],
-                    ]
-                ),
-                'weight'                  => ElementsHelper::get_font_weight_selector( $attributes ),
-                'font_family'             => ElementsHelper::get_font_family_selector( $attributes ),
+                'weight'                          => ElementsHelper::get_font_weight_selector( $attributes ),
+                'font_family'                     => ElementsHelper::get_font_family_selector( $attributes ),
             ],
         ];
     }

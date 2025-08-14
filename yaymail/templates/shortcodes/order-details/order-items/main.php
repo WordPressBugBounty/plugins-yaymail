@@ -9,6 +9,10 @@ $margin_side = is_rtl() ? 'left' : 'right';
 $order_id    = isset( $args['order'] ) ? $args['order']->get_id() : '';
 $order_data  = isset( $order_id ) ? wc_get_order( $order_id ) : '';
 
+if ( empty( $order_data ) ) {
+    $order_data = isset( $args['order'] ) ? $args['order'] : null;
+}
+
 $element_data       = isset( $args['element'] ) ? $args['element'] : [];
 $border_color       = isset( $element_data['border_color'] ) ? $element_data['border_color'] : 'inherit';
 $text_style         = isset( $args['text_style'] ) ? $args['text_style'] : '';
@@ -16,7 +20,7 @@ $image_style        = isset( $args['styles_product_image'] ) ? $args['styles_pro
 $is_placeholder     = isset( $args['is_placeholder'] ) ? $args['is_placeholder'] : false;
 $structure_items    = isset( $args['structure_items'] ) ? $args['structure_items'] : [];
 $yaymail_settings   = yaymail_settings();
-$order_items        = $order_data->get_items();
+$order_items        = ! empty( $order_data ) ? $order_data->get_items() : [];
 $image_height       = isset( $yaymail_settings['product_image_height'] ) ? $yaymail_settings['product_image_height'] : '30';
 $image_width        = isset( $yaymail_settings['product_image_width'] ) ? $yaymail_settings['product_image_width'] : '30';
 $image_position     = isset( $yaymail_settings['product_image_position'] ) ? $yaymail_settings['product_image_position'] : 'top';
@@ -173,7 +177,7 @@ foreach ( $order_items as $item_id => $item ) :
     if ( $show_purchase_note && $purchase_note ) {
         ?>
         <tr>
-            <td colspan="<?php echo isset( $structure_items['cost'] ) ? 3 : 2; ?>" style="<?php echo esc_attr( $text_style ); ?>;">
+            <td class="yaymail-purchase-note" colspan="<?php echo isset( $structure_items['cost'] ) ? 3 : 2; ?>" style="<?php echo esc_attr( $text_style ); ?>;">
                 <?php
                 echo wp_kses_post( wpautop( do_shortcode( $purchase_note ) ) );
                 ?>

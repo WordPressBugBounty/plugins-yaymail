@@ -101,16 +101,14 @@ class SimpleOffer extends BaseElement {
                     'title'         => __( 'Showing items', 'yaymail' ),
                     'default_value' => isset( $attributes['showing_items'] ) ? $attributes['showing_items'] : [ 'button', 'border' ],
                     'type'          => 'content',
-                    'extras_data'   => [
-                        'options' => [
-                            [
-                                'label' => __( 'Border', 'yaymail' ),
-                                'value' => 'border',
-                            ],
-                            [
-                                'label' => __( 'Button', 'yaymail' ),
-                                'value' => 'button',
-                            ],
+                    'options'       => [
+                        [
+                            'label' => __( 'Border', 'yaymail' ),
+                            'value' => 'border',
+                        ],
+                        [
+                            'label' => __( 'Button', 'yaymail' ),
+                            'value' => 'button',
                         ],
                     ],
                 ],
@@ -129,10 +127,8 @@ class SimpleOffer extends BaseElement {
                     'component'     => 'NumberInput',
                     'title'         => __( 'Border width', 'yaymail' ),
                     'default_value' => isset( $attributes['border_width'] ) ? $attributes['border_width'] : '3',
-                    'extras_data'   => [
-                        'min' => 0,
-                        'max' => 100,
-                    ],
+                    'min'           => 0,
+                    'max'           => 100,
                     'type'          => 'style',
                     'conditions'    => $border_conditions,
                 ],
@@ -141,24 +137,22 @@ class SimpleOffer extends BaseElement {
                     'component'     => 'Selector',
                     'title'         => __( 'Border style', 'yaymail' ),
                     'default_value' => isset( $attributes['border_style'] ) ? $attributes['border_style'] : 'solid',
-                    'extras_data'   => [
-                        'options' => [
-                            [
-                                'label' => __( 'Solid', 'yaymail' ),
-                                'value' => 'solid',
-                            ],
-                            [
-                                'label' => __( 'Double', 'yaymail' ),
-                                'value' => 'double',
-                            ],
-                            [
-                                'label' => __( 'Dotted', 'yaymail' ),
-                                'value' => 'dotted',
-                            ],
-                            [
-                                'label' => __( 'Dashed', 'yaymail' ),
-                                'value' => 'dashed',
-                            ],
+                    'options'       => [
+                        [
+                            'label' => __( 'Solid', 'yaymail' ),
+                            'value' => 'solid',
+                        ],
+                        [
+                            'label' => __( 'Double', 'yaymail' ),
+                            'value' => 'double',
+                        ],
+                        [
+                            'label' => __( 'Dotted', 'yaymail' ),
+                            'value' => 'dotted',
+                        ],
+                        [
+                            'label' => __( 'Dashed', 'yaymail' ),
+                            'value' => 'dashed',
                         ],
                     ],
                     'type'          => 'style',

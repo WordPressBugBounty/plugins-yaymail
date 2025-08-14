@@ -37,6 +37,7 @@ $billing_wrapper_style = TemplateHelpers::get_style(
         'text-align'  => yaymail_get_text_align(),
         'font-size'   => '14px',
         'font-family' => TemplateHelpers::get_font_family_value( isset( $data['font_family'] ) ? $data['font_family'] : 'inherit' ),
+        'border'      => 'solid 1px ' . $data['border_color'],
     ]
 );
 
@@ -51,14 +52,25 @@ $title_style = TemplateHelpers::get_style(
     ]
 );
 
+$is_layout_type_modern = isset( $data['layout_type'] ) && 'modern' === $data['layout_type'];
+
 ob_start();
 ?>
-
+<style>
+    /* Modern layout */
+    <?php if ( $is_layout_type_modern ) { ?>
+    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-billing-address-wrap {
+        border: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+        <?php
+    }//end if
+    ?>
+</style>
 <div class="yaymail-billing-title" style="<?php echo esc_attr( $title_style ); ?>" > <?php echo wp_kses_post( do_shortcode( $data['title'] ) ); ?> </div>
-<div style="<?php echo esc_attr( $billing_border_style ); ?>">
-    <div style="<?php echo esc_attr( $billing_wrapper_style ); ?>">
-        <?php echo wp_kses_post( do_shortcode( isset( $data['rich_text'] ) ? $data['rich_text'] : '[yaymail_billing_address]' ) ); ?>
-    </div>
+<div class="yaymail-billing-address-wrap" style="<?php echo esc_attr( $billing_wrapper_style ); ?>">
+    <?php echo wp_kses_post( do_shortcode( isset( $data['rich_text'] ) ? $data['rich_text'] : '[yaymail_billing_address]' ) ); ?>
 </div>
            
 <?php

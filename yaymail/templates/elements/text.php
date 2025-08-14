@@ -1,5 +1,6 @@
 <?php
 defined( 'ABSPATH' ) || exit;
+
 use YayMail\Utils\TemplateHelpers;
 
 /**

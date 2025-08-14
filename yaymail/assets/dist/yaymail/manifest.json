@@ -1,16 +1,56 @@
 {
-  "_vendor_antd_form-8c7d003b.js": {
-    "file": "vendor_antd_form-8c7d003b.js"
+  "_vendor_antd_form-4fafe7b8.js": {
+    "file": "vendor_antd_form-4fafe7b8.js"
   },
-  "_vendor_antd_table-5605ad8b.js": {
-    "file": "vendor_antd_table-5605ad8b.js",
+  "_vendor_antd_table-c6f87bf7.js": {
+    "file": "vendor_antd_table-c6f87bf7.js",
     "imports": [
-      "_vendor_antd_form-8c7d003b.js"
+      "_vendor_antd_form-4fafe7b8.js"
     ]
   },
   "assets/svgs/addons-icon.svg": {
     "file": "addons-icon-97582c56.svg",
     "src": "assets/svgs/addons-icon.svg"
+  },
+  "assets/svgs/attachment-email-icon.svg": {
+    "file": "attachment-email-icon-b0961bda.svg",
+    "src": "assets/svgs/attachment-email-icon.svg"
+  },
+  "assets/svgs/border-all.svg": {
+    "file": "border-all-2f0ae333.svg",
+    "src": "assets/svgs/border-all.svg"
+  },
+  "assets/svgs/border-bottom.svg": {
+    "file": "border-bottom-17a26883.svg",
+    "src": "assets/svgs/border-bottom.svg"
+  },
+  "assets/svgs/border-custom.svg": {
+    "file": "border-custom-d5e33460.svg",
+    "src": "assets/svgs/border-custom.svg"
+  },
+  "assets/svgs/border-left.svg": {
+    "file": "border-left-561b2d9b.svg",
+    "src": "assets/svgs/border-left.svg"
+  },
+  "assets/svgs/border-none.svg": {
+    "file": "border-none-0c81fcea.svg",
+    "src": "assets/svgs/border-none.svg"
+  },
+  "assets/svgs/border-right.svg": {
+    "file": "border-right-32174db6.svg",
+    "src": "assets/svgs/border-right.svg"
+  },
+  "assets/svgs/border-top.svg": {
+    "file": "border-top-56835a07.svg",
+    "src": "assets/svgs/border-top.svg"
+  },
+  "assets/svgs/bottom-left-radius.svg": {
+    "file": "bottom-left-radius-0687d927.svg",
+    "src": "assets/svgs/bottom-left-radius.svg"
+  },
+  "assets/svgs/bottom-right-radius.svg": {
+    "file": "bottom-right-radius-d7b16719.svg",
+    "src": "assets/svgs/bottom-right-radius.svg"
   },
   "assets/svgs/desktop-icon.svg": {
     "file": "desktop-icon-39c91fc1.svg",
@@ -96,6 +136,14 @@
     "file": "support-icon-29ace2fa.svg",
     "src": "assets/svgs/support-icon.svg"
   },
+  "assets/svgs/top-left-radius.svg": {
+    "file": "top-left-radius-c9ed26fe.svg",
+    "src": "assets/svgs/top-left-radius.svg"
+  },
+  "assets/svgs/top-right-radius.svg": {
+    "file": "top-right-radius-6ea638b9.svg",
+    "src": "assets/svgs/top-right-radius.svg"
+  },
   "assets/svgs/undo-icon.svg": {
     "file": "undo-icon-53a6e3b4.svg",
     "src": "assets/svgs/undo-icon.svg"
@@ -117,17 +165,17 @@
     "src": "features/email-customizer/components/notice/notice-icon.svg"
   },
   "yaymail-main.css": {
-    "file": "yaymail-main-8bd62f1b.css",
+    "file": "yaymail-main-e20f7ff7.css",
     "src": "yaymail-main.css"
   },
   "yaymail-main.tsx": {
     "css": [
-      "yaymail-main-8bd62f1b.css"
+      "yaymail-main-e20f7ff7.css"
     ],
-    "file": "yaymail-main.tsx-0f306554.js",
+    "file": "yaymail-main.tsx-d2f3cbc0.js",
     "imports": [
-      "_vendor_antd_form-8c7d003b.js",
-      "_vendor_antd_table-5605ad8b.js"
+      "_vendor_antd_form-4fafe7b8.js",
+      "_vendor_antd_table-c6f87bf7.js"
     ],
     "isEntry": true,
     "src": "yaymail-main.tsx"

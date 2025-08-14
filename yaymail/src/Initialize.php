@@ -30,13 +30,24 @@ class Initialize {
     protected function __construct() {
         I18n::get_instance();
 
-        $yaymail_init = apply_filters( 'yaymail_temp_init_hook_name', 'init' );
+        /**
+         * Handle init core
+         * Emails, Templates, Elements, Shortcodes, Integrations
+         * $hook_name => $priority
+         */
+        $initialization_core_hooks = [
+            apply_filters( 'yaymail_temp_init_hook_name', 'init' ) => 10,
+            // Integrate for Mastercard Gateway plugin
+            'woocommerce_api_mastercard_gateway' => 10,
+        ];
+        foreach ( $initialization_core_hooks as $hook => $priority ) {
+            add_action( $hook, [ $this, 'init_core' ], $priority ?? 10 );
+        }
 
-        add_action( $yaymail_init, [ $this, 'woocommerce_init' ] );
-        add_action( 'init', [ $this, 'yaymail_init' ] );
+        add_action( 'init', [ $this, 'init_modules' ] );
     }
 
-    public function woocommerce_init() {
+    public function init_core() {
         require_once YAYMAIL_PLUGIN_PATH . 'src/Functions.php';
         do_action( 'yaymail_init_start' );
 
@@ -50,7 +61,7 @@ class Initialize {
         ShortcodesLoader::get_instance();
     }
 
-    public static function yaymail_init() {
+    public function init_modules() {
 
         $version_current        = YAYMAIL_VERSION;
         $version_old            = get_option( 'yaymail_version' );

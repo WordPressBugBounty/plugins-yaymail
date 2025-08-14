@@ -15,6 +15,33 @@ $template_exclude_style = apply_filters( 'yaymail_template_exclude_style', [] );
                 h2,h3{ font-family:inherit;color:inherit;text-align:inherit;}
                 .yaymail-inline-block {display: inline-block;}
             .yaymail-customizer-email-template-container a {color: <?php echo esc_attr( $template->get_text_link_color() ); ?>}
+
+            /**
+            * Media queries are not supported by all email clients, however they do work on modern mobile
+            * Gmail clients and can help us achieve better consistency there.
+            */
+            @media screen and (max-width: 600px) {
+                .yaymail-template-content-container {
+                    width: 100% !important;
+                    transform-origin: top !important;
+                    transform: scale(1.15) !important;
+                }
+                .yaymail-template-content-container .yaymail-element__content {
+                    padding: 8px 15px !important;
+                }
+                .yaymail-template-content-container .yaymail-billing-address-column,
+                .yaymail-template-content-container .yaymail-shipping-address-column {
+                    display: block !important;
+                    width: 100% !important;
+                }
+                .yaymail-template-content-container .yaymail-shipping-address-column {
+                    margin-top: 15px;
+                }
+                .yaymail-template-content-container .yaymail_item_product_title {
+                    min-width: 120px;
+                    width: 100%;
+                }
+            }
             </style>
         <?php endif; ?>
     </head>

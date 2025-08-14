@@ -58,10 +58,6 @@ class NewUsersShortcodes extends BaseShortcode {
 
     public function yaymail_set_password_link( $data, $shortcode_atts = [] ) {
 
-        $template = ! empty( $data['template'] ) ? $data['template'] : null;
-
-        $text_link_color = ! empty( $template ) ? $template->get_text_link_color() : YAYMAIL_COLOR_WC_DEFAULT;
-
         $render_data = isset( $data['render_data'] ) ? $data['render_data'] : [];
 
         $is_placeholder = isset( $data['is_placeholder'] ) ? $data['is_placeholder'] : false;
@@ -74,14 +70,14 @@ class NewUsersShortcodes extends BaseShortcode {
              */
             $url = wc_customer_edit_account_url();
 
-            return wp_kses_post( "<a style='color:$text_link_color' href='$url'> $text_link </a>" );
+            return wp_kses_post( "<a href='$url'> $text_link </a>" );
         }
 
         if ( isset( $render_data['set_password_url'] ) && ! empty( $render_data['set_password_url'] ) ) {
 
             $url = $render_data['set_password_url'];
 
-            return wp_kses_post( "<a style='color:$text_link_color' href='$url'> $text_link </a>" );
+            return wp_kses_post( "<a href='$url'> $text_link </a>" );
         }
 
         return '';

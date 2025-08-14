@@ -30,13 +30,41 @@ class Logo extends BaseElement {
             'available' => true,
             'position'  => 10,
             'data'      => [
-                'align'            => ElementsHelper::get_align( $attributes ),
-                'padding'          => ElementsHelper::get_spacing( $attributes ),
-                'src'              => ElementsHelper::get_image_src( $attributes ),
-                'width'            => ElementsHelper::get_dimension( $attributes ),
-                'background_color' => ElementsHelper::get_color( $attributes ),
-                'url'              => ElementsHelper::get_text_input( $attributes ),
-                'alt'              => ElementsHelper::get_text_input(
+                'container_group_definition' => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Container settings', 'yaymail' ),
+                    'description' => __( 'Handle container layout settings', 'yaymail' ),
+                ],
+                'padding'                    => ElementsHelper::get_spacing( $attributes ),
+                'background_color'           => ElementsHelper::get_color( $attributes ),
+                'logo_breaker'               => [
+                    'component' => 'LineBreaker',
+                ],
+                'logo_group_definition'      => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Logo settings', 'yaymail' ),
+                    'description' => __( 'Handle logo settings', 'yaymail' ),
+                ],
+                'src'                        => ElementsHelper::get_media(
+                    $attributes,
+                    [
+                        'title' => __( 'Source image', 'yaymail' ),
+                    ]
+                ),
+                'align'                      => ElementsHelper::get_align(
+                    $attributes,
+                    [
+                        'title' => __( 'Logo position', 'yaymail' ),
+                    ]
+                ),
+                'width'                      => ElementsHelper::get_dimension( $attributes ),
+                'url'                        => ElementsHelper::get_text_input(
+                    $attributes,
+                    [
+                        'title' => __( 'Open link', 'yaymail' ),
+                    ]
+                ),
+                'alt'                        => ElementsHelper::get_text_input(
                     $attributes,
                     [
                         'value_path'    => 'alt',

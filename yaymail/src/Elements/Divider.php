@@ -53,11 +53,9 @@ class Divider extends BaseElement {
                     'component'     => 'Dimension',
                     'title'         => __( 'Width', 'yaymail' ),
                     'default_value' => isset( $attributes['width'] ) ? $attributes['width'] : '100',
-                    'extras_data'   => [
-                        'min'  => 0,
-                        'max'  => 100,
-                        'unit' => '%',
-                    ],
+                    'min'           => 0,
+                    'max'           => 100,
+                    'unit'          => '%',
                     'type'          => 'style',
                 ],
                 'height'           => [
@@ -65,10 +63,8 @@ class Divider extends BaseElement {
                     'component'     => 'Dimension',
                     'title'         => __( 'Height', 'yaymail' ),
                     'default_value' => isset( $attributes['height'] ) ? $attributes['height'] : '6',
-                    'extras_data'   => [
-                        'min' => 1,
-                        'max' => 30,
-                    ],
+                    'min'           => 1,
+                    'max'           => 30,
                     'type'          => 'style',
                 ],
                 'background_color' => [
@@ -90,24 +86,22 @@ class Divider extends BaseElement {
                     'component'     => 'DividerTypeSelector',
                     'title'         => __( 'Line type', 'yaymail' ),
                     'default_value' => isset( $attributes['divider_type'] ) ? $attributes['divider_type'] : 'solid',
-                    'extras_data'   => [
-                        'options' => [
-                            [
-                                'label' => __( 'Solid', 'yaymail' ),
-                                'value' => 'solid',
-                            ],
-                            [
-                                'label' => __( 'Double', 'yaymail' ),
-                                'value' => 'double',
-                            ],
-                            [
-                                'label' => __( 'Dotted', 'yaymail' ),
-                                'value' => 'dotted',
-                            ],
-                            [
-                                'label' => __( 'Dashed', 'yaymail' ),
-                                'value' => 'dashed',
-                            ],
+                    'options'       => [
+                        [
+                            'label' => __( 'Solid', 'yaymail' ),
+                            'value' => 'solid',
+                        ],
+                        [
+                            'label' => __( 'Double', 'yaymail' ),
+                            'value' => 'double',
+                        ],
+                        [
+                            'label' => __( 'Dotted', 'yaymail' ),
+                            'value' => 'dotted',
+                        ],
+                        [
+                            'label' => __( 'Dashed', 'yaymail' ),
+                            'value' => 'dashed',
                         ],
                     ],
                     'type'          => 'style',

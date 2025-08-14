@@ -363,7 +363,7 @@ if ( ! function_exists( 'yaymail_get_email_direction' ) ) {
         $yaymail_settings = yaymail_settings();
         return isset( $yaymail_settings['direction'] ) && 'rtl' === $yaymail_settings['direction'] ? 'rtl' : 'ltr';
     }
-}
+}//end if
 
 /**
  * Get email recipient zone

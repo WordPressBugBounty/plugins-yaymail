@@ -85,7 +85,6 @@ class ProductModel {
      */
     public function get_featured_products( $params ) {
         $product_type = isset( $params['product_type'] ) ? $params['product_type'] : 'newest';
-        $limit        = isset( $params['number_of_products'] ) ? $params['number_of_products'] : self::DEFAULT_LIMIT;
         unset( $params['product_type'] );
 
         switch ( $product_type ) {
@@ -141,20 +140,64 @@ class ProductModel {
         return $result;
     }
 
-        /**
-         * Retrieves the newest products based on the provided criteria.
-         *
-         * This function retrieves the newest products from the WooCommerce store based on the specified criteria, including the number of products to retrieve and the sorting order.
-         *
-         * @param array $criteria An associative array of criteria for retrieving the newest products.
-         *   - 'number_of_products' (string): The number of newest products to retrieve. Default is "5".
-         *   - 'sorted_by' (string): The sorting criteria for the newest products. Default is "none".
-         *   - 'category_ids' (null or array): An array of category IDs to filter products by, or null if not used.
-         *   - 'tag_ids' (null or array): An array of tag IDs to filter products by, or null if not used.
-         *   - 'product_ids' (null or array): An array of specific product IDs to retrieve, or null if not used.
-         *
-         * @return WC_Product_Simple[]|WC_Product_Variable[] An array of WooCommerce simple and variable product objects representing the newest products.
-         */
+    public function get_cross_up_sells_products( $params ) {
+        $order_id               = isset( $params['order_id'] ) ? $params['order_id'] : 0;
+        $linked_products_type   = isset( $params['linked_products_type'] ) ? $params['linked_products_type'] : 'cross_sells';
+        $max_products_displayed = isset( $params['max_products_displayed'] ) ? $params['max_products_displayed'] : 0;
+        if ( 0 === $order_id ) {
+            return [];
+        }
+
+        if ( 'sample_order' === $order_id ) {
+            $products          = wc_get_products( [ 'limit' => $max_products_displayed ] );
+            $products_response = array_map( [ $this, 'get_product_response' ], $products );
+            return $products_response;
+        }
+
+        $order       = wc_get_order( $order_id );
+        $items       = $order->get_items();
+        $product_ids = [];
+        $products    = [];
+        foreach ( $items as $item ) {
+            if ( 'cross_sells' === $linked_products_type ) {
+                $product_ids = array_merge( $item->get_product()->get_cross_sell_ids(), $product_ids );
+            } else {
+                $product_ids = array_merge( $item->get_product()->get_upsell_ids(), $product_ids );
+            }
+        }
+        $product_ids = array_unique( $product_ids );
+
+        if ( empty( $product_ids ) ) {
+            return [];
+        }
+
+        foreach ( $product_ids as $product_id ) {
+            if ( count( $products ) < $max_products_displayed ) {
+                $products[] = wc_get_product( $product_id );
+            }
+        }
+
+        $products_response = array_map( [ $this, 'get_product_response' ], $products );
+
+        return $products_response;
+    }
+
+    /**
+     * Retrieves the newest products based on the provided criteria.
+     *
+     * This function retrieves the newest products from the WooCommerce store based on the specified criteria, including the number of products to retrieve and the sorting order.
+     *
+     * @param array $criteria An associative array of criteria for retrieving the newest products.
+     *   - 'number_of_products' (string): The number of newest products to retrieve. Default is "5".
+     *   - 'sorted_by' (string): The sorting criteria for the newest products. Default is "none".
+     *   - 'category_ids' (null or array): An array of category IDs to filter products by, or null if not used.
+     *   - 'tag_ids' (null or array): An array of tag IDs to filter products by, or null if not used.
+     *   - 'product_ids' (null or array): An array of specific product IDs to retrieve, or null if not used.
+     *
+     * @param array $optional_args An associative array of optional arguments for the query.
+     *
+     * @return WC_Product_Simple[]|WC_Product_Variable[] An array of WooCommerce simple and variable product objects representing the newest products.
+     */
     private function get_newest_products( $criteria, $optional_args = [] ) {
         $args = [
             'limit'     => isset( $criteria['number_of_products'] ) ? $criteria['number_of_products'] : self::DEFAULT_LIMIT,
@@ -185,20 +228,21 @@ class ProductModel {
         return $products;
     }
 
-        /**
-         * Retrieves products on sale based on the provided criteria.
-         *
-         * This function retrieves products on sale from the WooCommerce store based on the specified criteria, including the number of products to retrieve and the sorting order.
-         *
-         * @param array $criteria An associative array of criteria for retrieving products on sale.
-         *   - 'number_of_products' (string): The number of products on sale to retrieve. Default is "5".
-         *   - 'sorted_by' (string): The sorting criteria for products on sale. Default is "none".
-         *   - 'category_ids' (null or array): An array of category IDs to filter products by, or null if not used.
-         *   - 'tag_ids' (null or array): An array of tag IDs to filter products by, or null if not used.
-         *   - 'product_ids' (null or array): An array of specific product IDs to retrieve, or null if not used.
-         *
-         * @return WC_Product_Simple[]|WC_Product_Variable[] An array of WooCommerce simple and variable product objects representing products on sale.
-         */
+    /**
+     * Retrieves products on sale based on the provided criteria.
+     *
+     * This function retrieves products on sale from the WooCommerce store based on the specified criteria, including the number of products to retrieve and the sorting order.
+     *
+     * @param array $criteria An associative array of criteria for retrieving products on sale.
+     *   - 'number_of_products' (string): The number of products on sale to retrieve. Default is "5".
+     *   - 'sorted_by' (string): The sorting criteria for products on sale. Default is "none".
+     *   - 'category_ids' (null or array): An array of category IDs to filter products by, or null if not used.
+     *   - 'tag_ids' (null or array): An array of tag IDs to filter products by, or null if not used.
+     *   - 'product_ids' (null or array): An array of specific product IDs to retrieve, or null if not used.
+     * @param array $optional_args An associative array of optional arguments for the query.
+     *
+     * @return WC_Product_Simple[]|WC_Product_Variable[] An array of WooCommerce simple and variable product objects representing products on sale.
+     */
     private function get_on_sale_products( $criteria, $optional_args = [] ) {
         $args = [
             'meta_query' => [
@@ -252,20 +296,21 @@ class ProductModel {
         return $products;
     }
 
-        /**
-         * Retrieves featured products based on the provided criteria.
-         *
-         * This function retrieves products on sale from the WooCommerce store based on the specified criteria, including the number of products to retrieve and the sorting order.
-         *
-         * @param array $criteria An associative array of criteria for retrieving products on sale.
-         *   - 'number_of_products' (string): The number of products on sale to retrieve. Default is "5".
-         *   - 'sorted_by' (string): The sorting criteria for products on sale. Default is "none".
-         *   - 'category_ids' (null or array): An array of category IDs to filter products by, or null if not used.
-         *   - 'tag_ids' (null or array): An array of tag IDs to filter products by, or null if not used.
-         *   - 'product_ids' (null or array): An array of specific product IDs to retrieve, or null if not used.
-         *
-         * @return WC_Product_Simple[]|WC_Product_Variable[] An array of WooCommerce simple and variable product objects representing products on sale.
-         */
+    /**
+     * Retrieves featured products based on the provided criteria.
+     *
+     * This function retrieves products on sale from the WooCommerce store based on the specified criteria, including the number of products to retrieve and the sorting order.
+     *
+     * @param array $criteria An associative array of criteria for retrieving products on sale.
+     *   - 'number_of_products' (string): The number of products on sale to retrieve. Default is "5".
+     *   - 'sorted_by' (string): The sorting criteria for products on sale. Default is "none".
+     *   - 'category_ids' (null or array): An array of category IDs to filter products by, or null if not used.
+     *   - 'tag_ids' (null or array): An array of tag IDs to filter products by, or null if not used.
+     *   - 'product_ids' (null or array): An array of specific product IDs to retrieve, or null if not used.
+     * @param array $optional_args An associative array of optional arguments for the query.
+     *
+     * @return WC_Product_Simple[]|WC_Product_Variable[] An array of WooCommerce simple and variable product objects representing products on sale.
+     */
     private function get_product_type_featured_products( $criteria, $optional_args = [] ) {
         $tax_query[] = [
             'taxonomy' => 'product_visibility',
@@ -308,35 +353,28 @@ class ProductModel {
         }
     }
 
-        /**
-         * Retrieves products by category IDs based on the provided criteria.
-         *
-         * This function retrieves products from the WooCommerce store based on specified category IDs and criteria, including the number of products to retrieve and the sorting order.
-         *
-         * @param array $criteria An associative array of criteria for retrieving products by category.
-         *   - 'number_of_products' (string): The number of products to retrieve by category. Default is "5".
-         *   - 'sorted_by' (string): The sorting criteria for products by category. Default is "none".
-         *   - 'category_ids' (array): An array of category IDs to filter products by. If empty, an empty array is returned.
-         *
-         * @return WC_Product_Simple[]|WC_Product_Variable[] An array of WooCommerce simple and variable product objects representing products by category.
-         */
+    /**
+     * Retrieves products by category IDs based on the provided criteria.
+     *
+     * This function retrieves products from the WooCommerce store based on specified category IDs and criteria, including the number of products to retrieve and the sorting order.
+     *
+     * @param array $criteria An associative array of criteria for retrieving products by category.
+     *   - 'number_of_products' (string): The number of products to retrieve by category. Default is "5".
+     *   - 'sorted_by' (string): The sorting criteria for products by category. Default is "none".
+     *   - 'category_ids' (array): An array of category IDs to filter products by. If empty, an empty array is returned.
+     * @param array $optional_args An associative array of optional arguments for the query.
+     *
+     * @return WC_Product_Simple[]|WC_Product_Variable[] An array of WooCommerce simple and variable product objects representing products by category.
+     */
     private function get_by_categories( $criteria, $optional_args = [] ) {
         if ( empty( $criteria['category_ids'] ) ) {
             return [];
         }
 
         $args = [
-            'limit'     => isset( $criteria['number_of_products'] ) ? $criteria['number_of_products'] : self::DEFAULT_LIMIT,
-            'category'  => $criteria['category_ids'],
-            'status'    => 'publish',
-            'tax_query' => [
-                [
-                    'taxonomy' => 'product_type',
-                    'field'    => 'slug',
-                    'terms'    => 'grouped',
-                    'operator' => 'NOT IN',
-                ],
-            ],
+            'limit'               => isset( $criteria['number_of_products'] ) ? $criteria['number_of_products'] : self::DEFAULT_LIMIT,
+            'product_category_id' => $criteria['category_ids'],
+            'status'              => 'publish',
         ];
 
         if ( isset( $criteria['sorted_by'] ) && 'random' === $criteria['sorted_by'] ) {
@@ -352,35 +390,28 @@ class ProductModel {
         return $products;
     }
 
-        /**
-         * Retrieves products by tag IDs based on the provided criteria.
-         *
-         * This function retrieves products from the WooCommerce store based on specified tag IDs and criteria, including the number of products to retrieve and the sorting order.
-         *
-         * @param array $criteria An associative array of criteria for retrieving products by tag.
-         *   - 'number_of_products' (string): The number of products to retrieve by tag. Default is "5".
-         *   - 'sorted_by' (string): The sorting criteria for products by tag. Default is "none".
-         *   - 'tag_ids' (array): An array of category IDs to filter products by. If empty, an empty array is returned.
-         *
-         * @return WC_Product_Simple[]|WC_Product_Variable[] An array of WooCommerce simple and variable product objects representing products by category.
-         */
+    /**
+     * Retrieves products by tag IDs based on the provided criteria.
+     *
+     * This function retrieves products from the WooCommerce store based on specified tag IDs and criteria, including the number of products to retrieve and the sorting order.
+     *
+     * @param array $criteria An associative array of criteria for retrieving products by tag.
+     *   - 'number_of_products' (string): The number of products to retrieve by tag. Default is "5".
+     *   - 'sorted_by' (string): The sorting criteria for products by tag. Default is "none".
+     *   - 'tag_ids' (array): An array of category IDs to filter products by. If empty, an empty array is returned.
+     * @param array $optional_args An associative array of optional arguments for the query.
+     *
+     * @return WC_Product_Simple[]|WC_Product_Variable[] An array of WooCommerce simple and variable product objects representing products by category.
+     */
     private function get_by_tags( $criteria, $optional_args = [] ) {
         if ( empty( $criteria['tag_ids'] ) ) {
             return [];
         }
 
         $args = [
-            'limit'     => isset( $criteria['number_of_products'] ) ? $criteria['number_of_products'] : self::DEFAULT_LIMIT,
-            'tag'       => $criteria['tag_ids'],
-            'status'    => 'publish',
-            'tax_query' => [
-                [
-                    'taxonomy' => 'product_type',
-                    'field'    => 'slug',
-                    'terms'    => 'grouped',
-                    'operator' => 'NOT IN',
-                ],
-            ],
+            'limit'          => isset( $criteria['number_of_products'] ) ? $criteria['number_of_products'] : self::DEFAULT_LIMIT,
+            'product_tag_id' => $criteria['tag_ids'],
+            'status'         => 'publish',
         ];
 
         if ( isset( $criteria['sorted_by'] ) && 'random' === $criteria['sorted_by'] ) {
@@ -396,25 +427,26 @@ class ProductModel {
         return $products;
     }
 
-        /**
-         * Retrieves products by specific product IDs based on the provided criteria.
-         *
-         * This function retrieves products from the WooCommerce store based on specified product IDs and criteria, including the number of products to retrieve and the sorting order.
-         *
-         * @param array $criteria An associative array of criteria for retrieving products by specific product IDs.
-         *   - 'number_of_products' (string): The number of products to retrieve by specific product IDs. Default is "5".
-         *   - 'sorted_by' (string): The sorting criteria for products by specific product IDs. Default is "none".
-         *   - 'product_ids' (array): An array of specific product IDs to retrieve. If empty, an empty array is returned.
-         *
-         * @return WC_Product_Simple[]|WC_Product_Variable[] An array of WooCommerce simple and variable product objects representing products by specific product IDs.
-         */
+    /**
+     * Retrieves products by specific product IDs based on the provided criteria.
+     *
+     * This function retrieves products from the WooCommerce store based on specified product IDs and criteria, including the number of products to retrieve and the sorting order.
+     *
+     * @param array $criteria An associative array of criteria for retrieving products by specific product IDs.
+     *   - 'number_of_products' (string): The number of products to retrieve by specific product IDs. Default is "5".
+     *   - 'sorted_by' (string): The sorting criteria for products by specific product IDs. Default is "none".
+     *   - 'product_ids' (array): An array of specific product IDs to retrieve. If empty, an empty array is returned.
+     * @param array $optional_args An associative array of optional arguments for the query.
+     *
+     * @return WC_Product_Simple[]|WC_Product_Variable[] An array of WooCommerce simple and variable product objects representing products by specific product IDs.
+     */
     private function get_by_product_ids( $criteria, $optional_args = [] ) {
         if ( empty( $criteria['product_ids'] ) ) {
             return [];
         }
 
         $args = [
-            'limit'     => isset( $criteria['number_of_products'] ) ? $criteria['number_of_products'] : self::DEFAULT_LIMIT,
+            'limit'     => -1,
             'include'   => $criteria['product_ids'],
             'status'    => 'publish',
             'tax_query' => [
@@ -440,80 +472,21 @@ class ProductModel {
         return $products;
     }
 
-        /**
-         * Retrieves product response data based on a WooCommerce product.
-         *
-         * This function generates and returns an array of data representing a WooCommerce product, including its ID, name, sale price, regular price, thumbnail source, and permalink.
-         *
-         * @param \WC_Product $wc_product A WooCommerce product object to generate response data for.
-         *
-         * @return array An associative array containing the product response data.
-         *   - 'id' (int): The product's ID.
-         *   - 'name' (string): The product's name.
-         *   - 'sale_price_html' (string): The HTML representation of the sale price.
-         *   - 'regular_price_html' (string): The HTML representation of the regular price.
-         *   - 'thumbnail_src' (string): The URL of the product's thumbnail image.
-         *   - 'permalink' (string): The URL to the product's page.
-         *   - 'price' (number): The price which is used for sorting purpose.
-         */
-    private function get_product_response( \WC_Product $wc_product ) {
-        $result = [];
-        if ( ! $wc_product || 'grouped' === $wc_product->get_type() ) {
-            return [];
-        }
-        if ( $wc_product instanceof \WC_Product_Variable ) {
-            $min_sale_price    = $wc_product->get_variation_sale_price( 'min', true );
-            $max_sale_price    = $wc_product->get_variation_sale_price( 'max', true );
-            $min_regular_price = $wc_product->get_variation_regular_price( 'min', true );
-            $max_regular_price = $wc_product->get_variation_regular_price( 'max', true );
-
-            $show_min_regular_price = $min_sale_price !== $min_regular_price;
-            $show_max_regular_price = $min_regular_price !== $max_regular_price && $max_regular_price !== $max_sale_price;
-            $show_max_sale_price    = $min_sale_price !== $max_sale_price;
-            $sale_price_html        = wc_price( $min_sale_price ) . ( $show_max_sale_price ? ' - ' . wc_price( $max_sale_price ) : '' );
-            $regular_price_html     = ( $show_min_regular_price ? wc_price( $min_regular_price ) : '' ) . ( $show_min_regular_price && $show_max_regular_price ? ' - ' : '' ) . ( $show_max_regular_price ? wc_price( $max_regular_price ) : '' );
-            $price_html             = $sale_price_html . ( '' !== $regular_price_html ? '<span style="text-decoration: line-through; margin-left: 5px;">' . $regular_price_html . '</span>' : '' );
-            $price                  = ! empty( $min_sale_price ) ? $min_sale_price : ( ! empty( $min_regular_price ) ? $min_regular_price : 0 );
-        } else {
-            $sale_price      = $wc_product->get_sale_price();
-            $sale_price_html = ! empty( $sale_price ) ? wc_price( $sale_price ) : '';
-
-            $regular_price      = $wc_product->get_regular_price();
-            $regular_price_html = ! empty( $regular_price ) ? wc_price( $regular_price ) : '';
-            $price              = ! empty( $sale_price ) ? $sale_price : ( ! empty( $regular_price ) ? $regular_price : 0 );
-        }//end if
-
-        if ( ! empty( $sale_price_html ) ) {
-            $regular_price_html = "<span style=\"text-decoration: line-through\">$regular_price_html</span>";
-        }
-
-        $result = [
-            'id'                 => $wc_product->get_id(),
-            'name'               => $wc_product->get_title(),
-            'sale_price_html'    => $sale_price_html,
-            'regular_price_html' => $regular_price_html,
-            'thumbnail_src'      => $wc_product->get_image_id() ? current( wp_get_attachment_image_src( $wc_product->get_image_id(), 'single-post-thumbnail' ) ) : wc_placeholder_img_src(),
-            'permalink'          => $wc_product->get_permalink(),
-            'price'              => (float) $price,
-        ];
-        return $result;
-    }
-
-        /**
-         * Retrieves a page of terms (categories, tags, or products) based on the provided parameters.
-         *
-         * This function retrieves a page of terms, which can be categories, tags, or products, based on the specified taxonomy, search string, page number, and page size.
-         *
-         * @param string $taxonomy The taxonomy to filter terms (categories or tags) or an empty string for products.
-         * @param string $search_string The search string to filter terms or products by name. Default is an empty string.
-         * @param int    $page_num The page number for paginating results. Default is 1.
-         * @param int    $page_size The number of terms to retrieve per page. Default is 10.
-         * @param array  $optional_args Optional WP_Query arguments to merge with default arguments.
-         *
-         * @return array An associative array containing the retrieved terms or products.
-         *   - 'list' (array): An array of term or product data, each with 'id' and 'name' fields.
-         *   - 'next_page' (int|false): The page number for the next page of results, or false if no more pages are available.
-         */
+    /**
+     * Retrieves a page of terms (categories, tags, or products) based on the provided parameters.
+     *
+     * This function retrieves a page of terms, which can be categories, tags, or products, based on the specified taxonomy, search string, page number, and page size.
+     *
+     * @param string $taxonomy The taxonomy to filter terms (categories or tags) or an empty string for products.
+     * @param string $search_string The search string to filter terms or products by name. Default is an empty string.
+     * @param int    $page_num The page number for paginating results. Default is 1.
+     * @param int    $page_size The number of terms to retrieve per page. Default is 10.
+     * @param array  $optional_args Optional WP_Query arguments to merge with default arguments.
+     *
+     * @return array An associative array containing the retrieved terms or products.
+     *   - 'list' (array): An array of term or product data, each with 'id' and 'name' fields.
+     *   - 'next_page' (int|false): The page number for the next page of results, or false if no more pages are available.
+     */
     private function get_terms_page( $taxonomy, $search_string = '', $page_num = 1, $page_size = 10, $optional_args = [] ) {
 
         // if ( class_exists( 'SitePress' ) ) {

@@ -67,17 +67,6 @@ class ElementsHelper {
             $attributes = [];
         }
 
-        $attributes['padding'] = array_merge(
-            // default spacings
-            [
-                'top'    => '15',
-                'right'  => '50',
-                'bottom' => '15',
-                'left'   => '50',
-            ],
-            $attributes['padding'] ?? []
-        );
-
         $default_config = [
             'value_path'    => 'padding',
             'title'         => __( 'Padding', 'yaymail' ),
@@ -97,10 +86,10 @@ class ElementsHelper {
     }
 
     /**
-     * Get image URL element data.
+     * Get URL element data.
      *
-     * @param array $attributes    The attributes array containing the image URL data.
-     * @param array $config  Configuration for Image component.
+     * @param array $attributes    The attributes array containing the URL data.
+     * @param array $config  Configuration for Media component.
      *              [
      *                  'value_path' => "src",
      *                  'title' => "Image URL",
@@ -109,7 +98,7 @@ class ElementsHelper {
      *
      * @return array An array containing image URL property data.
      */
-    public static function get_image_src( $attributes, $config = [] ) {
+    public static function get_media( $attributes, $config = [] ) {
         $default_src = esc_url( YAYMAIL_PLUGIN_URL . 'assets/images/woocommerce-logo.png' );
 
         $default_config = [
@@ -119,7 +108,7 @@ class ElementsHelper {
         ];
 
         $result              = self::get_component_data( $attributes, $config, $default_config );
-        $result['component'] = 'Image';
+        $result['component'] = 'Media';
 
         return $result;
     }
@@ -133,7 +122,6 @@ class ElementsHelper {
      *                  'value_path' => "width",
      *                  'title' => "Width",
      *                  'default_value' => "172"
-     *                  'extras_data'   => []
      *              ]
      *
      * @return array An array containing Dimension property data.
@@ -366,5 +354,49 @@ class ElementsHelper {
             }
         }
         return $available_elements;
+    }
+
+    /**
+     * Get Spacing element data. Default is 'padding'
+     *
+     * @param array      $attributes The attributes array containing the spacing data.
+     * @param array|null $config (Optional) Configuration for the Spacing component.
+     *                          Default:
+     *                                  [
+     *                                      'value_path'    => "padding",
+     *                                      'title'         => "Padding",
+     *                                      'default_value' => [
+     *                                          'top'    => '15',
+     *                                          'right'  => '50',
+     *                                          'bottom' => '15',
+     *                                          'left'   => '50',
+     *                                      ]
+     *                                  ]
+     *
+     * @since 4.2.0
+     * @return array An array containing spacing property data.
+     */
+    public static function get_border_radius( $attributes, $config = [] ) {
+
+        if ( ! is_array( $attributes ) || empty( $attributes ) ) {
+            $attributes = [];
+        }
+
+        $default_config = [
+            'value_path'    => 'border_radius',
+            'title'         => __( 'Border radius', 'yaymail' ),
+            'default_value' => [
+                'top'    => '0',
+                'right'  => '0',
+                'bottom' => '0',
+                'left'   => '0',
+            ],
+            'type'          => 'style',
+        ];
+
+        $result              = self::get_component_data( $attributes, $config, $default_config );
+        $result['component'] = 'BorderRadius';
+
+        return $result;
     }
 }

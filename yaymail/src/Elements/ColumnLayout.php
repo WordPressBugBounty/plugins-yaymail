@@ -42,11 +42,8 @@ class ColumnLayout extends BaseElement {
                     'component'     => 'Dimension',
                     'title'         => __( 'Column spacing', 'yaymail' ),
                     'default_value' => isset( $attributes['column_spacing'] ) ? $attributes['column_spacing'] : '0',
-                    'extras_data'   => [
-                        'min'  => 0,
-                        'max'  => 100,
-                        'unit' => 'px',
-                    ],
+                    'min'           => 0,
+                    'max'           => 100,
                     'type'          => 'style',
                 ],
                 'container_setting_breaker'          => [
@@ -71,17 +68,13 @@ class ColumnLayout extends BaseElement {
                 ],
                 'border_radius'                      => [
                     'value_path'    => 'border_radius',
-                    'component'     => 'Spacing',
+                    'component'     => 'BorderRadius',
                     'title'         => __( 'Border radius', 'yaymail' ),
                     'default_value' => [
                         'top_left'     => isset( $attributes['border_radius']['top_left'] ) ? $attributes['border_radius']['top_left'] : '0',
                         'top_right'    => isset( $attributes['border_radius']['top_right'] ) ? $attributes['border_radius']['top_right'] : '0',
                         'bottom_left'  => isset( $attributes['border_radius']['bottom_left'] ) ? $attributes['border_radius']['bottom_left'] : '0',
                         'bottom_right' => isset( $attributes['border_radius']['bottom_right'] ) ? $attributes['border_radius']['bottom_right'] : '0',
-                    ],
-                    'extras_data'   => [
-                        'is_border_radius' => true,
-                        'class_name'       => 'yaymail-border-radius',
                     ],
                     'type'          => 'style',
                 ],
@@ -116,17 +109,13 @@ class ColumnLayout extends BaseElement {
                 ],
                 'inner_border_radius'                => [
                     'value_path'    => 'inner_border_radius',
-                    'component'     => 'Spacing',
+                    'component'     => 'BorderRadius',
                     'title'         => __( 'Inner border radius', 'yaymail' ),
                     'default_value' => [
                         'top_left'     => isset( $attributes['inner_border_radius']['top_left'] ) ? $attributes['inner_border_radius']['top_left'] : '0',
                         'top_right'    => isset( $attributes['inner_border_radius']['top_right'] ) ? $attributes['inner_border_radius']['top_right'] : '0',
                         'bottom_left'  => isset( $attributes['inner_border_radius']['bottom_left'] ) ? $attributes['inner_border_radius']['bottom_left'] : '0',
                         'bottom_right' => isset( $attributes['inner_border_radius']['bottom_right'] ) ? $attributes['inner_border_radius']['bottom_right'] : '0',
-                    ],
-                    'extras_data'   => [
-                        'is_border_radius' => true,
-                        'class_name'       => 'yaymail-border-radius',
                     ],
                     'type'          => 'style',
                 ],

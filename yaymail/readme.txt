@@ -4,7 +4,7 @@ Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: email customizer, email templates, marketing, woocommerce emails, design
 Requires at least: 3.0
 Tested up to: 6.8
-Stable tag: 4.1.1
+Stable tag: 4.2.0
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -233,6 +233,30 @@ We offer single-site licenses and also unlimited site licenses to better support
 9. Break free from default WooCommerce styles, go bold with dark theme email templates
 
 == Changelog ==
+
+= Aug 13, 2025 - Version 4.2.0 =
+- Added: Cross/Up-sell products block (Pro)
+- Added: Products with Reviews block (Pro)
+- Added: Container element (Pro)
+- Added: Rating Stars element
+- Added: Email Attachment (Pro)
+- Added: Export/Import backup
+- Added: Button border setting
+- Added: Button padding setting
+- Added: Container border settings for Text, Order Details, Order Download
+- Added: Setting to change Order Details font size
+- Added: Modern layout for Billing/Shipping address elements
+- Added: Include settings for Zorem Advanced Shipment Tracking element (Pro)
+- Added: Intro patterns
+- Updated: Responsive for Order Details
+- Fixed: Order detail layout with RTL
+- Fixed: RTL Admin layout
+- Fixed: Enhance tracking information for plugin WooCommerce Shipping & Tax
+- Fixed: Fix issue Global Header and Footer not display correctly when send mail and in preview email with multi language
+- Fixed: Select parent not working properly
+- Fixed: Admin UI issues
+- Fixed: Support React 17
+- Fixed: Some issues
 
 = Jul 21, 2025 - Version 4.1.1 =
 - Fixed: Global hearder/footer 

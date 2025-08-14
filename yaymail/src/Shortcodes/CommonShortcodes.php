@@ -118,18 +118,11 @@ class CommonShortcodes extends BaseShortcode {
     }
 
     public function yaymail_site_link( $data, $shortcode_atts = [] ) {
-        $template = ! empty( $data['template'] ) ? $data['template'] : null;
-
         $is_placeholder = isset( $data['is_placeholder'] ) ? $data['is_placeholder'] : false;
 
         $text_link = isset( $shortcode_atts['text_link'] ) ? $shortcode_atts['text_link'] : TemplateHelpers::get_content_as_placeholder( 'text_link', __( 'Home URL', 'yaymail' ), $is_placeholder );
 
-        if ( empty( $template ) ) {
-            $text_link_color = YAYMAIL_COLOR_WC_DEFAULT;
-        } else {
-            $text_link_color = $template->get_text_link_color();
-        }
-        return '<a style="color: ' . esc_attr( $text_link_color ) . ';" href="' . esc_url( get_home_url() ) . '"> ' . $text_link . ' </a>';
+        return '<a href="' . esc_url( get_home_url() ) . '"> ' . $text_link . ' </a>';
     }
 
     public function yaymail_site_url() {
@@ -143,15 +136,11 @@ class CommonShortcodes extends BaseShortcode {
     }
 
     public function yaymail_user_account_link( $data, $shortcode_atts = [] ) {
-        $template = ! empty( $data['template'] ) ? $data['template'] : null;
-
-        $text_link_color = ! empty( $template ) ? $template->get_text_link_color() : YAYMAIL_COLOR_WC_DEFAULT;
-
         $is_placeholder = isset( $data['is_placeholder'] ) ? $data['is_placeholder'] : false;
 
         $text_link = isset( $shortcode_atts['text_link'] ) ? $shortcode_atts['text_link'] : TemplateHelpers::get_content_as_placeholder( 'text_link', __( 'My Account', 'yaymail' ), $is_placeholder );
 
-        return '<a style="color: ' . esc_attr( $text_link_color ) . ';" href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '"> ' . $text_link . ' </a>';
+        return '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '"> ' . $text_link . ' </a>';
     }
 
     public function yaymail_user_account_url() {
@@ -193,8 +182,10 @@ class CommonShortcodes extends BaseShortcode {
 
         $order = Helpers::get_order_from_shortcode_data( $render_data );
         if ( empty( $order ) ) {
-            if ( isset( $render_data['email'] ) && isset( $render_data['email']->user_id ) ) {
-                return $render_data['email']->user_id;
+            if ( isset( $render_data['email'] ) && isset( $render_data['email']->object ) ) {
+                if ( $render_data['email']->object instanceof \WP_User ) {
+                    return $render_data['email']->object->ID;
+                }
             }
             $user = wp_get_current_user();
             return ! empty( $user ) ? $user->ID : '0';

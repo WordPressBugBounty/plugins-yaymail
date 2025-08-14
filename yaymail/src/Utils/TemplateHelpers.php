@@ -252,4 +252,91 @@ class TemplateHelpers {
         $current_column_index = array_search( $element['id'], array_column( $parent_element['children'], 'id' ) );
         return $current_column_index;
     }
+
+    public static function get_border_css_value( $border ) {
+        if ( $border['side'] === 'none' ) {
+            return '';
+        }
+        if ( $border['side'] === 'all' ) {
+            return self::get_style(
+                [
+                    'border' => self::get_border_style( $border ),
+                ]
+            );
+        }
+        if ( $border['side'] === 'top' ) {
+            return self::get_style(
+                [
+                    'border-top' => self::get_border_style( $border ),
+                ]
+            );
+        }
+        if ( $border['side'] === 'bottom' ) {
+            return self::get_style(
+                [
+                    'border-bottom' => self::get_border_style( $border ),
+                ]
+            );
+        }
+        if ( $border['side'] === 'right' ) {
+            return self::get_style(
+                [
+                    'border-right' => self::get_border_style( $border ),
+                ]
+            );
+        }
+        if ( $border['side'] === 'left' ) {
+            return self::get_style(
+                [
+                    'border-left' => self::get_border_style( $border ),
+                ]
+            );
+        }
+        if ( $border['side'] === 'custom' ) {
+            return self::get_style(
+                [
+                    'border-top'    => self::get_border_style(
+                        [
+                            'width' => $border['custom']['top'],
+                            'style' => $border['style'],
+                            'color' => $border['color'],
+                        ]
+                    ),
+                    'border-right'  => self::get_border_style(
+                        [
+                            'width' => $border['custom']['right'],
+                            'style' => $border['style'],
+                            'color' => $border['color'],
+                        ]
+                    ),
+                    'border-bottom' => self::get_border_style(
+                        [
+                            'width' => $border['custom']['bottom'],
+                            'style' => $border['style'],
+                            'color' => $border['color'],
+                        ]
+                    ),
+                    'border-left'   => self::get_border_style(
+                        [
+                            'width' => $border['custom']['left'],
+                            'style' => $border['style'],
+                            'color' => $border['color'],
+                        ]
+                    ),
+                ]
+            );
+        }//end if
+        return '';
+    }
+
+    public static function get_border_style( $border, $unit = 'px' ) {
+        $unit = esc_attr( $unit );
+        return sprintf(
+            '%d%s %s %s',
+            $border['width'],
+            $unit,
+            $border['style'],
+            $border['color']
+        );
+    }
 }

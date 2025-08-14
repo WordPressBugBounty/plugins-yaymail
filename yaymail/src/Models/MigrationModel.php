@@ -38,21 +38,24 @@ class MigrationModel {
     }
 
     /**
-     * Restore backup
+     * Restore backup to a specific version
      *
-     * @param string $backup_name
+     * @param array $backup Backup data containing posts, postmeta, options, metadata, and version.
      *
-     * @return boolean is_critical_migration_required
+     * @return array Returns array with 'is_critical_migration_required' boolean flag.
+     * @throws \Exception When backup doesn't exist or restoration fails.
      */
-    public function reset( $backup_name ) {
+    public function reset( $backup ) {
         global $wpdb;
-        $backup = get_option( $backup_name, null );
 
-        if ( ! $backup ) {
+        if ( ! $backup || ! $backup['version'] || ! $backup['name'] ) {
             throw new \Exception( 'Back up does not exist', 500 );
         }
 
         try {
+            $backup_name = $backup['name'];
+            $version     = $backup['version'];
+
             $wpdb->query( 'START TRANSACTION' );
             $this->logger->log( '***** Start reset transaction ****' );
             $this->logger->log( "Backup name: $backup_name" );
@@ -142,8 +145,6 @@ class MigrationModel {
             }
 
             // Remove the succeeded migration log from db
-            $version               = str_replace( AbstractMigration::BACKUP_PREFIX, '', $backup_name );
-            $version               = str_replace( '_', '.', $version );
             $successful_migrations = get_option( AbstractMigration::SUCCESSFUL_MIGRATIONS, null );
             $removed_migrations    = [];
             if ( ! empty( $successful_migrations ) ) {
@@ -188,7 +189,7 @@ class MigrationModel {
             );
             update_option( 'yaymail_addon_versions', $restored_addon_versions );
 
-            do_action( 'yaymail_before_reset_migration_commit', $backup_name, $removed_migrations );
+            do_action( 'yaymail_before_reset_migration_commit', $backup, $removed_migrations );
 
             $wpdb->query( 'COMMIT' );
             $this->logger->log( '***** Finish reset transaction ****' );

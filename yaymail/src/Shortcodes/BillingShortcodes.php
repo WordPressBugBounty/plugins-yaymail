@@ -406,7 +406,7 @@ class BillingShortcodes extends BaseShortcode {
             /**
              * Is sample order
              */
-            return '<a href="#" style="color:' . esc_attr( $text_link_color ) . ';">' . __( 'johndoe@gmail.com', 'yaymail' ) . '</a>';
+            return '<a href="#">' . __( 'johndoe@gmail.com', 'yaymail' ) . '</a>';
 
         }
 
@@ -419,6 +419,6 @@ class BillingShortcodes extends BaseShortcode {
             return '';
         }
 
-        return '<a href="mailto:' . esc_url( $order->get_billing_email() ) . '" style="color:' . esc_attr( $text_link_color ) . ';">' . $order->get_billing_email() . '</a>';
+        return '<a href="mailto:' . esc_url( $order->get_billing_email() ) . '">' . $order->get_billing_email() . '</a>';
     }
 }
