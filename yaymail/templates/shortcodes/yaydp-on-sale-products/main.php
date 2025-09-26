@@ -80,11 +80,13 @@ $button_buy_now_style = TemplateHelpers::get_style(
     ]
 );
 
-function change_image_dimensions( $html, $new_width, $new_height ) {
-    $html = preg_replace( '/width="(\d+)"/', 'width="' . $new_width . '"', $html );
-    $html = preg_replace( '/height="(\d+)"/', 'height="' . $new_height . '"', $html );
+if ( ! function_exists( 'change_image_dimensions' ) ) {
+    function change_image_dimensions( $html, $new_width, $new_height ) {
+        $html = preg_replace( '/width="(\d+)"/', 'width="' . $new_width . '"', $html );
+        $html = preg_replace( '/height="(\d+)"/', 'height="' . $new_height . '"', $html );
 
-    return $html;
+        return $html;
+    }
 }
 ?>
 

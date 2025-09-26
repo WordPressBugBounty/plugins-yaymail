@@ -24,7 +24,6 @@ class Ajax {
     protected function init_hooks() {
         add_action( 'wp_ajax_yaymail_preview_mail', [ $this, 'preview_mail' ] );
         add_action( 'wp_ajax_yaymail_preview_mail_for_woo', [ $this, 'preview_mail_for_woo' ] );
-        add_action( 'wp_ajax_yaymail_preview_mail_search_order', [ $this, 'preview_mail_search_order' ] );
         add_action( 'wp_ajax_yaymail_send_test_mail', [ $this, 'send_test_mail' ] );
         add_action( 'wp_ajax_yaymail_install_yaysmtp', [ $this, 'install_yaysmtp' ] );
         add_action( 'wp_ajax_yaymail_get_custom_hook_html', [ $this, 'get_custom_hook_html' ] );
@@ -44,7 +43,7 @@ class Ajax {
             return wp_send_json_error( [ 'mess' => __( 'Verify nonce failed', 'yaymail' ) ] );
         }
         try {
-            $import_file = isset( $_FILES['import_file'] ) ? $_FILES['import_file'] : null;
+            $import_file = isset( $_FILES['import_file'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_FILES['import_file'] ) ) : null;
             if ( ! $import_file ) {
                 return wp_send_json_error( [ 'mess' => __( 'Can\'t find import file', 'yaymail' ) ] );
             }
@@ -147,11 +146,11 @@ class Ajax {
              * Backup options
              */
             $query_options          = "
-                SELECT *
-                FROM {$wpdb->options}
-                WHERE option_name LIKE '%yaymail%'
-            ";
-            $yaymail_options        = $wpdb->get_results( $query_options );
+            SELECT *
+            FROM {$wpdb->options}
+            WHERE option_name LIKE '%yaymail%'
+        ";
+            $yaymail_options        = $wpdb->get_results( $query_options ); // phpcs:ignore
             $backup_data['options'] = $yaymail_options;
 
             $backup_data['created_date'] = current_datetime()->format( 'Y-m-d H:i:s' );
@@ -324,8 +323,8 @@ class Ajax {
         }
         try {
             $order_id         = isset( $_POST['order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['order_id'] ) ) : 'sample_order';
-            $template_data    = isset( $_POST['template_data'] ) ? $this->sanitize( wp_unslash( $_POST['template_data'] ) ) : [];
-            $unsaved_settings = isset( $_POST['unsaved_settings'] ) ? $this->sanitize( wp_unslash( $_POST['unsaved_settings'] ) ) : [];
+            $template_data    = isset( $_POST['template_data'] ) ? $this->sanitize( wp_unslash( $_POST['template_data'] ) ) : []; //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $unsaved_settings = isset( $_POST['unsaved_settings'] ) ? $this->sanitize( wp_unslash( $_POST['unsaved_settings'] ) ) : []; //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
             if ( empty( $template_data ) ) {
                 return wp_send_json_error( [ 'mess' => __( 'Can\'t find template', 'yaymail' ) ] );
@@ -439,58 +438,13 @@ class Ajax {
         }//end try
     }
 
-    public function preview_mail_search_order() {
-        $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
-        if ( ! wp_verify_nonce( $nonce, 'yaymail_frontend_nonce' ) ) {
-            return wp_send_json_error( [ 'mess' => __( 'Verify nonce failed', 'yaymail' ) ] );
-        }
-        try {
-            global $wpdb;
-
-            $order_id = isset( $_POST['order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['order_id'] ) ) : 'sample_order';
-
-            $list_order = [];
-
-            $table_name = $wpdb->prefix . 'wc_orders';
-            $query      = $wpdb->prepare( "SELECT ID FROM $table_name WHERE type = 'shop_order' AND CAST(ID AS CHAR) LIKE %s", $wpdb->esc_like( $order_id ) . '%' );
-
-            if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) !== $table_name ) { // phpcs:ignore
-                $table_name = "{$wpdb->prefix}posts";
-                $query      = $wpdb->prepare( "SELECT ID FROM $table_name WHERE post_type = 'shop_order' AND CAST(ID AS CHAR) LIKE %s", $wpdb->esc_like( $order_id ) . '%' );
-            }
-
-            $order_ids = $wpdb->get_col( $query ); // phpcs:ignore
-
-            if ( $order_ids ) {
-                foreach ( $order_ids as $order_id ) {
-                    $list_order[] = [
-                        'value' => $order_id,
-                        'label' => '#order: ' . $order_id,
-                    ];
-                }
-            }
-
-            wp_send_json_success(
-                [
-                    'list_order' => $list_order,
-                ]
-            );
-        } catch ( \Error $error ) {
-            yaymail_get_logger( $error );
-        } catch ( \Exception $exception ) {
-            yaymail_get_logger( $exception );
-        }//end try
-    }
-
-
-
     public function export_templates() {
         $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
         if ( ! wp_verify_nonce( $nonce, 'yaymail_frontend_nonce' ) ) {
             return wp_send_json_error( [ 'mess' => __( 'Verify nonce failed', 'yaymail' ) ] );
         }
         try {
-            $templates = isset( $_POST['templates'] ) ? $_POST['templates'] : [];
+            $templates = isset( $_POST['templates'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['templates'] ) ) : [];
             // TODO: sanitize
             $default     = [
                 'post_type'      => 'yaymail_template',

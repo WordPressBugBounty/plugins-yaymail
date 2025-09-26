@@ -136,16 +136,17 @@ class HookShortcodes extends BaseShortcode {
             $products = yaydp_get_on_sale_products( $attr_tuples['limit'] );
             $args     = [
                 'products'                => $products,
-                'color'                   => $this->get_attribute( $attr_tuples, 'color' ),
-                'background_color'        => $this->get_attribute( $attr_tuples, 'background_color' ),
-                'sale_price_color'        => $this->get_attribute( $attr_tuples, 'sale_price_color', 'color' ),
-                'regular_price_color'     => $this->get_attribute( $attr_tuples, 'regular_price_color', 'color' ),
-                'product_name_color'      => $this->get_attribute( $attr_tuples, 'product_name_color', 'color' ),
-                'button_background_color' => $this->get_attribute( $attr_tuples, 'button_background_color' ),
-                'button_text_color'       => $this->get_attribute( $attr_tuples, 'button_text_color', 'color' ),
+                'color'                   => esc_attr( $this->get_attribute( $attr_tuples, 'color' ) ),
+                'background_color'        => esc_attr( $this->get_attribute( $attr_tuples, 'background_color' ) ),
+                'sale_price_color'        => esc_attr( $this->get_attribute( $attr_tuples, 'sale_price_color', 'color' ) ),
+                'regular_price_color'     => esc_attr( $this->get_attribute( $attr_tuples, 'regular_price_color', 'color' ) ),
+                'product_name_color'      => esc_attr( $this->get_attribute( $attr_tuples, 'product_name_color', 'color' ) ),
+                'button_background_color' => esc_attr( $this->get_attribute( $attr_tuples, 'button_background_color' ) ),
+                'button_text_color'       => esc_attr( $this->get_attribute( $attr_tuples, 'button_text_color', 'color' ) ),
             ];
             $content  = yaymail_get_content( 'templates/shortcodes/yaydp-on-sale-products/main.php', $args );
-            return $content;
+            // We escape the content via yaymail_kses_post_e() in the template file
+            return $content; // nosemgrep
         }
         return 'yaydp_on_sale_products';
     }

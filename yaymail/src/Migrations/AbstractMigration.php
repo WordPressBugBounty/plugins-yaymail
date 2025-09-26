@@ -123,7 +123,7 @@ abstract class AbstractMigration {
             FROM {$wpdb->options}
             WHERE option_name LIKE '%yaymail%'
         ";
-        $yaymail_options        = $wpdb->get_results( $query_options );
+        $yaymail_options        = $wpdb->get_results( $query_options ); // phpcs:ignore
         $backup_data['options'] = $yaymail_options;
 
         $backup_data['created_date'] = current_datetime()->format( 'Y-m-d H:i:s' );
@@ -200,7 +200,7 @@ abstract class AbstractMigration {
         return $formatted_options;
     }
 
-    protected function may_mark_template_as_v4_supported( string $template_post_id, AbstractAddonMigrationManager $migration_manager = null ): void {
+    protected function may_mark_template_as_v4_supported( string $template_post_id, $migration_manager = null ): void {
         if ( ! isset( $migration_manager ) ) {
             $supported_template_ids = SupportedPlugins::get_instance()->get_template_ids_from_core();
         } else {

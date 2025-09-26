@@ -20,10 +20,14 @@ class RankMath {
 
         add_filter(
             'rank_math/sitemap/exclude_post_type',
-            function( $excluded_post_types ) {
-                $excluded_post_types[] = TemplatePostType::POST_TYPE;
-                return $excluded_post_types;
-            }
+            function( $check, $post_type ) {
+                if ( $post_type === TemplatePostType::POST_TYPE ) {
+                    return true;
+                }
+                return $check;
+            },
+            10,
+            2
         );
 
         // Trick to delete all the duplicate value in the previous version of the plugin

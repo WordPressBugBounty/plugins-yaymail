@@ -124,6 +124,7 @@ class ComposerStaticInitYayMail
         'YayMail\\GlobalHeaderFooter' => __DIR__ . '/../..' . '/src/GlobalHeaderFooter.php',
         'YayMail\\I18n' => __DIR__ . '/../..' . '/src/I18n.php',
         'YayMail\\Initialize' => __DIR__ . '/../..' . '/src/Initialize.php',
+        'YayMail\\Integrations\\AdminAndSiteEnhancements\\AdminAndSiteEnhancements' => __DIR__ . '/../..' . '/src/Integrations/AdminAndSiteEnhancements/AdminAndSiteEnhancements.php',
         'YayMail\\Integrations\\F4ShippingPhoneAndEmailForWooCommerce\\F4ShippingPhoneAndEmailForWooCommerce' => __DIR__ . '/../..' . '/src/Integrations/F4ShippingPhoneAndEmailForWooCommerce/F4ShippingPhoneAndEmailForWooCommerce.php',
         'YayMail\\Integrations\\IntegrationsLoader' => __DIR__ . '/../..' . '/src/Integrations/IntegrationsLoader.php',
         'YayMail\\Integrations\\RankMath' => __DIR__ . '/../..' . '/src/Integrations/RankMath.php',

@@ -92,6 +92,7 @@ return array(
     'YayMail\\GlobalHeaderFooter' => $baseDir . '/src/GlobalHeaderFooter.php',
     'YayMail\\I18n' => $baseDir . '/src/I18n.php',
     'YayMail\\Initialize' => $baseDir . '/src/Initialize.php',
+    'YayMail\\Integrations\\AdminAndSiteEnhancements\\AdminAndSiteEnhancements' => $baseDir . '/src/Integrations/AdminAndSiteEnhancements/AdminAndSiteEnhancements.php',
     'YayMail\\Integrations\\F4ShippingPhoneAndEmailForWooCommerce\\F4ShippingPhoneAndEmailForWooCommerce' => $baseDir . '/src/Integrations/F4ShippingPhoneAndEmailForWooCommerce/F4ShippingPhoneAndEmailForWooCommerce.php',
     'YayMail\\Integrations\\IntegrationsLoader' => $baseDir . '/src/Integrations/IntegrationsLoader.php',
     'YayMail\\Integrations\\RankMath' => $baseDir . '/src/Integrations/RankMath.php',

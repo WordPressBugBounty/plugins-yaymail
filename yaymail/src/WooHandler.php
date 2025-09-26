@@ -16,6 +16,7 @@ class WooHandler {
 
     protected function __construct() {
         add_filter( 'woocommerce_prepare_email_for_preview', [ $this, 'display_preview_notice' ] );
+        add_filter( 'woocommerce_mail_content', [ $this, 'handle_default_preview_content' ] );
         // Add settings to WooCommerce email options section
         add_filter( 'woocommerce_get_settings_email', [ $this, 'add_settings' ], 10, 2 );
         add_filter(
@@ -34,7 +35,11 @@ class WooHandler {
 
     public function display_preview_notice( $email ) {
 
-        if ( isset( $_GET['preview_woocommerce_mail'] ) && ! Helpers::is_true( $_GET['preview_woocommerce_mail'] ) ) {
+        if ( ! ( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'preview-mail' ) ) ) {
+            return $email;
+        }
+
+        if ( isset( $_GET['preview_woocommerce_mail'] ) && ! Helpers::is_true( sanitize_text_field( wp_unslash( $_GET['preview_woocommerce_mail'] ) ) ) ) {
             return $email;
         }
 
@@ -56,6 +61,7 @@ class WooHandler {
             return $email;
         }
 
+        add_filter( 'yaymail_previewing_template_is_yaymail_template', '__return_true' );
         ob_start();
         ?>
             <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; max-width: 600px; margin: 20px auto; padding: 20px; text-align: center;">
@@ -68,7 +74,27 @@ class WooHandler {
         <?php
         $content = ob_get_clean();
         yaymail_kses_post_e( $content );
-        exit;
+        return $email;
+    }
+
+    public function handle_default_preview_content( $content ) {
+
+        if ( ! ( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( sanitize_text_field( wp_unslash( $_REQUEST['_wpnonce'] ) ), 'preview-mail' ) ) ) {
+            return $content;
+        }
+
+        if ( isset( $_GET['preview_woocommerce_mail'] ) && ! Helpers::is_true( sanitize_text_field( wp_unslash( $_GET['preview_woocommerce_mail'] ) ) ) ) {
+            return $content;
+        }
+
+        if ( isset( $_GET['rest_route'] ) && $_GET['rest_route'] === '/wc-admin-email/settings/email/send-preview' ) {
+            return $content;
+        }
+
+        if ( apply_filters( 'yaymail_previewing_template_is_yaymail_template', false ) ) {
+            return '';
+        }
+        return $content;
     }
 
     /**

@@ -20,11 +20,9 @@ $template_exclude_style = apply_filters( 'yaymail_template_exclude_style', [] );
             * Media queries are not supported by all email clients, however they do work on modern mobile
             * Gmail clients and can help us achieve better consistency there.
             */
-            @media screen and (max-width: 600px) {
+            /* @media screen and (max-width: 600px) {
                 .yaymail-template-content-container {
                     width: 100% !important;
-                    transform-origin: top !important;
-                    transform: scale(1.15) !important;
                 }
                 .yaymail-template-content-container .yaymail-element__content {
                     padding: 8px 15px !important;
@@ -41,7 +39,7 @@ $template_exclude_style = apply_filters( 'yaymail_template_exclude_style', [] );
                     min-width: 120px;
                     width: 100%;
                 }
-            }
+            } */
             </style>
         <?php endif; ?>
     </head>

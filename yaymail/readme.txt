@@ -1,10 +1,10 @@
 === YayMail - WooCommerce Email Customizer ===
 Contributors: YayCommerce
 Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
-Tags: email customizer, email templates, marketing, woocommerce emails, design
+Tags: woocommerce email customizer, email templates, email builder, woocommerce emails, drag and drop
 Requires at least: 3.0
 Tested up to: 6.8
-Stable tag: 4.2.0
+Stable tag: 4.2.0.1
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -234,6 +234,9 @@ We offer single-site licenses and also unlimited site licenses to better support
 
 == Changelog ==
 
+= Sep 27, 2025 - Version 4.2.0.1 =
+- Fixed: RankMath issue
+
 = Aug 13, 2025 - Version 4.2.0 =
 - Added: Cross/Up-sell products block (Pro)
 - Added: Products with Reviews block (Pro)
@@ -452,7 +455,7 @@ Updated: YayMail Addon License Manager – Added support for License Manager sho
 - Released: YayMail Premium Addon for SG Order Approval for WooCommerce v1.5
 -- Fixed: Calling method exists on array
 - Released: YayMail Addon for YITH WooCommerce Gift Cards v1.7
--- Fixed: Add class to use CSS
+-- Fixed: Add class to use CSS in Yay Mail builder
 - Released: YayMail Addon for Deposits & Partial Payments for WooCommerce v1.3
 -- Fixed: Styling shortcode content
 - Released: YayMail Premium Addon for YITH WooCommerce Request A Quote Premium v1.4

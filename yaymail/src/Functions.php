@@ -92,13 +92,13 @@ if ( ! function_exists( 'yaymail_get_content' ) ) {
 
         $path = $root . $path;
 
-        if ( ! file_exists( $path ) ) {
+        if ( $path === false || ! file_exists( $path ) ) {
             return '';
         }
 
         // TODO: do later
         ob_start();
-        include $path;
+        include $path; // nosemgrep
         $html = ob_get_contents();
         ob_end_clean();
         return yaymail_kses_post( $html );

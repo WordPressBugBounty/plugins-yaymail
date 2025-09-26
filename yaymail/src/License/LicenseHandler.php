@@ -140,13 +140,12 @@ class LicenseHandler {
     }
 
     public function do_remove_license_request() {
-        if ( isset( $_POST['nonce'] ) ) {
-            wp_verify_nonce( sanitize_text_field( $_POST['nonce'] ) );
+        if ( isset( $_POST['_wpnonce'] ) && wp_verify_nonce( sanitize_text_field( $_POST['_wpnonce'] ), 'woocommerce-settings' ) ) {
+            $licensing_plugin_slug = isset( $_POST[ CorePlugin::get( 'slug' ) . '_licensing_plugin' ] ) ? sanitize_text_field( $_POST[ CorePlugin::get( 'slug' ) . '_licensing_plugin' ] ) : '';
+            $license               = new License( $licensing_plugin_slug );
+            $license->remove_license_key();
+            $license->remove_license_info();
         }
-        $licensing_plugin_slug = isset( $_POST[ CorePlugin::get( 'slug' ) . '_licensing_plugin' ] ) ? sanitize_text_field( $_POST[ CorePlugin::get( 'slug' ) . '_licensing_plugin' ] ) : '';
-        $license               = new License( $licensing_plugin_slug );
-        $license->remove_license_key();
-        $license->remove_license_info();
     }
 
     public function do_post_requests() {
