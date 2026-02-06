@@ -169,11 +169,13 @@ class RegisterMenu {
             }
         }
         if ( ! $has_plugin_menu ) {
-            add_submenu_page( 'yaycommerce', __( 'Email Builder Settings', 'yaymail' ), __( 'YayMail', 'yaymail' ), 'manage_woocommerce', 'yaymail-settings', [ $this, 'render_placeholder_menu' ], 0 );
+            $page_id = add_submenu_page( 'yaycommerce', __( 'Email Builder Settings', 'yaymail' ), __( 'YayMail', 'yaymail' ), 'manage_woocommerce', 'yaymail-settings', '__return_false', 0 );
+            add_action( 'load-' . $page_id, [ $this, 'redirect_to_licenses_menu' ] );
         }
     }
 
-    public function render_placeholder_menu() {
-        wp_safe_redirect( admin_url( 'admin.php?page="yaycommerce-licenses"' ) );
+    public function redirect_to_licenses_menu() {
+        wp_safe_redirect( admin_url( 'admin.php?page=yaycommerce-licenses' ) );
+        exit;
     }
 }

@@ -3,8 +3,8 @@ Contributors: YayCommerce
 Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: woocommerce email customizer, email templates, email builder, woocommerce emails, drag and drop
 Requires at least: 3.0
-Tested up to: 6.8
-Stable tag: 4.2.0.1
+Tested up to: 6.9
+Stable tag: 4.3.2
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -12,11 +12,6 @@ License URI: https://www.gnu.org/licenses/gpl-2.0.html
 Customize WooCommerce email templates with an advanced drag-and-drop email builder. Works great with 70+ WooCommerce Email Customizer Addons.
 
 == Description ==
-
-🎉 **YayMail 4.0 – Big Update is here!**
-This is a major release packed with performance improvements and UI enhancements. To ensure everything works smoothly, please update all related addons to their latest versions.
-
-If you encounter any issues, feel free to reach out to our support team via this link: [https://yaycommerce.com/support/](https://yaycommerce.com/support/)
 
 **Your brand deserves emails that shine.** ✨
 
@@ -233,6 +228,43 @@ We offer single-site licenses and also unlimited site licenses to better support
 9. Break free from default WooCommerce styles, go bold with dark theme email templates
 
 == Changelog ==
+
+= Dec 17, 2025 - Version 4.3.2 =
+- Updated: Twitter icons
+- Fixed: Table modern layout (Integrate with WC 10.4)
+- Fixed: Encoding WC Cart Abandoned variables
+- Fixed: Admin notice
+- Fixed: Addon licenses
+- Fixed: Order link Shortcode (Customers link should point to Account order page)
+
+= Nov 11, 2025 - Version 4.3.1 =
+- New: Notice when WC emails type mismatch & disabled
+- Updated: Unlock Revision feature (Lite)
+- Updated: Admin UI
+- Fixed: Bugs & Warning
+- Fixed: Incorrect payment instruction when using Addon Germanized
+- Fixed: Undo redo with Editor
+- Fixed: Global Header/Footer item index
+- Fixed: Editor captures changes incorrectly
+
+= Oct 7, 2025 - Version 4.3.0 =
+- New: Global Variables (Pro)
+- New: Synced pattern (Pro)
+- New: Countdown element (Pro)
+- New: Integration with YITH WooCommerce Custom Order Status
+- New: Change settings for multiple elements in the same time
+- Updated: Add description to Preview Email feature (Pro)
+- Updated: Tracking information table in WooCommerce Shipping & Tax
+- Updated: Element classes
+- Updated: UI
+- Fixed: Shortcode not displaying correctly according to the is_plain value
+- Fixed: Background and text color not working for Text List Element
+- Fixed: Copy content not working for Text List, Image List Element
+- Fixed: Shortcode "yaymail_fooevents_ticket_details" not working
+- Fixed: The global header and footer not displaying correctly with the language
+- Fixed: Missing attachments when send mail
+- Fixed: Admin and Site Enhancements Plugin
+- Fixed: Video width issue on mobile
 
 = Sep 27, 2025 - Version 4.2.0.1 =
 - Fixed: RankMath issue

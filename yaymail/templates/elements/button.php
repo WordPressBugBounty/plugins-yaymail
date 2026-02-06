@@ -76,13 +76,14 @@ $text_style = TemplateHelpers::get_style(
         'font-size'   => "{$data['font_size']}px",
         'font-weight' => $data['weight'],
         'padding'     => TemplateHelpers::get_spacing_value( isset( $data['button_padding'] ) ? $data['button_padding'] : $default_button_padding ),
+        'text-align'  => 'center',
     ]
 );
 
 ob_start();
 ?>
 
-    <table style="<?php echo esc_attr( $button_holder_style ); ?>">
+    <table class="yaymail-element-button" style="<?php echo esc_attr( $button_holder_style ); ?>">
         <tbody>
             <tr>
                 <td style="padding: 0;">

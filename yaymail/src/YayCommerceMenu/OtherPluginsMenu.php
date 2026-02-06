@@ -281,6 +281,15 @@ class OtherPluginsMenu {
                 'type'              => [ 'marketing' ],
                 'version'           => 0,
             ],
+            'yayreviews'        => [
+                'slug'              => 'yay-customer-reviews-woocommerce',
+                'name'              => 'YayReviews – Advanced Customer Reviews for WooCommerce',
+                'short_description' => 'Collect more customer reviews through automated reminders and rewards.',
+                'icon'              => 'https://ps.w.org/yay-customer-reviews-woocommerce/assets/icon-256x256.png?rev=3340109',
+                'download_link'     => 'https://downloads.wordpress.org/plugin/yay-customer-reviews-woocommerce.zip',
+                'type'              => [ 'woocommerce' ],
+                'version'           => 0,
+            ],
         ];
     }
 
@@ -311,7 +320,7 @@ class OtherPluginsMenu {
                         'html' => $html,
                     ]
                 );
-            }
+            }//end if
         } catch ( \Exception $ex ) {
             wp_send_json_error(
                 [
@@ -330,7 +339,7 @@ class OtherPluginsMenu {
                     ],
                 ]
             );
-        }
+        }//end try
     }
 
     public function yay_recommended_activate_plugin() {
@@ -355,7 +364,7 @@ class OtherPluginsMenu {
                         'mess' => __( 'Activate success', 'yaycommerce' ),
                     ]
                 );
-            }
+            }//end if
         } catch ( \Exception $ex ) {
             wp_send_json_error(
                 [
@@ -374,7 +383,7 @@ class OtherPluginsMenu {
                     ],
                 ]
             );
-        }
+        }//end try
     }
 
     public function yay_recommended_upgrade_plugin() {
@@ -445,7 +454,7 @@ class OtherPluginsMenu {
                                 'mess' => 'Error',
                             ]
                         );
-                    }
+                    }//end if
                 } else {
                     $is_active = is_plugin_active( $plugin );
                     $result    = $upgrader->upgrade( $plugin );
@@ -464,8 +473,8 @@ class OtherPluginsMenu {
                             ]
                         );
                     }
-                }
-            }
+                }//end if
+            }//end if
         } catch ( \Exception $ex ) {
             wp_send_json_error(
                 [
@@ -484,7 +493,7 @@ class OtherPluginsMenu {
                     ],
                 ]
             );
-        }
+        }//end try
     }
 
     public function check_pro_version_exists( $plugin_detail ) {
@@ -531,6 +540,15 @@ class OtherPluginsMenu {
         }
         if ( 'wp-whatsapp' === $plugin_detail['slug'] ) {
             $exist_pro_ver = array_key_exists( 'whatsapp-for-wordpress/whatsapp.php', $all_plugin ) === true ? 'whatsapp-for-wordpress/whatsapp.php' : false;
+        }
+        if ( 'yay-customer-reviews-woocommerce' === $plugin_detail['slug'] ) {
+            if ( array_key_exists( 'yayreviews-pro/yay-customer-reviews-woocommerce.php', $all_plugin ) ) {
+                $exist_pro_ver = 'yayreviews-pro/yay-customer-reviews-woocommerce.php';
+            } elseif ( array_key_exists( 'yay-customer-reviews-woocommerce/yay-customer-reviews-woocommerce.php', $all_plugin ) ) {
+                $exist_pro_ver = 'yay-customer-reviews-woocommerce/yay-customer-reviews-woocommerce.php';
+            } elseif ( array_key_exists( 'yayreviews/yay-customer-reviews-woocommerce.php', $all_plugin ) ) {
+                $exist_pro_ver = 'yayreviews/yay-customer-reviews-woocommerce.php';
+            }
         }
         return $exist_pro_ver;
     }

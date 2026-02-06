@@ -6,8 +6,11 @@ if ( empty( $args['element'] ) ) {
     return;
 }
 
-$element = $args['element'];
-$data    = $element['data'];
+$element         = $args['element'];
+$data            = $element['data'];
+$settings        = $args['settings'];
+$container_width = isset( $settings['container_width'] ) ? $settings['container_width'] : 605;
+
 
 $data_column_default = is_array( $data['text_list']['column_1'] ) && ! empty( $data['text_list']['column_1'] ) ? $data['text_list']['column_1'] : [
     'rich_text'   => '<p><span style="font-size: 18px;"><strong>This is a title</strong></span></p><p>&nbsp;</p><p><span> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy.</span></p><p>&nbsp;</p><p><span>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.</span></p>',
@@ -83,9 +86,15 @@ $wrapper_style = TemplateHelpers::get_style(
     ]
 );
 
+$column_width = $container_width / $data['number_column'];
+
 $column_style = TemplateHelpers::get_style(
     [
-        'color' => $data['text_color'],
+        'color'      => $data['text_color'],
+        'width'      => TemplateHelpers::get_dimension_value( $column_width, 'px' ),
+        'box-sizing' => 'border-box',
+        'display'    => 'table-cell',
+        'word-break' => 'break-word',
     ]
 );
 
@@ -105,7 +114,7 @@ $column_1_text_style = TemplateHelpers::get_style(
 
 $column_1_button_holder_style = TemplateHelpers::get_style(
     [
-        'width'   => $data_column_1['button_width'],
+        'width'   => TemplateHelpers::get_dimension_value( $data_column_1['button_width'], '%' ),
         'margin'  => 'auto',
         'padding' => TemplateHelpers::get_spacing_value( isset( $data_column_1['button_padding'] ) ? $data_column_1['button_padding'] : [] ),
         'float'   => in_array( $data_column_1['button_align'], [ 'left', 'right' ], true ) ? $data_column_1['button_align'] : 'unset',
@@ -131,6 +140,8 @@ $column_1_button_text_style = TemplateHelpers::get_style(
         'font-family' => TemplateHelpers::get_font_family_value( $data_column_1['button_font_family'] ),
         'line-height' => "{$data_column_1['button_height']}px",
         'color'       => $data_column_1['button_text_color'],
+        'text-align'  => 'center',
+        'display'     => 'block',
     ]
 );
 
@@ -144,7 +155,7 @@ $column_2_text_style = TemplateHelpers::get_style(
 
 $column_2_button_holder_style = TemplateHelpers::get_style(
     [
-        'width'   => $data_column_2['button_width'],
+        'width'   => TemplateHelpers::get_dimension_value( $data_column_2['button_width'], '%' ),
         'margin'  => 'auto',
         'padding' => TemplateHelpers::get_spacing_value( isset( $data_column_2['button_padding'] ) ? $data_column_2['button_padding'] : [] ),
         'float'   => in_array( $data_column_2['button_align'], [ 'left', 'right' ], true ) ? $data_column_2['button_align'] : 'unset',
@@ -170,6 +181,8 @@ $column_2_button_text_style = TemplateHelpers::get_style(
         'font-family' => TemplateHelpers::get_font_family_value( $data_column_2['button_font_family'] ),
         'line-height' => "{$data_column_2['button_height']}px",
         'color'       => $data_column_2['button_text_color'],
+        'text-align'  => 'center',
+        'display'     => 'block',
     ]
 );
 
@@ -183,7 +196,7 @@ $column_3_text_style = TemplateHelpers::get_style(
 
 $column_3_button_holder_style = TemplateHelpers::get_style(
     [
-        'width'   => $data_column_3['button_width'],
+        'width'   => TemplateHelpers::get_dimension_value( $data_column_3['button_width'], '%' ),
         'margin'  => 'auto',
         'padding' => TemplateHelpers::get_spacing_value( isset( $data_column_3['button_padding'] ) ? $data_column_3['button_padding'] : [] ),
         'float'   => in_array( $data_column_3['button_align'], [ 'left', 'right' ], true ) ? $data_column_3['button_align'] : 'unset',
@@ -209,35 +222,37 @@ $column_3_button_text_style = TemplateHelpers::get_style(
         'font-family' => TemplateHelpers::get_font_family_value( $data_column_3['button_font_family'] ),
         'line-height' => "{$data_column_3['button_height']}px",
         'color'       => $data_column_3['button_text_color'],
+        'text-align'  => 'center',
+        'display'     => 'block',
     ]
 );
 
 ob_start();
 ?>
 
-<table style="width: 100%;">
+<table  className="yaymail-table-text-list"  width="100%" cellspacing="0" cellpadding="0" border="0" style="width: 100%;table-layout: fixed;">
         <tbody>
             <tr>
                 <!-- Column 1 -->
                 <td valign="top" style="<?php echo esc_attr( $column_style ); ?>">
-                    <table>
+                    <table style="width: 100%;table-layout: fixed;">
                         <tbody>
                             <tr>
                                 <td>
-                                    <div style="<?php echo esc_attr( $column_1_text_style ); ?> ">
+                                    <div class="yaymail-table-text-list-column" style="<?php echo esc_attr( $column_1_text_style ); ?> ">
                                         <?php echo wp_kses_post( do_shortcode( $data_column_1['rich_text'] ) ); ?>
                                     </div>
                                 </td>
                             </tr>
                             <?php if ( $data_column_1['show_button'] ) : ?>
                             <tr>
-                                <td>
+                                <td class="yaymail-table-text-list-column">
                                     <table style="<?php echo esc_attr( $column_1_button_holder_style ); ?>">
                                         <tbody>
                                             <tr>
                                                 <td>
                                                     <a
-                                                        href="<?php echo esc_url( $data_column_1['button_url'] ); ?>"
+                                                        href="<?php echo esc_url( do_shortcode( $data_column_1['button_url'] ) ); ?>"
                                                         style="<?php echo esc_attr( $column_1_button_link_style ); ?>"
                                                         target="_blank"
                                                         rel="noreferrer"
@@ -257,24 +272,24 @@ ob_start();
                 <!-- Column 2 -->
                 <?php if ( 1 < (int) $data['number_column'] ) : ?>
                 <td valign="top" style="<?php echo esc_attr( $column_style ); ?>">
-                    <table>
+                    <table style="width: 100%;table-layout: fixed;">
                         <tbody>
                             <tr>
                                 <td>
-                                    <div style="<?php echo esc_attr( $column_2_text_style ); ?>">
+                                    <div class="yaymail-table-text-list-column" style="<?php echo esc_attr( $column_2_text_style ); ?>">
                                         <?php echo wp_kses_post( do_shortcode( $data_column_2['rich_text'] ) ); ?>
                                     </div>
                                 </td>
                             </tr>
                             <?php if ( $data_column_2['show_button'] ) : ?>
                             <tr>
-                                <td>
+                                <td class="yaymail-table-text-list-column">
                                     <table style="<?php echo esc_attr( $column_2_button_holder_style ); ?>">
                                         <tbody>
                                             <tr>
                                                 <td>
                                                     <a
-                                                        href="<?php echo esc_url( $data_column_2['button_url'] ); ?>"
+                                                        href="<?php echo esc_url( do_shortcode( $data_column_2['button_url'] ) ); ?>"
                                                         style="<?php echo esc_attr( $column_2_button_link_style ); ?>"
                                                         target="_blank"
                                                         rel="noreferrer"
@@ -295,7 +310,7 @@ ob_start();
                 <!-- Column 3 -->
                 <?php if ( 3 === (int) $data['number_column'] ) : ?>
                 <td valign="top" style="<?php echo esc_attr( $column_style ); ?>">
-                    <table>
+                    <table style="width: 100%;table-layout: fixed;">
                         <tbody>
                             <tr>
                                 <td>
@@ -312,7 +327,7 @@ ob_start();
                                             <tr>
                                                 <td>
                                                     <a
-                                                        href="<?php echo esc_url( $data_column_3['button_url'] ); ?>"
+                                                        href="<?php echo esc_url( do_shortcode( $data_column_3['button_url'] ) ); ?>"
                                                         style="<?php echo esc_attr( $column_3_button_link_style ); ?>"
                                                         target="_blank"
                                                         rel="noreferrer"

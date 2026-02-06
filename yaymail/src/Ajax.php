@@ -5,6 +5,7 @@ namespace YayMail;
 use YayMail\Utils\SingletonTrait;
 use YayMail\Models\SettingModel;
 use YayMail\Models\TemplateModel;
+use YayMail\Models\RevisionModel;
 use YayMail\Migrations\MainMigration;
 use YayMail\Utils\Helpers;
 use YayMail\Migrations\AbstractMigration;
@@ -35,6 +36,7 @@ class Ajax {
         add_action( 'wp_ajax_yaymail_dismiss_multi_select_notice', [ $this, 'dismiss_multi_select_notice' ] );
         add_action( 'wp_ajax_yaymail_export_state', [ $this, 'export_state' ] );
         add_action( 'wp_ajax_yaymail_import_state', [ $this, 'import_state' ] );
+        add_action( 'wp_ajax_yaymail_dismiss_new_element_notification', [ $this, 'dismiss_new_element_notification' ] );
     }
 
     public function import_state() {
@@ -469,6 +471,7 @@ class Ajax {
                     $text_link_color          = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['text_link_color'], true );
                     $background_color         = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['background_color'], true );
                     $content_background_color = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['content_background_color'], true );
+                    $content_text_color       = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['content_text_color'], true );
                     $file_name                = "{$template_name}.json";
                     if ( empty( $language ) ) {
                         $export_data[] = [
@@ -480,6 +483,8 @@ class Ajax {
                                 'text_link_color'          => $text_link_color,
                                 'background_color'         => $background_color,
                                 'content_background_color' => $content_background_color,
+                                'content_text_color'       => $content_text_color,
+                                'title_color'              => $title_color,
                             ],
                         ];
                     }
@@ -583,6 +588,7 @@ class Ajax {
         $elements         = $data['elements'] ?? null;
         $text_link_color  = $data['text_link_color'] ?? null;
         $background_color = $data['background_color'] ?? null;
+        $title_color      = $data['title_color'] ?? null;
 
         if ( empty( $template_name ) ) {
             return null;
@@ -596,7 +602,9 @@ class Ajax {
         $template->set_elements( $elements );
         $template->set_text_link_color( $text_link_color );
         $template->set_background_color( $background_color );
-
+        $template->set_title_color( $title_color );
+        $template->set_content_background_color( $content_background_color );
+        $template->set_content_text_color( $content_text_color );
         if ( $is_legacy ) {
             $template->set_status( 'inactive' );
         }
@@ -695,12 +703,16 @@ class Ajax {
 
             $elements_data = TemplateModel::get_elements_for_template( $template_name );
 
+            $revision_model = RevisionModel::get_instance();
+            $revisions_data = $revision_model->get_by_template( $template_name );
+
             wp_send_json_success(
                 [
                     'settings_data'          => $settings_data,
                     'templates_data'         => $templates_data,
                     'selected_template_data' => $selected_template_data,
                     'elements_data'          => $elements_data,
+                    'revisions_data'         => $revisions_data,
                     'shortcodes_data'        => $shortcodes_data,
                 ]
             );
@@ -776,6 +788,32 @@ class Ajax {
             );
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+        } catch ( \Exception $exception ) {
+            yaymail_get_logger( $exception );
+        }
+    }
+
+    public function dismiss_new_element_notification() {
+        $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+        if ( ! wp_verify_nonce( $nonce, 'yaymail_frontend_nonce' ) ) {
+            return wp_send_json_error( [ 'mess' => __( 'Verify nonce failed', 'yaymail' ) ] );
+        }
+
+        $elements = isset( $_POST['elements'] ) ? array_map( 'sanitize_text_field', wp_unslash( $_POST['elements'] ) ) : [];
+
+        $viewed_new_elements = get_option( 'yaymail_viewed_new_elements', [] );
+        $viewed_new_elements = array_unique( array_merge( $viewed_new_elements, $elements ) );
+
+        try {
+            update_option( 'yaymail_viewed_new_elements', $viewed_new_elements );
+
+            wp_send_json_success(
+                [
+                    'viewed_new_elements' => $viewed_new_elements,
+                ]
+            );
+        } catch ( \Error $error ) {
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
         }

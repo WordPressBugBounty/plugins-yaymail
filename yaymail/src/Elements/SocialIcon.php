@@ -95,7 +95,7 @@ class SocialIcon extends BaseElement {
                 'icon_list'                  => [
                     'value_path'    => 'icon_list',
                     'component'     => 'SocialList',
-                    'title'         => __( 'Socials', 'yaymail' ),
+                    'title'         => __( 'Social', 'yaymail' ),
                     'default_value' => isset( $attributes['icon_list'] ) ? $attributes['icon_list'] : [
                         [
                             'icon' => 'facebook',

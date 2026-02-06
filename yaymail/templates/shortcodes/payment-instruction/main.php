@@ -11,7 +11,15 @@ if ( ! isset( $args['order'] ) || ! ( Helpers::is_woocommerce_order( $args['orde
 $text_align           = yaymail_get_text_align();
 $order_instance       = $args['order'];
 $payment_gateway      = wc_get_payment_gateway_by_order( $order_instance );
-$payment_instructions = ! empty( $payment_gateway ) && isset( $payment_gateway->instructions ) ? $payment_gateway->instructions : '';
+$payment_instructions = '';
+if ( ! empty( $payment_gateway ) ) {
+    if ( isset( $payment_gateway->instructions ) ) {
+        $payment_instructions = $payment_gateway->instructions;
+    } elseif ( ! empty( $payment_gateway->get_option( 'instructions' ) ) ) {
+        // This fix the issue with Invoice Payment in Addon Germanized
+        $payment_instructions = $payment_gateway->get_option( 'instructions' );
+    }
+}
 if ( ! empty( $payment_instructions ) ) :
     ?>
 
@@ -88,12 +96,12 @@ if ( false !== $payment_gateway && ! empty( $payment_gateway->account_details ) 
             }
 
             $account_html .= '</ul>';
-        }
+        }//end foreach
 
         if ( $has_details ) {
             $account_html = PHP_EOL . $account_html;
             echo wp_kses_post( "<section class='yaymail-builder-wrap-account'> $account_html </section>" );
         }
-    }
-}
+    }//end if
+}//end if
 ?>

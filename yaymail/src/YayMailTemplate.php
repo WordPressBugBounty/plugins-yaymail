@@ -36,6 +36,8 @@ class YayMailTemplate {
         'background_color'         => '_yaymail_email_backgroundColor_settings',
         'text_link_color'          => '_yaymail_email_textLinkColor_settings',
         'content_background_color' => '_yaymail_email_content_background_color',
+        'content_text_color'       => '_yaymail_email_content_text_color',
+        'title_color'              => '_yaymail_email_title_color',
         'language'                 => '_yaymail_template_language',
         'modified_by'              => '_yaymail_modified_by',
         'is_v4_supported'          => '_yaymail_is_v4_supported',
@@ -50,6 +52,8 @@ class YayMailTemplate {
         'background_color'         => '',
         'text_link_color'          => '',
         'content_background_color' => '',
+        'content_text_color'       => '',
+        'title_color'              => '',
         'language'                 => '',
         'modified_by'              => '',
         'is_v4_supported'          => false,
@@ -75,6 +79,7 @@ class YayMailTemplate {
         'background_color'       => self::DEFAULT_DATA['background_color'],
         'text_link_color'        => self::DEFAULT_DATA['text_link_color'],
         'language'               => self::DEFAULT_DATA['language'],
+        'title_color'            => self::DEFAULT_DATA['title_color'],
         'global_header_settings' => self::DEFAULT_DATA['global_header_settings'],
         'global_footer_settings' => self::DEFAULT_DATA['global_footer_settings'],
     ];
@@ -95,6 +100,8 @@ class YayMailTemplate {
                         'background_color'         => self::DEFAULT_DATA['background_color'],
                         'text_link_color'          => self::DEFAULT_DATA['text_link_color'],
                         'content_background_color' => self::DEFAULT_DATA['content_background_color'],
+                        'content_text_color'       => self::DEFAULT_DATA['content_text_color'],
+                        'title_color'              => self::DEFAULT_DATA['title_color'],
                         'global_header_settings'   => self::DEFAULT_DATA['global_header_settings'],
                         'global_footer_settings'   => self::DEFAULT_DATA['global_footer_settings'],
                     ]
@@ -183,6 +190,10 @@ class YayMailTemplate {
 
     public function get_language( $context = 'view' ) {
         return $this->get_prop( 'language', $context );
+    }
+
+    public function get_title_color( $context = 'view' ) {
+        return $this->get_prop( 'title_color', $context );
     }
 
     /**
@@ -274,6 +285,23 @@ class YayMailTemplate {
             $this->set_prop( 'language', $value );
         }
     }
+
+    public function set_title_color( $value ) {
+        if ( ! is_null( $value ) && is_string( $value ) ) {
+            $this->set_prop( 'title_color', $value );
+        }
+    }
+    public function set_content_background_color( $value ) {
+        if ( ! is_null( $value ) && is_string( $value ) ) {
+            $this->set_prop( 'content_background_color', $value );
+        }
+    }
+    public function set_content_text_color( $value ) {
+        if ( ! is_null( $value ) && is_string( $value ) ) {
+            $this->set_prop( 'content_text_color', $value );
+        }
+    }
+
 
     /**
      * Set global header

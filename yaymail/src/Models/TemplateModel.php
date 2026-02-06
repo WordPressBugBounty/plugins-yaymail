@@ -270,6 +270,12 @@ class TemplateModel {
         if ( ! empty( $args['content_background_color'] ) ) {
             update_post_meta( $new_template_id, self::$meta_keys['content_background_color'], '#ffffff' );
         }
+        if ( ! empty( $args['content_text_color'] ) ) {
+            update_post_meta( $new_template_id, self::$meta_keys['content_text_color'], '#000000' );
+        }
+        if ( ! empty( $args['title_color'] ) ) {
+            update_post_meta( $new_template_id, self::$meta_keys['title_color'], '#000000' );
+        }
         if ( ! empty( $args['global_header_settings'] ) ) {
             update_post_meta( $new_template_id, self::$meta_keys['global_header_settings'], $args['global_header_settings'] );
         }
@@ -282,7 +288,7 @@ class TemplateModel {
         return self::get_meta_data( $new_template_id );
     }
 
-    public static function update( $template_id, $data ) {
+    public static function update( $template_id, $data, $is_save_revision = false ) {
         if ( isset( $data['elements'] ) && is_array( $data['elements'] ) && isset( self::$meta_keys['elements'] ) ) {
             update_post_meta( $template_id, self::$meta_keys['elements'], $data['elements'] );
         }
@@ -297,6 +303,14 @@ class TemplateModel {
 
         if ( ! empty( $data['content_background_color'] ) && isset( self::$meta_keys['content_background_color'] ) ) {
             update_post_meta( $template_id, self::$meta_keys['content_background_color'], $data['content_background_color'] );
+        }
+
+        if ( ! empty( $data['content_text_color'] ) && isset( self::$meta_keys['content_text_color'] ) ) {
+            update_post_meta( $template_id, self::$meta_keys['content_text_color'], $data['content_text_color'] );
+        }
+
+        if ( ! empty( $data['title_color'] ) && isset( self::$meta_keys['title_color'] ) ) {
+            update_post_meta( $template_id, self::$meta_keys['title_color'], $data['title_color'] );
         }
 
         if ( isset( $data['status'] ) && isset( self::$meta_keys['status'] ) ) {
@@ -318,6 +332,20 @@ class TemplateModel {
             'post_modified_gmt' => current_time( 'mysql', 1 ),
         ];
         wp_update_post( $post_data, true );
+
+        if ( $is_save_revision ) {
+            try {
+                $revision_model = RevisionModel::get_instance();
+                $new_revision   = $revision_model->save( $template_id, $data );
+            } catch ( \Throwable $th ) {
+                $new_revision = null;
+            }
+
+            return [
+                'updated_data' => self::get_meta_data( $template_id ),
+                'new_revision' => $new_revision,
+            ];
+        }
 
         return self::get_meta_data( $template_id );
     }
@@ -402,7 +430,9 @@ class TemplateModel {
             // TODO: how to store global default value
             $background_color         = self::query_meta_data( $template_post_id, self::$meta_keys['background_color'], YayMailTemplate::DEFAULT_DATA['background_color'] );
             $text_link_color          = self::query_meta_data( $template_post_id, self::$meta_keys['text_link_color'], YayMailTemplate::DEFAULT_DATA['text_link_color'] );
+            $title_color              = self::query_meta_data( $template_post_id, self::$meta_keys['title_color'], YayMailTemplate::DEFAULT_DATA['title_color'] );
             $content_background_color = self::query_meta_data( $template_post_id, self::$meta_keys['content_background_color'], YayMailTemplate::DEFAULT_DATA['content_background_color'] );
+            $content_text_color       = self::query_meta_data( $template_post_id, self::$meta_keys['content_text_color'], YayMailTemplate::DEFAULT_DATA['content_text_color'] );
             $global_header_settings   = self::query_meta_data( $template_post_id, self::$meta_keys['global_header_settings'], YayMailTemplate::DEFAULT_DATA['global_header_settings'] );
             $global_footer_settings   = self::query_meta_data( $template_post_id, self::$meta_keys['global_footer_settings'], YayMailTemplate::DEFAULT_DATA['global_footer_settings'] );
         }
@@ -413,9 +443,11 @@ class TemplateModel {
             'name'                     => $template_name,
             'elements'                 => ElementsHelper::filter_available_elements( $template_elements, $template_name ),
             'status'                   => $status,
+            'title_color'              => $title_color ?? '#000000',
             'background_color'         => $background_color ?? YAYMAIL_COLOR_BACKGROUND_DEFAULT,
             'text_link_color'          => $text_link_color ?? YAYMAIL_COLOR_WC_DEFAULT,
             'content_background_color' => $content_background_color ?? '#ffffff',
+            'content_text_color'       => $content_text_color ?? '#000000',
             'support_status'           => $support_info['status'] ?? 'already_supported',
             'addon_info'               => $support_info['addon'] ?? '',
             'post_modified'            => $post_modified,

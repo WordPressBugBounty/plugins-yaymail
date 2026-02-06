@@ -40,18 +40,20 @@ class NoticeMain {
             add_action( 'admin_notices', [ $this, 'render_upgrade_notice' ] );
         }
 
-        if ( time() >= (int) get_option( 'yaymail_next_recommendation_notice_time' ) || time() >= (int) get_option( 'yaymail_next_recommendation_suggest_addons_notice_time' ) || time() >= (int) get_option( 'yaymail_next_recommendation_upgrade_notice_time' ) ) {
-            wp_enqueue_script( 'yaymail-notice', YAYMAIL_PLUGIN_URL . 'assets/scripts/notice.js', [ 'jquery' ], YAYMAIL_VERSION, false );
-        }
+        if ( is_admin() ) {
+            if ( time() >= (int) get_option( 'yaymail_next_recommendation_notice_time' ) || time() >= (int) get_option( 'yaymail_next_recommendation_suggest_addons_notice_time' ) || time() >= (int) get_option( 'yaymail_next_recommendation_upgrade_notice_time' ) ) {
+                wp_enqueue_script( 'yaymail-notice', YAYMAIL_PLUGIN_URL . 'assets/scripts/notice.js', [ 'jquery' ], YAYMAIL_VERSION, false );
+            }
 
-        wp_localize_script(
-            'yaymail-notice',
-            'yaymail_notice',
-            [
-                'admin_ajax' => admin_url( 'admin-ajax.php' ),
-                'nonce'      => wp_create_nonce( 'yaymail_nonce' ),
-            ]
-        );
+            wp_localize_script(
+                'yaymail-notice',
+                'yaymail_notice',
+                [
+                    'admin_ajax' => admin_url( 'admin-ajax.php' ),
+                    'nonce'      => wp_create_nonce( 'yaymail_nonce' ),
+                ]
+            );
+        }
 
         add_action(
             'after_plugin_row_' . YAYMAIL_PLUGIN_BASENAME,

@@ -27,7 +27,9 @@ jQuery(document).ready(function () {
   );
   jQuery('.yaycommerce-license-layout').on(
     'click',
-    `#${slug}_license_card .yaycommerce-license-message .yaycommerce-license-message__close`,
+    `#${jQuery.escapeSelector(
+      slug,
+    )}_license_card .yaycommerce-license-message .yaycommerce-license-message__close`,
     function () {
       hideMessage(slug);
     },
@@ -39,7 +41,7 @@ jQuery(document).ready(function () {
     const { plugin } = jQuery(this).data();
     beforeCallAPI(plugin, 'activate');
     hideMessage(plugin);
-    const licenseKey = jQuery(`#${plugin}_license_input`).val();
+    const licenseKey = jQuery(`#${jQuery.escapeSelector(plugin)}_license_input`).val();
 
     const response = await fetch(`${REST_URL}/license/activate`, {
       ...POST_OPTIONS,
@@ -91,7 +93,7 @@ jQuery(document).ready(function () {
   }
 
   function replaceSuccessfullContent(data) {
-    jQuery(`#${data.slug}_license_card`).replaceWith(data.html);
+    jQuery(`#${jQuery.escapeSelector(data.slug)}_license_card`).replaceWith(data.html);
     if (data.core_plugin_licese_inactive != null) {
       jQuery('.yaycommerce-license__important-notice').attr(
         'data-display',
@@ -100,7 +102,7 @@ jQuery(document).ready(function () {
     }
   }
   function replaceActivatorContent(data) {
-    jQuery(`#${data.slug}_license_card`).replaceWith(data.html);
+    jQuery(`#${jQuery.escapeSelector(data.slug)}_license_card`).replaceWith(data.html);
     if (data.core_plugin_licese_inactive != null) {
       jQuery('.yaycommerce-license__important-notice').attr(
         'data-display',
@@ -110,8 +112,10 @@ jQuery(document).ready(function () {
   }
 
   function hideMessage(slug) {
-    jQuery(`#${slug}_license_card .yaycommerce-license-message`).removeClass('show');
-    jQuery(`#${slug}_license_card .yaycommerce-license-message`).html('');
+    jQuery(`#${jQuery.escapeSelector(slug)}_license_card .yaycommerce-license-message`).removeClass(
+      'show',
+    );
+    jQuery(`#${jQuery.escapeSelector(slug)}_license_card .yaycommerce-license-message`).html('');
   }
   function clearMessages() {
     jQuery('.message').removeClass('active');
@@ -134,45 +138,57 @@ jQuery(document).ready(function () {
   }
 
   function beforeCallAPI(plugin, action) {
+    const escapedPlugin = jQuery.escapeSelector(plugin);
     if (action === 'activate') {
-      jQuery(`.yaycommerce-activate-license-button[data-plugin=${plugin}]`)
+      jQuery(`.yaycommerce-activate-license-button[data-plugin='${escapedPlugin}']`)
         .find('.activate-loading')
         .css('display', 'inline-flex');
     }
 
     if (action === 'update') {
-      jQuery(`.yaycommerce-update-license[data-plugin=${plugin}]`)
+      jQuery(`.yaycommerce-update-license[data-plugin='${escapedPlugin}']`)
         .find('.activate-loading')
         .css('display', 'inline-flex');
     }
 
     if (action === 'remove') {
-      jQuery(`.yaycommerce-remove-license[data-plugin=${plugin}]`)
+      jQuery(`.yaycommerce-remove-license[data-plugin='${escapedPlugin}']`)
         .find('.activate-loading')
         .css('display', 'inline-flex');
     }
 
-    jQuery(`.yaycommerce-activate-license-button[data-plugin=${plugin}]`).attr('disabled', true);
-    jQuery(`.yaycommerce-update-license[data-plugin=${plugin}]`).attr('disabled', true);
-    jQuery(`.yaycommerce-remove-license[data-plugin="${plugin}"]`).attr('disabled', true);
+    jQuery(`.yaycommerce-activate-license-button[data-plugin='${escapedPlugin}']`).attr(
+      'disabled',
+      true,
+    );
+    jQuery(`.yaycommerce-update-license[data-plugin='${escapedPlugin}']`).attr('disabled', true);
+    jQuery(`.yaycommerce-remove-license[data-plugin='${escapedPlugin}']`).attr('disabled', true);
   }
 
   function afterCallAPI(plugin, action) {
+    const escapedPlugin = jQuery.escapeSelector(plugin);
     if (action === 'activate') {
-      jQuery(`.yaycommerce-activate-license-button[data-plugin=${plugin}]`)
+      jQuery(`.yaycommerce-activate-license-button[data-plugin='${escapedPlugin}']`)
         .find('.activate-loading')
         .hide();
     }
 
     if (action === 'update') {
-      jQuery(`.yaycommerce-update-license[data-plugin=${plugin}]`).find('.activate-loading').hide();
+      jQuery(`.yaycommerce-update-license[data-plugin='${escapedPlugin}']`)
+        .find('.activate-loading')
+        .hide();
     }
 
     if (action === 'remove') {
-      jQuery(`.yaycommerce-remove-license[data-plugin=${plugin}]`).find('.activate-loading').hide();
+      jQuery(`.yaycommerce-remove-license[data-plugin='${escapedPlugin}']`)
+        .find('.activate-loading')
+        .hide();
     }
-    jQuery(`.yaycommerce-activate-license-button[data-plugin=${plugin}]`).attr('disabled', false);
-    jQuery(`.yaycommerce-update-license[data-plugin=${plugin}]`).attr('disabled', false);
-    jQuery(`.yaycommerce-remove-license[data-plugin="${plugin}"]`).attr('disabled', false);
+    jQuery(`.yaycommerce-activate-license-button[data-plugin='${escapedPlugin}']`).attr(
+      'disabled',
+      false,
+    );
+    jQuery(`.yaycommerce-update-license[data-plugin='${escapedPlugin}']`).attr('disabled', false);
+    jQuery(`.yaycommerce-remove-license[data-plugin='${escapedPlugin}']`).attr('disabled', false);
   }
 });

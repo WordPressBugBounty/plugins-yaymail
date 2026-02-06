@@ -56,8 +56,8 @@ $item_style = TemplateHelpers::get_style(
         'vertical-align' => 'top',
         'text-align'     => 'center',
         'margin'         => '5px 0',
-        'padding-left'   => TemplateHelpers::get_dimension_value( max( ( $data['spacing'] ?? 0 ) - 2, 0 ) / 2 ),
-        'padding-right'  => TemplateHelpers::get_dimension_value( max( ( $data['spacing'] ?? 0 ) - 2, 0 ) / 2 ),
+        'padding-left'   => TemplateHelpers::get_dimension_value( max( ( $data['spacing'] ?? 0 ) - 5, 0 ) / 2 ),
+        'padding-right'  => TemplateHelpers::get_dimension_value( max( ( $data['spacing'] ?? 0 ) - 5, 0 ) / 2 ),
         'padding-top'    => 0,
         'padding-bottom' => 0,
     ]
@@ -73,7 +73,7 @@ $a_style = TemplateHelpers::get_style(
 
 ob_start();
 ?>
-<table class="yaymail-customizer-element-social" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse: collapse; margin: <?php echo esc_attr( $table_margin ); ?>; width: auto;">
+<table class="yaymail-customizer-element-social" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse: collapse; margin: <?php echo esc_attr( $table_margin ); ?>; width: 100%;">
     <tr>
         <td style="text-align: <?php echo esc_attr( $data['align'] ?? 'center' ); ?>;">
         <?php foreach ( $data['icon_list'] as $key => $el ) : ?>
@@ -84,7 +84,7 @@ ob_start();
             $text_align  = isset( $data['align'] ) ? $data['align'] : 'center';
             ?>
             <span class="yaymail-social-icon-item" style="<?php echo esc_attr( $item_style ); ?>">
-                <a href="<?php echo esc_attr( $el['url'] ); ?>" target="_blank" style="<?php echo esc_attr( $a_style ); ?>">
+                <a href="<?php echo esc_attr( do_shortcode( $el['url'] ) ); ?>" target="_blank" style="<?php echo esc_attr( $a_style ); ?>">
                     <img border="0" tabindex="0" src="<?php echo esc_attr( $img_url ); ?>" height="<?php echo esc_attr( $data['width_icon'] ); ?>" width="<?php echo esc_attr( $data['width_icon'] ); ?>" style="display: block; border: 0; margin: 0; padding: 0; outline: none;" />
                 </a>
             </span>

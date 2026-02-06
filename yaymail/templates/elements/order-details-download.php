@@ -49,18 +49,18 @@ ob_start();
 <style>
     /* Modern layout */
     <?php if ( $is_layout_type_modern ) { ?>
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-download-content {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-download-content {
         border: 0 !important;
     }
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-download-content th,
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-download-content td {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-download-content th,
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-download-content td {
         border: 0 !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
 
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-download-title--download,
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-download-content--download {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-download-title--download,
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-download-content--download {
         text-align: right !important;
     }
         <?php

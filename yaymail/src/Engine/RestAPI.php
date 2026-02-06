@@ -2,6 +2,7 @@
 namespace YayMail\Engine;
 
 use YayMail\Controllers\MigrationController;
+use YayMail\Controllers\RevisionController;
 use YayMail\Utils\SingletonTrait;
 use YayMail\Controllers\SettingController;
 use YayMail\Controllers\TemplateController;
@@ -29,6 +30,7 @@ class RestAPI {
     public function add_yaymail_endpoints() {
         TemplateController::get_instance();
         SettingController::get_instance();
+        RevisionController::get_instance();
         MigrationController::get_instance();
         ProductController::get_instance();
         AddonController::get_instance();

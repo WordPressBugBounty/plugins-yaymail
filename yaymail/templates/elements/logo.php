@@ -26,7 +26,7 @@ $wrapper_style = TemplateHelpers::get_style(
 
 ob_start();
 ?>
-    <a href="<?php echo esc_url( $data['url'] ); ?>" target="_blank" rel="noreferrer">
+    <a href="<?php echo esc_url( do_shortcode( $data['url'] ) ); ?>" target="_blank" rel="noreferrer">
         <img alt="<?php echo esc_attr( $data['alt'] ?? '' ); ?>" src="<?php echo esc_url( $data['src'] ); ?>" style="max-width: 100%; width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data['width'] ) ); ?>" />
     </a>
 <?php

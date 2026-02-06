@@ -60,47 +60,47 @@ ob_start();
 <style>
     /* Modern layout */
     <?php if ( $is_layout_type_modern ) { ?>
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-table {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table {
         border: 0 !important;
     }
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-table th,
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-table td {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table th,
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table td {
         border: 0 !important;
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
 
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail_item_price_title,
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail_item_price_content,
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail_element_foot_order_details tr td {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail_item_price_title,
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail_item_price_content,
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail_element_foot_order_details tr td {
         text-align: right !important;
     }
 
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail_item_quantity_title,
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail_item_quantity_content,
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail_item_cost_title,
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail_item_cost_content {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail_item_quantity_title,
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail_item_quantity_content,
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail_item_cost_title,
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail_item_cost_content {
         text-align: center !important;
     }
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-quantity-type-modern {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-quantity-type-modern {
         display: inline-block !important;
     }
 
 
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-table .order_item:last-child td {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table .order_item:last-child td {
         border-bottom: 1px solid <?php echo esc_attr( $border_color ); ?> !important;
     }
 
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-table .yaymail-order-detail-row-payment_method td,
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-table .yaymail-order-detail-row-payment_method th {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table .yaymail-order-detail-row-payment_method td,
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table .yaymail-order-detail-row-payment_method th {
         border-bottom: 1px solid <?php echo esc_attr( $border_color ); ?> !important;
     }
 
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-table th {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table th {
         font-size: <?php echo esc_attr( $table_heading_font_size ); ?>px !important;
     }
 
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-order-details-table td {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table td {
         font-size: <?php echo esc_attr( $table_content_font_size ); ?>px !important;
     }
     
@@ -110,7 +110,7 @@ ob_start();
 
     /* Hide table header */
     <?php if ( ! $show_table_header ) { ?>
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail_element_head_order_details {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail_element_head_order_details {
         display: none !important;
     }
     <?php } ?>

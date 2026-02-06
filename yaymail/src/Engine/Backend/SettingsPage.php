@@ -2,6 +2,7 @@
 
 namespace YayMail\Engine\Backend;
 
+use YayMail\Controllers\RevisionController;
 use YayMail\TemplatePatterns\PatternService;
 use YayMail\Models\MigrationModel;
 use YayMail\SupportedPlugins;
@@ -115,12 +116,14 @@ class SettingsPage {
         $_wc_emails = array_map(
             function( $email ) {
                 return (object) [
-                    'id'            => $email->id,
-                    'title'         => $email->title,
-                    'enabled'       => $email->enabled,
-                    'description'   => $email->description,
-                    'template_base' => $email->template_base,
-                    'recipient'     => $email->recipient,
+                    'id'               => $email->id,
+                    'title'            => $email->title,
+                    'enabled'          => $email->enabled,
+                    'description'      => $email->description,
+                    'template_base'    => $email->template_base,
+                    'recipient'        => $email->recipient,
+                    'content_type'     => $email->get_content_type(),
+                    'setting_page_url' => Helpers::yaymail_get_url_email_setting_page( $email->id ),
                 ];
             },
             $_wc_emails
@@ -173,6 +176,7 @@ class SettingsPage {
                             '"Lucida Console", Monaco, monospace',
                         ],
                         'social_icons'           => Localize::get_social_icons_data(),
+                        'revision_limit'         => RevisionController::YAYMAIL_TEMPLATE_REVISION_LIMIT,
                         'global_headers_footers' => Localize::get_global_headers_footers(),
                         'section_templates'      => SectionTemplateService::get_instance()->get_list_data(),
                         'patterns'               => PatternService::get_instance()->get_list_data(),
@@ -195,6 +199,7 @@ class SettingsPage {
                     'is_critical_migration_required' => MigrationModel::get_instance()->check_if_critical_migration_required(),
                     'supported_plugins'              => SupportedPlugins::get_instance()->get_slug_name_supported_plugins(),
                     'show_multi_select_notice'       => get_option( 'yaymail_show_multi_select_notice', 'yes' ),
+                    'viewed_new_elements'            => ! empty( get_option( 'yaymail_viewed_new_elements', [] ) ) ? get_option( 'yaymail_viewed_new_elements' ) : [],
                 ],
                 apply_filters( 'yaymail_additional_localized_variables', [] )
             )

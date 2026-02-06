@@ -36,7 +36,7 @@ $inactive_color = $data['inactive_stars_color'] ?? '#E0E0E0';
 
 ob_start();
 ?>
-<table class="yaymail-customizer-element-rating-stars" cellpadding="0" cellspacing="0" role="presentation" style="<?php echo esc_attr( $table_style ); ?>">
+<table class="yaymail-element-rating-stars" cellpadding="0" cellspacing="0" role="presentation" style="<?php echo esc_attr( $table_style ); ?>">
     <tbody>
         <tr>
             <td>
@@ -49,8 +49,8 @@ ob_start();
                     'font-size'     => $size . 'px',
                     'line-height'   => 1,
                     'padding'       => '0',
-                    'padding-left'  => ( $spacing / 2 ) . 'px',
-                    'padding-right' => ( $spacing / 2 ) . 'px',
+                    'padding-left'  => TemplateHelpers::get_dimension_value( ( $spacing - 4 ) / 2, 'px' ),
+                    'padding-right' => TemplateHelpers::get_dimension_value( ( $spacing - 4 ) / 2, 'px' ),
                     'display'       => 'inline-block',
                 ];
                 ?>

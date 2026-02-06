@@ -62,8 +62,8 @@ ob_start();
 <style>
     /* Modern layout */
     <?php if ( $is_layout_type_modern ) { ?>
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-billing-address-wrap,
-    [data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>"] .yaymail-shipping-address-wrap {
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-billing-address-wrap,
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-shipping-address-wrap {
         border: 0 !important;
         padding-left: 0 !important;
         padding-right: 0 !important;

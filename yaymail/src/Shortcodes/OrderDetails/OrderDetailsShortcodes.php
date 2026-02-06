@@ -267,12 +267,20 @@ class OrderDetailsShortcodes extends BaseShortcode {
 
     public function yaymail_order_id( $data, $shortcode_atts ) {
 
-        $render_data = isset( $data['render_data'] ) ? $data['render_data'] : [];
+        $render_data           = isset( $data['render_data'] ) ? $data['render_data'] : [];
+        $is_placeholder        = isset( $data['is_placeholder'] ) ? $data['is_placeholder'] : false;
+        $is_customized_preview = isset( $render_data['is_customized_preview'] ) ? $render_data['is_customized_preview'] : false;
+        $is_plain              = isset( $shortcode_atts['is_plain'] ) ? Helpers::is_true( $shortcode_atts['is_plain'] ) : false;
 
         if ( ! empty( $render_data['is_sample'] ) ) {
             /**
              * Is sample order
              */
+
+            if ( ! $is_plain ) {
+                return '<a href="#">1</a>';
+            }
+
             return '1';
         }
 
@@ -286,19 +294,17 @@ class OrderDetailsShortcodes extends BaseShortcode {
         }
 
         $sent_to_admin = isset( $render_data['sent_to_admin'] ) ? $render_data['sent_to_admin'] : false;
-        $is_plain      = isset( $shortcode_atts['is_plain'] ) ? Helpers::is_true( $shortcode_atts['is_plain'] ) : false;
-        if ( $is_plain || ! $sent_to_admin ) {
-            return $order->get_id();
-        }
 
         $template = ! empty( $data['template'] ) ? $data['template'] : null;
 
         $text_link_color = ! empty( $template ) ? $template->get_text_link_color() : YAYMAIL_COLOR_WC_DEFAULT;
 
+        $element_type = isset( $data['element']['type'] ) ? $data['element']['type'] : '';
+
         $link_style = TemplateHelpers::get_style(
             [
-                'color'           => 'heading' === $data['element']['type'] ? 'inherit' : $text_link_color,
-                'text-decoration' => 'heading' !== $data['element']['type'] ? 'underline' : 'none',
+                'color'           => 'heading' === $element_type ? 'inherit' : $text_link_color,
+                'text-decoration' => 'heading' !== $element_type ? 'underline' : 'none',
             ]
         );
 
@@ -310,17 +316,31 @@ class OrderDetailsShortcodes extends BaseShortcode {
 
         $url = ! empty( $forced_url ) ? do_shortcode( $forced_url ) : $order->get_edit_order_url();
 
-        return wp_kses_post( "<a style='$link_style' href='{$url}'>{$order->get_id()}</a>" );
+        // If not plain text and (placeholder or customized preview or sent to admin), show as link
+        if ( ! $is_plain && ( $is_placeholder || $is_customized_preview || $sent_to_admin ) ) {
+            return wp_kses_post( "<a style='$link_style' href='{$url}'>{$order->get_id()}</a>" );
+        }
+
+        // If is_plain is true, return just the order ID without link
+        return $order->get_id();
     }
 
     public function yaymail_order_number( $data, $shortcode_atts = [] ) {
 
-        $render_data = isset( $data['render_data'] ) ? $data['render_data'] : [];
+        $render_data           = isset( $data['render_data'] ) ? $data['render_data'] : [];
+        $is_placeholder        = isset( $data['is_placeholder'] ) ? $data['is_placeholder'] : false;
+        $is_customized_preview = isset( $render_data['is_customized_preview'] ) ? $render_data['is_customized_preview'] : false;
+        $is_plain              = isset( $shortcode_atts['is_plain'] ) ? Helpers::is_true( $shortcode_atts['is_plain'] ) : false;
 
         if ( ! empty( $render_data['is_sample'] ) ) {
             /**
              * Is sample order
              */
+
+            if ( ! $is_plain ) {
+                return '<a href="#">1</a>';
+            }
+
             return '1';
         }
 
@@ -339,45 +359,26 @@ class OrderDetailsShortcodes extends BaseShortcode {
 
         $sent_to_admin = isset( $render_data['sent_to_admin'] ) ? $render_data['sent_to_admin'] : false;
 
-        if ( ! empty( $shortcode_atts['is_plain'] ) || ! $sent_to_admin ) {
-            return $order->get_order_number();
+        if ( ! $is_plain && ( $is_placeholder || $is_customized_preview || $sent_to_admin ) ) {
+            // $sent_to_admin === true
+            return wp_kses_post( "<a style='$text_link_color' href='{$order->get_edit_order_url()}'>{$order->get_order_number()}</a>" );
         }
 
-        // $sent_to_admin === true
-        return wp_kses_post( "<a style='$text_link_color' href='{$order->get_edit_order_url()}'>{$order->get_order_number()}</a>" );
+        return $order->get_order_number();
     }
 
     public function yaymail_order_link( $data, $shortcode_atts = [] ) {
+        $order_url = $this->yaymail_order_url( $data );
 
-        $render_data = isset( $data['render_data'] ) ? $data['render_data'] : [];
+        if ( empty( $order_url ) ) {
+            return '';
+        }
 
         $is_placeholder = isset( $data['is_placeholder'] ) ? $data['is_placeholder'] : false;
 
         $text_link = isset( $shortcode_atts['text_link'] ) ? $shortcode_atts['text_link'] : TemplateHelpers::get_content_as_placeholder( 'text_link', __( 'Order', 'yaymail' ), $is_placeholder );
 
-        if ( ! empty( $render_data['is_sample'] ) ) {
-            /**
-             * Is sample order
-             */
-            return '<a href="' . esc_url( get_home_url() ) . '">' . $text_link . '</a>';
-        }
-
-        $order = Helpers::get_order_from_shortcode_data( $render_data );
-
-        if ( empty( $order ) ) {
-            /**
-             * Not having order_id
-             */
-            return '';
-        }
-
-        $edit_order_url = $order->get_edit_order_url();
-
-        if ( empty( $edit_order_url ) ) {
-            return '';
-        }
-
-        return wp_kses_post( "<a href='{$edit_order_url}'>" . $text_link . '</a>' );
+        return wp_kses_post( "<a href='{$order_url}'>" . $text_link . '</a>' );
     }
 
     public function yaymail_order_url( $data ) {
@@ -400,13 +401,15 @@ class OrderDetailsShortcodes extends BaseShortcode {
             return '';
         }
 
-        $edit_order_url = $order->get_edit_order_url();
+        $sent_to_admin = isset( $render_data['sent_to_admin'] ) ? $render_data['sent_to_admin'] : false;
 
-        if ( empty( $edit_order_url ) ) {
+        $order_url = $sent_to_admin ? $order->get_edit_order_url() : $order->get_view_order_url();
+
+        if ( empty( $order_url ) ) {
             return '';
         }
 
-        return esc_url( $edit_order_url );
+        return esc_url( $order_url );
     }
 
     public function yaymail_view_order_link( $data, $shortcode_atts = [] ) {

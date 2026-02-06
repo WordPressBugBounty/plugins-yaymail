@@ -20,6 +20,9 @@ $product_title  = isset( $data['product_title'] ) ? $data['product_title'] : Tem
 $expires_title  = isset( $data['expires_title'] ) ? $data['expires_title'] : TemplateHelpers::get_content_as_placeholder( 'expires_title', esc_html__( 'Expires', 'woocommerce' ), $is_placeholder );
 $download_title = isset( $data['download_title'] ) ? $data['download_title'] : TemplateHelpers::get_content_as_placeholder( 'download_title', esc_html__( 'Download', 'woocommerce' ), $is_placeholder );
 
+$table_heading_font_size = isset( $data['table_heading_font_size'] ) ? $data['table_heading_font_size'] : 14;
+$table_content_font_size = isset( $data['table_content_font_size'] ) ? $data['table_content_font_size'] : 14;
+
 $table_td_style = TemplateHelpers::get_style(
     [
         'padding'     => '12px',
@@ -37,8 +40,14 @@ $table_link_style = TemplateHelpers::get_style(
     ]
 );
 if ( ! empty( $order_data ) ) :
-
     $downloads = $order_data->get_downloadable_items();
+
+    $addon_file_downloads = apply_filters( 'yaymail_addon_download_files', [], $args );
+
+    if ( ! empty( $addon_file_downloads ) ) {
+        array_push( $downloads, ...$addon_file_downloads );
+    }
+
     if ( ! empty( $downloads ) ) :
         ?>
     <tbody style="<?php echo esc_attr( $table_td_style ); ?>">
@@ -53,7 +62,7 @@ if ( ! empty( $order_data ) ) :
                 <?php
                 if ( $show_product_image ) :
                     $product        = wc_get_product( $download['product_id'] );
-                    $image_url      = ( $product->get_image_id() ? current( wp_get_attachment_image_src( $product->get_image_id(), $size ) ) : wc_placeholder_img_src() );
+                    $image_url      = ( $product->get_image_id() ? current( wp_get_attachment_image_src( $product->get_image_id(), 'full' ) ) : wc_placeholder_img_src() );
                     $image_width    = isset( $settings['product_image_width'] ) ? $settings['product_image_width'] : '30';
                     $image_height   = isset( $settings['product_image_height'] ) ? $settings['product_image_height'] : '30';
                     $image_position = isset( $settings['product_image_position'] ) ? $settings['product_image_position'] : 'top';
@@ -76,7 +85,7 @@ if ( ! empty( $order_data ) ) :
                     $image       = $is_placeholder ? "<img width='{{product_image_width}}px' height='{{product_image_height}}px' src='{$image_url}' alt='product image' style='{$image_style}'/>" : "<img width='{$image_width}px' height='{$image_height}px' src='{$image_url}' alt='product image' style='{$image_style}'/>";
 
                     ?>
-                        <div class="yaymail-product-download-image" style="<?php echo esc_attr( $container_style ); ?>">
+                        <div class="yaymail-product-download-image">
                             <?php
                             if ( ( $show_product_image && 'bottom' !== $image_position ) || $is_placeholder ) {
                                 echo wp_kses_post( "<span class='yaymail-product_image_position__top'>" );

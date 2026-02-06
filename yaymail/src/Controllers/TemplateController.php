@@ -192,20 +192,25 @@ class TemplateController extends BaseController {
     }
 
     public function update_template( \WP_REST_Request $request ) {
-        $id       = sanitize_text_field( $request->get_param( 'template_id' ) );
-        $elements = $request->get_param( 'template_elements' );
+        $data     = json_decode( $request->get_param( 'data' ), true );
+        $id       = sanitize_text_field( $data['template_id'] );
+        $elements = $data['template_elements'];
         // TODO: later
         // $elements                   = Helpers::elements_remove_settings_empty( $request->get_param( 'template_elements' ) );
-        $background_color         = sanitize_text_field( $request->get_param( 'background_color' ) );
-        $text_link_color          = sanitize_text_field( $request->get_param( 'text_link_color' ) );
-        $content_background_color = sanitize_text_field( $request->get_param( 'content_background_color' ) );
-        $global_header_settings   = $request->get_param( 'global_header_settings' ) ?? YayMailTemplate::DEFAULT_DATA['global_header_settings'];
-        $global_footer_settings   = $request->get_param( 'global_footer_settings' ) ?? YayMailTemplate::DEFAULT_DATA['global_footer_settings'];
+        $background_color         = sanitize_text_field( $data['background_color'] );
+        $text_link_color          = sanitize_text_field( $data['text_link_color'] );
+        $content_background_color = sanitize_text_field( $data['content_background_color'] );
+        $content_text_color       = sanitize_text_field( $data['content_text_color'] );
+        $title_color              = sanitize_text_field( $data['title_color'] );
+        $global_header_settings   = $data['global_header_settings'] ?? YayMailTemplate::DEFAULT_DATA['global_header_settings'];
+        $global_footer_settings   = $data['global_footer_settings'] ?? YayMailTemplate::DEFAULT_DATA['global_footer_settings'];
         $update_data              = [
             'elements'                 => $elements,
             'background_color'         => $background_color,
             'text_link_color'          => $text_link_color,
             'content_background_color' => $content_background_color,
+            'content_text_color'       => $content_text_color,
+            'title_color'              => $title_color,
             'global_header_settings'   => $global_header_settings,
             'global_footer_settings'   => $global_footer_settings,
         ];
@@ -289,6 +294,8 @@ class TemplateController extends BaseController {
                 'background_color'         => YayMailTemplate::DEFAULT_DATA['background_color'],
                 'text_link_color'          => YayMailTemplate::DEFAULT_DATA['text_link_color'],
                 'content_background_color' => YayMailTemplate::DEFAULT_DATA['content_background_color'],
+                'content_text_color'       => YayMailTemplate::DEFAULT_DATA['content_text_color'],
+                'title_color'              => YayMailTemplate::DEFAULT_DATA['title_color'],
                 'global_header_settings'   => wp_parse_args(
                     [
                         'hidden' => true,
@@ -306,6 +313,8 @@ class TemplateController extends BaseController {
             $template_data['background_color']         = $update_data['background_color'];
             $template_data['text_link_color']          = $update_data['text_link_color'];
             $template_data['content_background_color'] = $update_data['content_background_color'];
+            $template_data['content_text_color']       = $update_data['content_text_color'];
+            $template_data['title_color']              = $update_data['title_color'] ?? '#000000';
             $template_data['global_header_settings']   = $update_data['global_header_settings'];
             $template_data['global_footer_settings']   = $update_data['global_footer_settings'];
 
@@ -340,9 +349,11 @@ class TemplateController extends BaseController {
             'elements'                 => ! empty( $copy_template_data['elements'] ) ? $copy_template_data['elements'] : yaymail_get_default_elements( $from_template ),
             'background_color'         => $copy_template_data['background_color'] ?? YAYMAIL_COLOR_BACKGROUND_DEFAULT,
             'content_background_color' => $copy_template_data['content_background_color'] ?? '#ffffff',
+            'content_text_color'       => $copy_template_data['content_text_color'] ?? '#000000',
             'text_link_color'          => $copy_template_data['text_link_color'] ?? YAYMAIL_COLOR_WC_DEFAULT,
             'global_header_settings'   => ! empty( $copy_template_data['global_header_settings'] ) ? $copy_template_data['global_header_settings'] : YayMailTemplate::DEFAULT_DATA['global_header_settings'],
             'global_footer_settings'   => ! empty( $copy_template_data['global_footer_settings'] ) ? $copy_template_data['global_footer_settings'] : YayMailTemplate::DEFAULT_DATA['global_footer_settings'],
+            'title_color'              => $copy_template_data['title_color'] ?? '#000000',
         ];
 
         $this->model::update( $template_id, $update_data, true );

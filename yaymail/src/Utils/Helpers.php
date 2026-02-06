@@ -399,4 +399,86 @@ class Helpers {
     public static function is_true( $value ) {
         return filter_var( $value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE );
     }
+
+    /**
+     * Sanitize array data recursively
+     *
+     * @param mixed $data The data to sanitize.
+     * @return mixed Sanitized data.
+     */
+    public static function sanitize_array_recursive( $data ) {
+        if ( is_array( $data ) ) {
+            $sanitized = [];
+            foreach ( $data as $key => $value ) {
+                // Recursively sanitize values
+                $sanitized[ $key ] = self::sanitize_array_recursive( $value );
+            }
+            return $sanitized;
+        } elseif ( is_string( $data ) ) {
+            // Special handling for color values
+            if ( self::is_color_value( $data ) ) {
+                return sanitize_hex_color( $data );
+            }
+            // Regular text sanitization
+            return sanitize_text_field( $data );
+        }
+
+        return $data;
+    }
+
+    /**
+     * Check if a string is a color value
+     *
+     * @param string $value The value to check.
+     * @return bool True if it's a color value.
+     */
+    public static function is_color_value( $value ) {
+        // Check if it's a hex color (#RRGGBB or #RGB)
+        return preg_match( '/^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/', $value );
+    }
+
+    /**
+     * Check if a WooCommerce feature is enabled
+     *
+     * @param string $feature_id The feature ID to check.
+     * @return bool True if the feature is enabled, false otherwise.
+     */
+    public static function check_wc_feature( $feature_id = '' ) {
+        if ( empty( $feature_id ) || ! class_exists( '\Automattic\WooCommerce\Internal\Features\FeaturesController' ) ) {
+            return false;
+        }
+
+        try {
+            $feature_controller = wc_get_container()->get( \Automattic\WooCommerce\Internal\Features\FeaturesController::class );
+
+            if ( ! $feature_controller ) {
+                return false;
+            }
+
+            return $feature_controller->feature_is_enabled( $feature_id );
+        } catch ( \Throwable $e ) {
+            return false;
+        }
+    }
+
+    /**
+     * Get the URL of the email setting page
+     *
+     * @param string $email_id The email ID.
+     * @return string The URL of the email setting page.
+     */
+    public static function yaymail_get_url_email_setting_page( $email_id ) {
+        if ( ! is_string( $email_id ) ) {
+            return '';
+        }
+
+        return add_query_arg(
+            [
+                'page'    => 'wc-settings',
+                'tab'     => 'email',
+                'section' => 'wc_email_' . $email_id,
+            ],
+            admin_url( 'admin.php' )
+        );
+    }
 }

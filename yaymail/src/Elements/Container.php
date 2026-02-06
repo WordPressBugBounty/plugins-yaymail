@@ -28,7 +28,9 @@ class Container extends BaseElement {
             'icon'            => self::$icon,
             'group'           => 'general',
             'available'       => false,
-            'disabled_reason' => __( 'This element is available in YayMail Pro', 'yaymail' ),
+            'disabled_reason' => [
+                'html' => __( 'This element is available in YayMail Pro', 'yaymail' ),
+            ],
             'position'        => 145,
             'children'        => isset( $attributes['children'] ) ? $attributes['children'] : [],
             'status_info'     => [

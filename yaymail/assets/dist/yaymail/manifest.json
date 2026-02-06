@@ -1,11 +1,11 @@
 {
-  "_vendor_antd_form-4fafe7b8.js": {
-    "file": "vendor_antd_form-4fafe7b8.js"
+  "_vendor_antd_form-9acdc172.js": {
+    "file": "vendor_antd_form-9acdc172.js"
   },
-  "_vendor_antd_table-c6f87bf7.js": {
-    "file": "vendor_antd_table-c6f87bf7.js",
+  "_vendor_antd_table-0c0188e2.js": {
+    "file": "vendor_antd_table-0c0188e2.js",
     "imports": [
-      "_vendor_antd_form-4fafe7b8.js"
+      "_vendor_antd_form-9acdc172.js"
     ]
   },
   "assets/svgs/addons-icon.svg": {
@@ -80,6 +80,10 @@
     "file": "global-header-footer-icon-b86567bb.svg",
     "src": "assets/svgs/global-header-footer-icon.svg"
   },
+  "assets/svgs/global-variables-icon.svg": {
+    "file": "global-variables-icon-39244cad.svg",
+    "src": "assets/svgs/global-variables-icon.svg"
+  },
   "assets/svgs/go-pro-icon.svg": {
     "file": "go-pro-icon-ed5c06eb.svg",
     "src": "assets/svgs/go-pro-icon.svg"
@@ -99,6 +103,10 @@
   "assets/svgs/play.svg": {
     "file": "play-7b22e39e.svg",
     "src": "assets/svgs/play.svg"
+  },
+  "assets/svgs/preview-attachment-pro.svg": {
+    "file": "preview-attachment-pro-2d698b2e.svg",
+    "src": "assets/svgs/preview-attachment-pro.svg"
   },
   "assets/svgs/preview-email-icon.svg": {
     "file": "preview-email-icon-b2920e0b.svg",
@@ -136,6 +144,10 @@
     "file": "support-icon-29ace2fa.svg",
     "src": "assets/svgs/support-icon.svg"
   },
+  "assets/svgs/synced-patterns.svg": {
+    "file": "synced-patterns-1c6b0a15.svg",
+    "src": "assets/svgs/synced-patterns.svg"
+  },
   "assets/svgs/top-left-radius.svg": {
     "file": "top-left-radius-c9ed26fe.svg",
     "src": "assets/svgs/top-left-radius.svg"
@@ -165,17 +177,17 @@
     "src": "features/email-customizer/components/notice/notice-icon.svg"
   },
   "yaymail-main.css": {
-    "file": "yaymail-main-e20f7ff7.css",
+    "file": "yaymail-main-09390d33.css",
     "src": "yaymail-main.css"
   },
   "yaymail-main.tsx": {
     "css": [
-      "yaymail-main-e20f7ff7.css"
+      "yaymail-main-09390d33.css"
     ],
-    "file": "yaymail-main.tsx-65e0d167.js",
+    "file": "yaymail-main.tsx-523766ce.js",
     "imports": [
-      "_vendor_antd_form-4fafe7b8.js",
-      "_vendor_antd_table-c6f87bf7.js"
+      "_vendor_antd_form-9acdc172.js",
+      "_vendor_antd_table-0c0188e2.js"
     ],
     "isEntry": true,
     "src": "yaymail-main.tsx"
