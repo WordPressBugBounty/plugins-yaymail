@@ -13,6 +13,7 @@ use YayMail\Utils\SingletonTrait;
 use YayMail\PostTypes\TemplatePostType;
 use YayMail\Shortcodes\ShortcodesExecutor;
 use YayMail\SupportedPlugins;
+use YayMail\Utils\TemplateHelpers;
 
 /**
  * Template Model
@@ -55,7 +56,11 @@ class TemplateModel {
         if ( isset( $args['name'] ) ) {
             $template_name     = $args['name'];
             $template_meta_key = self::$meta_keys['name'];
-            $clauses['where'] .= " AND ( postmeta.meta_key='$template_meta_key' AND postmeta.meta_value = '$template_name' )";
+            $clauses['where'] .= $wpdb->prepare(
+                ' AND ( postmeta.meta_key=%s AND postmeta.meta_value = %s )',
+                $template_meta_key,
+                $template_name
+            );
         }
 
         $query_string = implode( ' ', $clauses );
@@ -290,7 +295,8 @@ class TemplateModel {
 
     public static function update( $template_id, $data, $is_save_revision = false ) {
         if ( isset( $data['elements'] ) && is_array( $data['elements'] ) && isset( self::$meta_keys['elements'] ) ) {
-            update_post_meta( $template_id, self::$meta_keys['elements'], $data['elements'] );
+            $elements_data = TemplateHelpers::sanitize_elements_recursive( $data['elements'] );
+            update_post_meta( $template_id, self::$meta_keys['elements'], $elements_data );
         }
 
         if ( ! empty( $data['background_color'] ) && isset( self::$meta_keys['background_color'] ) ) {

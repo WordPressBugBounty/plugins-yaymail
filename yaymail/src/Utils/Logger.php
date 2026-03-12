@@ -53,13 +53,17 @@ class Logger {
     }
 
     private function cleanup_old_logs() {
-        // Return early if filesystem is not available
-        if ( ! $this->wp_filesystem ) {
+        // Return early if filesystem is not available or log directory is not a directory
+        if ( ! $this->wp_filesystem || ! $this->wp_filesystem->is_dir( $this->log_directory ) ) {
             return;
         }
 
         // Get all log files in the directory
         $files = $this->wp_filesystem->dirlist( $this->log_directory );
+
+        if ( ! is_array( $files ) ) {
+            return;
+        }
 
         // Filter only log files
         $log_files = array_filter(

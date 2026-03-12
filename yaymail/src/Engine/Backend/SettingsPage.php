@@ -182,8 +182,11 @@ class SettingsPage {
                         'patterns'               => PatternService::get_instance()->get_list_data(),
                     ],
                     'colors'                         => [
-                        'default_background_color' => YAYMAIL_COLOR_BACKGROUND_DEFAULT,
-                        'default_text_link_color'  => YAYMAIL_COLOR_WC_DEFAULT,
+                        'default_background_color'         => YAYMAIL_COLOR_BACKGROUND_DEFAULT,
+                        'default_text_link_color'          => YAYMAIL_COLOR_WC_DEFAULT,
+                        'default_content_background_color' => YAYMAIL_COLOR_CONTENT_BACKGROUND_DEFAULT,
+                        'default_content_text_color'       => YAYMAIL_COLOR_CONTENT_TEXT_DEFAULT,
+                        'default_title_color'              => YAYMAIL_COLOR_TITLE_DEFAULT,
                     ],
                     'smtp'                           => [
                         'link_detail' => self_admin_url( 'plugin-install.php?tab=plugin-information&plugin=yaysmtp&section=description&TB_iframe=true&width=600&height=800' ),
@@ -271,6 +274,7 @@ class SettingsPage {
             wp_dequeue_script( 'real-media-library-lite-rml' );
             wp_dequeue_style( 'real-media-library-rml' );
             wp_dequeue_script( 'real-media-library-rml' );
+            wp_dequeue_style( 'real-category-library-admin' );
         }
     }
 }

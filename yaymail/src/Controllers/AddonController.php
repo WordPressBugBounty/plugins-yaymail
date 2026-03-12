@@ -21,6 +21,10 @@ class AddonController extends BaseController {
         $this->init_hooks();
     }
 
+    protected function permission_callback_admin_only() {
+        return current_user_can( 'activate_plugins' );
+    }
+
     protected function init_hooks() {
         register_rest_route(
             YAYMAIL_REST_NAMESPACE,
@@ -40,7 +44,7 @@ class AddonController extends BaseController {
                 [
                     'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => [ $this, 'exec_activate_addon' ],
-                    'permission_callback' => [ $this, 'permission_callback' ],
+                    'permission_callback' => [ $this, 'permission_callback_admin_only' ],
                 ],
             ]
         );
@@ -51,7 +55,7 @@ class AddonController extends BaseController {
                 [
                     'methods'             => \WP_REST_Server::EDITABLE,
                     'callback'            => [ $this, 'exec_deactivate_addon' ],
-                    'permission_callback' => [ $this, 'permission_callback' ],
+                    'permission_callback' => [ $this, 'permission_callback_admin_only' ],
                 ],
             ]
         );

@@ -14,6 +14,7 @@ use YayMail\TemplatePatterns\PatternsLoader;
 use YayMail\TemplatePatterns\SectionTemplatesLoader;
 use YayMail\PreviewEmail\PreviewEmailsLoader;
 use YayMail\Notices\NoticeMain;
+use YayMail\TemplateLibrary\TemplateLibraryLoader;
 
 /**
  * YayMail Plugin Initializer
@@ -96,6 +97,7 @@ class Initialize {
 
         SectionTemplatesLoader::get_instance();
         PatternsLoader::get_instance();
+        TemplateLibraryLoader::get_instance();
 
         /**
          * Initialize rest api

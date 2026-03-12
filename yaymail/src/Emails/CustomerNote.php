@@ -83,6 +83,6 @@ class CustomerNote extends BaseEmail {
     }
 
     public function get_template_path() {
-        return YAYMAIL_PLUGIN_PATH . 'templates/emails/customer-note.php';
+        return yaymail_get_template( 'emails/customer-note.php', '', YAYMAIL_PLUGIN_PATH . 'templates/' );
     }
 }

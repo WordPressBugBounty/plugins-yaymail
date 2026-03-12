@@ -110,6 +110,6 @@ class CustomerRefundedOrder extends BaseEmail {
     }
 
     public function get_template_path() {
-        return YAYMAIL_PLUGIN_PATH . 'templates/emails/customer-refunded-order.php';
+        return yaymail_get_template( 'emails/customer-refunded-order.php', '', YAYMAIL_PLUGIN_PATH . 'templates/' );
     }
 }

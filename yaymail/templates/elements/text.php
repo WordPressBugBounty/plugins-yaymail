@@ -35,7 +35,7 @@ $text_style = TemplateHelpers::get_style(
 ob_start();
 ?>
 
-    <div style="<?php echo esc_attr( $text_style ); ?>"><?php echo do_shortcode( $data['rich_text'] ); ?></div>
+    <div style="<?php echo esc_attr( $text_style ); ?>"><?php yaymail_kses_post_e( do_shortcode( $data['rich_text'] ) ); ?></div>
 <?php
 $element_content = ob_get_clean();
 

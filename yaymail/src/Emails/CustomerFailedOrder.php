@@ -69,6 +69,6 @@ class CustomerFailedOrder extends BaseEmail {
     }
 
     public function get_template_path() {
-        return YAYMAIL_PLUGIN_PATH . 'templates/emails/customer-failed-order.php';
+        return yaymail_get_template( 'emails/customer-failed-order.php', '', YAYMAIL_PLUGIN_PATH . 'templates/' );
     }
 }

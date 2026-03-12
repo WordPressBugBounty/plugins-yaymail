@@ -140,6 +140,6 @@ class RestAPI {
     }
 
     public function permission_callback() {
-        return true;
+        return current_user_can( 'manage_options' );
     }
 }

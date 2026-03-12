@@ -1,6 +1,8 @@
 <?php
 $dir                    = is_rtl() ? 'rtl' : 'ltr';
 $template_exclude_style = apply_filters( 'yaymail_template_exclude_style', [] );
+$yaymail_settings       = yaymail_settings();
+$container_width        = isset( $yaymail_settings['container_width'] ) && is_numeric( $yaymail_settings['container_width'] ) ? $yaymail_settings['container_width'] : '605';
 ?>
 <!DOCTYPE html>
 <html <?php language_attributes(); ?> dir="<?php echo esc_attr( $dir ); ?>">
@@ -14,8 +16,14 @@ $template_exclude_style = apply_filters( 'yaymail_template_exclude_style', [] );
                 h1{ font-family:inherit;text-shadow:unset;text-align:inherit;}
                 h2,h3{ font-family:inherit;color:inherit;text-align:inherit;}
                 .yaymail-inline-block {display: inline-block;}
-            .yaymail-customizer-email-template-container a {color: <?php echo esc_attr( $template->get_text_link_color() ); ?>}
-
+                .yaymail-customizer-email-template-container a {color: <?php echo esc_attr( $template->get_text_link_color() ); ?>}
+                .yaymail-order-details-table .wc-item-meta {list-style-type: none;}
+                /* Ensure container width remains constant on mobile */
+                @media screen and (max-width: 600px) {
+                    .yaymail-template-content-container {
+                        width: <?php echo esc_attr( $container_width ); ?>px !important;
+                    }
+                }
             /**
             * Media queries are not supported by all email clients, however they do work on modern mobile
             * Gmail clients and can help us achieve better consistency there.

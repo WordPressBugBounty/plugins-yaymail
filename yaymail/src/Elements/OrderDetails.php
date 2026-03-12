@@ -265,6 +265,21 @@ class OrderDetails extends BaseElement {
                     'default_value' => esc_html__( 'Discount:', 'woocommerce' ),
                     'type'          => 'content',
                 ],
+                'custom_footer_rows_breaker'      => [
+                    'component' => 'LineBreaker',
+                ],
+                'custom_footer_rows_group'        => [
+                    'component'   => 'GroupDefinition',
+                    'title'       => __( 'Custom Footer Rows', 'yaymail' ),
+                    'description' => __( 'Add custom rows to the order totals footer', 'yaymail' ),
+                ],
+                'custom_footer_rows'              => [
+                    'value_path'    => 'custom_footer_rows',
+                    'component'     => 'CustomFooterRowsEditor',
+                    'title'         => __( 'Custom Footer Rows', 'yaymail' ),
+                    'default_value' => isset( $attributes['custom_footer_rows'] ) ? $attributes['custom_footer_rows'] : [],
+                    'type'          => 'content',
+                ],
             ],
         ];
     }

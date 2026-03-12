@@ -22,6 +22,34 @@ class MigrationModel {
         $this->logger = new Logger();
     }
 
+    /**
+     * Safely unserialize values coming from backup/import data.
+     *
+     * @param mixed $value The value to unserialize.
+     * @return mixed
+     */
+    private function safe_maybe_unserialize( $value ) {
+        if ( ! is_string( $value ) ) {
+            return $value;
+        }
+
+        if ( ! function_exists( 'is_serialized' ) || ! is_serialized( $value ) ) {
+            return $value;
+        }
+
+        $unserialized = @unserialize( $value, [ 'allowed_classes' => false ] );
+
+        if ( false === $unserialized && 'b:0;' !== $value ) {
+            return $value;
+        }
+
+        if ( is_object( $unserialized ) ) {
+            return $value;
+        }
+
+        return $unserialized;
+    }
+
     public function get_onload_data() {
         return [
             'required_migrations' => $this->get_required_migration_names(),
@@ -96,6 +124,9 @@ class MigrationModel {
             $backed_up_posts    = $backup['posts'];
             $backed_up_postmeta = $backup['postmeta'];
             foreach ( $backed_up_posts as $post ) {
+                if ( ! isset( $post->post_type ) || 'yaymail_template' !== $post->post_type ) {
+                    continue;
+                }
                 $wpdb->insert(
                     $wpdb->posts,
                     [
@@ -134,14 +165,24 @@ class MigrationModel {
                 );
                 if ( ! empty( $postmetas_for_current_post ) ) {
                     foreach ( $postmetas_for_current_post as $postmeta ) {
-                        add_post_meta( $inserted_post_id, $postmeta->meta_key, maybe_unserialize( $postmeta->meta_value ) );
+                        if ( ! isset( $postmeta->meta_key ) || strpos( (string) $postmeta->meta_key, 'yaymail' ) === false ) {
+                            continue;
+                        }
+                        add_post_meta(
+                            $inserted_post_id,
+                            $postmeta->meta_key,
+                            $this->safe_maybe_unserialize( $postmeta->meta_value )
+                        );
                     }
                 }
             }//end foreach
 
             // Restore backed-up options
             foreach ( $backup['options'] as $option ) {
-                update_option( $option->option_name, maybe_unserialize( $option->option_value ) );
+                // Only restore options that belong to YayMail (same pattern as export)
+                if ( strpos( $option->option_name, 'yaymail' ) !== false ) {
+                    update_option( $option->option_name, $this->safe_maybe_unserialize( $option->option_value ) );
+                }
             }
 
             // Remove the succeeded migration log from db
@@ -264,7 +305,7 @@ class MigrationModel {
 
         $backups = [];
         foreach ( $backups_result as $backup ) {
-            $data      = maybe_unserialize( $backup->option_value );
+            $data      = $this->safe_maybe_unserialize( $backup->option_value );
             $backups[] = [
                 'created_date' => $data['created_date'] ?? 'created_date not found',
                 'name'         => $backup->option_name ?? 'backup name not found',

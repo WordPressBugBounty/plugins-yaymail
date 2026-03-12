@@ -82,6 +82,6 @@ class CancelledOrder extends BaseEmail {
     }
 
     public function get_template_path() {
-        return YAYMAIL_PLUGIN_PATH . 'templates/emails/admin-cancelled-order.php';
+        return yaymail_get_template( 'emails/admin-cancelled-order.php', '', YAYMAIL_PLUGIN_PATH . 'templates/' );
     }
 }

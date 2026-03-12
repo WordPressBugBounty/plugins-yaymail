@@ -251,6 +251,7 @@ class OrderDetailsRenderer {
         $show_sku           = isset( $yaymail_settings['show_product_sku'] ) ? boolval( $yaymail_settings['show_product_sku'] ) : false;
         $show_des           = isset( $yaymail_settings['show_product_description'] ) ? boolval( $yaymail_settings['show_product_description'] ) : false;
         $show_regular_price = isset( $yaymail_settings['show_product_regular_price'] ) ? boolval( $yaymail_settings['show_product_regular_price'] ) : false;
+        $show_hyper_links   = isset( $yaymail_settings['show_product_hyper_links'] ) ? boolval( $yaymail_settings['show_product_hyper_links'] ) : false;
         $image_style        = 'left' === $image_position ? $this->get_styles_product_image() . $style_image_position_left : $this->get_styles_product_image();
 
         $image_url             = wc_placeholder_img_src();
@@ -404,27 +405,148 @@ class OrderDetailsRenderer {
     }
 
     public function render_item_totals( $structure_footer ) {
+        $custom_rows = isset( $this->element_data['custom_footer_rows'] )
+            ? $this->element_data['custom_footer_rows']
+            : [];
+
+        // Group custom rows by zone
+        $rows_by_zone = [
+            'before_all'     => [],
+            'after_subtotal' => [],
+            'before_total'   => [],
+            'after_total'    => [],
+        ];
+
+        foreach ( $custom_rows as $row ) {
+            // Check if row is enabled - handle both boolean and string values
+            $is_enabled = isset( $row['enabled'] ) ? boolval( $row['enabled'] ) : false;
+
+            if ( $is_enabled && isset( $row['zone'] ) ) {
+                $zone = $row['zone'];
+                if ( isset( $rows_by_zone[ $zone ] ) ) {
+                    $rows_by_zone[ $zone ][] = $row;
+                }
+            }
+        }
+
+        // Sort each zone by order
+        foreach ( $rows_by_zone as &$zone_rows ) {
+            usort(
+                $zone_rows,
+                function( $a, $b ) {
+                    $order_a = isset( $a['order'] ) ? intval( $a['order'] ) : 0;
+                    $order_b = isset( $b['order'] ) ? intval( $b['order'] ) : 0;
+                    return $order_a - $order_b;
+                }
+            );
+        }
+
         $index = 0;
+
+        // ZONE 1: Before all
+        foreach ( $rows_by_zone['before_all'] as $row ) {
+            $this->render_custom_row( $row, $index++, $structure_footer );
+        }
+
+        // Process standard rows
         foreach ( $this->item_totals as $key => $total ) {
-            if ( in_array( $key, $structure_footer['hidden_rows'], true ) ) {
+            if ( in_array( $key, $structure_footer['hidden_rows'] ?? [], true ) ) {
                 continue;
             }
-            ++$index;
-            $tr_class              = "yaymail-order-detail-row-{$key}";
-            $can_apply_placeholder = $this->is_placeholder && isset( $this->titles[ $key ] );
-            $label                 = TemplateHelpers::get_content_as_placeholder( "{$key}_title", esc_html( isset( $this->titles[ $key ] ) ? $this->titles[ $key ] : $total['label'] ), $can_apply_placeholder );
-            $style                 = $this->get_styles() . TemplateHelpers::get_style(
-                [
-                    'border-top-width' => 1 === $index ? '4px' : '0',
-                ]
-            );
-            ?>
-            <tr class="<?php echo esc_attr( $tr_class ); ?>">
-                <th class="td" scope="row" colspan="<?php echo esc_attr( isset( $structure_footer['label_col_span'] ) ? $structure_footer['label_col_span'] : $this->colspan_value ); ?>" style="<?php echo esc_attr( $style ); ?>"><?php echo wp_kses_post( $label ); ?></th>
-                <td class="td" colspan="<?php echo esc_attr( isset( $structure_footer['value_col_span'] ) ? $structure_footer['value_col_span'] : 1 ); ?>" style="<?php echo esc_attr( $style ); ?>"><?php echo wp_kses_post( $total['value'] ); ?></td>
-            </tr>
-            <?php
+
+            // ZONE 2: After subtotal
+            if ( 'cart_subtotal' === $key ) {
+                $this->render_standard_row( $key, $total, $index++, $structure_footer );
+                foreach ( $rows_by_zone['after_subtotal'] as $row ) {
+                    $this->render_custom_row( $row, $index++, $structure_footer );
+                }
+                continue;
+            }
+
+            // ZONE 3: Before total
+            if ( 'order_total' === $key ) {
+                foreach ( $rows_by_zone['before_total'] as $row ) {
+                    $this->render_custom_row( $row, $index++, $structure_footer );
+                }
+                $this->render_standard_row( $key, $total, $index++, $structure_footer );
+                continue;
+            }
+
+            // Other rows - render normally
+            $this->render_standard_row( $key, $total, $index++, $structure_footer );
+        }//end foreach
+
+        // ZONE 4: After all (after total)
+        foreach ( $rows_by_zone['after_total'] as $row ) {
+            $this->render_custom_row( $row, $index++, $structure_footer );
         }
+    }
+
+    /**
+     * Render a standard order total row
+     *
+     * @param string $key              The order total key.
+     * @param array  $total            The order total data.
+     * @param int    $index            The row index.
+     * @param array  $structure_footer The footer structure data.
+     */
+    private function render_standard_row( $key, $total, $index, $structure_footer ) {
+        $tr_class              = "yaymail-order-detail-row-{$key}";
+        $can_apply_placeholder = $this->is_placeholder && isset( $this->titles[ $key ] );
+        $label                 = TemplateHelpers::get_content_as_placeholder( "{$key}_title", esc_html( isset( $this->titles[ $key ] ) ? $this->titles[ $key ] : $total['label'] ), $can_apply_placeholder );
+        $style                 = $this->get_styles() . TemplateHelpers::get_style(
+            [
+                'border-top-width' => 1 === $index ? '4px' : '0',
+            ]
+        );
+        $heading_style         = $style . 'font-size: ' . ( isset( $this->element_data['table_heading_font_size'] ) ? $this->element_data['table_heading_font_size'] : '14' ) . 'px;';
+        $content_style         = $style . 'font-size: ' . ( isset( $this->element_data['table_content_font_size'] ) ? $this->element_data['table_content_font_size'] : '14' ) . 'px;';
+        ?>
+        <tr class="<?php echo esc_attr( $tr_class ); ?>">
+            <th class="td" scope="row" colspan="<?php echo esc_attr( isset( $structure_footer['label_col_span'] ) ? $structure_footer['label_col_span'] : $this->colspan_value ); ?>" style="<?php echo esc_attr( $heading_style ); ?>"><?php echo wp_kses_post( $label ); ?></th>
+            <td class="td" colspan="<?php echo esc_attr( isset( $structure_footer['value_col_span'] ) ? $structure_footer['value_col_span'] : 1 ); ?>" style="<?php echo esc_attr( $content_style ); ?>"><?php echo wp_kses_post( $total['value'] ); ?></td>
+        </tr>
+        <?php
+    }
+
+    /**
+     * Render a custom footer row
+     *
+     * @param array $custom_row       The custom row data.
+     * @param int   $index            The row index.
+     * @param array $structure_footer The footer structure data.
+     */
+    private function render_custom_row( $custom_row, $index, $structure_footer ) {
+        // Process shortcodes in label and value
+        $label = isset( $custom_row['label'] ) ? do_shortcode( $custom_row['label'] ) : '';
+        $value = isset( $custom_row['value'] ) ? do_shortcode( $custom_row['value'] ) : '';
+
+        if ( empty( $label ) && empty( $value ) ) {
+            return;
+        }
+
+        $style = $this->get_styles() . TemplateHelpers::get_style(
+            [
+                'border-top-width' => 1 === $index ? '4px' : '0',
+            ]
+        );
+
+        $heading_style = $style . 'font-size: ' . ( isset( $this->element_data['table_heading_font_size'] ) ? $this->element_data['table_heading_font_size'] : '14' ) . 'px;';
+        $content_style = $style . 'font-size: ' . ( isset( $this->element_data['table_content_font_size'] ) ? $this->element_data['table_content_font_size'] : '14' ) . 'px;';
+
+        $row_id = isset( $custom_row['id'] ) ? esc_attr( $custom_row['id'] ) : '';
+        ?>
+        <tr class="yaymail-order-detail-row-custom custom-row-<?php echo esc_attr( $row_id ); ?>">
+            <th class="td" scope="row" colspan="<?php echo esc_attr( isset( $structure_footer['label_col_span'] ) ? $structure_footer['label_col_span'] : $this->colspan_value ); ?>"
+                style="<?php echo esc_attr( $heading_style ); ?>">
+                <?php echo wp_kses_post( $label ); ?>
+            </th>
+            <td class="td" colspan="<?php echo esc_attr( isset( $structure_footer['value_col_span'] ) ? $structure_footer['value_col_span'] : 1 ); ?>"
+                style="<?php echo esc_attr( $content_style ); ?>">
+                <?php echo wp_kses_post( $value ); ?>
+            </td>
+        </tr>
+        <?php
     }
 
     public function render_customer_note() {

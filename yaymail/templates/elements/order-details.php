@@ -120,6 +120,5 @@ ob_start();
 <?php
 $element_content = ob_get_contents();
 ob_end_clean();
-$element_content .= do_shortcode( isset( $data['rich_text'] ) ? $data['rich_text'] : '' );
-
+$element_content .= yaymail_kses_post( do_shortcode( isset( $data['rich_text'] ) ? $data['rich_text'] : '' ) );
 TemplateHelpers::wrap_element_content( $element_content, $element, $wrapper_style );

@@ -403,3 +403,24 @@ function yaymail_get_email_recipient_zone( $email ) {
     $recipients = array_unique( $recipients );
     return implode( ', ', $recipients );
 }
+
+if ( ! function_exists( 'yaymail_get_template' ) ) {
+    function yaymail_get_template( $template_name, $template_path = '', $default_path = '' ) {
+        if ( ! $template_path ) {
+            $template_path = 'yaymail';
+        }
+
+        $template = locate_template(
+            array(
+                trailingslashit( $template_path ) . $template_name,
+                $template_name,
+            )
+        );
+
+        if ( ! $template ) {
+            $template = $default_path . $template_name;
+        }
+
+        return $template;
+    }
+}

@@ -70,6 +70,6 @@ class CustomerResetPassword extends BaseEmail {
     }
 
     public function get_template_path() {
-        return YAYMAIL_PLUGIN_PATH . 'templates/emails/customer-reset-password.php';
+        return yaymail_get_template( 'emails/customer-reset-password.php', '', YAYMAIL_PLUGIN_PATH . 'templates/' );
     }
 }

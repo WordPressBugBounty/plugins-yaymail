@@ -86,6 +86,6 @@ class CustomerInvoice extends BaseEmail {
 
 
     public function get_template_path() {
-        return YAYMAIL_PLUGIN_PATH . 'templates/emails/customer-invoice.php';
+        return yaymail_get_template( 'emails/customer-invoice.php', '', YAYMAIL_PLUGIN_PATH . 'templates/' );
     }
 }

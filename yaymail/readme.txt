@@ -4,12 +4,12 @@ Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: woocommerce email customizer, email templates, email builder, woocommerce emails, drag and drop
 Requires at least: 3.0
 Tested up to: 6.9
-Stable tag: 4.3.2
+Stable tag: 4.3.4
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
-Customize WooCommerce email templates with an advanced drag-and-drop email builder. Works great with 70+ WooCommerce Email Customizer Addons.
+Customize WooCommerce email templates with an advanced drag-and-drop email builder. Works great with 80+ WooCommerce Email Customizer Addons.
 
 == Description ==
 
@@ -18,6 +18,11 @@ Customize WooCommerce email templates with an advanced drag-and-drop email build
 YayMail is the #1 Free drag-and-drop email template customizer that lets you design stunning, branded emails effortlessly. No coding required.  
 
 Plus, expand your design possibilities with premade blocks and extensive plugin compatibility.
+
+**NEW**
+
+- [Email Customizer for Woodmart Wishlist](https://yaycommerce.com/yaymail-addons/yaymail-addon-for-woodmart/)
+- [Email Customizer for Blocksy Emails](https://yaycommerce.com/yaymail-addons/yaymail-addon-for-blocksy/)
 
 👋 **Works with Any WooCommerce Themes**
 
@@ -34,13 +39,14 @@ Plus, expand your design possibilities with premade blocks and extensive plugin 
 Here's how YayMail makes email customization easy:
 
 - 30+ elements are built-in
-- Preview on desktop/mobile easily
-- You can select an order to preview the email with real data
+- Real-time visual editing with instant preview
+- Duplicate elements or sections in one click
+- You can select an order to check the email with the actual data
 - Personalize each email with tons of shortcodes
-- Comes with global settings
+- Custom logo, brand colors, and typography controls
 - Import/export templates quickly
 - One-click to send a test email
-- Premade patterns (Coming soon)
+- Premade patterns and blocks
 
 [**QUICK ADMIN DEMO**](https://demo.yaycommerce.com/try-yaymail/) | [**YAYMAIL PRO**](https://yaycommerce.com/yaymail-woocommerce-email-customizer/) 💎
  
@@ -48,7 +54,7 @@ Here's how YayMail makes email customization easy:
 
 [Free vs Pro](https://docs.yaycommerce.com/yaymail/compare-yaymail-free-and-pro) | [YayMail Addons](https://yaycommerce.com/yaymail-addons/)
 
-When combined with [**YayMail Premium Addons**](https://yaycommerce.com/yaymail-addons/), you will unlock the visual email designer integration to go with 70+ third-party WooCommerce plugins.
+When combined with [**YayMail Premium Addons**](https://yaycommerce.com/yaymail-addons/), you will unlock the visual email designer integration to go with 80+ third-party WooCommerce plugins.
 
 With YayMail, you can drag and drop elements to the email templates. Each element makes a block in the WooCommerce visual email editor. It is very easy to edit content and design email layouts, just like you do with the Gutenberg editor or Elementor page builder.
 
@@ -228,6 +234,22 @@ We offer single-site licenses and also unlimited site licenses to better support
 9. Break free from default WooCommerce styles, go bold with dark theme email templates
 
 == Changelog ==
+= Mar 12, 2026 - Version 4.3.4 =
+- New: Template Library Feature
+- New: Preset color feature in customizer settings (Pro)
+- New: Capability to override YayMail templates with theme
+- Updated: Shipping Note into Tracking Information element for Advanced Shipment Tracking
+- Improved: Responsive layout on desktop
+- Fixed: YayPricing installation
+- Fixed: Other plugins installation
+- Fixed: SQL Injection vulnerability
+- Fixed: PHP Object Injection vulnerability
+- Fixed: Missing default values for Title, Content Background, and Content Text Color
+- Fixed: Error when log directory/files do not exist
+- Fixed: Advanced Shipment Tracking elements/shortcodes not displaying (Pro)
+
+= Feb 12, 2026 - Version 4.3.3 =
+- Fixed: Wordfence vulnerabilities
 
 = Dec 17, 2025 - Version 4.3.2 =
 - Updated: Twitter icons

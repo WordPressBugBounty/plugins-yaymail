@@ -164,130 +164,178 @@ class OtherPluginsMenu {
 
     public static function get_other_plugins() {
         return [
-            'filebird'          => [
+            'filebird'                  => [
                 'slug'              => 'filebird',
                 'name'              => 'FileBird - WordPress Media Library Folders & File Manager',
                 'short_description' => 'Organize thousands of WordPress media files in folders / categories at ease.',
-                'icon'              => 'https://ps.w.org/filebird/assets/icon-128x128.gif?rev=2299145',
+                'icon'              => 'https://ps.w.org/filebird/assets/icon-128x128.gif',
                 'download_link'     => 'https://downloads.wordpress.org/plugin/filebird.zip',
                 'type'              => [ 'featured' ],
                 'version'           => 0,
             ],
-            'yaymail'           => [
+            'yaymail'                   => [
                 'slug'              => 'yaymail',
                 'name'              => 'YayMail - WooCommerce Email Customizer',
                 'short_description' => 'Customize WooCommerce email templates with live preview & drag and drop email builder.',
-                'icon'              => 'https://ps.w.org/yaymail/assets/icon-256x256.gif?rev=2599198',
+                'icon'              => 'https://ps.w.org/yaymail/assets/icon-256x256.gif',
                 'download_link'     => 'https://downloads.wordpress.org/plugin/yaymail.zip',
                 'type'              => [ 'featured', 'woocommerce' ],
                 'version'           => 0,
             ],
-            'yaycurrency'       => [
+            'yaycurrency'               => [
                 'slug'              => 'yaycurrency',
                 'name'              => 'YayCurrency - WooCommerce Multi-Currency Switcher',
                 'short_description' => 'WooCommerce Multi-Currency made easy, powerful, and flexible.',
-                'icon'              => 'https://ps.w.org/yaycurrency/assets/icon-256x256.png?rev=2550570',
+                'icon'              => 'https://ps.w.org/yaycurrency/assets/icon-256x256.png',
                 'download_link'     => 'https://downloads.wordpress.org/plugin/yaycurrency.zip',
                 'type'              => [ 'featured', 'woocommerce' ],
                 'version'           => 0,
             ],
-            'yayswatches'       => [
+            'yayswatches'               => [
                 'slug'              => 'yayswatches',
                 'name'              => 'YaySwatches - Variation Swatches for WooCommerce',
                 'short_description' => 'Optimize your variable product showcase with color swatches, image swatches, custom images, buttons, and more!',
-                'icon'              => 'https://ps.w.org/yayswatches/assets/icon-256x256.png?rev=2757155',
+                'icon'              => 'https://ps.w.org/yayswatches/assets/icon-256x256.png',
                 'download_link'     => 'https://downloads.wordpress.org/plugin/yayswatches.zip',
                 'type'              => [ 'woocommerce' ],
                 'version'           => 0,
             ],
-            'yayextra'          => [
+            'yayextra'                  => [
                 'slug'              => 'yayextra',
                 'name'              => 'YayExtra - WooCommerce Extra Product Options',
                 'short_description' => 'Add WooCommerce product options like personal engraving, print-on-demand items, gifts, custom canvas prints, and personalized products.',
-                'icon'              => 'https://ps.w.org/yayextra/assets/icon-256x256.png?rev=2776349',
+                'icon'              => 'https://ps.w.org/yayextra/assets/icon-256x256.png',
                 'download_link'     => 'https://downloads.wordpress.org/plugin/yayextra.zip',
                 'type'              => [ 'woocommerce' ],
                 'version'           => 0,
             ],
-            'yaypricing'        => [
+            'yaypricing'                => [
                 'slug'              => 'yaypricing',
                 'name'              => 'YayPricing - WooCommerce Dynamic Pricing & Discounts',
                 'short_description' => 'Offer automatic pricing and discounts to design a powerful marketing strategy for your WooCommerce store.',
-                'icon'              => 'https://yaycommerce.com/wp-content/uploads/2022/11/yaypricing-256x256-1.png',
-                'download_link'     => 'https://yaycommerce.com/yaypricing-woocommerce-dynamic-pricing-and-discounts/',
+                'icon'              => 'https://ps.w.org/yaypricing/assets/icon-256x256.png',
+                'download_link'     => 'https://downloads.wordpress.org/plugin/yaypricing.zip',
                 'type'              => [ 'woocommerce' ],
                 'version'           => 0,
             ],
-            'yaysmtp'           => [
+            'yaysmtp'                   => [
                 'slug'              => 'yaysmtp',
                 'name'              => 'YaySMTP - Simple WP SMTP Mail',
                 'short_description' => 'Send WordPress emails successfully with WP Mail SMTP via your favorite Mailer.',
-                'icon'              => 'https://ps.w.org/yaysmtp/assets/icon-256x256.png?rev=2437984',
+                'icon'              => 'https://ps.w.org/yaysmtp/assets/icon-256x256.png',
                 'download_link'     => 'https://downloads.wordpress.org/plugin/yaysmtp.zip',
                 'type'              => [ 'featured', 'marketing' ],
                 'version'           => 0,
             ],
-            'wp-whatsapp'       => [
+            'yayreviews'                => [
+                'slug'              => 'yay-customer-reviews-woocommerce',
+                'name'              => 'YayReviews – Advanced Customer Reviews for WooCommerce',
+                'short_description' => 'YayReviews helps online stores collect, manage, and display authentic customer feedback.',
+                'icon'              => 'https://ps.w.org/yay-customer-reviews-woocommerce/assets/icon-256x256.png',
+                'download_link'     => 'https://downloads.wordpress.org/plugin/yay-customer-reviews-woocommerce.zip',
+                'type'              => [ 'featured', 'woocommerce' ],
+                'version'           => 0,
+            ],
+            'yay-wholesale-b2b'         => [
+                'slug'              => 'yay-wholesale-b2b',
+                'name'              => 'Yay Wholesale B2B for WooCommerce',
+                'short_description' => 'Yay Wholesale & B2B for WooCommerce is a powerful plugin that allows you to sell your products to wholesale customers and businesses.',
+                'icon'              => 'https://ps.w.org/yay-wholesale-b2b/assets/icon-256x256.png',
+                'download_link'     => 'https://downloads.wordpress.org/plugin/yay-wholesale-b2b.zip',
+                'type'              => [ 'featured', 'woocommerce' ],
+                'version'           => 0,
+            ],
+            'yayboost-sales-booster-for-woocommerce' => [
+                'slug'              => 'yayboost-sales-booster-for-woocommerce',
+                'name'              => 'YayBoost – Sales Booster for WooCommerce',
+                'short_description' => 'Boost conversions with smart sales triggers',
+                'icon'              => 'https://ps.w.org/yayboost-sales-booster-for-woocommerce/assets/icon-256x256.png',
+                'download_link'     => 'https://downloads.wordpress.org/plugin/yayboost-sales-booster-for-woocommerce.zip',
+                'type'              => [ 'featured', 'woocommerce' ],
+                'version'           => 0,
+            ],
+            'wp-whatsapp'               => [
                 'slug'              => 'wp-whatsapp',
                 'name'              => 'WP Chat App',
                 'short_description' => 'Integrate WhatsApp experience directly into your WordPress website.',
-                'icon'              => 'https://ps.w.org/wp-whatsapp/assets/icon-256x256.png?rev=2725670',
+                'icon'              => 'https://ps.w.org/wp-whatsapp/assets/icon-256x256.png',
                 'download_link'     => 'https://downloads.wordpress.org/plugin/wp-whatsapp.zip',
                 'type'              => [ 'featured' ],
                 'version'           => 0,
             ],
-            'filester'          => [
+            'filebird-document-library' => [
+                'slug'              => 'filebird-document-library',
+                'name'              => 'FileBird Document Library',
+                'short_description' => 'Create and publish document galleries using Gutenberg and FileBird folders.',
+                'icon'              => 'https://ps.w.org/filebird-document-library/assets/icon-256x256.png',
+                'download_link'     => 'https://downloads.wordpress.org/plugin/filebird-document-library.zip',
+                'url'               => 'https://wordpress.org/plugins/filebird-document-library/',
+                'type'              => [ 'management' ],
+                'version'           => 0,
+            ],
+            'filester'                  => [
                 'slug'              => 'filester',
                 'name'              => 'Filester - File Manager Pro',
                 'short_description' => 'Best WordPress file manager without FTP access. Clean design. No need to upgrade because this…',
-                'icon'              => 'https://ps.w.org/filester/assets/icon-256x256.gif?rev=2305540',
+                'icon'              => 'https://ps.w.org/filester/assets/icon-256x256.gif',
                 'download_link'     => 'https://downloads.wordpress.org/plugin/filester.zip',
                 'type'              => [ 'management' ],
                 'version'           => 0,
             ],
-            'cf7-multi-step'    => [
+            'cf7-multi-step'            => [
                 'slug'              => 'cf7-multi-step',
                 'name'              => 'Multi Step for Contact Form 7',
                 'short_description' => 'Break your looooooong form into user-friendly steps.',
-                'icon'              => 'https://ps.w.org/cf7-multi-step/assets/icon-256x256.png?rev=1994366',
+                'icon'              => 'https://ps.w.org/cf7-multi-step/assets/icon-256x256.png',
                 'download_link'     => 'https://downloads.wordpress.org/plugin/cf7-multi-step.zip',
                 'type'              => [ 'management' ],
                 'version'           => 0,
             ],
-            'cf7-database'      => [
+            'cf7-database'              => [
                 'slug'              => 'cf7-database',
                 'name'              => 'Database for Contact Form 7',
                 'short_description' => 'Automatically save all data submitted via Contact Form 7 to your database.',
-                'icon'              => 'https://ps.w.org/cf7-database/assets/icon-128x128.png?rev=1614091',
+                'icon'              => 'https://ps.w.org/cf7-database/assets/icon-256x256.png',
                 'download_link'     => 'https://downloads.wordpress.org/plugin/cf7-database.zip',
                 'type'              => [ 'management' ],
                 'version'           => 0,
             ],
-            'wp-duplicate-page' => [
+            'wp-duplicate-page'         => [
                 'slug'              => 'wp-duplicate-page',
                 'name'              => 'WP Duplicate Page',
                 'short_description' => 'Clone WordPress page, post, custom post types.',
-                'icon'              => 'https://ps.w.org/wp-duplicate-page/assets/icon-256x256.gif?rev=2432962',
+                'icon'              => 'https://ps.w.org/wp-duplicate-page/assets/icon-256x256.gif',
                 'download_link'     => 'https://downloads.wordpress.org/plugin/wp-duplicate-page.zip',
                 'type'              => [ 'management' ],
                 'version'           => 0,
             ],
-            'notibar'           => [
+            'notibar'                   => [
                 'slug'              => 'notibar',
                 'name'              => 'Notibar - Notification Bar for WordPress',
                 'short_description' => 'Customizer for sticky header, notification bar, alert, promo code, marketing campaign, top banner.',
-                'icon'              => 'https://ps.w.org/notibar/assets/icon-256x256.png?rev=2387855',
+                'icon'              => 'https://ps.w.org/notibar/assets/icon-256x256.png',
                 'download_link'     => 'https://downloads.wordpress.org/plugin/notibar.zip',
                 'type'              => [ 'marketing' ],
                 'version'           => 0,
             ],
-            'yayreviews'        => [
-                'slug'              => 'yay-customer-reviews-woocommerce',
-                'name'              => 'YayReviews – Advanced Customer Reviews for WooCommerce',
-                'short_description' => 'Collect more customer reviews through automated reminders and rewards.',
-                'icon'              => 'https://ps.w.org/yay-customer-reviews-woocommerce/assets/icon-256x256.png?rev=3340109',
-                'download_link'     => 'https://downloads.wordpress.org/plugin/yay-customer-reviews-woocommerce.zip',
-                'type'              => [ 'woocommerce' ],
+            'fastdup'                   => [
+                'slug'              => 'fastdup',
+                'name'              => 'FastDup – Fastest WordPress Migration & Duplicator',
+                'short_description' => 'Backup and migrate your WordPress sites.',
+                'icon'              => 'https://ps.w.org/fastdup/assets/icon-256x256.png',
+                'download_link'     => 'https://downloads.wordpress.org/plugin/fastdup.zip',
+                'url'               => 'https://wordpress.org/plugins/fastdup/',
+                'version'           => 0,
+                'type'              => [ 'management' ],
+            ],
+            'ninja-gdpr-compliance'     => [
+                'slug'              => 'ninja-gdpr-compliance',
+                'name'              => 'GDPR CCPA Compliance & Cookie Consent Banner',
+                'short_description' => 'Protect personal user data and privacy of EU citizens.',
+                'icon'              => 'https://ps.w.org/ninja-gdpr-compliance/assets/icon-128x128.png',
+                'download_link'     => 'https://downloads.wordpress.org/plugin/ninja-gdpr-compliance.zip',
+                'url'               => 'https://wordpress.org/plugins/ninja-gdpr-compliance/',
+                'type'              => [ 'management' ],
                 'version'           => 0,
             ],
         ];
@@ -532,6 +580,21 @@ class OtherPluginsMenu {
                 $exist_pro_ver = 'dynamic-pricing-discounts/yaypricing.php';
             }
         }
+        if ( 'yay-customer-reviews-woocommerce' === $plugin_detail['slug'] ) {
+			if ( array_key_exists( 'yayreviews-pro/yay-customer-reviews-woocommerce.php', $all_plugin ) ) {
+				$exist_pro_ver = 'yayreviews-pro/yay-customer-reviews-woocommerce.php';
+			}
+		}
+		if ( 'yay-wholesale-b2b' === $plugin_detail['slug'] ) {
+			if ( array_key_exists( 'yay-wholesale-b2b-pro/yay-wholesale-b2b.php', $all_plugin ) ) {
+				$exist_pro_ver = 'yay-wholesale-b2b-pro/yay-wholesale-b2b.php';
+			}
+		}
+        if ( 'yayboost-sales-booster-for-woocommerce' === $plugin_detail['slug'] ) {
+            if ( array_key_exists( 'yayboost-pro/yayboost-sales-booster-for-woocommerce.php', $all_plugin ) ) {
+                $exist_pro_ver = 'yayboost-pro/yayboost-sales-booster-for-woocommerce.php';
+            }
+        }
         if ( 'cf7-multi-step' === $plugin_detail['slug'] ) {
             $exist_pro_ver = array_key_exists( 'contact-form-7-multi-step-pro/contact-form-7-multi-step.php', $all_plugin ) === true ? 'contact-form-7-multi-step-pro/contact-form-7-multi-step.php' : false;
         }
@@ -540,15 +603,6 @@ class OtherPluginsMenu {
         }
         if ( 'wp-whatsapp' === $plugin_detail['slug'] ) {
             $exist_pro_ver = array_key_exists( 'whatsapp-for-wordpress/whatsapp.php', $all_plugin ) === true ? 'whatsapp-for-wordpress/whatsapp.php' : false;
-        }
-        if ( 'yay-customer-reviews-woocommerce' === $plugin_detail['slug'] ) {
-            if ( array_key_exists( 'yayreviews-pro/yay-customer-reviews-woocommerce.php', $all_plugin ) ) {
-                $exist_pro_ver = 'yayreviews-pro/yay-customer-reviews-woocommerce.php';
-            } elseif ( array_key_exists( 'yay-customer-reviews-woocommerce/yay-customer-reviews-woocommerce.php', $all_plugin ) ) {
-                $exist_pro_ver = 'yay-customer-reviews-woocommerce/yay-customer-reviews-woocommerce.php';
-            } elseif ( array_key_exists( 'yayreviews/yay-customer-reviews-woocommerce.php', $all_plugin ) ) {
-                $exist_pro_ver = 'yayreviews/yay-customer-reviews-woocommerce.php';
-            }
         }
         return $exist_pro_ver;
     }

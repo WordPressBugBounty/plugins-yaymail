@@ -339,4 +339,27 @@ class TemplateHelpers {
             $border['color']
         );
     }
+
+    public static function sanitize_elements_recursive( $elements ) {
+        if ( ! is_array( $elements ) ) {
+            return [];
+        }
+
+        foreach ( $elements as &$element ) {
+            if ( isset( $element['data']['rich_text'] ) ) {
+                $element['data']['rich_text'] = yaymail_kses_post( $element['data']['rich_text'], $allowed );
+            }
+
+            if ( isset( $element['data']['title'] ) ) {
+                $element['data']['title'] = yaymail_kses_post( $element['data']['title'] );
+            }
+
+            // Recursive cho nested elements
+            if ( isset( $element['children'] ) ) {
+                $element['children'] = self::sanitize_elements_recursive( $element['children'] );
+            }
+        }
+
+        return $elements;
+    }
 }

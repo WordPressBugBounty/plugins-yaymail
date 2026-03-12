@@ -87,10 +87,51 @@ class Ajax {
 
             $source_version = $imported_data->version;
 
+            $imported_posts = array_values(
+                array_filter(
+                    $imported_data->posts,
+                    function( $post ) {
+                        return isset( $post->post_type ) && 'yaymail_template' === $post->post_type;
+                    }
+                )
+            );
+
+            $imported_postmeta = array_values(
+                array_filter(
+                    $imported_data->postmeta,
+                    function( $postmeta ) use ( $imported_posts ) {
+                        if ( empty( $imported_posts ) ) {
+                            return false;
+                        }
+                        if ( ! isset( $postmeta->post_id ) || ! isset( $postmeta->meta_key ) ) {
+                            return false;
+                        }
+                        if ( strpos( (string) $postmeta->meta_key, 'yaymail' ) === false ) {
+                            return false;
+                        }
+                        foreach ( $imported_posts as $post ) {
+                            if ( isset( $post->ID ) && (int) $post->ID === (int) $postmeta->post_id ) {
+                                return true;
+                            }
+                        }
+                        return false;
+                    }
+                )
+            );
+
+            $imported_options = array_values(
+                array_filter(
+                    $imported_data->options,
+                    function( $option ) {
+                        return isset( $option->option_name ) && strpos( (string) $option->option_name, 'yaymail' ) !== false;
+                    }
+                )
+            );
+
             $backup_data = [
-                'posts'        => $imported_data->posts,
-                'postmeta'     => $imported_data->postmeta,
-                'options'      => $imported_data->options,
+                'posts'        => $imported_posts,
+                'postmeta'     => $imported_postmeta,
+                'options'      => $imported_options,
                 'created_date' => $imported_data->created_date ?? current_datetime()->format( 'Y-m-d H:i:s' ),
                 'name'         => '_yaymail_import_backup_' . $source_version,
                 'version'      => $source_version,
@@ -231,6 +272,11 @@ class Ajax {
         if ( ! wp_verify_nonce( $nonce, 'yaymail_frontend_nonce' ) ) {
             return wp_send_json_error( [ 'mess' => __( 'Verify nonce failed', 'yaymail' ) ] );
         }
+
+        if ( ! current_user_can( 'install_plugins' ) && ! current_user_can( 'activate_plugins' ) ) {
+            return wp_send_json_error( [ 'mess' => __( 'You do not have permission to install plugins', 'yaymail' ) ] );
+        }
+
         try {
             $is_installed = $this->process_plugin_installer( 'yaysmtp' );
 

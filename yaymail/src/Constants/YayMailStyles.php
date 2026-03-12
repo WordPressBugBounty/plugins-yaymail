@@ -34,5 +34,17 @@ class YayMailStyles {
         if ( ! defined( 'YAYMAIL_DEFAULT_FAMILY' ) ) {
             define( 'YAYMAIL_DEFAULT_FAMILY', 'Helvetica,Roboto,Arial,sans-serif' );
         }
+
+        if ( ! defined( 'YAYMAIL_COLOR_CONTENT_BACKGROUND_DEFAULT' ) ) {
+            define( 'YAYMAIL_COLOR_CONTENT_BACKGROUND_DEFAULT', '#ffffff' );
+        }
+
+        if ( ! defined( 'YAYMAIL_COLOR_CONTENT_TEXT_DEFAULT' ) ) {
+            define( 'YAYMAIL_COLOR_CONTENT_TEXT_DEFAULT', '#000000' );
+        }
+
+        if ( ! defined( 'YAYMAIL_COLOR_TITLE_DEFAULT' ) ) {
+            define( 'YAYMAIL_COLOR_TITLE_DEFAULT', '#873EFF' );
+        }
     }
 }

@@ -82,6 +82,6 @@ class CustomerNewAccount extends BaseEmail {
     }
 
     public function get_template_path() {
-        return YAYMAIL_PLUGIN_PATH . 'templates/emails/customer-new-account.php';
+        return yaymail_get_template( 'emails/customer-new-account.php', '', YAYMAIL_PLUGIN_PATH . 'templates/' );
     }
 }

@@ -53,7 +53,7 @@ if ( ! empty( $template ) ) :
     <table style="<?php echo esc_attr( $style_container_wrap ); ?>" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
         <tr>
             <td style="padding: 0;">
-                <table class="yaymail-template-content-container" style="width: <?php echo esc_attr( $container_width ); ?>px; margin: auto;border-spacing: 0;">
+                <table class="yaymail-template-content-container" style="width: 100%; max-width: <?php echo esc_attr( $container_width ); ?>px; margin: auto;border-spacing: 0;">
                     <tr>
                         <td style="padding: 0;">
                             <table style="<?php echo esc_attr( $style_container ); ?>" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" class="yaymail-customizer-email-template-container <?php echo esc_attr( 'yaymail-template-' . $template->get_name() ); ?>">
