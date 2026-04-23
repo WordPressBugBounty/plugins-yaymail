@@ -6,6 +6,7 @@ use YayMail\Models\TemplateModel;
 use YayMail\Shortcodes\ShortcodesExecutor;
 use YayMail\Models\SettingModel;
 use YayMail\YayMailTemplate;
+use YayMail\Utils\TemplateHelpers;
 
 
 defined( 'ABSPATH' ) || exit;
@@ -44,6 +45,8 @@ class TemplateRenderer {
             'settings'    => yaymail_settings(),
         ];
 
-        return yaymail_get_content( 'templates/emails/email-content.php', $args );
+        $content = yaymail_get_content( 'templates/emails/email-content.php', $args );
+
+        return TemplateHelpers::replace_color_paths( $content );
     }
 }

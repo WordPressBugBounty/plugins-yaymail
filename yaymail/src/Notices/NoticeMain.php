@@ -5,9 +5,7 @@ namespace YayMail\Notices;
 use YayMail\Utils\SingletonTrait;
 use YayMail\Notices\Ajax;
 use YayMail\SupportedPlugins;
-
 use YayMail\Utils\Logger;
-
 
 /**
  *
@@ -31,6 +29,9 @@ class NoticeMain {
     }
 
     protected function init_hooks() {
+        if ( ! function_exists( 'YayMail\init' ) ) {
+            return;
+        }
         // Show recommendation notice
         if ( time() >= (int) get_option( 'yaymail_next_recommendation_suggest_addons_notice_time' ) ) {
             add_action( 'admin_notices', [ $this, 'render_suggest_addons_notice' ] );
@@ -42,7 +43,7 @@ class NoticeMain {
 
         if ( is_admin() ) {
             if ( time() >= (int) get_option( 'yaymail_next_recommendation_notice_time' ) || time() >= (int) get_option( 'yaymail_next_recommendation_suggest_addons_notice_time' ) || time() >= (int) get_option( 'yaymail_next_recommendation_upgrade_notice_time' ) ) {
-                wp_enqueue_script( 'yaymail-notice', YAYMAIL_PLUGIN_URL . 'assets/scripts/notice.js', [ 'jquery' ], YAYMAIL_VERSION, false );
+                wp_enqueue_script( 'yaymail-notice', YAYMAIL_PLUGIN_URL . 'assets/scripts/notice.js', [ 'jquery' ], yaymail_version(), false );
             }
 
             wp_localize_script(

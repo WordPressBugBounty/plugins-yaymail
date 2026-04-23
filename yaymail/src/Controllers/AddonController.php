@@ -5,6 +5,7 @@ namespace YayMail\Controllers;
 use YayMail\Abstracts\BaseController;
 use YayMail\Models\AddonModel;
 use YayMail\Models\SettingModel;
+use YayMail\Utils\Helpers;
 use YayMail\Utils\SingletonTrait;
 
 /**
@@ -74,7 +75,86 @@ class AddonController extends BaseController {
     }
 
     public function get_addons() {
-        return array_values( AddonModel::get_all() );
+        $data = AddonModel::get_all();
+        $data = $this->filter_addons_by_platform( $data );
+        $data = $this->reorder_addons_for_catalog( $data );
+
+        return array_values( $data );
+    }
+
+    /**
+     * Keep Addons REST list aligned with active YayMail Woo vs Yay WP Pro (same idea as addons_platform in localize).
+     *
+     * @param array<string, array<string, mixed>> $data Addon rows keyed by namespace.
+     * @return array<string, array<string, mixed>>
+     */
+    private function filter_addons_by_platform( array $data ): array {
+        $has_wc = Helpers::is_yaymail_woocommerce_core_active();
+        $has_wp = Helpers::is_yaymail_wp_active();
+
+        if ( ( $has_wc && $has_wp ) || ( ! $has_wc && ! $has_wp ) ) {
+            return $data;
+        }
+
+        return array_filter(
+            $data,
+            function ( $addon ) use ( $has_wc, $has_wp ) {
+                $categories             = isset( $addon['categories'] ) && is_array( $addon['categories'] ) ? $addon['categories'] : [];
+                $has_wordpress_category = in_array( 'wordpress', $categories, true );
+
+                if ( $has_wc && ! $has_wp ) {
+                    return ! $has_wordpress_category;
+                }
+                if ( $has_wp && ! $has_wc ) {
+                    return $has_wordpress_category;
+                }
+
+                return true;
+            }
+        );
+    }
+
+    /**
+     * Pin core Woo addons first; append all others in original order (WordPress-catalog addons follow).
+     *
+     * @param array<string, array<string, mixed>> $data Addon rows keyed by namespace.
+     * @return array<string, array<string, mixed>>
+     */
+    private function reorder_addons_for_catalog( array $data ): array {
+        $pinned_keys = [
+            'YayMailAddonConditionalLogic',
+            'YayMailAddonWcSubscription',
+            'YayMailAddonYITHWishlist',
+        ];
+
+        $pinned_set = array_flip( $pinned_keys );
+
+        $head      = [];
+        $wordpress = [];
+        $others    = [];
+
+        foreach ( $pinned_keys as $key ) {
+            if ( isset( $data[ $key ] ) ) {
+                $head[ $key ] = $data[ $key ];
+            }
+        }
+
+        foreach ( $data as $key => $addon ) {
+            if ( isset( $pinned_set[ $key ] ) ) {
+                continue;
+            }
+
+            $categories   = isset( $addon['categories'] ) && is_array( $addon['categories'] ) ? $addon['categories'] : [];
+            $is_wordpress = in_array( 'wordpress', $categories, true );
+
+            if ( $is_wordpress ) {
+                $wordpress[ $key ] = $addon;
+            } else {
+                $others[ $key ] = $addon;
+            }
+        }
+
+        return $head + $wordpress + $others;
     }
 
     public function activate_addon( \WP_REST_Request $request ) {

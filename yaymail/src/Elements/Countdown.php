@@ -25,7 +25,7 @@ class Countdown extends BaseElement {
         return [
             'id'              => uniqid(),
             'type'            => self::$type,
-            'name'            => __( 'Countdown (support for Google SMTP)', 'yaymail' ),
+            'name'            => __( 'Countdown', 'yaymail' ),
             'icon'            => self::$icon,
             'group'           => 'basic',
             'available'       => false,

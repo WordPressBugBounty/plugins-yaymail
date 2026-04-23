@@ -34,28 +34,31 @@ class EmailsLoader {
 
         $yaymail_emails = YayMailEmails::get_instance();
 
-        $yaymail_emails->register( \YayMail\Emails\NewOrder::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\CancelledOrder::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\CustomerCancelledOrder::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\FailedOrder::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\CustomerFailedOrder::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\CustomerOnHoldOrder::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\CustomerProcessingOrder::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\CustomerCompletedOrder::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\CustomerRefundedOrder::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\CustomerInvoice::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\CustomerNote::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\CustomerResetPassword::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\CustomerNewAccount::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\GlobalHeaderFooter::get_instance() );
+        if ( yaymail_is_wc_installed() ) {
+            $yaymail_emails->register( \YayMail\Emails\NewOrder::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CancelledOrder::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerCancelledOrder::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\FailedOrder::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerFailedOrder::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerOnHoldOrder::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerProcessingOrder::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerCompletedOrder::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerRefundedOrder::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerInvoice::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerNote::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerResetPassword::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerNewAccount::get_instance() );
+            /**
+             * POS emails, WC 9.9.3
+             *
+             * @since 4.0.6
+             */
 
-        /**
-         * POS emails, WC 9.9.3
-         *
-         * @since 4.0.6
-         */
-        $yaymail_emails->register( \YayMail\Emails\CustomerPOSCompletedOrder::get_instance() );
-        $yaymail_emails->register( \YayMail\Emails\CustomerPOSRefundedOrder::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerPOSCompletedOrder::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerPOSRefundedOrder::get_instance() );
+        }//end if
+
+        $yaymail_emails->register( \YayMail\Emails\GlobalHeaderFooter::get_instance() );
 
         do_action( 'yaymail_register_emails', $yaymail_emails );
     }

@@ -2,6 +2,7 @@
 defined( 'ABSPATH' ) || exit;
 
 use YayMail\Utils\TemplateHelpers;
+use YayMail\Utils\Helpers;
 
 if ( empty( $args['element'] ) ) {
     return;
@@ -55,7 +56,8 @@ $title_style = TemplateHelpers::get_style(
     ]
 );
 
-$is_layout_type_modern = isset( $data['layout_type'] ) && 'modern' === $data['layout_type'];
+$is_layout_type_modern   = isset( $data['layout_type'] ) && 'modern' === $data['layout_type'];
+$is_responsive_on_mobile = Helpers::is_true( $data['responsive_on_mobile'] ?? false );
 
 ob_start();
 ?>
@@ -68,11 +70,21 @@ ob_start();
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
-        <?php
-    }//end if
-    ?>
+    <?php } ?>
+
+    /* Responsive layout: stack columns on smaller screens */
+    <?php if ( $is_responsive_on_mobile ) { ?>
+    @media only screen and (max-width: 400px) {
+        .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-billing-address-column,
+        .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-shipping-address-column {
+            display: block;
+            width: 100% !important;
+            margin-bottom: 10px;
+        }
+    }
+    <?php } ?>
 </style>
-<table class="yaymail-table-billing-shipping-address" cellpadding="0" cellspacing="0" border="0" style="<?php echo esc_attr( $table_style ); ?>">
+<table class="yaymail-table-billing-shipping-address" cellpadding="0" cellspacing="0" border="0" style="<?php echo esc_attr( $table_style ); ?>"<?php echo $is_responsive_on_mobile ? ' data-responsive-type="true"' : ''; ?>>
     <tbody>
         <tr>
             <?php if ( ! empty( $billing_address_html ) ) : ?>

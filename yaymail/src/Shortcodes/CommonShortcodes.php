@@ -140,11 +140,11 @@ class CommonShortcodes extends BaseShortcode {
 
         $text_link = isset( $shortcode_atts['text_link'] ) ? $shortcode_atts['text_link'] : TemplateHelpers::get_content_as_placeholder( 'text_link', __( 'My Account', 'yaymail' ), $is_placeholder );
 
-        return '<a href="' . esc_url( wc_get_page_permalink( 'myaccount' ) ) . '"> ' . $text_link . ' </a>';
+        return '<a href="' . esc_url( function_exists( 'WC' ) && defined( 'YAYMAIL_VERSION' ) ? wc_get_page_permalink( 'myaccount' ) : '' ) . '"> ' . $text_link . ' </a>';
     }
 
     public function yaymail_user_account_url() {
-        return esc_url( wc_get_page_permalink( 'myaccount' ) );
+        return esc_url( function_exists( 'WC' ) && defined( 'YAYMAIL_VERSION' ) ? wc_get_page_permalink( 'myaccount' ) : '' );
     }
 
     public function yaymail_user_email( $data ) {

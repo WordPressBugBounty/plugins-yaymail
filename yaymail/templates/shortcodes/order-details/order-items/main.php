@@ -35,7 +35,10 @@ $purchase_note      = true;
 
 $is_layout_type_modern = isset( $element_data['layout_type'] ) && 'modern' === $element_data['layout_type'];
 
+$count_items = 0;
+
 foreach ( $order_items as $item_id => $item ) :
+    ++$count_items;
     $product               = $item->get_product();
     $sku                   = '';
     $purchase_note         = '';
@@ -61,9 +64,13 @@ foreach ( $order_items as $item_id => $item ) :
         $product_hyper_link    = "<a href='{$product_permalink}' target='_blank'>{$product_name}</a>";
         $product_regular_price = isset( $product->get_data()['regular_price'] ) ? (float) $product->get_data()['regular_price'] : '';
     }
+    $row_classes = 'order_item';
+    if ( $count_items === count( $order_items ) ) {
+        $row_classes .= ' yaymail-order-item-last';
+    }
     ?>
    
-    <tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', 'order_item', $item, $order_data ) ); ?>" style="<?php echo esc_attr( $text_style ); ?>;">
+    <tr class="<?php echo esc_attr( apply_filters( 'woocommerce_order_item_class', $row_classes, $item, $order_data ) ); ?>" style="<?php echo esc_attr( $text_style ); ?>;">
         <?php
         foreach ( $structure_items as $key => $structure_item ) :
             if ( isset( $structure_item['width'] ) ) {
@@ -165,7 +172,7 @@ foreach ( $order_items as $item_id => $item ) :
                         echo wp_kses_post( $order_data->get_formatted_line_subtotal( $item ) );
                     break;
                 default:
-                    echo wp_kses_post( do_action( 'yaymail_order_details_item_' . $key . '_content', $item, $order_data, $element_data, false ) );
+                        yaymail_kses_post_e( do_action( 'yaymail_order_details_item_' . $key . '_content', $item, $order_data, $element_data, false ) );
                     break;
             endswitch;
             ?>

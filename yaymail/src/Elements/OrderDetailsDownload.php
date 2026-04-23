@@ -17,6 +17,10 @@ class OrderDetailsDownload extends BaseElement {
     protected static $type = 'order_details_download';
 
     protected function __construct() {
+        if ( ! yaymail_is_wc_installed() ) {
+            $this->available_email_ids = [];
+            return;
+        }
         $this->available_email_ids = [
             CustomerCompletedOrder::get_instance()->get_id(),
             CustomerProcessingOrder::get_instance()->get_id(),

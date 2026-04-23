@@ -4,51 +4,79 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInitYayMail
+class ComposerStaticInit96acdeffe5040d8022531bf12a887c4a
 {
-    public static $files = array (
-        '11298418fac2d36d6d38c7c3efc5b206' => __DIR__ . '/..' . '/10quality/wp-query-builder/src/Lib/functions.php',
-    );
-
     public static $prefixLengthsPsr4 = array (
-        'Y' => 
+        'Y' =>
         array (
             'YayMail\\' => 8,
-        ),
-        'T' => 
-        array (
-            'TenQuality\\WP\\Database\\' => 23,
-            'TenQuality\\Data\\' => 16,
+            'YayCommerce\\AdminShell\\' => 23,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'YayMail\\' => 
+        'YayMail\\' =>
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
-        'TenQuality\\WP\\Database\\' => 
+        'YayCommerce\\AdminShell\\' =>
         array (
-            0 => __DIR__ . '/..' . '/10quality/wp-query-builder/src',
-        ),
-        'TenQuality\\Data\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/10quality/php-data-model/src',
+            0 => __DIR__ . '/..' . '/yaycommerce/admin-shell/src',
         ),
     );
 
     public static $classMap = array (
         'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
-        'TenQuality\\Data\\Collection' => __DIR__ . '/..' . '/10quality/php-data-model/src/Collection.php',
-        'TenQuality\\Data\\Contracts\\Arrayable' => __DIR__ . '/..' . '/10quality/php-data-model/src/Contracts/Arrayable.php',
-        'TenQuality\\Data\\Contracts\\JSONable' => __DIR__ . '/..' . '/10quality/php-data-model/src/Contracts/JSONable.php',
-        'TenQuality\\Data\\Contracts\\Stringable' => __DIR__ . '/..' . '/10quality/php-data-model/src/Contracts/Stringable.php',
-        'TenQuality\\Data\\Model' => __DIR__ . '/..' . '/10quality/php-data-model/src/Model.php',
-        'TenQuality\\Data\\Traits\\CastTrait' => __DIR__ . '/..' . '/10quality/php-data-model/src/Traits/CastTrait.php',
-        'TenQuality\\Data\\Traits\\DataTrait' => __DIR__ . '/..' . '/10quality/php-data-model/src/Traits/DataTrait.php',
-        'TenQuality\\WP\\Database\\Abstracts\\DataModel' => __DIR__ . '/..' . '/10quality/wp-query-builder/src/Abstracts/DataModel.php',
-        'TenQuality\\WP\\Database\\QueryBuilder' => __DIR__ . '/..' . '/10quality/wp-query-builder/src/QueryBuilder.php',
-        'TenQuality\\WP\\Database\\Traits\\DataModelTrait' => __DIR__ . '/..' . '/10quality/wp-query-builder/src/Traits/DataModelTrait.php',
+        'YayCommerce\\AdminShell\\AdminShell' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/AdminShell.php',
+        'YayCommerce\\AdminShell\\Contracts\\AddonHostAdapter' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Contracts/AddonHostAdapter.php',
+        'YayCommerce\\AdminShell\\Contracts\\PluginMenuAdapter' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Contracts/PluginMenuAdapter.php',
+        'YayCommerce\\AdminShell\\License\\Contracts\\LicenseConfigAdapter' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/License/Contracts/LicenseConfigAdapter.php',
+        'YayCommerce\\AdminShell\\License\\EDD_SL_Plugin_Updater' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/License/EDD_SL_Plugin_Updater.php',
+        'YayCommerce\\AdminShell\\License\\License' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/License/License.php',
+        'YayCommerce\\AdminShell\\License\\LicenseAPI' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/License/LicenseAPI.php',
+        'YayCommerce\\AdminShell\\License\\LicenseHandler' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/License/LicenseHandler.php',
+        'YayCommerce\\AdminShell\\License\\PluginInfoFactory' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/License/PluginInfoFactory.php',
+        'YayCommerce\\AdminShell\\License\\RestAPI' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/License/RestAPI.php',
+        'YayCommerce\\AdminShell\\Menu\\ExternalPluginMenuAdapter' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Menu/ExternalPluginMenuAdapter.php',
+        'YayCommerce\\AdminShell\\Menu\\MenuSuppressor' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Menu/MenuSuppressor.php',
+        'YayCommerce\\AdminShell\\Menu\\PagesRouter' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Menu/PagesRouter.php',
+        'YayCommerce\\AdminShell\\Menu\\PluginSubmenu' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Menu/PluginSubmenu.php',
+        'YayCommerce\\AdminShell\\Menu\\TopLevelMenu' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Menu/TopLevelMenu.php',
+        'YayCommerce\\AdminShell\\Pages\\HelpPage' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Pages/HelpPage.php',
+        'YayCommerce\\AdminShell\\Pages\\LicensesPage' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Pages/LicensesPage.php',
+        'YayCommerce\\AdminShell\\Pages\\RecommendedPluginsPage' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Pages/RecommendedPluginsPage.php',
+        'YayCommerce\\AdminShell\\Registry\\AddonBridge' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Registry/AddonBridge.php',
+        'YayCommerce\\AdminShell\\Registry\\AddonLicenseAdapter' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Registry/AddonLicenseAdapter.php',
+        'YayCommerce\\AdminShell\\Registry\\LegacyBridge' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Registry/LegacyBridge.php',
+        'YayCommerce\\AdminShell\\Registry\\LicenseRegistry' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Registry/LicenseRegistry.php',
+        'YayCommerce\\AdminShell\\Registry\\PluginLicenseInfo' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Registry/PluginLicenseInfo.php',
+        'YayCommerce\\AdminShell\\Support\\Slug' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Support/Slug.php',
+        'YayCommerce\\AdminShell\\VersionedLoader' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/VersionedLoader.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\AdminShell' => __DIR__ . '/../..' . '/vendor-prefixed/src/AdminShell.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Contracts\\AddonHostAdapter' => __DIR__ . '/../..' . '/vendor-prefixed/src/Contracts/AddonHostAdapter.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Contracts\\PluginMenuAdapter' => __DIR__ . '/../..' . '/vendor-prefixed/src/Contracts/PluginMenuAdapter.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\License\\Contracts\\LicenseConfigAdapter' => __DIR__ . '/../..' . '/vendor-prefixed/src/License/Contracts/LicenseConfigAdapter.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\License\\EDD_SL_Plugin_Updater' => __DIR__ . '/../..' . '/vendor-prefixed/src/License/EDD_SL_Plugin_Updater.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\License\\License' => __DIR__ . '/../..' . '/vendor-prefixed/src/License/License.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\License\\LicenseAPI' => __DIR__ . '/../..' . '/vendor-prefixed/src/License/LicenseAPI.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\License\\LicenseHandler' => __DIR__ . '/../..' . '/vendor-prefixed/src/License/LicenseHandler.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\License\\PluginInfoFactory' => __DIR__ . '/../..' . '/vendor-prefixed/src/License/PluginInfoFactory.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\License\\RestAPI' => __DIR__ . '/../..' . '/vendor-prefixed/src/License/RestAPI.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Menu\\ExternalPluginMenuAdapter' => __DIR__ . '/../..' . '/vendor-prefixed/src/Menu/ExternalPluginMenuAdapter.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Menu\\MenuSuppressor' => __DIR__ . '/../..' . '/vendor-prefixed/src/Menu/MenuSuppressor.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Menu\\PagesRouter' => __DIR__ . '/../..' . '/vendor-prefixed/src/Menu/PagesRouter.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Menu\\PluginSubmenu' => __DIR__ . '/../..' . '/vendor-prefixed/src/Menu/PluginSubmenu.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Menu\\TopLevelMenu' => __DIR__ . '/../..' . '/vendor-prefixed/src/Menu/TopLevelMenu.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Pages\\HelpPage' => __DIR__ . '/../..' . '/vendor-prefixed/src/Pages/HelpPage.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Pages\\LicensesPage' => __DIR__ . '/../..' . '/vendor-prefixed/src/Pages/LicensesPage.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Pages\\RecommendedPluginsPage' => __DIR__ . '/../..' . '/vendor-prefixed/src/Pages/RecommendedPluginsPage.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Registry\\AddonBridge' => __DIR__ . '/../..' . '/vendor-prefixed/src/Registry/AddonBridge.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Registry\\AddonLicenseAdapter' => __DIR__ . '/../..' . '/vendor-prefixed/src/Registry/AddonLicenseAdapter.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Registry\\LegacyBridge' => __DIR__ . '/../..' . '/vendor-prefixed/src/Registry/LegacyBridge.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Registry\\LicenseRegistry' => __DIR__ . '/../..' . '/vendor-prefixed/src/Registry/LicenseRegistry.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Registry\\PluginLicenseInfo' => __DIR__ . '/../..' . '/vendor-prefixed/src/Registry/PluginLicenseInfo.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Support\\Slug' => __DIR__ . '/../..' . '/vendor-prefixed/src/Support/Slug.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\VersionedLoader' => __DIR__ . '/../..' . '/vendor-prefixed/src/VersionedLoader.php',
         'YayMail\\Abstracts\\BaseController' => __DIR__ . '/../..' . '/src/Abstracts/BaseController.php',
         'YayMail\\Abstracts\\BaseElement' => __DIR__ . '/../..' . '/src/Abstracts/BaseElement.php',
         'YayMail\\Abstracts\\BaseEmail' => __DIR__ . '/../..' . '/src/Abstracts/BaseEmail.php',
@@ -93,6 +121,7 @@ class ComposerStaticInitYayMail
         'YayMail\\Elements\\Logo' => __DIR__ . '/../..' . '/src/Elements/Logo.php',
         'YayMail\\Elements\\OrderDetails' => __DIR__ . '/../..' . '/src/Elements/OrderDetails.php',
         'YayMail\\Elements\\OrderDetailsDownload' => __DIR__ . '/../..' . '/src/Elements/OrderDetailsDownload.php',
+        'YayMail\\Elements\\OrderProgress' => __DIR__ . '/../..' . '/src/Elements/OrderProgress.php',
         'YayMail\\Elements\\ProductsWithReviews' => __DIR__ . '/../..' . '/src/Elements/ProductsWithReviews.php',
         'YayMail\\Elements\\RatingStars' => __DIR__ . '/../..' . '/src/Elements/RatingStars.php',
         'YayMail\\Elements\\ShippingAddress' => __DIR__ . '/../..' . '/src/Elements/ShippingAddress.php',
@@ -134,13 +163,6 @@ class ComposerStaticInitYayMail
         'YayMail\\Integrations\\F4ShippingPhoneAndEmailForWooCommerce\\F4ShippingPhoneAndEmailForWooCommerce' => __DIR__ . '/../..' . '/src/Integrations/F4ShippingPhoneAndEmailForWooCommerce/F4ShippingPhoneAndEmailForWooCommerce.php',
         'YayMail\\Integrations\\IntegrationsLoader' => __DIR__ . '/../..' . '/src/Integrations/IntegrationsLoader.php',
         'YayMail\\Integrations\\RankMath' => __DIR__ . '/../..' . '/src/Integrations/RankMath.php',
-        'YayMail\\License\\CorePlugin' => __DIR__ . '/../..' . '/src/License/CorePlugin.php',
-        'YayMail\\License\\EDD_SL_Plugin_Updater' => __DIR__ . '/../..' . '/src/License/EDD_SL_Plugin_Updater.php',
-        'YayMail\\License\\License' => __DIR__ . '/../..' . '/src/License/License.php',
-        'YayMail\\License\\LicenseAPI' => __DIR__ . '/../..' . '/src/License/LicenseAPI.php',
-        'YayMail\\License\\LicenseHandler' => __DIR__ . '/../..' . '/src/License/LicenseHandler.php',
-        'YayMail\\License\\LicensingPlugin' => __DIR__ . '/../..' . '/src/License/LicensingPlugin.php',
-        'YayMail\\License\\RestAPI' => __DIR__ . '/../..' . '/src/License/RestAPI.php',
         'YayMail\\Migrations\\AbstractAddonMigrationManager' => __DIR__ . '/../..' . '/src/Migrations/AbstractAddonMigrationManager.php',
         'YayMail\\Migrations\\AbstractMigration' => __DIR__ . '/../..' . '/src/Migrations/AbstractMigration.php',
         'YayMail\\Migrations\\MainMigration' => __DIR__ . '/../..' . '/src/Migrations/MainMigration.php',
@@ -156,6 +178,7 @@ class ComposerStaticInitYayMail
         'YayMail\\Models\\TemplateModel' => __DIR__ . '/../..' . '/src/Models/TemplateModel.php',
         'YayMail\\Notices\\Ajax' => __DIR__ . '/../..' . '/src/Notices/Ajax.php',
         'YayMail\\Notices\\NoticeMain' => __DIR__ . '/../..' . '/src/Notices/NoticeMain.php',
+        'YayMail\\Notices\\NoticeWPMail' => __DIR__ . '/../..' . '/src/Notices/NoticeWPMail.php',
         'YayMail\\PostTypes\\TemplatePostType' => __DIR__ . '/../..' . '/src/PostTypes/TemplatePostType.php',
         'YayMail\\PreviewEmail\\Integration\\WcSubscriptions' => __DIR__ . '/../..' . '/src/PreviewEmail/Integration/WcSubscriptions.php',
         'YayMail\\PreviewEmail\\PreviewEmailWoo' => __DIR__ . '/../..' . '/src/PreviewEmail/PreviewEmailWoo.php',
@@ -244,25 +267,24 @@ class ComposerStaticInitYayMail
         'YayMail\\Utils\\Helpers' => __DIR__ . '/../..' . '/src/Utils/Helpers.php',
         'YayMail\\Utils\\Localize' => __DIR__ . '/../..' . '/src/Utils/Localize.php',
         'YayMail\\Utils\\Logger' => __DIR__ . '/../..' . '/src/Utils/Logger.php',
+        'YayMail\\Utils\\OrderProgressVariantHelpers' => __DIR__ . '/../..' . '/src/Utils/OrderProgressVariantHelpers.php',
         'YayMail\\Utils\\SingletonTrait' => __DIR__ . '/../..' . '/src/Utils/SingletonTrait.php',
         'YayMail\\Utils\\StyleInline' => __DIR__ . '/../..' . '/src/Utils/StyleInline.php',
         'YayMail\\Utils\\TemplateHelpers' => __DIR__ . '/../..' . '/src/Utils/TemplateHelpers.php',
         'YayMail\\Utils\\TemplateRenderer' => __DIR__ . '/../..' . '/src/Utils/TemplateRenderer.php',
         'YayMail\\Utils\\YayMailViteApp' => __DIR__ . '/../..' . '/src/Utils/YayMailViteApp.php',
         'YayMail\\WooHandler' => __DIR__ . '/../..' . '/src/WooHandler.php',
-        'YayMail\\YayCommerceMenu\\LicensesMenu' => __DIR__ . '/../..' . '/src/YayCommerceMenu/LicensesMenu.php',
-        'YayMail\\YayCommerceMenu\\OtherPluginsMenu' => __DIR__ . '/../..' . '/src/YayCommerceMenu/OtherPluginsMenu.php',
-        'YayMail\\YayCommerceMenu\\RegisterMenu' => __DIR__ . '/../..' . '/src/YayCommerceMenu/RegisterMenu.php',
         'YayMail\\YayMailEmails' => __DIR__ . '/../..' . '/src/YayMailEmails.php',
         'YayMail\\YayMailTemplate' => __DIR__ . '/../..' . '/src/YayMailTemplate.php',
+        'YaymailPluginAdapter' => __DIR__ . '/../..' . '/YaymailPluginAdapter.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInitYayMail::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInitYayMail::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInitYayMail::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit96acdeffe5040d8022531bf12a887c4a::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit96acdeffe5040d8022531bf12a887c4a::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit96acdeffe5040d8022531bf12a887c4a::$classMap;
 
         }, null, ClassLoader::class);
     }

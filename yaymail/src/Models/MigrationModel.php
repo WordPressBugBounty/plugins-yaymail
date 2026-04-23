@@ -255,7 +255,7 @@ class MigrationModel {
 
     private function get_required_migration_names() {
         $old_version           = MigrationHelper::format_version_number( get_option( 'yaymail_version' ) );
-        $new_version           = MigrationHelper::format_version_number( YAYMAIL_VERSION );
+        $new_version           = MigrationHelper::format_version_number( yaymail_version() );
         $successful_migrations = get_option( AbstractMigration::SUCCESSFUL_MIGRATIONS, [] );
 
         // If freshly installed or already on latest version with no migrations needed
@@ -278,7 +278,7 @@ class MigrationModel {
 
         // Check if any migrations have already been run up to current version
         foreach ( $successful_migrations as $migration ) {
-            if ( empty( $migration['addon_namespace'] ) && version_compare( $migration['to_version'], YAYMAIL_VERSION, '>=' ) ) {
+            if ( empty( $migration['addon_namespace'] ) && version_compare( $migration['to_version'], yaymail_version(), '>=' ) ) {
                 return apply_filters( 'yaymail_required_migration_names', [] );
             }
         }

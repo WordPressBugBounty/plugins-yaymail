@@ -73,12 +73,26 @@ class Image extends BaseElement {
                     'default_value' => isset( $attributes['align'] ) ? $attributes['align'] : 'center',
                     'type'          => 'style',
                 ],
+                'full_width'                 => [
+                    'value_path'    => 'full_width',
+                    'component'     => 'Switcher',
+                    'title'         => __( 'Full width', 'yaymail' ),
+                    'default_value' => isset( $attributes['full_width'] ) ? $attributes['full_width'] : false,
+                    'type'          => 'style',
+                ],
                 'width'                      => [
                     'value_path'    => 'width',
                     'component'     => 'Dimension',
                     'title'         => __( 'Width', 'yaymail' ),
                     'default_value' => isset( $attributes['width'] ) ? $attributes['width'] : '252',
                     'type'          => 'style',
+                    'conditions'    => [
+                        [
+                            'comparison' => '!=',
+                            'value'      => true,
+                            'attribute'  => 'full_width',
+                        ],
+                    ],
                 ],
                 'url'                        => [
                     'value_path'    => 'url',

@@ -8,7 +8,7 @@ use YayMail\Elements\ElementsLoader;
 use YayMail\Integrations\TranslationModule;
 use YayMail\YayMailEmails;
 use YayMail\Utils\Logger;
-use YayMail\Utils\StyleInline;
+
 if ( ! function_exists( 'yaymail_get_emails' ) ) {
 
     /**
@@ -61,9 +61,23 @@ if ( ! function_exists( 'yaymail_get_email' ) ) {
 
 if ( ! function_exists( 'yaymail_is_wc_installed' ) ) {
     function yaymail_is_wc_installed() {
-        return function_exists( 'WC' );
+        return function_exists( 'WC' ) && defined( 'YAYMAIL_VERSION' );
     }
 }
+
+if ( ! function_exists( 'yaymail_is_wp_mail_installed' ) ) {
+    function yaymail_is_wp_mail_installed() {
+        return defined( 'YAYMAIL_WP_VERSION' );
+    }
+}
+
+if ( ! function_exists( 'yaymail_version' ) ) {
+    function yaymail_version() {
+        return yaymail_is_wp_mail_installed() ? YAYMAIL_WP_VERSION : YAYMAIL_VERSION;
+    }
+}
+
+
 
 if ( ! function_exists( 'yaymail_settings' ) ) {
     function yaymail_settings() {
@@ -98,7 +112,8 @@ if ( ! function_exists( 'yaymail_get_content' ) ) {
 
         // TODO: do later
         ob_start();
-        include $path; // nosemgrep
+        include $path;
+        // nosemgrep
         $html = ob_get_contents();
         ob_end_clean();
         return yaymail_kses_post( $html );
@@ -411,10 +426,10 @@ if ( ! function_exists( 'yaymail_get_template' ) ) {
         }
 
         $template = locate_template(
-            array(
+            [
                 trailingslashit( $template_path ) . $template_name,
                 $template_name,
-            )
+            ]
         );
 
         if ( ! $template ) {

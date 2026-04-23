@@ -47,8 +47,9 @@ class Localize {
                     ];
                 }
             }
+            return $data_orders;
         }//end if
-        return $data_orders;
+        return [];
     }
 
     public static function get_social_icons_data() {

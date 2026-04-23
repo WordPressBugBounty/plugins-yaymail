@@ -10,11 +10,12 @@ $element = $args['element'];
 $data    = $element['data'];
 
 $data_column_1 = [
-    'align'   => 'center',
-    'width'   => '242',
-    'url'     => '#',
-    'image'   => YAYMAIL_PLUGIN_URL . 'assets/images/woocommerce-logo.png',
-    'padding' => [
+    'align'      => 'center',
+    'full_width' => false,
+    'width'      => '242',
+    'url'        => '#',
+    'image'      => YAYMAIL_PLUGIN_URL . 'assets/images/woocommerce-logo.png',
+    'padding'    => [
         'top'    => '10',
         'right'  => '10',
         'bottom' => '10',
@@ -25,7 +26,11 @@ $data_column_1 = [
 if ( is_array( $data['image_box']['column_1'] ) && ! empty( $data['image_box']['column_1'] ) ) {
     $_data_column_1 = $data['image_box']['column_1'];
     foreach ( $_data_column_1 as $key => $value ) {
-        $data_column_1[ $key ] = $value['value'];
+        if ( $key === 'full_width' ) {
+            $data_column_1['full_width'] = filter_var( $value['value'], FILTER_VALIDATE_BOOLEAN );
+        } else {
+            $data_column_1[ $key ] = $value['value'];
+        }
     }
 }
 
@@ -83,7 +88,7 @@ ob_start();
                 <td class="yaymail-table-image-box-column" align="<?php echo esc_attr( $data_column_1['align'] ); ?>" width="50%" style="<?php echo esc_attr( $column_1_style ); ?>">
                     <div>
                         <a href="<?php echo esc_html( do_shortcode( $data_column_1['url'] ) ); ?>" target="_blank" rel="noreferrer">
-                            <img alt="<?php echo esc_attr( $data_column_1['alt'] ?? '' ); ?>" src="<?php echo esc_html( $data_column_1['image'] ); ?>" style="width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data_column_1['width'] ) ); ?>"/>
+                            <img alt="<?php echo esc_attr( $data_column_1['alt'] ?? '' ); ?>" src="<?php echo esc_html( $data_column_1['image'] ); ?>" style="width: <?php echo esc_attr( isset( $data_column_1['full_width'] ) && $data_column_1['full_width'] ? '100%' : TemplateHelpers::get_dimension_value( $data_column_1['width'] ) ); ?>"/>
                         </a>
                     </div>
                 </td>

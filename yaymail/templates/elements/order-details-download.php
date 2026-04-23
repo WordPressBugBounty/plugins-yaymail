@@ -28,22 +28,24 @@ $title_style = TemplateHelpers::get_style(
     ]
 );
 
+$is_layout_type_modern = isset( $data['layout_type'] ) && 'modern' === $data['layout_type'];
+
 $table_style = TemplateHelpers::get_style(
     [
-        'font-size'       => '14px',
-        'text-align'      => yaymail_get_text_align(),
-        'border'          => isset( $data['border_color'] ) ? '1px solid ' . $data['border_color'] : 'inherit',
-        'font-family'     => TemplateHelpers::get_font_family_value( isset( $data['font_family'] ) ? $data['font_family'] : 'inherit' ),
-        'color'           => isset( $data['text_color'] ) ? $data['text_color'] : 'inherit',
-        'border-collapse' => 'separate',
+        'font-size'        => '14px',
+        'text-align'       => yaymail_get_text_align(),
+        'font-family'      => TemplateHelpers::get_font_family_value( ! empty( $data['font_family'] ) ? $data['font_family'] : 'inherit' ),
+        'color'            => ! empty( $data['text_color'] ) ? $data['text_color'] : 'inherit',
+        'border-collapse'  => $is_layout_type_modern ? 'collapse' : 'separate',
+        'border'           => $is_layout_type_modern ? '0' : ( ! empty( $data['border_color'] ) ? '1px solid ' . $data['border_color'] : 'inherit' ),
+        'mso-table-lspace' => $is_layout_type_modern ? '0pt' : null,
+        'mso-table-rspace' => $is_layout_type_modern ? '0pt' : null,
     ]
 );
 
 $shortcoded_title   = isset( $data['title'] ) ? do_shortcode( $data['title'] ) : '';
 $shortcoded_content = isset( $data['rich_text'] ) ? do_shortcode( $data['rich_text'] ) : '';
 
-
-$is_layout_type_modern = isset( $data['layout_type'] ) && 'modern' === $data['layout_type'];
 ob_start();
 ?>
 <style>

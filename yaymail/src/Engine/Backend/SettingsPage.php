@@ -30,36 +30,23 @@ class SettingsPage {
      * Initialize hooks when class init
      */
     protected function init_hooks() {
-        // Register Menu
-        add_action( 'admin_menu', [ $this, 'add_yaymail_menu' ], YAYMAIL_MENU_PRIORITY );
-        add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ], 30 );
+        // Submenu is registered by YayCommerce AdminShell (YaymailPluginAdapter); keep hook id for enqueue/screen checks.
+        if ( defined( 'YAYMAIL_PREFIX' ) ) {
+            $this->yaymail_hook_surfix = 'yaycommerce_page_' . YAYMAIL_PREFIX . '-settings';
+        }
 
-        add_filter( 'plugin_action_links_' . YAYMAIL_PLUGIN_BASENAME, [ $this, 'plugin_action_links' ] );
-        add_filter( 'plugin_row_meta', [ $this, 'add_support_and_docs_links' ], 10, 2 );
+        // Register Menu
+        add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ], 30 );
         add_filter( 'mce_external_plugins', [ $this, 'register_wp_editor_plugins_script' ] );
 
-        // Add Column YayMail Customizer on Setting email of WooCommerce
-        add_filter( 'woocommerce_email_setting_columns', [ $this, 'woocommerce_email_setting_columns' ] );
-        add_action( 'woocommerce_email_setting_column_yaymail_customizer', [ $this, 'woocommerce_email_setting_column_yaymail_customizer' ] );
+        // Add Column YayMail Customizer on Setting email of WooCommerce (only when WC is active)
+        if ( yaymail_is_wc_installed() ) {
+            add_filter( 'woocommerce_email_setting_columns', [ $this, 'woocommerce_email_setting_columns' ] );
+            add_action( 'woocommerce_email_setting_column_yaymail_customizer', [ $this, 'woocommerce_email_setting_column_yaymail_customizer' ] );
+        }
 
         // Fix conflict plugins styles in Settings page
         add_action( 'admin_enqueue_scripts', [ $this, 'fix_conflict_plugins_styles' ], PHP_INT_MAX );
-    }
-
-    /**
-     * Register the YayMAil sub menu to WordPress YayCommerce menu.
-     */
-    public function add_yaymail_menu() {
-        $menu_args                 = [
-            'parent_slug' => 'yaycommerce',
-            'page_title'  => __( 'Email Builder Settings', 'yaymail' ),
-            'menu_title'  => __( 'YayMail', 'yaymail' ),
-            'capability'  => 'manage_woocommerce',
-            'menu_slug'   => YAYMAIL_PREFIX . '-settings',
-            'function'    => [ $this, 'render_yaymail_page' ],
-            'position'    => 0,
-        ];
-        $this->yaymail_hook_surfix = add_submenu_page( $menu_args['parent_slug'], $menu_args['page_title'], $menu_args['menu_title'], $menu_args['capability'], $menu_args['menu_slug'], $menu_args['function'], $menu_args['position'] );
     }
 
     /**
@@ -86,7 +73,7 @@ class SettingsPage {
     }
 
     public function admin_enqueue_scripts( $hook_suffix ) {
-        if ( in_array( $hook_suffix, [ $this->yaymail_hook_surfix ], true ) && class_exists( 'WC_Emails' ) ) {
+        if ( in_array( $hook_suffix, [ $this->yaymail_hook_surfix ], true ) ) {
             do_action( 'yaymail_before_enqueue_settings_page_scripts' );
             // Enqueue script here
             YayMailViteApp::get_instance()->enqueue_entry( 'yaymail-main.tsx', [ 'react', 'react-dom', 'wp-i18n' ] );
@@ -103,31 +90,34 @@ class SettingsPage {
      * Register localize data
      */
     public function localize_js_vars() {
+        if ( yaymail_is_wc_installed() ) {
+            $_wc_emails = wc()->mailer()->emails;
 
-        $_wc_emails = wc()->mailer()->emails;
+            // override template base for wc emails
+            foreach ( $_wc_emails as $email ) {
+                $reflector            = new \ReflectionClass( $email );
+                $email->template_base = $reflector->getFileName();
+                unset( $reflector );
+            }
 
-        // override template base for wc emails
-        foreach ( $_wc_emails as $email ) {
-            $reflector            = new \ReflectionClass( $email );
-            $email->template_base = $reflector->getFileName();
-            unset( $reflector );
-        }
-
-        $_wc_emails = array_map(
-            function( $email ) {
-                return (object) [
-                    'id'               => $email->id,
-                    'title'            => $email->title,
-                    'enabled'          => $email->enabled,
-                    'description'      => $email->description,
-                    'template_base'    => $email->template_base,
-                    'recipient'        => $email->recipient,
-                    'content_type'     => $email->get_content_type(),
-                    'setting_page_url' => Helpers::yaymail_get_url_email_setting_page( $email->id ),
-                ];
-            },
-            $_wc_emails
-        );
+            $_wc_emails = array_map(
+                function( $email ) {
+                    return (object) [
+                        'id'               => $email->id,
+                        'title'            => $email->title,
+                        'enabled'          => $email->enabled,
+                        'description'      => $email->description,
+                        'template_base'    => $email->template_base,
+                        'recipient'        => $email->recipient,
+                        'content_type'     => $email->get_content_type(),
+                        'setting_page_url' => Helpers::yaymail_get_url_email_setting_page( $email->id ),
+                    ];
+                },
+                $_wc_emails
+            );
+        } else {
+            $_wc_emails = [];
+        }//end if
 
         wp_localize_script(
             'module/yaymail/yaymail-main.tsx',
@@ -203,33 +193,25 @@ class SettingsPage {
                     'supported_plugins'              => SupportedPlugins::get_instance()->get_slug_name_supported_plugins(),
                     'show_multi_select_notice'       => get_option( 'yaymail_show_multi_select_notice', 'yes' ),
                     'viewed_new_elements'            => ! empty( get_option( 'yaymail_viewed_new_elements', [] ) ) ? get_option( 'yaymail_viewed_new_elements' ) : [],
+                    'is_yaymail_loader'              => function_exists( 'YayMail\\init' ),
+                    'addons_platform'                => [
+                        'has_wc_customizer' => Helpers::is_yaymail_woocommerce_core_active(),
+                        'has_wp_customizer' => Helpers::is_yaymail_wp_active(),
+                    ],
+                    'woocommerce_email_styles'       => $this->get_scoped_woocommerce_email_styles(),
                 ],
                 apply_filters( 'yaymail_additional_localized_variables', [] )
             )
         );
     }
 
-    /**
-     * Add link to YayMail settings page & Go Pro in Plugin row
-     */
-    public function plugin_action_links( $links ) {
-        $action_links = [
-            'settings' => '<a href="' . admin_url( 'admin.php?page=yaymail-settings' ) . '" aria-label="' . esc_attr__( 'View WooCommerce Email Builder', 'yaymail' ) . '">' . esc_html__( 'Start Customizing', 'yaymail' ) . '</a>',
-        ];
-        $links[]      = '<a target="_blank" href="https://yaycommerce.com/yaymail-woocommerce-email-customizer/" style="color: #43B854; font-weight: bold">' . __( 'Go Pro', 'yaymail' ) . '</a>';
-
-        return array_merge( $action_links, $links );
-    }
-
-    /**
-     * Add extra plugin meta in Plugin row
-     */
-    public function add_support_and_docs_links( $plugin_meta, $plugin_file ) {
-        if ( YAYMAIL_PLUGIN_BASENAME === $plugin_file ) {
-            $plugin_meta[] = '<a target="_blank" href="https://docs.yaycommerce.com/yaymail/getting-started/introduction">' . esc_html__( 'Docs', 'yaymail' ) . '</a>';
-            $plugin_meta[] = '<a target="_blank" href="https://yaycommerce.com/support/">' . esc_html__( 'Support', 'yaymail' ) . '</a>';
+    private function get_scoped_woocommerce_email_styles() {
+        if ( ! function_exists( 'WC' ) ) {
+            return '';
         }
-        return $plugin_meta;
+
+        $raw_styles = wp_unslash( wc_get_template_html( 'emails/email-styles.php' ) );
+        return Helpers::scope_css_block( $raw_styles, '.yaymail-customizer-template-section' );
     }
 
     /**

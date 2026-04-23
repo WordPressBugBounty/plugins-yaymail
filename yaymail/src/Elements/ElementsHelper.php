@@ -345,6 +345,10 @@ class ElementsHelper {
         $email = yaymail_get_email( $email_id );
         // Optimize this to call get_email only once
 
+        if ( empty( $email ) ) {
+            return $elements;
+        }
+
         $available_elements = [];
 
         foreach ( $elements as $element ) {
@@ -396,6 +400,20 @@ class ElementsHelper {
 
         $result              = self::get_component_data( $attributes, $config, $default_config );
         $result['component'] = 'BorderRadius';
+
+        return $result;
+    }
+
+    public static function get_button_width_selector( $attributes, $config = [] ) {
+        $default_config = [
+            'value_path'    => 'width',
+            'title'         => __( 'Width', 'yaymail' ),
+            'default_value' => 'auto',
+            'type'          => 'style',
+        ];
+
+        $result              = self::get_component_data( $attributes, $config, $default_config );
+        $result['component'] = 'ButtonWidthSelector';
 
         return $result;
     }

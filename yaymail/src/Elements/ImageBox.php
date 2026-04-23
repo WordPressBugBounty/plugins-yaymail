@@ -64,7 +64,7 @@ class ImageBox extends BaseElement {
                     'component'  => 'ImageBox',
                     'value_path' => 'image_box',
                     'column_1'   => [
-                        'padding' => [
+                        'padding'    => [
                             'value' => $attributes['column_1']['padding'] ?? [
                                 'top'    => '10',
                                 'right'  => '10',
@@ -73,23 +73,27 @@ class ImageBox extends BaseElement {
                             ],
                             'type'  => 'style',
                         ],
-                        'align'   => [
+                        'align'      => [
                             'value' => $attributes['column_1']['align'] ?? 'center',
                             'type'  => 'style',
                         ],
-                        'image'   => [
+                        'image'      => [
                             'value' => $attributes['column_1']['image'] ?? $src,
                             'type'  => 'content',
                         ],
-                        'width'   => [
+                        'full_width' => [
+                            'value' => $attributes['column_1']['full_width'] ?? false,
+                            'type'  => 'style',
+                        ],
+                        'width'      => [
                             'value' => $attributes['column_1']['width'] ?? '242',
                             'type'  => 'style',
                         ],
-                        'url'     => [
+                        'url'        => [
                             'value' => $attributes['column_1']['url'] ?? '#',
                             'type'  => 'content',
                         ],
-                        'alt'     => [
+                        'alt'        => [
                             'value' => $attributes['column_1']['alt'] ?? '',
                             'type'  => 'content',
                         ],

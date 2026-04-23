@@ -90,6 +90,13 @@ class BillingShippingAddress extends BaseElement {
                     ],
                     'type'          => 'content',
                 ],
+                'responsive_on_mobile'       => [
+                    'value_path'    => 'responsive_on_mobile',
+                    'component'     => 'Switcher',
+                    'title'         => __( 'Responsive on mobile', 'yaymail' ),
+                    'default_value' => isset( $attributes['responsive_on_mobile'] ) ? (bool) $attributes['responsive_on_mobile'] : false,
+                    'type'          => 'content',
+                ],
                 'title_color'                => ElementsHelper::get_color(
                     $attributes,
                     [

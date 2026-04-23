@@ -15,7 +15,6 @@ use YayMail\TemplatePatterns\SectionTemplatesLoader;
 use YayMail\PreviewEmail\PreviewEmailsLoader;
 use YayMail\Notices\NoticeMain;
 use YayMail\TemplateLibrary\TemplateLibraryLoader;
-
 /**
  * YayMail Plugin Initializer
  *
@@ -64,22 +63,25 @@ class Initialize {
 
     public function init_modules() {
 
-        $version_current        = YAYMAIL_VERSION;
+        $version_current        = yaymail_version();
         $version_old            = get_option( 'yaymail_version' );
         $version_current_backup = get_option( 'yaymail_version_backup' );
 
-        if ( $version_current !== $version_old ) {
+        if ( $version_current !== $version_old && yaymail_is_wc_installed() ) {
             if ( $version_current_backup !== $version_current ) {
                 \YayMail\Migrations\MainMigration::get_instance()->migrate();
 
-                update_option( 'yaymail_version', YAYMAIL_VERSION );
-                update_option( 'yaymail_version_backup', YAYMAIL_VERSION );
+                update_option( 'yaymail_version', $version_current );
+                update_option( 'yaymail_version_backup', $version_current );
             }
         }
 
         ActDeact::get_instance();
 
-        WooHandler::get_instance();
+        if ( yaymail_is_wc_installed() ) {
+            WooHandler::get_instance();
+        }
+
         /**
          * Preview Email loader
          */

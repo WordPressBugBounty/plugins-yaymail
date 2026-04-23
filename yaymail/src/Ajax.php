@@ -312,12 +312,13 @@ class Ajax {
             $template_name = isset( $_POST['template_name'] ) ? sanitize_text_field( wp_unslash( $_POST['template_name'] ) ) : '';
             $order_id      = isset( $_POST['order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['order_id'] ) ) : 'sample_order';
             $email         = isset( $_POST['email'] ) ? sanitize_text_field( $_POST['email'] ) : '';
+            $is_wc_email   = strpos( $template_name, 'wp-core-' ) !== 0;
 
             if ( empty( $template_name ) ) {
                 return wp_send_json_error( [ 'mess' => __( 'Can\'t find template', 'yaymail' ) ] );
             }
 
-            if ( empty( $order_id ) ) {
+            if ( empty( $order_id ) && $is_wc_email ) {
                 return wp_send_json_error( [ 'mess' => __( 'Can\'t find order', 'yaymail' ) ] );
             }
 
@@ -342,11 +343,15 @@ class Ajax {
 
             $html = $template->get_content( $render_data );
 
-            $headers        = "Content-Type: text/html\r\n";
-            $class_wc_email = \WC_Emails::instance();
-            $subject        = __( 'Email Test', 'yaymail' );
-            $send_mail      = $class_wc_email->send( $email, $subject, $html, $headers, [] );
+            $headers = "Content-Type: text/html\r\n";
+            $subject = __( 'Email Test', 'yaymail' );
 
+            if ( $is_wc_email ) {
+                $class_wc_email = \WC_Emails::instance();
+                $send_mail      = $class_wc_email->send( $email, $subject, $html, $headers, [] );
+            } else {
+                $send_mail = wp_mail( $email, $subject, $html, $headers, [] );
+            }
             if ( ! $send_mail ) {
                 return wp_send_json_error( [ 'mess' => __( 'Can\'t send email', 'yaymail' ) ] );
             }
@@ -370,7 +375,7 @@ class Ajax {
             return wp_send_json_error( [ 'mess' => __( 'Verify nonce failed', 'yaymail' ) ] );
         }
         try {
-            $order_id         = isset( $_POST['order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['order_id'] ) ) : 'sample_order';
+            $order_id         = ! empty( $_POST['order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['order_id'] ) ) : 'sample_order';
             $template_data    = isset( $_POST['template_data'] ) ? $this->sanitize( wp_unslash( $_POST['template_data'] ) ) : []; //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $unsaved_settings = isset( $_POST['unsaved_settings'] ) ? $this->sanitize( wp_unslash( $_POST['unsaved_settings'] ) ) : []; //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
@@ -408,21 +413,23 @@ class Ajax {
 
             $html = $template->get_content( $render_data );
 
-            // TODO: render with passing settings
-            $current_email = null;
-            $subject       = 'Sample Subject';
-            $emails        = wc()->mailer()->emails;
-            foreach ( $emails as $email ) {
-                if ( $email->id === $template_data['name'] ) {
-                    $current_email = $email;
-                    if ( method_exists( $current_email, 'set_object' ) ) {
-                        if ( ! empty( $render_data['order'] ) && is_a( $render_data['order'], '\WC_Order' ) ) {
-                            $current_email->set_object( $render_data['order'] );
-                        } else {
-                            $current_email->set_object( Helpers::get_dummy_order() );
+            if ( strpos( $template->get_name(), 'wp-core-' ) !== 0 ) {
+                // TODO: render with passing settings
+                $current_email = null;
+                $subject       = 'Sample Subject';
+                $emails        = wc()->mailer()->emails;
+                foreach ( $emails as $email ) {
+                    if ( $email->id === $template_data['name'] ) {
+                        $current_email = $email;
+                        if ( method_exists( $current_email, 'set_object' ) ) {
+                            if ( ! empty( $render_data['order'] ) && is_a( $render_data['order'], '\WC_Order' ) ) {
+                                $current_email->set_object( $render_data['order'] );
+                            } else {
+                                $current_email->set_object( Helpers::get_dummy_order() );
+                            }
                         }
+                        break;
                     }
-                    break;
                 }
             }
 

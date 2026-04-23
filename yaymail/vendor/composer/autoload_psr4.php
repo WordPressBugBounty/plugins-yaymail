@@ -7,6 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'YayMail\\' => array($baseDir . '/src'),
-    'TenQuality\\WP\\Database\\' => array($vendorDir . '/10quality/wp-query-builder/src'),
-    'TenQuality\\Data\\' => array($vendorDir . '/10quality/php-data-model/src'),
+    'YayCommerce\\AdminShell\\' => array($vendorDir . '/yaycommerce/admin-shell/src'),
 );

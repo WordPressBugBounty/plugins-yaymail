@@ -66,36 +66,56 @@ class OrderDetailsRenderer {
                 'label' => $this->titles['shipping'],
                 'value' => __( 'Free shipping', 'yaymail' ),
             ],
-            'payment_method' => [
-                'label' => $this->titles['payment_method'],
-                'value' => __( 'Direct bank transfer', 'yaymail' ),
-            ],
             'order_total'    => [
                 'label' => $this->titles['order_total'],
                 'value' => wc_price( 18 ),
+            ],
+            'payment_method' => [
+                'label' => $this->titles['payment_method'],
+                'value' => __( 'Direct bank transfer', 'yaymail' ),
             ],
         ];
         $this->order_note  = 'YayMail';
     }
 
     private function initialize_order_data( $order ) {
+        // Avoid appending the "via {shipping method}" suffix in the Shipping total.
+        // WooCommerce adds this suffix via the `woocommerce_order_shipping_to_display_shipped_via` filter.
+        add_filter( 'woocommerce_order_shipping_to_display_shipped_via', '__return_false', 10, 2 );
         $this->item_totals = $order->get_order_item_totals();
-        $this->order_note  = $order->get_customer_note();
-        $this->order       = $order;
+        remove_filter( 'woocommerce_order_shipping_to_display_shipped_via', '__return_false', 10 );
+        $this->order_note = $order->get_customer_note();
+        $this->order      = $order;
+    }
+
+    /**
+     * Whether order details use the modern (borderless grid) layout.
+     */
+    private function is_layout_modern() {
+        return isset( $this->element_data['layout_type'] ) && 'modern' === $this->element_data['layout_type'];
     }
 
     public function get_styles() {
-        return TemplateHelpers::get_style(
-            [
-                'padding'      => '12px',
-                'text-align'   => yaymail_get_text_align(),
-                'font-family'  => TemplateHelpers::get_font_family_value( isset( $this->element_data['font_family'] ) ? $this->element_data['font_family'] : 'inherit' ),
-                'color'        => isset( $this->element_data['text_color'] ) ? $this->element_data['text_color'] : 'inherit',
-                'border-width' => '1px',
-                'border-style' => 'solid',
-                'border-color' => isset( $this->element_data['border_color'] ) ? $this->element_data['border_color'] : 'inherit',
-            ]
-        );
+        $base_styles = [
+            'padding'     => '12px',
+            'text-align'  => yaymail_get_text_align(),
+            'font-family' => TemplateHelpers::get_font_family_value(
+                $this->element_data['font_family'] ?? 'inherit'
+            ),
+            'color'       => $this->element_data['text_color'] ?? 'inherit',
+        ];
+
+        if ( $this->is_layout_modern() ) {
+            return TemplateHelpers::get_style( $base_styles );
+        }
+
+        $border_styles = [
+            'border-width' => '1px',
+            'border-style' => 'solid',
+            'border-color' => $this->element_data['border_color'] ?? 'inherit',
+        ];
+
+        return TemplateHelpers::get_style( array_merge( $base_styles, $border_styles ) );
     }
 
     public function get_styles_product_image() {
@@ -166,9 +186,26 @@ class OrderDetailsRenderer {
     }
 
     public function render() {
-        $style = $this->get_styles() . 'padding: 0;border-collapse: separate;';
+        if ( $this->is_layout_modern() ) {
+            $table_style = TemplateHelpers::get_style(
+                [
+                    'width'            => '100%',
+                    'border'           => '0',
+                    'border-collapse'  => 'collapse',
+                    'mso-table-lspace' => '0pt',
+                    'mso-table-rspace' => '0pt',
+                    'padding'          => '0',
+                    'color'            => isset( $this->element_data['text_color'] ) ? $this->element_data['text_color'] : 'inherit',
+                    'font-family'      => TemplateHelpers::get_font_family_value( isset( $this->element_data['font_family'] ) ? $this->element_data['font_family'] : 'inherit' ),
+                ]
+            );
+            $border_attr = 0;
+        } else {
+            $table_style = $this->get_styles() . 'padding: 0;border-collapse: separate;';
+            $border_attr = 1;
+        }
         ?>
-            <table class="yaymail-order-details-table" cellspacing="0" cellpadding="6" width="100%" style="<?php echo esc_attr( $style ); ?>" border="1">
+            <table class="yaymail-order-details-table"<?php echo $this->is_layout_modern() ? ' data-layout-type-modern="true"' : ''; ?> cellspacing="0" cellpadding="6" width="100%" style="<?php echo esc_attr( $table_style ); ?>" border="<?php echo esc_attr( (string) $border_attr ); ?>">
             <?php
             $this->render_heading();
             $this->render_order_items();
@@ -267,7 +304,7 @@ class OrderDetailsRenderer {
 
         $is_layout_type_modern = isset( $this->element_data['layout_type'] ) && 'modern' === $this->element_data['layout_type'];
         ?>
-        <tr class="order_item">
+        <tr class="order_item yaymail-order-item-last">
             <?php foreach ( $structure_items as $key => $structure_item ) : ?>
                 <?php
                 if ( isset( $structure_item['width'] ) ) {
@@ -344,7 +381,7 @@ class OrderDetailsRenderer {
                             echo wp_kses_post( wc_price( $product_cost * $product_quantity ) );
                             break;
                         default:
-                            echo wp_kses_post( do_action( 'yaymail_order_details_item_' . $key . '_content', null, $this->order, $this->element_data, true ) );
+                            yaymail_kses_post_e( do_action( 'yaymail_order_details_item_' . $key . '_content', null, $this->order, $this->element_data, true ) );
                             break;
                     endswitch;
                     ?>
@@ -494,16 +531,21 @@ class OrderDetailsRenderer {
         $tr_class              = "yaymail-order-detail-row-{$key}";
         $can_apply_placeholder = $this->is_placeholder && isset( $this->titles[ $key ] );
         $label                 = TemplateHelpers::get_content_as_placeholder( "{$key}_title", esc_html( isset( $this->titles[ $key ] ) ? $this->titles[ $key ] : $total['label'] ), $can_apply_placeholder );
-        $style                 = $this->get_styles() . TemplateHelpers::get_style(
-            [
-                'border-top-width' => 1 === $index ? '4px' : '0',
-            ]
-        );
-        $heading_style         = $style . 'font-size: ' . ( isset( $this->element_data['table_heading_font_size'] ) ? $this->element_data['table_heading_font_size'] : '14' ) . 'px;';
-        $content_style         = $style . 'font-size: ' . ( isset( $this->element_data['table_content_font_size'] ) ? $this->element_data['table_content_font_size'] : '14' ) . 'px;';
+        $style                 = $this->get_styles();
+
+        if ( ! $this->is_layout_modern() ) {
+            $style .= TemplateHelpers::get_style(
+                [
+                    'border-top-width' => ( $index === 1 ) ? '4px' : '0',
+                ]
+            );
+        }
+
+        $heading_style = $style . 'font-size: ' . ( isset( $this->element_data['table_heading_font_size'] ) ? $this->element_data['table_heading_font_size'] : '14' ) . 'px;';
+        $content_style = $style . 'font-size: ' . ( isset( $this->element_data['table_content_font_size'] ) ? $this->element_data['table_content_font_size'] : '14' ) . 'px;';
         ?>
         <tr class="<?php echo esc_attr( $tr_class ); ?>">
-            <th class="td" scope="row" colspan="<?php echo esc_attr( isset( $structure_footer['label_col_span'] ) ? $structure_footer['label_col_span'] : $this->colspan_value ); ?>" style="<?php echo esc_attr( $heading_style ); ?>"><?php echo wp_kses_post( $label ); ?></th>
+            <th class="td" scope="row" colspan="<?php echo esc_attr( isset( $structure_footer['label_col_span'] ) ? $structure_footer['label_col_span'] : $this->colspan_value ); ?>" style="<?php echo esc_attr( $heading_style ); ?>"><?php echo wp_kses_post( do_shortcode( $label ) ); ?></th>
             <td class="td" colspan="<?php echo esc_attr( isset( $structure_footer['value_col_span'] ) ? $structure_footer['value_col_span'] : 1 ); ?>" style="<?php echo esc_attr( $content_style ); ?>"><?php echo wp_kses_post( $total['value'] ); ?></td>
         </tr>
         <?php
@@ -525,11 +567,13 @@ class OrderDetailsRenderer {
             return;
         }
 
-        $style = $this->get_styles() . TemplateHelpers::get_style(
-            [
-                'border-top-width' => 1 === $index ? '4px' : '0',
-            ]
-        );
+        $style = $this->is_layout_modern()
+            ? ''
+            : $this->get_styles() . TemplateHelpers::get_style(
+                [
+                    'border-top-width' => ( $index === 1 ) ? '4px' : '0',
+                ]
+            );
 
         $heading_style = $style . 'font-size: ' . ( isset( $this->element_data['table_heading_font_size'] ) ? $this->element_data['table_heading_font_size'] : '14' ) . 'px;';
         $content_style = $style . 'font-size: ' . ( isset( $this->element_data['table_content_font_size'] ) ? $this->element_data['table_content_font_size'] : '14' ) . 'px;';

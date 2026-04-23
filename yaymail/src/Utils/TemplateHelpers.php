@@ -362,4 +362,8 @@ class TemplateHelpers {
 
         return $elements;
     }
+
+    public static function replace_color_paths( $value ) {
+        return $value;
+    }
 }

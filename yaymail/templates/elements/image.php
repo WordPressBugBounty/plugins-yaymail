@@ -31,7 +31,8 @@ ob_start();
 ?>
 
     <a href="<?php echo esc_url( do_shortcode( $data['url'] ) ); ?>" target="_blank" rel="noreferrer">
-        <img alt="<?php echo esc_attr( $data['alt'] ?? '' ); ?>" src="<?php echo esc_url( $src ); ?>" style="max-width: 100%; width: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data['width'] ) ); ?>" alt="YayMail Image" />
+        <?php $image_width = isset( $data['full_width'] ) && filter_var( $data['full_width'], FILTER_VALIDATE_BOOLEAN ) ? '100%' : esc_attr( TemplateHelpers::get_dimension_value( $data['width'] ) ); ?>
+        <img alt="<?php echo esc_attr( $data['alt'] ?? '' ); ?>" src="<?php echo esc_url( $src ); ?>" style="max-width: 100%; width: <?php echo esc_attr( $image_width ); ?>;" alt="YayMail Image" />
     </a>
 <?php
 $element_content = ob_get_clean();

@@ -12,7 +12,7 @@ abstract class BaseController {
      * @return bool
      */
     public function permission_callback() {
-        return current_user_can( 'manage_woocommerce' );
+        return current_user_can( 'manage_options' );
     }
 
     /**
@@ -43,7 +43,7 @@ abstract class BaseController {
     /**
      * Function API exec
      *
-     * @param  callable $callable
+     * @param  callable         $callable
      * @param  \WP_REST_Request $request
      * @return \WP_REST_Response|\WP_Error
      */
@@ -69,5 +69,4 @@ abstract class BaseController {
 
         return rest_ensure_response( $response );
     }
-
 }

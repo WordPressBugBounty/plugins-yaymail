@@ -481,4 +481,125 @@ class Helpers {
             admin_url( 'admin.php' )
         );
     }
+
+    public static function is_yaymail_lite_and_yaymail_wp_pro_active() {
+        return function_exists( 'is_plugin_active' ) && is_plugin_active( 'yaymail/yaymail.php' ) && is_plugin_active( 'yaymail-wp-pro/yaymail-wp.php' );
+    }
+
+    /**
+     * Whether a WooCommerce-focused YayMail core plugin is active (lite, Pro, or Email Customizer for WooCommerce slug).
+     *
+     * @return bool
+     */
+    public static function is_yaymail_woocommerce_core_active() {
+        if ( ! function_exists( 'is_plugin_active' ) ) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+
+        $plugin_files = [
+            'yaymail/yaymail.php',
+            'yaymail-pro/yaymail.php',
+            'email-customizer-for-woocommerce/yaymail.php',
+        ];
+
+        foreach ( $plugin_files as $plugin_file ) {
+            if ( is_plugin_active( $plugin_file ) || is_plugin_active_for_network( $plugin_file ) ) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * Whether Yay WP Email Customizer is active.
+     *
+     * @return bool
+     */
+    public static function is_yaymail_wp_active() {
+        if ( ! function_exists( 'is_plugin_active' ) ) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+
+        $plugin_file = 'yaymail-wp-mail/yaymail-wp.php';
+
+        return is_plugin_active( $plugin_file ) || is_plugin_active_for_network( $plugin_file );
+    }
+
+    public static function get_plugin_path() {
+        return self::is_yaymail_lite_and_yaymail_wp_pro_active() ? YAYMAIL_WP_PLUGIN_PATH : YAYMAIL_PLUGIN_PATH;
+    }
+
+    public static function get_plugin_url() {
+        return self::is_yaymail_lite_and_yaymail_wp_pro_active() ? YAYMAIL_WP_PLUGIN_URL : YAYMAIL_PLUGIN_URL;
+    }
+    public static function scope_css_block( $css, $scope_selector ) {
+        $result = '';
+        $length = strlen( $css );
+        $offset = 0;
+
+        while ( $offset < $length ) {
+            $open_brace_pos = strpos( $css, '{', $offset );
+            if ( false === $open_brace_pos ) {
+                $result .= substr( $css, $offset );
+                break;
+            }
+
+            $selector_text = trim( substr( $css, $offset, $open_brace_pos - $offset ) );
+            $cursor        = $open_brace_pos + 1;
+            $depth         = 1;
+
+            while ( $cursor < $length && $depth > 0 ) {
+                $char = $css[ $cursor ];
+                if ( '{' === $char ) {
+                    ++$depth;
+                } elseif ( '}' === $char ) {
+                    --$depth;
+                }
+                ++$cursor;
+            }
+
+            $body_text = substr( $css, $open_brace_pos + 1, $cursor - $open_brace_pos - 2 );
+            $offset    = $cursor;
+
+            if ( '' === $selector_text ) {
+                continue;
+            }
+
+            if ( str_starts_with( $selector_text, '@media' ) || str_starts_with( $selector_text, '@supports' ) ) {
+                $result .= $selector_text . '{' . self::scope_css_block( $body_text, $scope_selector ) . '}';
+                continue;
+            }
+
+            if ( str_starts_with( $selector_text, '@' ) ) {
+                $result .= $selector_text . '{' . $body_text . '}';
+                continue;
+            }
+
+            $selector_list = array_filter(
+                array_map( 'trim', explode( ',', $selector_text ) ),
+                static function( $selector ) {
+                    return '' !== $selector;
+                }
+            );
+
+            if ( empty( $selector_list ) ) {
+                continue;
+            }
+
+            $scoped_selectors = array_map(
+                static function( $selector ) use ( $scope_selector ) {
+                    if ( str_starts_with( $selector, $scope_selector ) ) {
+                        return $selector;
+                    }
+                    return $scope_selector . ' ' . $selector;
+                },
+                $selector_list
+            );
+
+            $result .= implode( ', ', $scoped_selectors ) . '{' . $body_text . '}';
+        }//end while
+
+        return $result;
+    }
 }

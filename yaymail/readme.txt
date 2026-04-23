@@ -4,7 +4,7 @@ Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: woocommerce email customizer, email templates, email builder, woocommerce emails, drag and drop
 Requires at least: 3.0
 Tested up to: 6.9
-Stable tag: 4.3.4
+Stable tag: 4.4.0
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -19,10 +19,10 @@ YayMail is the #1 Free drag-and-drop email template customizer that lets you des
 
 Plus, expand your design possibilities with premade blocks and extensive plugin compatibility.
 
-**NEW**
+**NEW RELEASES**
 
-- [Email Customizer for Woodmart Wishlist](https://yaycommerce.com/yaymail-addons/yaymail-addon-for-woodmart/)
-- [Email Customizer for Blocksy Emails](https://yaycommerce.com/yaymail-addons/yaymail-addon-for-blocksy/)
+- [Conditional Logic for your email blocks](https://yaycommerce.com/yaymail-addons/conditional-logic-addon-for-yaymail?utm_source=wp-org&utm_medium=yaymail) 
+- [Email Customizer for Woodmart Wishlist](https://yaycommerce.com/yaymail-addons/yaymail-addon-for-woodmart/?utm_source=wp-org&utm_medium=yaymail)
 
 👋 **Works with Any WooCommerce Themes**
 
@@ -48,11 +48,11 @@ Here's how YayMail makes email customization easy:
 - One-click to send a test email
 - Premade patterns and blocks
 
-[**QUICK ADMIN DEMO**](https://demo.yaycommerce.com/try-yaymail/) | [**YAYMAIL PRO**](https://yaycommerce.com/yaymail-woocommerce-email-customizer/) 💎
+[**QUICK ADMIN DEMO**](https://demo.yaycommerce.com/try-yaymail/) | [**YAYMAIL PRO**](https://yaycommerce.com/yaymail-woocommerce-email-customizer/?utm_source=wp-org&utm_medium=yaymail) 💎
  
 [youtube https://youtu.be/sfVwCGV5RBQ]
 
-[Free vs Pro](https://docs.yaycommerce.com/yaymail/compare-yaymail-free-and-pro) | [YayMail Addons](https://yaycommerce.com/yaymail-addons/)
+[Free vs Pro](https://docs.yaycommerce.com/yaymail/compare-yaymail-free-and-pro) | [YayMail Addons](https://yaycommerce.com/yaymail-addons/?utm_source=wp-org&utm_medium=yaymail)
 
 When combined with [**YayMail Premium Addons**](https://yaycommerce.com/yaymail-addons/), you will unlock the visual email designer integration to go with 80+ third-party WooCommerce plugins.
 
@@ -145,13 +145,13 @@ This WooCommerce email designer's third-party integrations include but are not l
 - Polylang, TranslatePress, Loco Translate, Weglot, GTranslate, and more!
 
 ###🧠 CONDITIONAL LOGIC (Premium Only)
-For more flexibility and personalization, [YayMail Conditional Logic](https://yaycommerce.com/yaymail-addons/conditional-logic-addon-for-yaymail) allows you to quickly add extra email blocks based on your conditions.
+For more flexibility and personalization, [YayMail Conditional Logic](https://yaycommerce.com/yaymail-addons/conditional-logic-addon-for-yaymail/?utm_source=wp-org&utm_medium=yaymail) allows you to quickly add extra email blocks based on your conditions.
 
 - Related products
 - Recommended products
 - Customer loyalty rewards for specific buyers
 - WooCommerce custom email per product
-➡️ [View Demo](https://demo.yaycommerce.com/try-yaymail/)
+➡️ [View Demo](https://demo.yaycommerce.com/try-yaymail/?utm_source=wp-org&utm_medium=yaymail)
 
 ###🦄 YAYMAIL ADDONS
 
@@ -195,7 +195,7 @@ Happy Customizing! 💛
 From YayMail user interface, select an email template from the dropdown list of WooCommerce workflows. For instance, if you've chosen **Completed order** template, you'll get its related sample content loaded in the editing section. Then you will be able to start editing using the custom email blocks.
 
 = I want to setup the next order coupon in WooCommerce emails. How to do that? =
-Yes, with YayMail, you can deploy a next-order coupon strategy and build a loyal customer base. Here's a step-by-step guide to creating [next-order coupon in WooCommerce emails](https://yaycommerce.com/how-to-setup-next-order-coupon-in-woocommerce-emails/).
+Yes, with YayMail, you can deploy a next-order coupon strategy and build a loyal customer base. Here's a step-by-step guide to creating [next-order coupon in WooCommerce emails](https://yaycommerce.com/how-to-setup-next-order-coupon-in-woocommerce-emails/?utm_source=wp-org&utm_medium=yaymail).
 
 = How do I change the email content in WooCommerce? =
 To change the email content in a WooCommerce email, just select an email element, you will see its text editor on the left panel. From there, you can edit the text, images, and other media content in your emails.
@@ -203,12 +203,12 @@ To change the email content in a WooCommerce email, just select an email element
 = How do I override WooCommerce email templates? =
 With YayMail, you don't have to modify your theme code to override WooCommerce email templates. To stop using the old style email template and start sending the new email design, just go to YayMail and enable the templates you want to use. For example, to override the `customer-completed-order.php` template, just enable **Completed order** email template in the YayMail's dropdown list. 
 
-= YayMail Pro vs. Premium Addon, not sure which to buy? =
-No worries, [it doesn't hurt to ask](https://m.me/yaycommerce).
+= YayMail Pro vs. Premium Addons, not sure which to buy? =
+No worries, [it doesn't hurt to ask](https://yaycommerce.com/support/?utm_source=wp-org&utm_medium=yaymail).
 
 = I have issues when customizing WooCommerce default emails. How can I get support? =
-Please [create a topic](https://wordpress.org/support/plugin/yaymail/) or [contact us](https://yaycommerce.com/support/) to get help. We’re sure to resolve the glitch!
-To quickly get the answers, please attach screenshots of screen notice and currently activated WooCommerce plugins on your website.
+Please [create a topic](https://wordpress.org/support/plugin/yaymail/) or [contact us](https://yaycommerce.com/support/?utm_source=wp-org&utm_medium=yaymail) to get help. We’re sure to resolve the glitch!
+To quickly get the answers, please attach screenshots of the screen notice and currently activated WooCommerce plugins on your website.
 
 = I can't save my designed templates in email customiser. What should I do now? =
 Please make sure not to add external links or insecure resources to the email template. Then, please try clicking on Reset template to revert it back to the initial design.
@@ -234,10 +234,27 @@ We offer single-site licenses and also unlimited site licenses to better support
 9. Break free from default WooCommerce styles, go bold with dark theme email templates
 
 == Changelog ==
+
+= Apr 23, 2026 - Version 4.4.0 =
+- Added: Support for synced pattern in import/export & backup (Pro)
+- Added: Button width selector
+- Added: Full-width option for Image element
+- Added: Element Order Progress
+- Added: Conditional logic feature suggestion
+- Updated: Column responsive
+- Updated: Filtering by visibility from admin custom order fields of Custom Order Field by SkyVerge (Pro)
+- Updated: Tour content UX by constraining content height and enabling scroll on overflow
+- Updated: Tour styling
+- Updated: Admin shell menu and license
+- Updated: Admin UI style
+- Fixed: “Create pattern” action for invalid multi-select states
+- Fixed: Title element shortcode rendering issue
+- Fixed: Multi select (mark global header/footer)
+
 = Mar 12, 2026 - Version 4.3.4 =
 - New: Template Library Feature
 - New: Preset color feature in customizer settings (Pro)
-- New: Capability to override YayMail templates with theme
+- New: Capability to override Yay Mail templates with theme
 - Updated: Shipping Note into Tracking Information element for Advanced Shipment Tracking
 - Improved: Responsive layout on desktop
 - Fixed: YayPricing installation

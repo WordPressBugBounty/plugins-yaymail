@@ -14,7 +14,6 @@ use YayMail\PostTypes\TemplatePostType;
 use YayMail\Shortcodes\ShortcodesExecutor;
 use YayMail\SupportedPlugins;
 use YayMail\Utils\TemplateHelpers;
-
 /**
  * Template Model
  *
@@ -89,34 +88,38 @@ class TemplateModel {
 
         $excluded_templates = apply_filters( 'yaymail_excluded_templates', [ 'yaymail_global_header_footer' ] );
 
-        /* Wc Emails, may or may not be supported by us */
-        $wc_emails = \WC_Emails::instance()->get_emails();
+        if ( yaymail_is_wc_installed() ) {
+            /* Wc Emails, may or may not be supported by us */
+            $wc_emails = \WC_Emails::instance()->get_emails();
 
-        foreach ( $wc_emails as $wc_email ) {
-            $template_id = $wc_email->id ?? null;
+            foreach ( $wc_emails as $wc_email ) {
+                $template_id = $wc_email->id ?? null;
 
-            if ( ! isset( $template_id ) ) {
-                continue;
-            }
+                if ( ! isset( $template_id ) ) {
+                    continue;
+                }
 
-            if ( in_array( $template_id, $excluded_templates, true ) ) {
-                continue;
-            }
+                if ( in_array( $template_id, $excluded_templates, true ) ) {
+                    continue;
+                }
 
-            if ( SupportedPlugins::get_instance()->get_support_info( $template_id )['status'] !== 'already_supported' ) {
-                // Templates is currently not editable, but could be supported by pro/addon
-                $template_data = self::get_uneditable_template( $wc_email, $templates );
-                $templates[]   = $template_data;
-                continue;
-            }
+                if ( SupportedPlugins::get_instance()->get_support_info( $template_id )['status'] !== 'already_supported' ) {
+                    // Templates is currently not editable, but could be supported by pro/addon
+                    $template_data = self::get_uneditable_template( $wc_email, $templates );
+                    $templates[]   = $template_data;
+                    continue;
+                }
 
-            $email_data    = SupportedPlugins::get_instance()->get_yaymail_template_data( $template_id );
-            $template_data = self::get_yaymail_template( $email_data );
-            if ( isset( $template_data ) ) {
-                unset( $template_data['elements'] );
-                $templates[] = $template_data;
-            }
-        }//end foreach
+                $email_data    = SupportedPlugins::get_instance()->get_yaymail_template_data( $template_id );
+                $template_data = self::get_yaymail_template( $email_data );
+                if ( isset( $template_data ) ) {
+                    unset( $template_data['elements'] );
+                    $templates[] = $template_data;
+                }
+            }//end foreach
+        } else {
+            $templates = [];
+        }//end if
 
         // Make sure it will show templates for Automatewoo ...
         // Because those templates don't appear in wc_emails
@@ -429,7 +432,7 @@ class TemplateModel {
         $template_elements = self::query_meta_data( $template_post_id, self::$meta_keys['elements'], [] );
 
         $support_info = SupportedPlugins::get_instance()->get_support_info( $template_name );
-        if ( $support_info['status'] !== 'already_supported' ) {
+        if ( $support_info['status'] !== 'already_supported' && 'wp-core-edd-password_reset' !== $template_name ) {
             // Template is not editable
             $template_elements = self::get_uneditable_template_placeholder_elements( $support_info );
         } elseif ( isset( $post ) ) {
@@ -457,8 +460,8 @@ class TemplateModel {
             'support_status'           => $support_info['status'] ?? 'already_supported',
             'addon_info'               => $support_info['addon'] ?? '',
             'post_modified'            => $post_modified,
-            'global_header_settings'   => $global_header_settings,
-            'global_footer_settings'   => $global_footer_settings,
+            'global_header_settings'   => isset( $global_header_settings ) ? $global_header_settings : [],
+            'global_footer_settings'   => isset( $global_footer_settings ) ? $global_footer_settings : [],
         ];
     }
 

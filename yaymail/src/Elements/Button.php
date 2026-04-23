@@ -62,13 +62,23 @@ class Button extends BaseElement {
                         'title' => __( 'Button position', 'yaymail' ),
                     ]
                 ),
-                'width'                           => ElementsHelper::get_dimension(
+                'width'                           => ElementsHelper::get_button_width_selector( $attributes ),
+                'custom_width'                    => ElementsHelper::get_dimension(
                     $attributes,
                     [
+                        'value_path'    => 'custom_width',
+                        'title'         => __( 'Custom width', 'yaymail' ),
                         'default_value' => '50',
                         'min'           => 0,
                         'max'           => 100,
                         'unit'          => '%',
+                        'conditions'    => [
+                            'condition_1' => [
+                                'attribute'  => 'width',
+                                'comparison' => '==',
+                                'value'      => 'custom',
+                            ],
+                        ],
                     ]
                 ),
                 'height'                          => ElementsHelper::get_dimension(

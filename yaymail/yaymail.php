@@ -3,7 +3,7 @@
  * Plugin Name: YayMail - WooCommerce Email Customizer
  * Plugin URI: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
  * Description: Create awesome transactional emails with a drag and drop email builder
- * Version: 4.3.4
+ * Version: 4.4.0
  * Author: YayCommerce
  * Author URI: https://yaycommerce.com
  * License:     GPLv2 or later
@@ -13,7 +13,7 @@
  * Tested up to: 6.9
  * Requires PHP: 5.4
  * WC requires at least: 3.0.0
- * WC tested up to: 10.6.0
+ * WC tested up to: 10.7.0
  * Domain Path: /i18n/languages/
  *
  * @package YayMail
@@ -32,7 +32,7 @@ if ( ! defined( 'YAYMAIL_DEBUG' ) ) {
 }
 
 if ( ! defined( 'YAYMAIL_VERSION' ) ) {
-    define( 'YAYMAIL_VERSION', '4.3.4' );
+    define( 'YAYMAIL_VERSION', '4.4.0' );
 }
 
 if ( ! defined( 'YAYMAIL_PLUGIN_URL' ) ) {
@@ -53,6 +53,10 @@ if ( ! defined( 'YAYMAIL_IS_DEVELOPMENT' ) ) {
 
 if ( ! defined( 'YAYMAIL_REST_NAMESPACE' ) ) {
     define( 'YAYMAIL_REST_NAMESPACE', 'yaymail/v1' );
+}
+
+if ( ! defined( 'YAYMAIL_MENU_PRIORITY' ) ) {
+    define( 'YAYMAIL_MENU_PRIORITY', 100 );
 }
 
 $yaymail_has_required_deps = true;
@@ -83,12 +87,45 @@ if ( ! $yaymail_has_required_deps ) {
     return;
 }
 
-require_once YAYMAIL_PLUGIN_PATH . 'vendor/autoload.php';
+require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/YaymailPluginAdapter.php';
 
+spl_autoload_register(
+    function ( $class ) {
+        $prefix = 'YayMail\\';
+
+        if ( strpos( $class, $prefix ) !== 0 ) {
+            return;
+        }
+
+        $relative      = substr( $class, strlen( $prefix ) );
+        $relative_path = str_replace( '\\', '/', $relative ) . '.php';
+
+        $core_file = YAYMAIL_PLUGIN_PATH . 'src/' . $relative_path;
+
+        // Check if yaymail-wp-pro active
+        if ( ! function_exists( 'is_plugin_active' ) ) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+        $yaymail_wp_pro_plugin_file = 'yaymail-wp-pro/yaymail-wp.php';
+        $yaymail_wp_pro_active      = is_plugin_active( $yaymail_wp_pro_plugin_file ) || is_plugin_active_for_network( $yaymail_wp_pro_plugin_file );
+
+        if ( $yaymail_wp_pro_active ) {
+            $core_file = YAYMAIL_WP_PLUGIN_PATH . 'src/' . $relative_path;
+        }
+
+        if ( file_exists( $core_file ) ) {
+            require $core_file;
+        }
+    },
+    true,
+    true
+);
 /**
  * Initialize constants
  */
 Constants\ConstantsHandler::get_instance();
+// Notices\NoticeWPMail::get_instance();
 
 if ( ! function_exists( 'install_yaymail_admin_notice' ) ) {
     function install_yaymail_admin_notice() {
@@ -107,8 +144,10 @@ if ( ! function_exists( 'install_yaymail_admin_notice' ) ) {
 
 if ( ! function_exists( 'YayMail\\init' ) ) {
     function init() {
-        \YayMail\YayCommerceMenu\RegisterMenu::get_instance();
-        \YayMail\License\LicenseHandler::get_instance();
+        \YayMailScoped\YayCommerce\AdminShell\AdminShell::boot();
+        \YayMailScoped\YayCommerce\AdminShell\AdminShell::register_plugin(
+            new \YaymailPluginAdapter()
+        );
         if ( ! function_exists( 'WC' ) ) {
             add_action( 'admin_notices', 'YayMail\\install_yaymail_admin_notice' );
         } else {

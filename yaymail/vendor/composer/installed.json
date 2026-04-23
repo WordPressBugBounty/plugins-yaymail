@@ -1,127 +1,55 @@
 {
     "packages": [
         {
-            "name": "10quality/php-data-model",
-            "version": "v1.0.x-dev",
-            "version_normalized": "1.0.9999999.9999999-dev",
+            "name": "yaycommerce/admin-shell",
+            "version": "v2.5.6",
+            "version_normalized": "2.5.6.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/10quality/php-data-model.git",
-                "reference": "dea1c20d2100478bb7c929322e49f00b20c9d6d8"
+                "url": "git@github.com:YayCommerce/yaycommerce-plugin-admin-shell.git",
+                "reference": "9861b00508a2552f9fc20c66af95bcb42487a6a8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/10quality/php-data-model/zipball/dea1c20d2100478bb7c929322e49f00b20c9d6d8",
-                "reference": "dea1c20d2100478bb7c929322e49f00b20c9d6d8",
+                "url": "https://api.github.com/repos/YayCommerce/yaycommerce-plugin-admin-shell/zipball/9861b00508a2552f9fc20c66af95bcb42487a6a8",
+                "reference": "9861b00508a2552f9fc20c66af95bcb42487a6a8",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4"
+                "php": ">=7.4"
             },
             "require-dev": {
-                "phpunit/phpunit": "9.*"
+                "phpunit/phpunit": "^9.0"
             },
-            "time": "2023-01-05T16:44:06+00:00",
-            "default-branch": true,
+            "time": "2026-04-23T09:27:17+00:00",
+            "bin": [
+                "bin/yaycommerce-init",
+                "bin/yaycommerce-update",
+                "bin/yaycommerce-prerelease"
+            ],
             "type": "library",
             "installation-source": "dist",
             "autoload": {
                 "psr-4": {
-                    "TenQuality\\Data\\": "src"
+                    "YayCommerce\\AdminShell\\": "src/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "10 Quality",
-                    "email": "info@10quality.com"
-                },
-                {
-                    "name": "Cami M",
-                    "email": "info@10quality.com"
-                }
-            ],
-            "description": "PHP Library that provides generic and scalable Data Models (abstract model class) for any type of data handling.",
-            "homepage": "https://github.com/10quality/php-data-model",
-            "keywords": [
-                "data",
-                "models"
-            ],
-            "support": {
-                "issues": "https://github.com/10quality/php-data-model/issues",
-                "source": "https://github.com/10quality/php-data-model/tree/v1.0.3"
-            },
-            "install-path": "../10quality/php-data-model"
-        },
-        {
-            "name": "10quality/wp-query-builder",
-            "version": "v1.0.x-dev",
-            "version_normalized": "1.0.9999999.9999999-dev",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/10quality/wp-query-builder.git",
-                "reference": "0df188d63f4c3ff0f4bc17113fe4e4465b8e46ff"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/10quality/wp-query-builder/zipball/0df188d63f4c3ff0f4bc17113fe4e4465b8e46ff",
-                "reference": "0df188d63f4c3ff0f4bc17113fe4e4465b8e46ff",
-                "shasum": ""
-            },
-            "require": {
-                "10quality/php-data-model": "^1.0",
-                "php": ">=5.4"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "9.*"
-            },
-            "time": "2023-02-09T02:29:19+00:00",
-            "default-branch": true,
-            "type": "library",
-            "installation-source": "dist",
-            "autoload": {
-                "files": [
-                    "src/Lib/functions.php"
-                ],
+            "autoload-dev": {
                 "psr-4": {
-                    "TenQuality\\WP\\Database\\": "src"
+                    "YayCommerce\\AdminShell\\Tests\\": "tests/"
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "GPL-3.0-or-later"
             ],
-            "authors": [
-                {
-                    "name": "Alejandro Mostajo",
-                    "email": "amostajo@gmail.com"
-                },
-                {
-                    "name": "Hyper Tribal",
-                    "email": "grow@hypertribal.com"
-                },
-                {
-                    "name": "10 Quality",
-                    "email": "info@10quality.com"
-                }
-            ],
-            "description": "Wordpress Query Builder class library for custom models and data querying.",
-            "keywords": [
-                "database",
-                "models",
-                "query builder",
-                "wordpress"
-            ],
+            "description": "Shared admin shell for YayCommerce plugins: top-level menu, Licenses page, Other Plugins, Help, optional license subsystem",
             "support": {
-                "issues": "https://github.com/10quality/wp-query-builder/issues",
-                "source": "https://github.com/10quality/wp-query-builder/tree/v1.0"
+                "source": "https://github.com/YayCommerce/yaycommerce-plugin-admin-shell/tree/v2.5.6",
+                "issues": "https://github.com/YayCommerce/yaycommerce-plugin-admin-shell/issues"
             },
-            "install-path": "../10quality/wp-query-builder"
+            "install-path": "../yaycommerce/admin-shell"
         }
     ],
-    "dev": true,
+    "dev": false,
     "dev-package-names": []
 }

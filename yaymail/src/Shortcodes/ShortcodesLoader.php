@@ -24,21 +24,30 @@ class ShortcodesLoader {
 
         $this->shortcode_intances = [
             CommonShortcodes::get_instance(),
-            OrderDetailsShortcodes::get_instance(),
-            HookShortcodes::get_instance(),
-            ShippingShortcodes::get_instance(),
-            BillingShortcodes::get_instance(),
-            PaymentsShortcodes::get_instance(),
-            NewUsersShortcodes::get_instance(),
-            ResetPasswordsShortcodes::get_instance(),
-            OrderMetaShortcodes::get_instance(),
+
             LegacyCustomShortcodes::get_instance(),
 
-            /**
-             * @since 4.0.6
-             */
-            RefundShortcodes::get_instance(),
         ];
+
+        if ( function_exists( 'WC' ) && defined( 'YAYMAIL_VERSION' ) ) {
+            $this->shortcode_intances = array_merge(
+                $this->shortcode_intances,
+                [
+                    OrderDetailsShortcodes::get_instance(),
+                    HookShortcodes::get_instance(),
+                    ShippingShortcodes::get_instance(),
+                    BillingShortcodes::get_instance(),
+                    PaymentsShortcodes::get_instance(),
+                    NewUsersShortcodes::get_instance(),
+                    ResetPasswordsShortcodes::get_instance(),
+                    OrderMetaShortcodes::get_instance(),
+                    /**
+                    * @since 4.0.6
+                    */
+                    RefundShortcodes::get_instance(),
+                ]
+            );
+        }
 
         do_action( 'yaymail_register_shortcodes', $this );
 

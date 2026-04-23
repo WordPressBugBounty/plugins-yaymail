@@ -84,6 +84,10 @@ class ImageList extends BaseElement {
                                 'value' => isset( $attributes['column_1']['image'] ) ? $attributes['column_1']['image'] : $src,
                                 'type'  => 'content',
                             ],
+                            'full_width'       => [
+                                'value' => isset( $attributes['column_1']['full_width'] ) ? $attributes['column_1']['full_width'] : false,
+                                'type'  => 'style',
+                            ],
                             'width'            => [
                                 'value' => isset( $attributes['column_1']['width'] ) ? $attributes['column_1']['width'] : '100',
                                 'type'  => 'style',
@@ -119,6 +123,10 @@ class ImageList extends BaseElement {
                                 'value' => isset( $attributes['column_2']['image'] ) ? $attributes['column_2']['image'] : $src,
                                 'type'  => 'content',
                             ],
+                            'full_width'       => [
+                                'value' => isset( $attributes['column_2']['full_width'] ) ? $attributes['column_2']['full_width'] : false,
+                                'type'  => 'style',
+                            ],
                             'width'            => [
                                 'value' => isset( $attributes['column_2']['width'] ) ? $attributes['column_2']['width'] : '100',
                                 'type'  => 'style',
@@ -153,6 +161,10 @@ class ImageList extends BaseElement {
                             'image'            => [
                                 'value' => isset( $attributes['column_3']['image'] ) ? $attributes['column_3']['image'] : $src,
                                 'type'  => 'content',
+                            ],
+                            'full_width'       => [
+                                'value' => isset( $attributes['column_3']['full_width'] ) ? $attributes['column_3']['full_width'] : false,
+                                'type'  => 'style',
                             ],
                             'width'            => [
                                 'value' => isset( $attributes['column_3']['width'] ) ? $attributes['column_3']['width'] : '100',

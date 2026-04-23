@@ -33,12 +33,23 @@ $wrapper_style = TemplateHelpers::get_style(
     ]
 );
 
+$width = isset($data['width']) ? $data['width'] : 'auto';
+$custom_width = isset($data['custom_width']) ? $data['custom_width'] : '50';
+
+if ($width === 'custom') {
+    $parsed_width = $custom_width . '%';
+} elseif (in_array($width, ['auto', '25%', '50%', '75%', '100%'])) {
+    $parsed_width = $width;
+} else {
+    $parsed_width = $width . '%';
+}
+
 $margin_value        = isset( $data['margin'] ) && 'center' === $data['margin'] ? '0 auto' : 'auto';
 $float_value         = in_array( $data['align'], [ 'left', 'right' ], true ) ? $data['align'] : 'unset';
 $button_holder_style = TemplateHelpers::get_style(
     [
-        'width'          => $data['width'] . '%',
-        'min-width'      => $data['width'] . '%',
+        'width'          => $parsed_width,
+        'min-width'      => $parsed_width === 'auto' ? 'auto' : $parsed_width,
         'margin'         => $margin_value,
         'padding'        => TemplateHelpers::get_spacing_value( isset( $data['padding'] ) ? $data['padding'] : [] ),
         'float'          => $float_value,

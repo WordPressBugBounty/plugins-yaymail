@@ -612,7 +612,7 @@ final class Ver_4_0_0 extends AbstractMigration {
             return;
         }
 
-        if ( $element['type'] === 'column_layout' ) {
+        if ( $element['type'] === 'column_layout' && empty( $element['children'] ) ) {
             $data['inner_border_radius']    = [
                 'top_left'     => 0,
                 'top_right'    => 0,

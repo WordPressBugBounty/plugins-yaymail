@@ -10,8 +10,6 @@ use YayMail\Utils\SingletonTrait;
 class YayMailViteApp {
     use SingletonTrait;
 
-    public const BASE_PATH = YAYMAIL_PLUGIN_URL . 'assets/dist/yaymail/';
-
     private $entries              = [];
     private $manifest             = [];
     private $preload_module_files = [];
@@ -20,6 +18,13 @@ class YayMailViteApp {
     protected function __construct() {
         add_action( 'wp_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ], 99 );
         add_action( 'admin_enqueue_scripts', [ $this, 'wp_enqueue_scripts' ], 99 );
+    }
+
+    private function get_plugin_url() {
+        if ( Helpers::is_yaymail_lite_and_yaymail_wp_pro_active() ) {
+            return YAYMAIL_WP_PLUGIN_URL;
+        }
+        return YAYMAIL_PLUGIN_URL;
     }
 
     public function enqueue_entry( string $key = 'yaymail-main.tsx', array $deps = [] ) {
@@ -97,8 +102,8 @@ class YayMailViteApp {
                 wp_register_script( "module/yaymail/$entry_key", "http://localhost:3000/$entry_key", $entry_opts['deps'], null, true );// phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 
             } else {
-                $url = self::BASE_PATH . $this->get_module_opts( $entry_key )['file'];
-                wp_register_script( "module/yaymail/$entry_key", $url, $entry_opts['deps'], YAYMAIL_VERSION, true );
+                $url = $this->get_plugin_url() . 'assets/dist/yaymail/' . $this->get_module_opts( $entry_key )['file'];
+                wp_register_script( "module/yaymail/$entry_key", $url, $entry_opts['deps'], yaymail_version(), true );
             }
 
             wp_enqueue_script( "module/yaymail/$entry_key" );
@@ -119,7 +124,7 @@ class YayMailViteApp {
 
         } else {
             foreach ( $this->preload_module_files as $file ) {
-                echo ( '<link rel="modulepreload" href="' . esc_attr( self::BASE_PATH . $file ) . '">' );
+                echo ( '<link rel="modulepreload" href="' . esc_attr( $this->get_plugin_url() . 'assets/dist/yaymail/' . $file ) . '">' );
             }
         }
     }
@@ -130,7 +135,7 @@ class YayMailViteApp {
         }
 
         foreach ( $this->style_files as $file ) {
-            wp_register_style( 'yay/' . $file, self::BASE_PATH . $file, [], YAYMAIL_VERSION );
+            wp_register_style( 'yay/' . $file, $this->get_plugin_url() . 'assets/dist/yaymail/' . $file, [], yaymail_version() );
             wp_enqueue_style( 'yay/' . $file );
         }
     }
@@ -140,11 +145,17 @@ class YayMailViteApp {
         require_once ABSPATH . '/wp-admin/includes/file.php';
         WP_Filesystem();
 
-        $content = $wp_filesystem->get_contents( YAYMAIL_PLUGIN_PATH . 'assets/dist/yaymail/manifest.json' );
+        if ( Helpers::is_yaymail_lite_and_yaymail_wp_pro_active() ) {
+            $plugin_path = YAYMAIL_WP_PLUGIN_PATH;
+        } else {
+            $plugin_path = YAYMAIL_PLUGIN_PATH;
+        }
+
+        $content = $wp_filesystem->get_contents( $plugin_path . 'assets/dist/yaymail/manifest.json' );
 
         // when $wp_filesystem is not available, use file_get_contents
         if ( ! $content ) {
-            $content = file_get_contents( YAYMAIL_PLUGIN_PATH . 'assets/dist/yaymail/manifest.json' );
+            $content = file_get_contents( $plugin_path . 'assets/dist/yaymail/manifest.json' );
         }
 
         $this->manifest = json_decode( $content, true );

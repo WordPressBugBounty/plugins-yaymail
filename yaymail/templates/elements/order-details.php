@@ -60,6 +60,11 @@ ob_start();
 <style>
     /* Modern layout */
     <?php if ( $is_layout_type_modern ) { ?>
+        <?php
+        $modern_line_color = ( '' === (string) $border_color || 'inherit' === strtolower( (string) $border_color ) ) ? '#dddddd' : $border_color;
+        ?>
+
+
     .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table {
         border: 0 !important;
     }
@@ -70,8 +75,8 @@ ob_start();
         padding-right: 0 !important;
     }
 
-    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail_item_price_title,
-    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail_item_price_content,
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> th.yaymail_item_price_title,
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> td.yaymail_item_price_content,
     .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail_element_foot_order_details tr td {
         text-align: right !important;
     }
@@ -87,13 +92,13 @@ ob_start();
     }
 
 
-    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table .order_item:last-child td {
-        border-bottom: 1px solid <?php echo esc_attr( $border_color ); ?> !important;
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table tbody.yaymail_element_body_order_details .yaymail-order-item-last td{
+        border-bottom: 1px solid <?php echo esc_attr( $modern_line_color ); ?> !important;
     }
 
     .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table .yaymail-order-detail-row-payment_method td,
     .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table .yaymail-order-detail-row-payment_method th {
-        border-bottom: 1px solid <?php echo esc_attr( $border_color ); ?> !important;
+        border-bottom: 1px solid <?php echo esc_attr( $modern_line_color ); ?> !important;
     }
 
     .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-table th {

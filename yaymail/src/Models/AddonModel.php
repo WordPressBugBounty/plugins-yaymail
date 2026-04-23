@@ -1555,6 +1555,8 @@ class AddonModel {
             ],
         ];
 
+        $data = apply_filters( 'yaymail_addon_supported_plugins', $data );
+
         foreach ( array_keys( $data ) as $namespace ) {
             $data[ $namespace ]['installation_status']              = [];
             $data[ $namespace ]['installation_status']['is_active'] = function_exists( $namespace . '\init' ) || function_exists( $namespace . '\addon_init' );
@@ -1578,7 +1580,6 @@ class AddonModel {
                 $data[ $namespace ]['installation_status']['plugin_file']  = $plugin_status['file'];
             }
         }
-
         return $data;
     }
 
@@ -1592,6 +1593,9 @@ class AddonModel {
     }
 
     public static function get_template_ids( array $template_names ): array {
+        if ( ! function_exists( 'WC' ) || ! class_exists( 'WC_Emails' ) ) {
+            return [];
+        }
 
         return array_filter(
             array_map(

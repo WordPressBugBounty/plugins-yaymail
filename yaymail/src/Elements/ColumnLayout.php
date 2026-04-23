@@ -46,6 +46,34 @@ class ColumnLayout extends BaseElement {
                     'max'           => 100,
                     'type'          => 'style',
                 ],
+                'responsive_on_mobile'               => [
+                    'value_path'    => 'responsive_on_mobile',
+                    'component'     => 'Switcher',
+                    'title'         => __( 'Responsive on mobile', 'yaymail' ),
+                    'default_value' => isset( $attributes['responsive_on_mobile'] ) ? (bool) $attributes['responsive_on_mobile'] : false,
+                    'type'          => 'content',
+                ],
+                'vertical_align'                     => [
+                    'value_path'    => 'vertical_align',
+                    'component'     => 'Selector',
+                    'title'         => __( 'Vertical align', 'yaymail' ),
+                    'default_value' => isset( $attributes['vertical_align'] ) ? $attributes['vertical_align'] : 'top',
+                    'options'       => [
+                        [
+                            'label' => __( 'Top', 'yaymail' ),
+                            'value' => 'top',
+                        ],
+                        [
+                            'label' => __( 'Middle', 'yaymail' ),
+                            'value' => 'middle',
+                        ],
+                        [
+                            'label' => __( 'Bottom', 'yaymail' ),
+                            'value' => 'bottom',
+                        ],
+                    ],
+                    'type'          => 'style',
+                ],
                 'container_setting_breaker'          => [
                     'component' => 'LineBreaker',
                 ],

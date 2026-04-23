@@ -255,7 +255,7 @@ class OrderDetails extends BaseElement {
                     'value_path'    => 'shipping_title',
                     'component'     => 'TextInput',
                     'title'         => __( 'Shipping', 'yaymail' ),
-                    'default_value' => esc_html__( 'Shipping:', 'woocommerce' ),
+                    'default_value' => esc_html__( 'Shipping:', 'woocommerce' ) . ' [yaymail_shipping_method]',
                     'type'          => 'content',
                 ],
                 'discount_title'                 => [
@@ -265,15 +265,15 @@ class OrderDetails extends BaseElement {
                     'default_value' => esc_html__( 'Discount:', 'woocommerce' ),
                     'type'          => 'content',
                 ],
-                'custom_footer_rows_breaker'      => [
+                'custom_footer_rows_breaker'     => [
                     'component' => 'LineBreaker',
                 ],
-                'custom_footer_rows_group'        => [
+                'custom_footer_rows_group'       => [
                     'component'   => 'GroupDefinition',
                     'title'       => __( 'Custom Footer Rows', 'yaymail' ),
                     'description' => __( 'Add custom rows to the order totals footer', 'yaymail' ),
                 ],
-                'custom_footer_rows'              => [
+                'custom_footer_rows'             => [
                     'value_path'    => 'custom_footer_rows',
                     'component'     => 'CustomFooterRowsEditor',
                     'title'         => __( 'Custom Footer Rows', 'yaymail' ),

@@ -85,7 +85,7 @@ abstract class BaseEmail {
      * Function check current template is WooCommerce email
      * Return boolean
      */
-    protected function is_template_email( \WC_Email $email ) {
+    protected function is_template_email( $email ) {
         return ! empty( $email->id ) && $email->id === $this->id;
     }
 

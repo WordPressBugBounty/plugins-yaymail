@@ -54,11 +54,11 @@ ob_start();
 ?>
 
     <h1 class="yaymail-customizer-element-title__title" style="<?php echo esc_html( $title_style ); ?>">
-        <?php echo esc_html( $data['title'] ); ?>
+        <?php yaymail_kses_post_e( do_shortcode( $data['title'] ) ); ?>
     </h1>
     <?php if ( ! empty( $data['subtitle'] ) ) : ?>
         <h4 class="yaymail-customizer-element-title__subtitle" style="<?php echo esc_html( $subtitle_style ); ?>">
-            <?php echo esc_html( $data['subtitle'] ); ?>
+            <?php yaymail_kses_post_e( do_shortcode( $data['subtitle'] ) ); ?>
         </h4>
     <?php endif; ?>
 <?php

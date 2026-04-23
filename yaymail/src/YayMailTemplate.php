@@ -88,7 +88,7 @@ class YayMailTemplate {
 
         $this->model = TemplateModel::get_instance();
 
-        if ( is_string( $template_name ) && ! empty( $template_name ) && Helpers::is_yaymail_email( $template_name ) ) {
+        if ( is_string( $template_name ) && ! empty( $template_name ) ) {
             $template_data = $this->model::find_by_name( $template_name, $language );
             if ( empty( $template_data['id'] ) && SupportedPlugins::get_instance()->get_support_info( $template_name )['status'] === 'already_supported' ) {
                 /** Insert new template when not exists */
@@ -348,6 +348,10 @@ class YayMailTemplate {
 
     public function get_content( $data ) {
         try {
+            if ( strpos( $this->get_name(), 'wp-core-' ) === 0 && ! empty( $this->renderer ) ) {
+                return $this->renderer->generate_content( $data );
+            }
+
             if ( ! empty( $this->renderer ) ) {
                 return StyleInline::get_instance()->convert_style_inline( $this->renderer->generate_content( $data ) );
             }
@@ -355,7 +359,7 @@ class YayMailTemplate {
             yaymail_get_logger( $e->getMessage() );
         } catch ( \Error $e ) {
             yaymail_get_logger( $e->getMessage() );
-        }
+        }//end try
         return '';
     }
 }
