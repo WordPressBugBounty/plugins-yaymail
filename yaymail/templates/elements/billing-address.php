@@ -10,6 +10,14 @@ if ( empty( $args['element'] ) ) {
 $element = $args['element'];
 $data    = $element['data'];
 
+$billing_content_format = [
+    'bold'      => isset( $data['billing_content_text_format']['bold'] ) ? filter_var( $data['billing_content_text_format']['bold'], FILTER_VALIDATE_BOOLEAN ) : false,
+    'italic'    => isset( $data['billing_content_text_format']['italic'] ) ? filter_var( $data['billing_content_text_format']['italic'], FILTER_VALIDATE_BOOLEAN ) : true,
+    'underline' => isset( $data['billing_content_text_format']['underline'] ) ? filter_var( $data['billing_content_text_format']['underline'], FILTER_VALIDATE_BOOLEAN ) : false,
+];
+
+$billing_content_alignment = isset( $data['billing_content_alignment'] ) ? $data['billing_content_alignment'] : 'left';
+
 $billing_address_html = wp_kses_post( do_shortcode( isset( $data['rich_text'] ) ? $data['rich_text'] : '[yaymail_billing_address]' ) );
 
 if ( empty( $billing_address_html ) ) :
@@ -35,9 +43,10 @@ $billing_wrapper_style = TemplateHelpers::get_style(
         'color'       => isset( $data['text_color'] ) ? $data['text_color'] : 'inherit',
         'padding'     => '12px',
         'text-align'  => yaymail_get_text_align(),
-        'font-size'   => '14px',
+        'font-size'   => TemplateHelpers::get_dimension_value( $data['billing_content_font_size'] ?? 14 ),
         'font-family' => TemplateHelpers::get_font_family_value( isset( $data['font_family'] ) ? $data['font_family'] : 'inherit' ),
         'border'      => 'solid 1px ' . $data['border_color'],
+        'text-align'  => $billing_content_alignment,
     ]
 );
 
@@ -67,6 +76,11 @@ ob_start();
         <?php
     }//end if
     ?>
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-billing-address-wrap address {
+        font-weight: <?php echo esc_attr( $billing_content_format['bold'] ?? false ? 'bold' : 'normal' ); ?> !important;
+        font-style: <?php echo esc_attr( $billing_content_format['italic'] ?? false ? 'italic' : 'normal' ); ?> !important;
+        text-decoration: <?php echo esc_attr( $billing_content_format['underline'] ?? false ? 'underline' : 'none' ); ?> !important;
+    }
 </style>
 <div class="yaymail-billing-title" style="<?php echo esc_attr( $title_style ); ?>" > <?php echo wp_kses_post( do_shortcode( $data['title'] ) ); ?> </div>
 <div class="yaymail-billing-address-wrap" style="<?php echo esc_attr( $billing_wrapper_style ); ?>">

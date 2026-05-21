@@ -69,7 +69,7 @@ $connector_inactive_color = TemplateHelpers::replace_color_paths(
     (string) ( $data['connector_inactive_color'] ?? '#E5E5E5' )
 );
 
-$icon_size = (int) ( $data['icon_size'] ?? 24 );
+$icon_size = (int) ( $data['icon_size'] ?? 18 );
 $icon_size = max( 10, min( $icon_size, 80 ) );
 
 $label_font_size = (int) ( $data['label_font_size'] ?? 14 );

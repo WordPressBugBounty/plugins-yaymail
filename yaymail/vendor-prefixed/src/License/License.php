@@ -26,33 +26,33 @@ class License
     public function update_license_info(array $license_info) : void
     {
         unset($license_info['success']);
-        update_option($this->adapter->get_plugin_slug() . '_license_info', $license_info, \false);
+        \update_option($this->adapter->get_plugin_slug() . '_license_info', $license_info, \false);
         $this->license_info = $license_info;
     }
     public function update_license_key(string $license_key) : void
     {
-        update_option($this->adapter->get_plugin_slug() . '_license_key', $license_key);
+        \update_option($this->adapter->get_plugin_slug() . '_license_key', $license_key);
         $this->license_key = $license_key;
     }
     public function get_license_key()
     {
-        return get_option($this->adapter->get_plugin_slug() . '_license_key');
+        return \get_option($this->adapter->get_plugin_slug() . '_license_key');
     }
     public function get_license_info() : array
     {
         $default = ['expires' => 'Not updated'];
-        $info = get_option($this->adapter->get_plugin_slug() . '_license_info');
+        $info = \get_option($this->adapter->get_plugin_slug() . '_license_info');
         $info = \is_string($info) ? \json_decode($info, \true) : $info;
         return $info ?: $default;
     }
     public function remove_license_key() : void
     {
-        delete_option($this->adapter->get_plugin_slug() . '_license_key');
+        \delete_option($this->adapter->get_plugin_slug() . '_license_key');
         $this->license_key = null;
     }
     public function remove_license_info() : void
     {
-        delete_option($this->adapter->get_plugin_slug() . '_license_info');
+        \delete_option($this->adapter->get_plugin_slug() . '_license_info');
         $this->license_info = ['expires' => 'Not updated'];
     }
     public function activate(string $license_key) : array

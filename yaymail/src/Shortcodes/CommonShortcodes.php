@@ -108,6 +108,12 @@ class CommonShortcodes extends BaseShortcode {
                 'group'       => 'general',
                 'callback'    => [ $this, 'yaymail_additional_content' ],
             ],
+            [
+                'name'        => 'yaymail_store_email',
+                'description' => __( 'Store Email', 'yaymail' ),
+                'group'       => 'general',
+                'callback'    => [ $this, 'yaymail_store_email' ],
+            ],
         ];
 
         return apply_filters( 'yaymail_common_shortcodes', $shortcodes );
@@ -339,5 +345,11 @@ class CommonShortcodes extends BaseShortcode {
             return wpautop( wptexturize( $render_data['additional_content'] ) );
         }
         return __( 'Additional content', 'yaymail' );
+    }
+
+    public function yaymail_store_email( $data ) {
+        $store_email = sanitize_email( get_option( 'woocommerce_email_from_address' ) ?? '' );
+
+        return $store_email;
     }
 }

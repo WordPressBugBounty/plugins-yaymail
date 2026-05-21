@@ -28,12 +28,12 @@ class ExternalPluginMenuAdapter
         if (!\is_admin()) {
             return;
         }
-        add_action('admin_menu', [$this, 'register_other_plugins_submenu'], 20);
+        \add_action('admin_menu', [$this, 'register_other_plugins_submenu'], 20);
     }
     public function register_other_plugins_submenu() : void
     {
-        $page_id = add_submenu_page($this->parent_menu, $this->menu_title, $this->menu_title, $this->menu_capability, $this->menu_slug, [RecommendedPluginsPage::class, 'render']);
-        add_action('load-' . $page_id, function () {
+        $page_id = \add_submenu_page($this->parent_menu, $this->menu_title, $this->menu_title, $this->menu_capability, $this->menu_slug, [RecommendedPluginsPage::class, 'render']);
+        \add_action('load-' . $page_id, function () {
             RecommendedPluginsPage::load_data();
         });
     }

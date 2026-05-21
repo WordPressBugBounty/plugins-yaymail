@@ -417,4 +417,22 @@ class ElementsHelper {
 
         return $result;
     }
+
+    public static function get_text_format_toggles( $attributes, $config = [] ) {
+        $default_config = [
+            'value_path'    => 'text_format_toggles',
+            'title'         => __( 'Text format toggles', 'yaymail' ),
+            'default_value' => [
+                'bold'      => false,
+                'italic'    => true,
+                'underline' => false,
+            ],
+            'type'          => 'style',
+        ];
+
+        $result              = self::get_component_data( $attributes, $config, $default_config );
+        $result['component'] = 'TextFormatToggles';
+
+        return $result;
+    }
 }

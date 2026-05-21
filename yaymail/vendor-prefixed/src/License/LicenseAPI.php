@@ -15,11 +15,11 @@ class LicenseAPI
     {
         try {
             $url = $store_url . '?edd_action=activate_license&item_id=' . $item_id . '&license=' . \rawurlencode($license_key) . '&url=' . \home_url();
-            $raw = wp_remote_get($url);
-            if (is_wp_error($raw)) {
+            $raw = \wp_remote_get($url);
+            if (\is_wp_error($raw)) {
                 throw new \Error('WP HTTP error', 1);
             }
-            $response = \json_decode(wp_remote_retrieve_body($raw));
+            $response = \json_decode(\wp_remote_retrieve_body($raw));
             if (isset($response->success) && $response->success) {
                 return ['success' => \true, 'license' => $response->license ?? 'valid', 'expires' => $response->expires ?? null, 'license_limit' => $response->license_limit ?? 0, 'payment_id' => $response->payment_id ?? '', 'customer_name' => $response->customer_name ?? ''];
             }
@@ -32,11 +32,11 @@ class LicenseAPI
     {
         try {
             $url = $store_url . '?edd_action=deactivate_license&item_id=' . $item_id . '&license=' . \rawurlencode($license_key) . '&url=' . \home_url();
-            $raw = wp_remote_get($url);
-            if (is_wp_error($raw)) {
+            $raw = \wp_remote_get($url);
+            if (\is_wp_error($raw)) {
                 return ['success' => \false, 'is_server_error' => \true];
             }
-            $response = \json_decode(wp_remote_retrieve_body($raw));
+            $response = \json_decode(\wp_remote_retrieve_body($raw));
             return ['success' => isset($response->success) && $response->success, 'license' => $response->license ?? 'deactivated'];
         } catch (\Error $error) {
             return ['success' => \false, 'is_server_error' => \true];
@@ -46,11 +46,11 @@ class LicenseAPI
     {
         try {
             $url = $store_url . '?edd_action=check_license&item_id=' . $item_id . '&license=' . \rawurlencode((string) $license_key) . '&url=' . \home_url();
-            $raw = wp_remote_get($url);
-            if (is_wp_error($raw)) {
+            $raw = \wp_remote_get($url);
+            if (\is_wp_error($raw)) {
                 throw new \Error('WP HTTP error', 1);
             }
-            $response = \json_decode(wp_remote_retrieve_body($raw));
+            $response = \json_decode(\wp_remote_retrieve_body($raw));
             if (isset($response->success) && \true === $response->success) {
                 if ('valid' === $response->license || 'expired' === $response->license) {
                     return ['success' => \true, 'license' => $response->license, 'expires' => $response->expires ?? null, 'license_limit' => $response->license_limit ?? 0, 'payment_id' => $response->payment_id ?? '', 'customer_name' => $response->customer_name ?? ''];
@@ -68,8 +68,8 @@ class LicenseAPI
             if (!empty($license_key)) {
                 $url .= '&license=' . \rawurlencode($license_key);
             }
-            $raw = wp_remote_get($url);
-            $response = \json_decode(wp_remote_retrieve_body($raw));
+            $raw = \wp_remote_get($url);
+            $response = \json_decode(\wp_remote_retrieve_body($raw));
             if (isset($response->new_version)) {
                 return (array) $response;
             }

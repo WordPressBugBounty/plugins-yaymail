@@ -34,7 +34,7 @@ $active_index = min( max( 0, (int) $current_step_index ), max( 0, $step_count - 
 
 $bubble_pad        = 6;
 $bubble_size       = $icon_size + ( $bubble_pad * 2 );
-$bubble_cell_size  = max( 44, $bubble_size );
+$bubble_cell_size  = max( 42, $bubble_size );
 $bubble_row_height = max( $bubble_size, $bubble_cell_size );
 // First/last column inset scales with bubble width (mirror TSX getEdgeTrackPaddingPx).
 $edge_track_padding_px = max( 8, (int) round( 8 + ( $bubble_cell_size - 44 ) * 0.5 ) );

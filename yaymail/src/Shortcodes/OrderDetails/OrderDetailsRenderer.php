@@ -256,7 +256,7 @@ class OrderDetailsRenderer {
         ?>
         <tbody class="yaymail_element_body_order_details yaymail_element_body_order_item">
         <?php
-        if ( null === $this->order || ! ( $this->order instanceof \WC_Order ) || 12345 === $this->order->get_id() ) {
+        if ( null === $this->order || ! ( $this->order instanceof \WC_Order ) || ( 12345 === $this->order->get_id() && ! wc_get_order( 12345 ) ) ) {
             $this->render_sample_items( $structure_items );
         } else {
             $this->render_real_items( $structure_items );

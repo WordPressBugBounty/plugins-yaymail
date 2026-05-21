@@ -69,6 +69,13 @@ abstract class BaseTemplate {
      */
     protected $elements = [];
 
+    /**
+     * Template-level email settings applied when using this template.
+     *
+     * @var array
+     */
+    protected $template_settings = [];
+
     public function __construct() {
     }
 
@@ -104,6 +111,10 @@ abstract class BaseTemplate {
         return $this->access;
     }
 
+    public function get_email_settings() {
+        return $this->template_settings;
+    }
+
     /**
      * Get full template payload including elements.
      *
@@ -114,14 +125,15 @@ abstract class BaseTemplate {
         $this->available = $this->determine_availability();
 
         $data = [
-            'id'          => $this->get_id(),
-            'email_type'  => $this->get_email_type(),
-            'name'        => $this->get_name(),
-            'description' => $this->get_description(),
-            'position'    => $this->get_position(),
-            'available'   => $this->get_available(),
-            'access'      => $this->get_access(),
-            'elements'    => $this->get_elements(),
+            'id'             => $this->get_id(),
+            'email_type'     => $this->get_email_type(),
+            'name'           => $this->get_name(),
+            'description'    => $this->get_description(),
+            'position'       => $this->get_position(),
+            'available'      => $this->get_available(),
+            'access'         => $this->get_access(),
+            'elements'       => $this->get_elements(),
+            'email_settings' => $this->get_email_settings(),
         ];
 
         return $data;

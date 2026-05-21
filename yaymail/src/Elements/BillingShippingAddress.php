@@ -131,6 +131,33 @@ class BillingShippingAddress extends BaseElement {
                         'editor_id'     => 'bsa_billing_title',
                     ]
                 ),
+                'billing_content_font_size' => ElementsHelper::get_dimension(
+                    $attributes,
+                    [
+                        'value_path'    => 'billing_content_font_size',
+                        'title'         => __( 'Billing content font size', 'yaymail' ),
+                        'default_value' => '14',
+                        'min'           => 8,
+                        'max'           => 25,
+                        'unit'          => 'px',
+                        'type'          => 'style',
+                    ]
+                ),
+                'billing_content_alignment' => ElementsHelper::get_align(
+                    $attributes,
+                    [
+                        'value_path'    => 'billing_content_alignment',
+                        'title'         => __( 'Billing content alignment', 'yaymail' ),
+                        'default_value' => 'left',
+                    ]
+                ),
+                'billing_content_text_format'  => ElementsHelper::get_text_format_toggles(
+                    $attributes,
+                    [
+                        'value_path'    => 'billing_content_text_format',
+                        'title'         => __( 'Billing address text formatting', 'yaymail' ),
+                    ]
+                ),
                 'shipping_title'             => ElementsHelper::get_rich_text(
                     $attributes,
                     [
@@ -138,6 +165,33 @@ class BillingShippingAddress extends BaseElement {
                         'title'         => __( 'Shipping title', 'yaymail' ),
                         'default_value' => '<span style="font-size: 20px;font-weight:600;">' . __( 'Shipping Address', 'woocommerce' ) . '</span>',
                         'editor_id'     => 'bsa_shipping_title',
+                    ]
+                ),
+                'shipping_content_font_size' => ElementsHelper::get_dimension(
+                    $attributes,
+                    [
+                        'value_path'    => 'shipping_content_font_size',
+                        'title'         => __( 'Shipping content font size', 'yaymail' ),
+                        'default_value' => '14',
+                        'min'           => 8,
+                        'max'           => 25,
+                        'unit'          => 'px',
+                        'type'          => 'style',
+                    ]
+                ),
+                'shipping_content_alignment' => ElementsHelper::get_align(
+                    $attributes,
+                    [
+                        'value_path'    => 'shipping_content_alignment',
+                        'title'         => __( 'Shipping content alignment', 'yaymail' ),
+                        'default_value' => 'left',
+                    ]
+                ),
+                'shipping_content_text_format' => ElementsHelper::get_text_format_toggles(
+                    $attributes,
+                    [
+                        'value_path'    => 'shipping_content_text_format',
+                        'title'         => __( 'Shipping address text formatting', 'yaymail' ),
                     ]
                 ),
                 'shipping_address_content'   => [

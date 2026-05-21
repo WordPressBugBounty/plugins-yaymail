@@ -20,7 +20,7 @@ class YaymailPluginAdapter implements \YayMailScoped\YayCommerce\AdminShell\Cont
         };
     }
     public function get_settings_page_position(): ?int {
-        return null; }
+        return 0; }
     public function get_capability(): string {
         return 'manage_options'; }
     public function get_plugin_basename(): string {

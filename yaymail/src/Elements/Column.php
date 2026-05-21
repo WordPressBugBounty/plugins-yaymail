@@ -2,6 +2,7 @@
 namespace YayMail\Elements;
 
 use YayMail\Abstracts\BaseElement;
+use YayMail\Constants\AttributesData;
 use YayMail\Utils\SingletonTrait;
 
 /**
@@ -25,7 +26,8 @@ class Column extends BaseElement {
             'children'              => isset( $attributes['children'] ) ? $attributes['children'] : [],
 
             'data'                  => [
-                'width' => isset( $attributes['width'] ) ? $attributes['width'] : $width,
+                'width'  => isset( $attributes['width'] ) ? $attributes['width'] : $width,
+                'border' => isset( $attributes['border'] ) ? $attributes['border'] : AttributesData::BORDER_DEFAULT,
             ],
         ];
     }

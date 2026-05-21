@@ -5,7 +5,7 @@ use YayMail\Abstracts\BasePattern;
 use YayMail\Elements\Column;
 use YayMail\Elements\ColumnLayout;
 use YayMail\Elements\Divider;
-use YayMail\Elements\Image;
+use YayMail\Elements\Logo;
 use YayMail\Elements\SocialIcon;
 use YayMail\Elements\Text;
 use YayMail\TemplatePatterns\SectionTemplates\Footer;
@@ -50,8 +50,9 @@ class Footer7 extends BasePattern {
                                             ],
                                         ]
                                     ),
-                                    Image::get_object_data(
+                                    Logo::get_object_data(
                                         [
+                                            'background_color' => '#ffffff00',
                                             'align'   => 'center',
                                             'src'     => 'https://images.wpbrandy.com/uploads/yaymail-footer-img-1.png',
                                             'width'   => 195,

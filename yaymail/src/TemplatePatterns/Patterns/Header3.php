@@ -4,7 +4,7 @@ namespace YayMail\TemplatePatterns\Patterns;
 use YayMail\Abstracts\BasePattern;
 use YayMail\Elements\Column;
 use YayMail\Elements\ColumnLayout;
-use YayMail\Elements\Image;
+use YayMail\Elements\Logo;
 use YayMail\Elements\Text;
 use YayMail\TemplatePatterns\SectionTemplates\Header;
 use YayMail\Utils\SingletonTrait;
@@ -29,6 +29,7 @@ class Header3 extends BasePattern {
                 [
                     'background_color'       => '#ffffff',
                     'inner_background_color' => '#fffbf1',
+                    'vertical_align'         => 'middle',
                     'inner_border_radius'    => [
                         'top_left'     => 10,
                         'top_right'    => 10,
@@ -46,7 +47,7 @@ class Header3 extends BasePattern {
                             50,
                             [
                                 'children' => [
-                                    Image::get_object_data(
+                                    Logo::get_object_data(
                                         [
                                             'background_color' => '#ffffff00',
                                             'align'   => 'left',

@@ -69,28 +69,8 @@ if ( isset( $data['border_radius'] ) ) {
     );
 }//end if
 
-if ( ! empty( $element['children'] ) ) {
-    $inner_styles = '';
-    if ( 'column_layout' === $element['type'] ) {
-
-        $inner_border_radius    = $data['inner_border_radius'];
-        $inner_background_color = $data['inner_background_color'];
-
-        $inner_styles = TemplateHelpers::get_style(
-            [
-                'border-radius'    => TemplateHelpers::get_border_radius_value( $inner_border_radius, 'px' ),
-                'overflow'         => 'hidden',
-                'background-color' => $inner_background_color,
-            ]
-        );
-    }
-}
-
 ob_start();
-if ( 'column_layout' === $element['type'] ) : ?>
-<div class="yaymail-inner-customizer-element-column" style="<?php echo esc_attr( $inner_styles ); ?>">  
-<?php endif; ?> 
-   
+?>
 <table style="width: 100%; background-color: inherit;" cellpadding="0" cellspacing="0">
     <tbody>
         <?php
@@ -101,10 +81,6 @@ if ( 'column_layout' === $element['type'] ) : ?>
             ?>
     </tbody>
 </table>
-
-<?php if ( 'column_layout' === $element['type'] ) : ?>
-</div>  
-<?php endif; ?>
 
 <?php
 $element_content = ob_get_clean();

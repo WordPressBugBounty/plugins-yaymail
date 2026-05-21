@@ -135,4 +135,25 @@ class OrderProgressVariantHelpers {
         }
         return '' !== $step_label_inactive_color ? $step_label_inactive_color : $global_label_inactive_color;
     }
+
+    /**
+     * Filled-bar icon wrapper border-color by step state.
+     *
+     * @param bool   $is_step_active Whether step is active or completed.
+     * @param string $raw_active Per-step border color when active.
+     * @param string $raw_inactive Per-step border color when inactive.
+     * @return string
+     */
+    public static function resolve_filled_bar_icon_border_color( $is_step_active, $raw_active, $raw_inactive ) {
+        $fallback_active   = '#c9a8ff';
+        $fallback_inactive = '#e2e6ee';
+        $raw_active        = trim( (string) $raw_active );
+        $raw_inactive      = trim( (string) $raw_inactive );
+
+        if ( $is_step_active ) {
+            return '' !== $raw_active ? $raw_active : $fallback_active;
+        }
+
+        return '' !== $raw_inactive ? $raw_inactive : $fallback_inactive;
+    }
 }

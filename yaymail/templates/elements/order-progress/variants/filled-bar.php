@@ -66,6 +66,19 @@ $column_width_percents = $yaymail_step_marker_presets[ $preset_key ]['widths'];
                                     $connector_active_color
                                 );
 
+                                $raw_global_border_radius = is_array( $data ) ? (string) ( $data['filled_bar_icon_border_radius'] ?? '' ) : '';
+                                $raw_border_active        = is_array( $step ) ? (string) ( $step['filled_bar_icon_border_color_active'] ?? '' ) : '';
+                                $raw_border_inactive      = is_array( $step ) ? (string) ( $step['filled_bar_icon_border_color_inactive'] ?? '' ) : '';
+                                $icon_border_radius       = trim( (string) $raw_global_border_radius ) === ''
+                                    ? 50
+                                    : max( 0, (int) $raw_global_border_radius );
+
+                                $icon_border_color = OrderProgressVariantHelpers::resolve_filled_bar_icon_border_color(
+                                    $is_step_active,
+                                    $raw_border_active,
+                                    $raw_border_inactive
+                                );
+
                                 $pct = isset( $column_width_percents[ $index ] ) ? (int) $column_width_percents[ $index ] : (int) floor( 100 / max( 1, $step_count ) );
 
                                 $segment_colors = OrderProgressVariantHelpers::get_connector_segment_colors(
@@ -82,9 +95,12 @@ $column_width_percents = $yaymail_step_marker_presets[ $preset_key ]['widths'];
                                     [
                                         'display'          => 'inline-block',
                                         'background-color' => $image_bg_color ? $image_bg_color : 'transparent',
-                                        'border-radius'    => '9999px',
+                                        'border-radius'    => $icon_border_radius . 'px',
                                         'padding'          => '10px',
                                         'vertical-align'   => 'middle',
+                                        'border-width'     => '2px',
+                                        'border-style'     => 'solid',
+                                        'border-color'     => $icon_border_color,
                                     ]
                                 );
 
@@ -213,7 +229,7 @@ $column_width_percents = $yaymail_step_marker_presets[ $preset_key ]['widths'];
         </tr>
 
         <tr class="yaymail-element-order-progress--filled-bar-labels-row">
-            <td colspan="<?php echo esc_attr( (string) $step_count ); ?>" style="<?php echo esc_attr( TemplateHelpers::get_style( [ 'padding' => '10px 0 0' ] ) ); ?>">
+            <td colspan="<?php echo esc_attr( (string) $step_count ); ?>" style="<?php echo esc_attr( TemplateHelpers::get_style( [ 'padding' => '0' ] ) ); ?>">
                 <table class="yaymail-element-order-progress--filled-bar-labels-inner" width="100%" cellpadding="0" cellspacing="0" role="presentation" style="<?php echo esc_attr( $table_style ); ?>">
                     <tbody>
                         <tr>

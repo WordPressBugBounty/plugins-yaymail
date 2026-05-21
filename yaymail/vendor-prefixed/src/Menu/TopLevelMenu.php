@@ -18,7 +18,7 @@ class TopLevelMenu
     public static string $capability = 'manage_options';
     public function init() : void
     {
-        add_action('admin_menu', [$this, 'register_menu'], 9);
+        \add_action('admin_menu', [$this, 'register_menu'], 9);
     }
     /**
      * Register top-level menu. Guard ensures only the first plugin wins.
@@ -32,7 +32,7 @@ class TopLevelMenu
         if (isset($admin_page_hooks['yaycommerce'])) {
             return;
         }
-        add_menu_page(
+        \add_menu_page(
             'yaycommerce',
             'YayCommerce',
             self::$capability,
@@ -43,7 +43,7 @@ class TopLevelMenu
             self::$position
         );
         // Remove the auto-created "YayCommerce" submenu AFTER all submenus are registered.
-        add_action('admin_menu', [__CLASS__, 'remove_parent_submenu'], 999);
+        \add_action('admin_menu', [__CLASS__, 'remove_parent_submenu'], 999);
     }
     /**
      * WP auto-creates a submenu matching the parent slug. Remove it late
@@ -51,7 +51,7 @@ class TopLevelMenu
      */
     public static function remove_parent_submenu() : void
     {
-        remove_submenu_page('yaycommerce', 'yaycommerce');
+        \remove_submenu_page('yaycommerce', 'yaycommerce');
     }
     /**
      * Inline base64 SVG logo — copied as-is from YayMail Pro RegisterMenu.php.

@@ -20,7 +20,7 @@ class PagesRouter
     }
     public function init() : void
     {
-        add_action('admin_menu', [$this, 'register_submenus'], 11);
+        \add_action('admin_menu', [$this, 'register_submenus'], 11);
         // Instantiate RecommendedPluginsPage to register its wp_ajax_* handlers.
         RecommendedPluginsPage::get_instance();
     }
@@ -28,9 +28,9 @@ class PagesRouter
     {
         $submenus = $this->get_submenus();
         foreach ($submenus as $slug => $submenu) {
-            $page_id = add_submenu_page($submenu['parent'], $submenu['name'], $submenu['name'], $submenu['capability'], $slug, $submenu['render_callback'], $submenu['position'] ?? null);
+            $page_id = \add_submenu_page($submenu['parent'], $submenu['name'], $submenu['name'], $submenu['capability'], $slug, $submenu['render_callback'], $submenu['position'] ?? null);
             if ($submenu['load_callback']) {
-                add_action('load-' . $page_id, $submenu['load_callback']);
+                \add_action('load-' . $page_id, $submenu['load_callback']);
             }
         }
     }

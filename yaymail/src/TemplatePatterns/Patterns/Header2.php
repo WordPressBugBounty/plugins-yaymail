@@ -4,7 +4,7 @@ namespace YayMail\TemplatePatterns\Patterns;
 use YayMail\Abstracts\BasePattern;
 use YayMail\Elements\Column;
 use YayMail\Elements\ColumnLayout;
-use YayMail\Elements\Image;
+use YayMail\Elements\Logo;
 use YayMail\Elements\Text;
 use YayMail\TemplatePatterns\SectionTemplates\Header;
 use YayMail\Utils\SingletonTrait;
@@ -33,8 +33,9 @@ class Header2 extends BasePattern {
                             32,
                             [
                                 'children' => [
-                                    Image::get_object_data(
+                                    Logo::get_object_data(
                                         [
+                                            'background_color' => '#ffffff00',
                                             'src'     => 'https://images.wpbrandy.com/uploads/yaymail-footer-img-1.png',
                                             'width'   => 195,
                                             'padding' => [

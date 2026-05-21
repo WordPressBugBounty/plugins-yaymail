@@ -21,7 +21,7 @@ class PluginSubmenu
     }
     public function init() : void
     {
-        add_action('admin_menu', [$this, 'register'], 10);
+        \add_action('admin_menu', [$this, 'register'], 10);
     }
     public function register() : void
     {
@@ -37,7 +37,7 @@ class PluginSubmenu
             foreach ($yaycommerce_menu as $key => $value) {
                 if ($value[2] === $menu_slug) {
                     if (\method_exists($this->adapter, 'is_licensed') && $this->adapter->is_licensed() || !\method_exists($this->adapter, 'is_licensed')) {
-                        remove_submenu_page('yaycommerce', $menu_slug);
+                        \remove_submenu_page('yaycommerce', $menu_slug);
                         $is_override = \true;
                     } else {
                         $has_menu = \true;
@@ -63,17 +63,17 @@ class PluginSubmenu
                 $callback = null;
             }
         }
-        $page_id = add_submenu_page('yaycommerce', $this->adapter->get_page_title(), $this->adapter->get_menu_title(), $this->adapter->get_capability(), $menu_slug, $callback ?? '__return_false', $this->adapter->get_settings_page_position());
+        $page_id = \add_submenu_page('yaycommerce', $this->adapter->get_page_title(), $this->adapter->get_menu_title(), $this->adapter->get_capability(), $menu_slug, $callback ?? '__return_false', $this->adapter->get_settings_page_position());
         if ($is_override) {
             \remove_all_actions('load-' . $page_id);
         }
         if ($needs_redirect) {
-            add_action('load-' . $page_id, [__CLASS__, 'redirect_to_licenses']);
+            \add_action('load-' . $page_id, [__CLASS__, 'redirect_to_licenses']);
         }
     }
     public static function redirect_to_licenses() : void
     {
-        wp_safe_redirect(\admin_url('admin.php?page=yaycommerce-licenses'));
+        \wp_safe_redirect(\admin_url('admin.php?page=yaycommerce-licenses'));
         exit;
     }
 }

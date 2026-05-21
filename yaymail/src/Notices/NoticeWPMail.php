@@ -24,14 +24,14 @@ class NoticeWPMail {
 
         add_action( 'admin_footer', [ $this, 'enqueue_admin_script' ] );
 
-        // Handle YayMail core installation
-        add_action( 'admin_action_yaymail_wp_install', [ $this, 'install_yaymail_wp' ] );
+        // Handle Yay WP installation
+        add_action( 'admin_action_yay_wp_install', [ $this, 'install_yay_wp' ] );
 
         // Show admin notices after installation
         add_action( 'admin_notices', [ $this, 'show_install_notices' ] );
     }
 
-    private function is_yaymail_wp_installed() {
+    private function is_yay_wp_installed() {
         return defined( 'YAYMAIL_WP_VERSION' );
     }
 
@@ -41,7 +41,7 @@ class NoticeWPMail {
      * @param string $plugin_file
      */
     public function display_under_plugin_notices( $plugin_file ) {
-        if ( $this->is_yaymail_wp_installed() ) {
+        if ( $this->is_yay_wp_installed() ) {
             return;
             // No need to show notices if dependencies are met
         }
@@ -51,7 +51,7 @@ class NoticeWPMail {
         echo wp_kses_post(
             '<tr class="plugin-update-tr' . ( is_plugin_active( $plugin_file ) ? ' active' : '' ) . '">
                 <td colspan="' . esc_attr( $wp_list_table->get_column_count() ) . '" class="plugin-update colspanchange">'
-                . ( ! $this->is_yaymail_wp_installed() ? $this->get_yaymail_wp_required_notice() : '' )
+                . ( ! $this->is_yay_wp_installed() ? $this->get_yay_wp_required_notice() : '' )
                 . '</td>
             </tr>'
         );
@@ -60,16 +60,16 @@ class NoticeWPMail {
     /**
      * Returns the notice for missing YayMail - WP Email Customizer plugin.
      */
-    protected function get_yaymail_wp_required_notice() {
-        $yaymail_versions = [
-            'yamail-addon-wp-mail/yaymail-wp.php',
-            'yaymail-wp/yaymail-wp.php',
+    protected function get_yay_wp_required_notice() {
+        $yay_wp_versions = [
+            'yay-wp-email-customizer/yay-wp-email-customizer.php',
+            'yay-wp-email-customizer-pro/yay-wp-email-customizer.php',
         ];
 
         $all_plugins        = get_plugins();
         $plugin_to_activate = null;
 
-        foreach ( $yaymail_versions as $plugin_file ) {
+        foreach ( $yay_wp_versions as $plugin_file ) {
             if ( array_key_exists( $plugin_file, $all_plugins ) && ! is_plugin_active( $plugin_file ) ) {
                 $plugin_to_activate = $plugin_file;
                 break;
@@ -84,22 +84,22 @@ class NoticeWPMail {
 
             return sprintf(
                 '<div class="notice inline notice-warning notice-alt"><p>%s <a href="%s">%s</a></p></div>',
-                esc_html__( 'To customize WordPress core emails, you need to activate YayMail - WP Email Customizer plugin.', 'yaymail' ),
+                esc_html__( 'To customize WordPress core emails, you need to activate Yay WP Email Customizer plugin.', 'yaymail' ),
                 esc_url( $activate_url ),
                 esc_html__( 'Activate Now', 'yaymail' )
             );
         }
 
         $install_url = wp_nonce_url(
-            admin_url( 'admin.php?action=yaymail_wp_install' ),
-            'yaymail-wp-install'
+            admin_url( 'admin.php?action=yay_wp_install' ),
+            'yay-wp-install'
         );
 
         return sprintf(
             '<div class="notice inline notice-warning notice-alt"><p>%s <a href="%s">%s</a></p></div>',
-            esc_html__( 'To customize WordPress core emails, you need to install and activate YayMail - WP Email Customizer plugin. Get', 'yaymail' ),
+            esc_html__( 'To customize WordPress core emails, you need to install and activate Yay WP Email Customizer plugin. Get', 'yaymail' ),
             esc_url( $install_url ),
-            esc_html__( 'YayMail - WP Email Customizer', 'yaymail' ),
+            esc_html__( 'Yay WP Email Customizer', 'yaymail' ),
         );
     }
 
@@ -113,7 +113,7 @@ class NoticeWPMail {
         }
 
         // Verify nonce
-        check_admin_referer( 'yaymail-wp-install' );
+        check_admin_referer( 'yay-wp-install' );
 
         // Include required WordPress files
         require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
@@ -125,26 +125,26 @@ class NoticeWPMail {
         $upgrader = new \Plugin_Upgrader( new \WP_Ajax_Upgrader_Skin() );
 
         // Install the plugin
-        $download_url = 'https://downloads.wordpress.org/plugin/yaymail-wp.zip';
+        $download_url = 'https://downloads.wordpress.org/plugin/yay-wp-email-customizer.zip';
         $result       = $upgrader->install( $download_url );
 
         // Check if installation was successful
         if ( is_wp_error( $result ) ) {
-            wp_redirect( admin_url( 'plugins.php?yaymail-wp-install-error=1' ) );
+            wp_redirect( admin_url( 'plugins.php?yay-wp-install-error=1' ) );
             exit;
         }
 
         // Try to activate the plugin
-        $plugin_file     = 'yaymail-wp/yaymail-wp.php';
+        $plugin_file     = 'yay-wp-email-customizer/yay-wp-email-customizer.php';
         $activate_result = activate_plugin( $plugin_file );
 
         if ( is_wp_error( $activate_result ) ) {
-            wp_redirect( admin_url( 'plugins.php?yaymail-wp-installed=1&yaymail-wp-activate-error=1' ) );
+            wp_redirect( admin_url( 'plugins.php?yay-wp-installed=1&yay-wp-activate-error=1' ) );
             exit;
         }
 
         // Success - redirect back to plugins page
-        wp_redirect( admin_url( 'plugins.php?yaymail-wp-installed=1&yaymail-wp-activated=1' ) );
+        wp_redirect( admin_url( 'plugins.php?yay-wp-installed=1&yay-wp-activated=1' ) );
         exit;
     }
 
@@ -152,24 +152,24 @@ class NoticeWPMail {
      * Displays admin notices after plugin installation.
      */
     public function show_install_notices() {
-        if ( isset( $_GET['yaymail-wp-install-error'] ) ) {
+        if ( isset( $_GET['yay-wp-install-error'] ) ) {
             ?>
             <div class="notice notice-error is-dismissible">
-                <p><?php esc_html_e( 'Failed to install YayMail - WP Email Customizer plugin. Please try installing it manually from WordPress.org.', 'yaymail' ); ?></p>
+                <p><?php esc_html_e( 'Failed to install Yay WP Email Customizer plugin. Please try installing it manually from WordPress.org.', 'yaymail' ); ?></p>
             </div>
             <?php
         }
 
-        if ( isset( $_GET['yaymail-wp-installed'] ) && isset( $_GET['yaymail-wp-activated'] ) ) {
+        if ( isset( $_GET['yay-wp-installed'] ) && isset( $_GET['yay-wp-activated'] ) ) {
             ?>
             <div class="notice notice-success is-dismissible">
-                <p><?php esc_html_e( 'YayMail - WP Email Customizer plugin has been successfully installed and activated!', 'yaymail' ); ?></p>
+                <p><?php esc_html_e( 'Yay WP Email Customizer plugin has been successfully installed and activated!', 'yaymail' ); ?></p>
             </div>
             <?php
-        } elseif ( isset( $_GET['yaymail-wp-installed'] ) && isset( $_GET['yaymail-wp-activate-error'] ) ) {
+        } elseif ( isset( $_GET['yay-wp-installed'] ) && isset( $_GET['yay-wp-activate-error'] ) ) {
             ?>
             <div class="notice notice-warning is-dismissible">
-                <p><?php esc_html_e( 'YayMail - WP Email Customizer plugin was installed but could not be activated automatically. Please activate it manually.', 'yaymail' ); ?></p>
+                <p><?php esc_html_e( 'Yay WP Email Customizer plugin was installed but could not be activated automatically. Please activate it manually.', 'yaymail' ); ?></p>
             </div>
             <?php
         }
@@ -179,8 +179,8 @@ class NoticeWPMail {
      * Enqueues a script to modify the plugin row styling in the admin footer.
      */
     public function enqueue_admin_script() {
-        // Check is YayMail - WP Email Customizer plugin installed
-        if ( $this->is_yaymail_wp_installed() ) {
+        // Check is Yay WP Email Customizer plugin installed
+        if ( $this->is_yay_wp_installed() ) {
             return;
         }
         ?>

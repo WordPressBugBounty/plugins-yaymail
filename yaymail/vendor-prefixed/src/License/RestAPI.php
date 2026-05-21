@@ -17,19 +17,19 @@ class RestAPI
     public function __construct(LicenseConfigAdapter $adapter)
     {
         $this->adapter = $adapter;
-        add_action('rest_api_init', [$this, 'init_rest_api']);
+        \add_action('rest_api_init', [$this, 'init_rest_api']);
     }
     public function init_rest_api() : void
     {
         $namespace = Slug::to_var_name($this->adapter->get_plugin_slug()) . '/v1';
-        register_rest_route($namespace, '/license/activate', ['methods' => [\WP_REST_Server::CREATABLE], 'callback' => [$this, 'activate_license'], 'permission_callback' => [$this, 'permission_callback']]);
-        register_rest_route($namespace, '/license/update', ['methods' => [\WP_REST_Server::CREATABLE], 'callback' => [$this, 'update_license'], 'permission_callback' => [$this, 'permission_callback']]);
-        register_rest_route($namespace, '/license/delete', ['methods' => [\WP_REST_Server::CREATABLE], 'callback' => [$this, 'remove_license'], 'permission_callback' => [$this, 'permission_callback']]);
+        \register_rest_route($namespace, '/license/activate', ['methods' => [\WP_REST_Server::CREATABLE], 'callback' => [$this, 'activate_license'], 'permission_callback' => [$this, 'permission_callback']]);
+        \register_rest_route($namespace, '/license/update', ['methods' => [\WP_REST_Server::CREATABLE], 'callback' => [$this, 'update_license'], 'permission_callback' => [$this, 'permission_callback']]);
+        \register_rest_route($namespace, '/license/delete', ['methods' => [\WP_REST_Server::CREATABLE], 'callback' => [$this, 'remove_license'], 'permission_callback' => [$this, 'permission_callback']]);
     }
     public function activate_license(\WP_REST_Request $request_data) : \WP_REST_Response
     {
         $nonce = $request_data->get_header('x_wp_nonce');
-        if (!wp_verify_nonce($nonce, 'wp_rest')) {
+        if (!\wp_verify_nonce($nonce, 'wp_rest')) {
             return new \WP_REST_Response(['success' => \false, 'message' => 'Nonce is invalid'], 403);
         }
         $license_key = \sanitize_text_field($request_data->get_param('license_key'));
@@ -49,7 +49,7 @@ class RestAPI
     public function update_license(\WP_REST_Request $request_data) : \WP_REST_Response
     {
         $nonce = $request_data->get_header('x_wp_nonce');
-        if (!wp_verify_nonce($nonce, 'wp_rest')) {
+        if (!\wp_verify_nonce($nonce, 'wp_rest')) {
             return new \WP_REST_Response(['success' => \false, 'message' => 'Nonce is invalid'], 403);
         }
         $license = new License($this->adapter);
@@ -70,7 +70,7 @@ class RestAPI
     public function remove_license(\WP_REST_Request $request_data) : \WP_REST_Response
     {
         $nonce = $request_data->get_header('x_wp_nonce');
-        if (!wp_verify_nonce($nonce, 'wp_rest')) {
+        if (!\wp_verify_nonce($nonce, 'wp_rest')) {
             return new \WP_REST_Response(['success' => \false, 'message' => 'Nonce is invalid'], 403);
         }
         $license = new License($this->adapter);

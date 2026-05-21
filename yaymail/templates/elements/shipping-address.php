@@ -10,6 +10,14 @@ if ( empty( $args['element'] ) ) {
 $element = $args['element'];
 $data    = $element['data'];
 
+$shipping_content_format = [
+    'bold'      => isset( $data['shipping_content_text_format']['bold'] ) ? filter_var( $data['shipping_content_text_format']['bold'], FILTER_VALIDATE_BOOLEAN ) : false,
+    'italic'    => isset( $data['shipping_content_text_format']['italic'] ) ? filter_var( $data['shipping_content_text_format']['italic'], FILTER_VALIDATE_BOOLEAN ) : true,
+    'underline' => isset( $data['shipping_content_text_format']['underline'] ) ? filter_var( $data['shipping_content_text_format']['underline'], FILTER_VALIDATE_BOOLEAN ) : false,
+];
+
+$shipping_content_alignment = isset( $data['shipping_content_alignment'] ) ? $data['shipping_content_alignment'] : 'left';
+
 $shipping_address_html = wp_kses_post( do_shortcode( isset( $data['rich_text'] ) ? $data['rich_text'] : '[yaymail_shipping_address]' ) );
 
 if ( empty( $shipping_address_html ) ) :
@@ -35,9 +43,10 @@ $shipping_wrapper_style = TemplateHelpers::get_style(
         'color'       => isset( $data['text_color'] ) ? $data['text_color'] : 'inherit',
         'padding'     => '12px',
         'text-align'  => yaymail_get_text_align(),
-        'font-size'   => '14px',
+        'font-size'   => TemplateHelpers::get_dimension_value( $data['shipping_content_font_size'] ?? 14 ),
         'font-family' => TemplateHelpers::get_font_family_value( isset( $data['font_family'] ) ? $data['font_family'] : 'inherit' ),
         'border'      => 'solid 1px ' . $data['border_color'],
+        'text-align'  => $shipping_content_alignment,
     ]
 );
 
@@ -67,6 +76,11 @@ ob_start();
         <?php
     }//end if
     ?>
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-shipping-address-wrap address {
+        font-weight: <?php echo esc_attr( $shipping_content_format['bold'] ?? false ? 'bold' : 'normal' ); ?> !important;
+        font-style: <?php echo esc_attr( $shipping_content_format['italic'] ?? false ? 'italic' : 'normal' ); ?> !important;
+        text-decoration: <?php echo esc_attr( $shipping_content_format['underline'] ?? false ? 'underline' : 'none' ); ?> !important;
+    }
 </style>
 <div class="yaymail-shipping-title" style="<?php echo esc_attr( $title_style ); ?>" > <?php echo wp_kses_post( do_shortcode( $data['title'] ) ); ?> </div>
 <div class="yaymail-shipping-address-wrap" style="<?php echo esc_attr( $shipping_wrapper_style ); ?>">

@@ -2,13 +2,12 @@
 namespace YayMail\TemplatePatterns\Patterns;
 
 use YayMail\Abstracts\BasePattern;
-use YayMail\Elements\Divider;
-use YayMail\Elements\Image;
 use YayMail\Elements\Text;
 use YayMail\TemplatePatterns\SectionTemplates\Header;
 use YayMail\Utils\SingletonTrait;
 use YayMail\Elements\ColumnLayout;
 use YayMail\Elements\Column;
+use YayMail\Elements\Logo;
 
 /**
  * Header6 Elements
@@ -29,13 +28,15 @@ class Header7 extends BasePattern {
                 2,
                 [
                     'background_color' => '#ffffff',
+                    'vertical_align'   => 'middle',
                     'children'         => [
                         Column::get_object_data(
                             50,
                             [
                                 'children' => [
-                                    Image::get_object_data(
+                                    Logo::get_object_data(
                                         [
+                                            'background_color' => '#ffffff00',
                                             'align'   => 'left',
                                             'src'     => 'https://images.wpbrandy.com/uploads/yaymail-footer-img-1.png',
                                             'width'   => 195,

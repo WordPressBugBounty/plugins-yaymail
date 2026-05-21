@@ -89,8 +89,10 @@ class AddonController extends BaseController {
      * @return array<string, array<string, mixed>>
      */
     private function filter_addons_by_platform( array $data ): array {
-        $has_wc = Helpers::is_yaymail_woocommerce_core_active();
-        $has_wp = Helpers::is_yaymail_wp_active();
+        $plugin_works = Helpers::get_plugin_work_info();
+
+        $has_wc = $plugin_works['yaymail'];
+        $has_wp = $plugin_works['yay-wp-email-customizer'];
 
         if ( ( $has_wc && $has_wp ) || ( ! $has_wc && ! $has_wp ) ) {
             return $data;
@@ -145,7 +147,7 @@ class AddonController extends BaseController {
             }
 
             $categories   = isset( $addon['categories'] ) && is_array( $addon['categories'] ) ? $addon['categories'] : [];
-            $is_wordpress = in_array( 'wordpress', $categories, true );
+            $is_wordpress = in_array( 'WordPress', $categories, true );
 
             if ( $is_wordpress ) {
                 $wordpress[ $key ] = $addon;

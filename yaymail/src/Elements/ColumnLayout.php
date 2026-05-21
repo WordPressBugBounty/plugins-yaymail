@@ -154,6 +154,10 @@ class ColumnLayout extends BaseElement {
                     'default_value' => isset( $attributes['inner_background_color'] ) ? $attributes['inner_background_color'] : '#ffffff00',
                     'type'          => 'style',
                 ],
+                'column_borders'                     => [
+                    'component' => 'ColumnBorders',
+                    'title'     => __( 'Column borders', 'yaymail' ),
+                ],
             ],
         ];
     }

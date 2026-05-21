@@ -376,7 +376,7 @@ class Ajax {
         }
         try {
             $order_id         = ! empty( $_POST['order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['order_id'] ) ) : 'sample_order';
-            $template_data    = isset( $_POST['template_data'] ) ? $this->sanitize( wp_unslash( $_POST['template_data'] ) ) : []; //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+            $template_data    = isset( $_POST['template_data'] ) ? $this->sanitize( json_decode( wp_unslash( $_POST['template_data'] ), true ) ) : []; //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
             $unsaved_settings = isset( $_POST['unsaved_settings'] ) ? $this->sanitize( wp_unslash( $_POST['unsaved_settings'] ) ) : []; //phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
 
             if ( empty( $template_data ) ) {

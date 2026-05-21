@@ -3,8 +3,8 @@ Contributors: YayCommerce
 Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: woocommerce email customizer, email templates, email builder, woocommerce emails, drag and drop
 Requires at least: 3.0
-Tested up to: 6.9
-Stable tag: 4.4.0
+Tested up to: 7.0
+Stable tag: 4.4.1
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -234,6 +234,20 @@ We offer single-site licenses and also unlimited site licenses to better support
 9. Break free from default WooCommerce styles, go bold with dark theme email templates
 
 == Changelog ==
+
+= May 21, 2026 - Version 4.4.1 =
+- Added: Ability to keep content when applying pre-built template
+- Added: Border settings for column layouts
+- Added: Typography settings for billing and shipping addresses
+- Added: More pre-built email templates to the Template Library
+- Updated: Admin UI
+- Updated: Compatible with WP 7.0
+- Updated: Improve Order Progress element
+- Fixed: Redo/Undo bug. Ignoring some steps in previous version
+- Fixed: Minor bugs
+- Fixed: Rendering issue when the Order Details Download element is empty
+- Fixed: Border issues in the modern style of the Order Details Download element
+- Fixed: Incorrect image source for Pre-built templates
 
 = Apr 23, 2026 - Version 4.4.0 =
 - Added: Support for synced pattern in import/export & backup (Pro)

@@ -28,7 +28,7 @@ use YayMailScoped\YayCommerce\AdminShell\Support\Constants;
 class AdminShell
 {
     /** Package version — used for cross-scope version election. */
-    const VERSION = '2.5.6';
+    const VERSION = '2.6.1';
     private static ?self $instance = null;
     private static bool $booted = \false;
     private static array $enabled_slugs = [];
@@ -66,7 +66,7 @@ class AdminShell
         $GLOBALS['yaycommerce_admin_shell_versions'][self::$prefix] = ['version' => self::VERSION, 'registry' => $instance->registry, 'boot_cb' => [static::class, 'do_shell_registration']];
         // Register the version election — only once (first copy to call boot sets it up)
         if (1 === \count($GLOBALS['yaycommerce_admin_shell_versions'])) {
-            add_action('admin_menu', [static::class, 'elect_version'], 8);
+            \add_action('admin_menu', [static::class, 'elect_version'], 8);
         }
         // Legacy bridge — reads yaycommerce_licensing_plugins filter.
         // Runs for ALL versions (uses global WP hooks, contributes to any winning registry).
@@ -232,7 +232,7 @@ class AdminShell
     private static function register_plugin_links(PluginMenuAdapter $adapter) : void
     {
         $basename = $adapter->get_plugin_basename();
-        add_filter('plugin_action_links_' . $basename, function (array $links) use($adapter) {
+        \add_filter('plugin_action_links_' . $basename, function (array $links) use($adapter) {
             $new = [];
             $menu_slug = $adapter->get_menu_slug();
             if (!empty($menu_slug)) {
@@ -245,7 +245,7 @@ class AdminShell
             }
             return \array_merge($new, $links);
         });
-        add_filter('plugin_row_meta', function (array $meta, string $file) use($adapter, $basename) {
+        \add_filter('plugin_row_meta', function (array $meta, string $file) use($adapter, $basename) {
             if ($file !== $basename) {
                 return $meta;
             }

@@ -11,6 +11,21 @@ if ( empty( $args['element'] ) ) {
 $element = $args['element'];
 $data    = $element['data'];
 
+$shipping_content_format = [
+    'bold'      => isset( $data['shipping_content_text_format']['bold'] ) ? filter_var( $data['shipping_content_text_format']['bold'], FILTER_VALIDATE_BOOLEAN ) : false,
+    'italic'    => isset( $data['shipping_content_text_format']['italic'] ) ? filter_var( $data['shipping_content_text_format']['italic'], FILTER_VALIDATE_BOOLEAN ) : true,
+    'underline' => isset( $data['shipping_content_text_format']['underline'] ) ? filter_var( $data['shipping_content_text_format']['underline'], FILTER_VALIDATE_BOOLEAN ) : false,
+];
+
+$billing_content_format = [
+    'bold'      => isset( $data['billing_content_text_format']['bold'] ) ? filter_var( $data['billing_content_text_format']['bold'], FILTER_VALIDATE_BOOLEAN ) : false,
+    'italic'    => isset( $data['billing_content_text_format']['italic'] ) ? filter_var( $data['billing_content_text_format']['italic'], FILTER_VALIDATE_BOOLEAN ) : true,
+    'underline' => isset( $data['billing_content_text_format']['underline'] ) ? filter_var( $data['billing_content_text_format']['underline'], FILTER_VALIDATE_BOOLEAN ) : false,
+];
+
+$shipping_content_alignment = isset( $data['shipping_content_alignment'] ) ? $data['shipping_content_alignment'] : 'left';
+$billing_content_alignment  = isset( $data['billing_content_alignment'] ) ? $data['billing_content_alignment']  : 'left';
+
 $billing_address_html  = wp_kses_post( do_shortcode( '[yaymail_billing_address]' ) );
 $shipping_address_html = wp_kses_post( do_shortcode( '[yaymail_shipping_address]' ) );
 $width                 = ! empty( $billing_address_html ) & ! empty( $shipping_address_html ) ? '50%' : '100%';
@@ -40,7 +55,6 @@ $column_style = TemplateHelpers::get_style(
     [
         'color'       => isset( $data['text_color'] ) ? $data['text_color'] : 'inherit',
         'padding'     => '12px',
-        'font-size'   => '14px',
         'font-family' => TemplateHelpers::get_font_family_value( isset( $data['font_family'] ) ? $data['font_family'] : 'inherit' ),
         'border'      => 'solid 1px ' . $data['border_color'],
     ]
@@ -83,6 +97,22 @@ ob_start();
         }
     }
     <?php } ?>
+
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-shipping-address-wrap address {
+        font-weight: <?php echo esc_attr( $shipping_content_format['bold'] ?? false ? 'bold' : 'normal' ); ?> !important;
+        font-style: <?php echo esc_attr( $shipping_content_format['italic'] ?? false ? 'italic' : 'normal' ); ?> !important;
+        text-decoration: <?php echo esc_attr( $shipping_content_format['underline'] ?? false ? 'underline' : 'none' ); ?> !important;
+        font-size: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data['shipping_content_font_size'] ?? 14 ) ); ?> !important;
+        text-align: <?php echo esc_attr( $shipping_content_alignment ); ?> !important;
+    }
+
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-billing-address-wrap address {
+        font-weight: <?php echo esc_attr( $billing_content_format['bold'] ?? false ? 'bold' : 'normal' ); ?> !important;
+        font-style: <?php echo esc_attr( $billing_content_format['italic'] ?? false ? 'italic' : 'normal' ); ?> !important;
+        text-decoration: <?php echo esc_attr( $billing_content_format['underline'] ?? false ? 'underline' : 'none' ); ?> !important;
+        font-size: <?php echo esc_attr( TemplateHelpers::get_dimension_value( $data['billing_content_font_size'] ?? 14 ) ); ?> !important;
+        text-align: <?php echo esc_attr( $billing_content_alignment ); ?> !important;
+    }
 </style>
 <table class="yaymail-table-billing-shipping-address" cellpadding="0" cellspacing="0" border="0" style="<?php echo esc_attr( $table_style ); ?>"<?php echo $is_responsive_on_mobile ? ' data-responsive-type="true"' : ''; ?>>
     <tbody>

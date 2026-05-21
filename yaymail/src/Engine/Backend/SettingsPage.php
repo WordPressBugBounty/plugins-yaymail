@@ -119,6 +119,8 @@ class SettingsPage {
             $_wc_emails = [];
         }//end if
 
+        $plugin_work = Helpers::get_plugin_work_info();
+
         wp_localize_script(
             'module/yaymail/yaymail-main.tsx',
             'yaymailData',
@@ -164,6 +166,9 @@ class SettingsPage {
                             'Verdana, Geneva, sans-serif',
                             '"Courier New", Courier, monospace',
                             '"Lucida Console", Monaco, monospace',
+                            '"Outfit", "DM Sans", sans-serif',
+                            '"Kodchasan", system-ui, sans-serif',
+                            '"Fraunces", serif',
                         ],
                         'social_icons'           => Localize::get_social_icons_data(),
                         'revision_limit'         => RevisionController::YAYMAIL_TEMPLATE_REVISION_LIMIT,
@@ -195,8 +200,8 @@ class SettingsPage {
                     'viewed_new_elements'            => ! empty( get_option( 'yaymail_viewed_new_elements', [] ) ) ? get_option( 'yaymail_viewed_new_elements' ) : [],
                     'is_yaymail_loader'              => function_exists( 'YayMail\\init' ),
                     'addons_platform'                => [
-                        'has_wc_customizer' => Helpers::is_yaymail_woocommerce_core_active(),
-                        'has_wp_customizer' => Helpers::is_yaymail_wp_active(),
+                        'has_wc_customizer' => $plugin_work['yaymail'],
+                        'has_wp_customizer' => $plugin_work['yay-wp-email-customizer'],
                     ],
                     'woocommerce_email_styles'       => $this->get_scoped_woocommerce_email_styles(),
                 ],

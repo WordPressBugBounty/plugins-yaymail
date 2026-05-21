@@ -40,7 +40,7 @@ class MenuSuppressor
      */
     public function init() : void
     {
-        add_action('admin_menu', [$this, 'suppress_legacy_menus'], 5);
+        \add_action('admin_menu', [$this, 'suppress_legacy_menus'], 5);
     }
     /**
      * Remove any legacy top-level menus from the slug list.
@@ -48,7 +48,7 @@ class MenuSuppressor
     public function suppress_legacy_menus() : void
     {
         foreach ($this->slugs_to_suppress as $slug) {
-            remove_menu_page($slug);
+            \remove_menu_page($slug);
         }
     }
     /**

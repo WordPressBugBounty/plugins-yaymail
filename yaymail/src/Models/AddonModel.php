@@ -1553,6 +1553,48 @@ class AddonModel {
                 'plugin_slug'            => 'yaymail-addon-for-custom-user-registration-fields-addify',
                 'categories'             => [ 'others' ],
             ],
+            'YayMailAddonSalesman'                         => [
+                'plugin_name'            => 'Salesman (by MarketPress)',
+                'template_ids'           => [],
+                'slug_name'              => 'salesman',
+                'link_upgrade'           => '',
+                'is_3rd_party_installed' => class_exists( 'MarketPress_Salesman' ),
+                'description'            => 'Customize <strong>Salesman</strong> emails with <strong>YayMail</strong> email builder.',
+                'plugin_slug'            => 'yaymail-addon-for-salesman-by-marketpress',
+                'categories'             => [ 'marketing' ],
+            ],
+            'YayMailAddonForBlocksy'                       => [
+                'plugin_name'            => 'YayMail Addon For Blocksy',
+                'template_ids'           => self::get_template_ids(
+                    [
+                        'BackInStockEmail',
+                        'ConfirmSubscriptionEmail',
+                        'SubscriptionConfirmedEmail',
+                    ]
+                ),
+                'slug_name'              => 'blocksy',
+                'link_upgrade'           => 'https://yaycommerce.com/yaymail-addons/yaymail-addon-for-blocksy/',
+                'is_3rd_party_installed' => class_exists( 'Blocksy\Plugin' ),
+                'description'            => 'Customize <strong>Blocksy</strong> emails with <strong>YayMail</strong> email builder.',
+                'plugin_slug'            => 'yaymail-addon-for-blocksy',
+                'categories'             => [ 'marketing' ],
+            ],
+            'YayMailAddonForWoodmart'                      => [
+                'plugin_name'            => 'YayMail Addon For WoodMart',
+                'template_ids'           => self::get_template_ids(
+                    [
+                        'XTS_Email_Wishlist_Back_In_Stock',
+                        'XTS_Email_Wishlist_On_Sale_Products',
+                        'XTS_Email_Wishlist_Promotional',
+                    ]
+                ),
+                'slug_name'              => 'woodmart',
+                'link_upgrade'           => 'https://yaycommerce.com/yaymail-addons/yaymail-addon-for-woodmart/',
+                'is_3rd_party_installed' => defined( 'WOODMART_THEME_DIR' ),
+                'description'            => 'Customize <strong>WoodMart</strong> emails with <strong>YayMail</strong> email builder.',
+                'plugin_slug'            => 'yaymail-addon-for-woodmart',
+                'categories'             => [ 'marketing' ],
+            ],
         ];
 
         $data = apply_filters( 'yaymail_addon_supported_plugins', $data );

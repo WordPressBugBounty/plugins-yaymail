@@ -35,10 +35,10 @@ class AddonBridge
      */
     public function init() : void
     {
-        add_action('plugins_loaded', [$this, 'load_addon_plugins'], 9999);
+        \add_action('plugins_loaded', [$this, 'load_addon_plugins'], 9999);
         if (\is_admin()) {
-            add_action('yaycommerce_licenses_page', [$this, 'render_addon_cards'], 100);
-            add_action('admin_enqueue_scripts', [$this, 'enqueue_addon_scripts']);
+            \add_action('yaycommerce_licenses_page', [$this, 'render_addon_cards'], 100);
+            \add_action('admin_enqueue_scripts', [$this, 'enqueue_addon_scripts']);
         }
     }
     /**
@@ -70,11 +70,11 @@ class AddonBridge
     private function build_addon_info(array $plugin) : PluginLicenseInfo
     {
         $slug = $plugin['slug'] ?? '';
-        $raw_info = get_option($slug . '_license_info', []);
+        $raw_info = \get_option($slug . '_license_info', []);
         if (\is_string($raw_info)) {
             $raw_info = \json_decode($raw_info, \true) ?: [];
         }
-        $license_key = (string) get_option($slug . '_license_key', '');
+        $license_key = (string) \get_option($slug . '_license_key', '');
         $expires_raw = $raw_info['expires'] ?? null;
         $status = $this->derive_status($license_key, $raw_info);
         $info = new PluginLicenseInfo();
@@ -149,9 +149,9 @@ class AddonBridge
             return;
         }
         $assets_url = \plugin_dir_url(__FILE__) . '../../assets/';
-        wp_enqueue_script('yaycommerce-license', $assets_url . 'js/license.js', ['jquery'], '1.0', \true);
+        \wp_enqueue_script('yaycommerce-license', $assets_url . 'js/license.js', ['jquery'], '1.0', \true);
         foreach ($this->addon_slugs as $slug) {
-            wp_localize_script('yaycommerce-license', Slug::to_var_name($slug) . 'LicenseData', ['slug' => $slug, 'apiSettings' => ['restNonce' => wp_create_nonce('wp_rest'), 'restUrl' => \esc_url_raw(rest_url(Slug::to_var_name($slug) . '/v1')), 'adminUrl' => \admin_url()]]);
+            \wp_localize_script('yaycommerce-license', Slug::to_var_name($slug) . 'LicenseData', ['slug' => $slug, 'apiSettings' => ['restNonce' => \wp_create_nonce('wp_rest'), 'restUrl' => \esc_url_raw(\rest_url(Slug::to_var_name($slug) . '/v1')), 'adminUrl' => \admin_url()]]);
         }
     }
     /**

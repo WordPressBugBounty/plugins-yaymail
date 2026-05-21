@@ -115,6 +115,33 @@ class ShippingAddress extends BaseElement {
                     'default_value' => isset( $attributes['title'] ) ? $attributes['title'] : ( '<span style="font-size: 20px;font-weight:600;">' . __( 'Shipping Address', 'woocommerce' ) . '</span>' ),
                     'type'          => 'content',
                 ],
+                'shipping_content_font_size' => ElementsHelper::get_dimension(
+                    $attributes,
+                    [
+                        'value_path'    => 'shipping_content_font_size',
+                        'title'         => __( 'Shipping content font size', 'yaymail' ),
+                        'default_value' => '14',
+                        'min'           => 8,
+                        'max'           => 25,
+                        'unit'          => 'px',
+                        'type'          => 'style',
+                    ]
+                ),
+                'shipping_content_alignment' => ElementsHelper::get_align(
+                    $attributes,
+                    [
+                        'value_path'    => 'shipping_content_alignment',
+                        'title'         => __( 'Shipping content alignment', 'yaymail' ),
+                        'default_value' => 'left',
+                    ]
+                ),
+                'shipping_content_text_format' => ElementsHelper::get_text_format_toggles(
+                    $attributes,
+                    [
+                        'value_path'    => 'shipping_content_text_format',
+                        'title'         => __( 'Shipping address text formatting', 'yaymail' ),
+                    ]
+                ),
                 'rich_text'                  => [
                     'value_path'    => 'rich_text',
                     'component'     => '',

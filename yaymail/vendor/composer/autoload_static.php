@@ -7,7 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit96acdeffe5040d8022531bf12a887c4a
 {
     public static $prefixLengthsPsr4 = array (
-        'Y' =>
+        'Y' => 
         array (
             'YayMail\\' => 8,
             'YayCommerce\\AdminShell\\' => 23,
@@ -15,11 +15,11 @@ class ComposerStaticInit96acdeffe5040d8022531bf12a887c4a
     );
 
     public static $prefixDirsPsr4 = array (
-        'YayMail\\' =>
+        'YayMail\\' => 
         array (
             0 => __DIR__ . '/../..' . '/src',
         ),
-        'YayCommerce\\AdminShell\\' =>
+        'YayCommerce\\AdminShell\\' => 
         array (
             0 => __DIR__ . '/..' . '/yaycommerce/admin-shell/src',
         ),
@@ -200,10 +200,34 @@ class ComposerStaticInit96acdeffe5040d8022531bf12a887c4a
         'YayMail\\SupportedPlugins' => __DIR__ . '/../..' . '/src/SupportedPlugins.php',
         'YayMail\\TemplateLibrary\\TemplateLibraryLoader' => __DIR__ . '/../..' . '/src/TemplateLibrary/TemplateLibraryLoader.php',
         'YayMail\\TemplateLibrary\\TemplateLibraryService' => __DIR__ . '/../..' . '/src/TemplateLibrary/TemplateLibraryService.php',
+        'YayMail\\TemplateLibrary\\Templates\\CancelledOrder\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/CancelledOrder/Classic.php',
+        'YayMail\\TemplateLibrary\\Templates\\CancelledOrder\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/CancelledOrder/Modern.php',
+        'YayMail\\TemplateLibrary\\Templates\\Completed\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Classic.php',
+        'YayMail\\TemplateLibrary\\Templates\\Completed\\Completed1' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Completed1.php',
+        'YayMail\\TemplateLibrary\\Templates\\Completed\\Completed2' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Completed2.php',
+        'YayMail\\TemplateLibrary\\Templates\\Completed\\Completed4' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Completed4.php',
+        'YayMail\\TemplateLibrary\\Templates\\Completed\\Completed5' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Completed5.php',
+        'YayMail\\TemplateLibrary\\Templates\\Completed\\Completed6' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Completed6.php',
+        'YayMail\\TemplateLibrary\\Templates\\Completed\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Modern.php',
         'YayMail\\TemplateLibrary\\Templates\\Completed\\ModernMinimal' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/ModernMinimal.php',
+        'YayMail\\TemplateLibrary\\Templates\\CustomerCancelledOrder\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/CustomerCancelledOrder/Classic.php',
+        'YayMail\\TemplateLibrary\\Templates\\CustomerCancelledOrder\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/CustomerCancelledOrder/Modern.php',
+        'YayMail\\TemplateLibrary\\Templates\\CustomerFailedOrder\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/CustomerFailedOrder/Classic.php',
+        'YayMail\\TemplateLibrary\\Templates\\CustomerFailedOrder\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/CustomerFailedOrder/Modern.php',
+        'YayMail\\TemplateLibrary\\Templates\\FailedOrder\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/FailedOrder/Classic.php',
+        'YayMail\\TemplateLibrary\\Templates\\FailedOrder\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/FailedOrder/Modern.php',
+        'YayMail\\TemplateLibrary\\Templates\\NewOrder\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/NewOrder/Classic.php',
+        'YayMail\\TemplateLibrary\\Templates\\NewOrder\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/NewOrder/Modern.php',
         'YayMail\\TemplateLibrary\\Templates\\NewOrder\\ModernMinimal' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/NewOrder/ModernMinimal.php',
+        'YayMail\\TemplateLibrary\\Templates\\OrderOnHold\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/OrderOnHold/Classic.php',
+        'YayMail\\TemplateLibrary\\Templates\\OrderOnHold\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/OrderOnHold/Modern.php',
         'YayMail\\TemplateLibrary\\Templates\\OrderOnHold\\ModernMinimal' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/OrderOnHold/ModernMinimal.php',
+        'YayMail\\TemplateLibrary\\Templates\\OrderOnHold\\OnHold1' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/OrderOnHold/OnHold1.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/Classic.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/Modern.php',
         'YayMail\\TemplateLibrary\\Templates\\Processing\\ModernMinimal' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/ModernMinimal.php',
+        'YayMail\\TemplateLibrary\\Templates\\RefundedOrder\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/RefundedOrder/Classic.php',
+        'YayMail\\TemplateLibrary\\Templates\\RefundedOrder\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/RefundedOrder/Modern.php',
         'YayMail\\TemplatePatterns\\PatternService' => __DIR__ . '/../..' . '/src/TemplatePatterns/PatternService.php',
         'YayMail\\TemplatePatterns\\PatternsLoader' => __DIR__ . '/../..' . '/src/TemplatePatterns/PatternsLoader.php',
         'YayMail\\TemplatePatterns\\Patterns\\Banner1' => __DIR__ . '/../..' . '/src/TemplatePatterns/Patterns/Banner1.php',

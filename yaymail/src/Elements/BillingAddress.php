@@ -103,6 +103,33 @@ class BillingAddress extends BaseElement {
                         'default_value' => '<span style="font-size: 20px;font-weight:600;">' . __( 'Billing Address', 'woocommerce' ) . '</span>',
                     ]
                 ),
+                'billing_content_font_size' => ElementsHelper::get_dimension(
+                    $attributes,
+                    [
+                        'value_path'    => 'billing_content_font_size',
+                        'title'         => __( 'Billing content font size', 'yaymail' ),
+                        'default_value' => '14',
+                        'min'           => 8,
+                        'max'           => 25,
+                        'unit'          => 'px',
+                        'type'          => 'style',
+                    ]
+                ),
+                'billing_content_alignment' => ElementsHelper::get_align(
+                    $attributes,
+                    [
+                        'value_path'    => 'billing_content_alignment',
+                        'title'         => __( 'Billing content alignment', 'yaymail' ),
+                        'default_value' => 'left',
+                    ]
+                ),
+                'billing_content_text_format' => ElementsHelper::get_text_format_toggles(
+                    $attributes,
+                    [
+                        'value_path'    => 'billing_content_text_format',
+                        'title'         => __( 'Billing address text formatting', 'yaymail' ),
+                    ]
+                ),
                 'rich_text'                  => [
                     'value_path'    => 'rich_text',
                     'component'     => '',

@@ -46,6 +46,10 @@ $table_style = TemplateHelpers::get_style(
 $shortcoded_title   = isset( $data['title'] ) ? do_shortcode( $data['title'] ) : '';
 $shortcoded_content = isset( $data['rich_text'] ) ? do_shortcode( $data['rich_text'] ) : '';
 
+if ( empty( $shortcoded_content ) ) {
+    return;
+}
+
 ob_start();
 ?>
 <style>
@@ -54,6 +58,9 @@ ob_start();
     .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-download-content {
         border: 0 !important;
     }
+
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-download-content tbody,
+    .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-download-content tr,
     .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-download-content th,
     .yaymail-element-<?php echo esc_attr( $element['id'] ); ?> .yaymail-order-details-download-content td {
         border: 0 !important;
@@ -70,12 +77,10 @@ ob_start();
     ?>
 </style>
 
-<?php if ( ! empty( $shortcoded_content ) ) : ?>
 <div class="yaymail-order-details-download-title" style="<?php echo esc_attr( $title_style ); ?>" > <?php yaymail_kses_post_e( $shortcoded_title ); ?></div>
 <table class="yaymail-order-details-download-content" style="<?php echo esc_attr( $table_style ); ?>" border="0" cellpadding="6" cellspacing="0" width="100%" >
     <?php yaymail_kses_post_e( $shortcoded_content ); ?>
 </table>
-<?php endif; ?>
 <?php
 $element_content = ob_get_clean();
 TemplateHelpers::wrap_element_content( $element_content, $element, $wrapper_style );

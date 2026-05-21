@@ -21,7 +21,7 @@ class YayMailViteApp {
     }
 
     private function get_plugin_url() {
-        if ( Helpers::is_yaymail_lite_and_yaymail_wp_pro_active() ) {
+        if ( Helpers::is_yaymail_lite_and_yay_wp_pro_active() ) {
             return YAYMAIL_WP_PLUGIN_URL;
         }
         return YAYMAIL_PLUGIN_URL;
@@ -103,7 +103,7 @@ class YayMailViteApp {
 
             } else {
                 $url = $this->get_plugin_url() . 'assets/dist/yaymail/' . $this->get_module_opts( $entry_key )['file'];
-                wp_register_script( "module/yaymail/$entry_key", $url, $entry_opts['deps'], yaymail_version(), true );
+                wp_register_script( "module/yaymail/$entry_key", $url, $entry_opts['deps'], time(), true );
             }
 
             wp_enqueue_script( "module/yaymail/$entry_key" );
@@ -145,7 +145,7 @@ class YayMailViteApp {
         require_once ABSPATH . '/wp-admin/includes/file.php';
         WP_Filesystem();
 
-        if ( Helpers::is_yaymail_lite_and_yaymail_wp_pro_active() ) {
+        if ( Helpers::is_yaymail_lite_and_yay_wp_pro_active() ) {
             $plugin_path = YAYMAIL_WP_PLUGIN_PATH;
         } else {
             $plugin_path = YAYMAIL_PLUGIN_PATH;

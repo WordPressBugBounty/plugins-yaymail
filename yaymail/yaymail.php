@@ -3,14 +3,14 @@
  * Plugin Name: YayMail - WooCommerce Email Customizer
  * Plugin URI: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
  * Description: Create awesome transactional emails with a drag and drop email builder
- * Version: 4.4.0
+ * Version: 4.4.1
  * Author: YayCommerce
  * Author URI: https://yaycommerce.com
  * License:     GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: yaymail
  * Requires at least: 4.7
- * Tested up to: 6.9
+ * Tested up to: 7.0
  * Requires PHP: 5.4
  * WC requires at least: 3.0.0
  * WC tested up to: 10.7.0
@@ -32,7 +32,7 @@ if ( ! defined( 'YAYMAIL_DEBUG' ) ) {
 }
 
 if ( ! defined( 'YAYMAIL_VERSION' ) ) {
-    define( 'YAYMAIL_VERSION', '4.4.0' );
+    define( 'YAYMAIL_VERSION', '4.4.1' );
 }
 
 if ( ! defined( 'YAYMAIL_PLUGIN_URL' ) ) {
@@ -103,11 +103,11 @@ spl_autoload_register(
 
         $core_file = YAYMAIL_PLUGIN_PATH . 'src/' . $relative_path;
 
-        // Check if yaymail-wp-pro active
+        // Check if yay-wp-pro active
         if ( ! function_exists( 'is_plugin_active' ) ) {
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
-        $yaymail_wp_pro_plugin_file = 'yaymail-wp-pro/yaymail-wp.php';
+        $yaymail_wp_pro_plugin_file = 'yay-wp-email-customizer-pro/yay-wp-email-customizer.php';
         $yaymail_wp_pro_active      = is_plugin_active( $yaymail_wp_pro_plugin_file ) || is_plugin_active_for_network( $yaymail_wp_pro_plugin_file );
 
         if ( $yaymail_wp_pro_active ) {
@@ -130,15 +130,15 @@ Constants\ConstantsHandler::get_instance();
 if ( ! function_exists( 'install_yaymail_admin_notice' ) ) {
     function install_yaymail_admin_notice() {
         ?>
-            <div class="error">          
-                <p>
-                <?php
+<div class="error">
+    <p>
+        <?php
                 // translators: %s: search WooCommerce plugin link
                 printf( 'YayMail ' . esc_html__( 'is enabled but not effective. It requires %1$sWooCommerce%2$s in order to work.', 'yaymail' ), '<a href="' . esc_url( admin_url( 'plugin-install.php?s=woocommerce&tab=search&type=term' ) ) . '">', '</a>' );
                 ?>
-                </p>
-            </div>
-        <?php
+    </p>
+</div>
+<?php
     }
 }
 

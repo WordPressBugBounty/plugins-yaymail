@@ -28,7 +28,18 @@ class LicenseRegistry
      */
     public function all() : array
     {
-        return $this->plugins;
+        // Refactor old licensing plugin integration
+        $old_plugins = [];
+        $handlers = ['YayMailScoped\\YAYDP\\License\\License_Handler', 'YayMailScoped\\YayMail\\License\\LicenseHandler', 'YayMailScoped\\Yay_Currency\\License\\LicenseHandler', 'YayMailScoped\\Yay_Swatches\\License\\LicenseHandler', 'YayMailScoped\\YayExtra\\License\\LicenseHandler', 'YayMailScoped\\YayRev\\License\\LicenseHandler', 'YayMailScoped\\YayWholesaleB2B\\License\\LicenseHandler', 'YayMailScoped\\YaySMTP\\License\\LicenseHandler'];
+        foreach ($handlers as $handler) {
+            if (\class_exists($handler) && \method_exists($handler, 'get_licensing_plugins')) {
+                $plugins = $handler::get_licensing_plugins();
+                if (\is_array($plugins)) {
+                    $old_plugins = \array_merge($old_plugins, $plugins);
+                }
+            }
+        }
+        return \array_merge($this->plugins, $old_plugins);
     }
     /**
      * Return a single PluginLicenseInfo by slug, or null if not registered.

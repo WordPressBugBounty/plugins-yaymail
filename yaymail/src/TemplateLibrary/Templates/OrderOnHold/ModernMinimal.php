@@ -6,10 +6,11 @@ use YayMail\Abstracts\BaseTemplate;
 use YayMail\Elements\BillingShippingAddress;
 use YayMail\Elements\Column;
 use YayMail\Elements\ColumnLayout;
-use YayMail\Elements\Divider;
-use YayMail\Elements\ElementsHelper;
+use YayMail\Elements\Heading;
 use YayMail\Elements\Image;
+use YayMail\Elements\Logo;
 use YayMail\Elements\OrderDetails;
+use YayMail\Elements\OrderProgress;
 use YayMail\Elements\SocialIcon;
 use YayMail\Elements\Text;
 use YayMail\Utils\SingletonTrait;
@@ -28,55 +29,214 @@ class ModernMinimal extends BaseTemplate {
         $this->description = 'Clean layout with plenty of whitespace';
         $this->elements    = [
             ColumnLayout::get_object_data(
-                2,
+                4,
                 [
-                    'background_color' => '#ffffff',
-                    'children'         => [
+                    'column_width'           => [],
+                    'column_spacing'         => '0',
+                    'vertical_align'         => 'top',
+                    'padding'                => [
+                        'top'    => '15',
+                        'right'  => 50,
+                        'bottom' => '15',
+                        'left'   => 50,
+                    ],
+                    'border_radius'          => [
+                        'top_left'     => '0',
+                        'top_right'    => '0',
+                        'bottom_left'  => '0',
+                        'bottom_right' => '0',
+                    ],
+                    'background_color'       => '#fff',
+                    'background_image'       => [
+                        'url'        => '',
+                        'position'   => 'default',
+                        'x_position' => 0,
+                        'y_position' => 0,
+                        'repeat'     => 'default',
+                        'size'       => 'default',
+                    ],
+                    'inner_border_radius'    => [
+                        'top_left'     => '0',
+                        'top_right'    => '0',
+                        'bottom_left'  => '0',
+                        'bottom_right' => '0',
+                    ],
+                    'inner_background_color' => '#ffffff00',
+                    'children'               => [
                         Column::get_object_data(
-                            30,
+                            29,
                             [
                                 'children' => [
-                                    Image::get_object_data(
+                                    Logo::get_object_data(
                                         [
-                                            'align'   => 'left',
-                                            'src'     => YAYMAIL_PLUGIN_URL . 'assets/images/woocommerce-logo.png',
-                                            'width'   => 116,
+                                            'container_group_definition' => [
+                                                'component' => 'GroupDefinition',
+                                                'title' => 'Container settings',
+                                                'description' => 'Handle container layout settings',
+                                            ],
                                             'padding' => [
-                                                'top'    => 0,
+                                                'top'    => 10,
                                                 'right'  => 10,
-                                                'bottom' => 0,
+                                                'bottom' => 10,
                                                 'left'   => 0,
                                             ],
+                                            'background_color' => '#fff',
+                                            'image_breaker' => [
+                                                'component' => 'LineBreaker',
+                                            ],
+                                            'image_group_definition' => [
+                                                'component' => 'GroupDefinition',
+                                                'title' => 'Image settings',
+                                                'description' => 'Handle image settings',
+                                            ],
+                                            'src'     => YAYMAIL_PLUGIN_URL . 'assets/images/woocommerce-logo.png',
+                                            'align'   => 'left',
+                                            'width'   => 116,
+                                            'url'     => '#',
+                                            'alt'     => '',
                                         ]
                                     ),
                                 ],
                             ]
                         ),
                         Column::get_object_data(
-                            70,
+                            25.59,
                             [
                                 'children' => [
                                     Text::get_object_data(
                                         [
-                                            'rich_text'  => '<p style="text-align: right; font-size: 18px; font-weight: 500;">My Account      Order Tracking      Contact</p>',
-                                            'padding'    => [
-                                                'top'    => 0,
+                                            'container_group_definition' => [
+                                                'component' => 'GroupDefinition',
+                                                'title' => 'Container settings',
+                                                'description' => 'Handle container layout settings',
+                                            ],
+                                            'padding'     => [
+                                                'top'    => '15',
                                                 'right'  => 0,
-                                                'bottom' => 0,
+                                                'bottom' => '15',
                                                 'left'   => 0,
                                             ],
-                                            'text_color' => '#333439',
+                                            'background_color' => '#fff',
+                                            'border'      => [
+                                                'side'   => 'none',
+                                                'width'  => '1',
+                                                'style'  => 'solid',
+                                                'color'  => '#e5e5e5',
+                                                'custom' => [
+                                                    'top'  => '1',
+                                                    'right' => '1',
+                                                    'bottom' => '1',
+                                                    'left' => '1',
+                                                ],
+                                            ],
+                                            'content_breaker' => [
+                                                'component' => 'LineBreaker',
+                                            ],
+                                            'content_group_definition' => [
+                                                'component' => 'GroupDefinition',
+                                                'title' => 'Content settings',
+                                                'description' => 'Handle content settings',
+                                            ],
+                                            'font_family' => 'Helvetica,Roboto,Arial,sans-serif',
+                                            'text_color'  => '#000000',
+                                            'rich_text'   => '<div style="text-align: right"><span style="font-size: 18px">My Account</span></div>',
                                         ]
                                     ),
                                 ],
                             ]
                         ),
-                    ],
-                    'padding'          => [
-                        'top'    => 20,
-                        'right'  => 40,
-                        'bottom' => 20,
-                        'left'   => 40,
+                        Column::get_object_data(
+                            34.160,
+                            [
+                                'children' => [
+                                    Text::get_object_data(
+                                        [
+                                            'container_group_definition' => [
+                                                'component' => 'GroupDefinition',
+                                                'title' => 'Container settings',
+                                                'description' => 'Handle container layout settings',
+                                            ],
+                                            'padding'     => [
+                                                'top'    => '15',
+                                                'right'  => 0,
+                                                'bottom' => '15',
+                                                'left'   => 0,
+                                            ],
+                                            'background_color' => '#fff',
+                                            'border'      => [
+                                                'side'   => 'none',
+                                                'width'  => '1',
+                                                'style'  => 'solid',
+                                                'color'  => '#e5e5e5',
+                                                'custom' => [
+                                                    'top'  => '1',
+                                                    'right' => '1',
+                                                    'bottom' => '1',
+                                                    'left' => '1',
+                                                ],
+                                            ],
+                                            'content_breaker' => [
+                                                'component' => 'LineBreaker',
+                                            ],
+                                            'content_group_definition' => [
+                                                'component' => 'GroupDefinition',
+                                                'title' => 'Content settings',
+                                                'description' => 'Handle content settings',
+                                            ],
+                                            'font_family' => 'Helvetica,Roboto,Arial,sans-serif',
+                                            'text_color'  => '#1a1a1a',
+                                            'rich_text'   => '<div style="text-align: center"><span style="font-size: 18px;font-weight: 500">Order Tracking</span></div>',
+                                        ]
+                                    ),
+                                ],
+                            ]
+                        ),
+                        Column::get_object_data(
+                            11.25,
+                            [
+                                'children' => [
+                                    Text::get_object_data(
+                                        [
+                                            'container_group_definition' => [
+                                                'component' => 'GroupDefinition',
+                                                'title' => 'Container settings',
+                                                'description' => 'Handle container layout settings',
+                                            ],
+                                            'padding'     => [
+                                                'top'    => '15',
+                                                'right'  => 2,
+                                                'bottom' => '15',
+                                                'left'   => 0,
+                                            ],
+                                            'background_color' => '#fff',
+                                            'border'      => [
+                                                'side'   => 'none',
+                                                'width'  => '1',
+                                                'style'  => 'solid',
+                                                'color'  => '#e5e5e5',
+                                                'custom' => [
+                                                    'top'  => '1',
+                                                    'right' => '1',
+                                                    'bottom' => '1',
+                                                    'left' => '1',
+                                                ],
+                                            ],
+                                            'content_breaker' => [
+                                                'component' => 'LineBreaker',
+                                            ],
+                                            'content_group_definition' => [
+                                                'component' => 'GroupDefinition',
+                                                'title' => 'Content settings',
+                                                'description' => 'Handle content settings',
+                                            ],
+                                            'font_family' => 'Helvetica,Roboto,Arial,sans-serif',
+                                            'text_color'  => '#1a1a1a',
+                                            'rich_text'   => '<div style="text-align: right"><span style="font-size: 18px;font-weight: 500">Contact</span></div>',
+                                        ]
+                                    ),
+                                ],
+                            ]
+                        ),
                     ],
                 ]
             ),
@@ -85,18 +245,19 @@ class ModernMinimal extends BaseTemplate {
                 [
                     'background_color'       => '#FFFBEB',
                     'inner_background_color' => '#ffffff00',
+                    'vertical_align'         => 'middle',
                     'children'               => [
                         Column::get_object_data(
                             70,
                             [
                                 'children' => [
-                                    Text::get_object_data(
+                                    Heading::get_object_data(
                                         [
-                                            'rich_text'  => '<h1 style="font-size: 30px; font-weight: 600;">Order #[yaymail_order_id is_plain="true"]<br><br>You\'re just one step away</h1>',
+                                            'rich_text'  => '<h1 style="font-size: 30px; font-weight: 600;">Order #[yaymail_order_id is_plain="true"]<br />You\'re just one step away</h1>',
                                             'text_color' => '#333439',
                                             'background_color' => '#ffffff00',
                                             'padding'    => [
-                                                'top'    => 10,
+                                                'top'    => 0,
                                                 'right'  => 0,
                                                 'bottom' => 0,
                                                 'left'   => 50,
@@ -144,15 +305,58 @@ class ModernMinimal extends BaseTemplate {
                     ],
                 ]
             ),
-            Image::get_object_data(
+            OrderProgress::get_object_data(
                 [
-                    'src'     => 'https://images.wpbrandy.com/uploads/yaymail-on-hold-processing-bar.png',
-                    'width'   => 600,
-                    'padding' => [
-                        'top'    => 0,
-                        'right'  => 10,
-                        'bottom' => 0,
-                        'left'   => 0,
+                    'padding'                       => [
+                        'top'    => 40,
+                        'right'  => '50',
+                        'bottom' => 25,
+                        'left'   => '50',
+                    ],
+                    'background_color'              => '#ffffff',
+                    'display_style'                 => 'filled_bar',
+                    'current_step_index'            => 0,
+                    'connector_height'              => 2,
+                    'connector_active_color'        => '#873eff',
+                    'connector_inactive_color'      => '#e2e6ee',
+                    'icon_size'                     => '18',
+                    'filled_bar_icon_border_radius' => 50,
+                    'label_font_size'               => 13,
+                    'font_family'                   => '"Helvetica Neue",Helvetica,Roboto,Arial,sans-serif',
+                    'steps'                         => [
+                        '0' => [
+                            'title'                => 'Ordered',
+                            'label_active_color'   => '#111827',
+                            'label_inactive_color' => '#9ca3af',
+                            'image_active_url'     => YAYMAIL_PLUGIN_URL . '/assets/images/check.png',
+                            'image_inactive_url'   => YAYMAIL_PLUGIN_URL . '/assets/images/check.png',
+                            'image_bg_color'       => '#873eff',
+                            'filled_bar_icon_border_radius' => '50',
+                            'filled_bar_icon_border_color_active' => '#873eff',
+                            'filled_bar_icon_border_color_inactive' => '#e9d5ff',
+                        ],
+                        '1' => [
+                            'title'                => 'Processing',
+                            'label_active_color'   => '#111827',
+                            'label_inactive_color' => '#9ca3af',
+                            'image_active_url'     => YAYMAIL_PLUGIN_URL . '/assets/images/check.png',
+                            'image_inactive_url'   => YAYMAIL_PLUGIN_URL . '/assets/images/check.png',
+                            'image_bg_color'       => '#873eff',
+                            'filled_bar_icon_border_radius' => '50',
+                            'filled_bar_icon_border_color_active' => '#873eff',
+                            'filled_bar_icon_border_color_inactive' => '#e9d5ff',
+                        ],
+                        '2' => [
+                            'title'                => 'Completed',
+                            'label_active_color'   => '#111827',
+                            'label_inactive_color' => '#9ca3af',
+                            'image_active_url'     => YAYMAIL_PLUGIN_URL . '/assets/images/check.png',
+                            'image_inactive_url'   => YAYMAIL_PLUGIN_URL . '/assets/images/check.png',
+                            'image_bg_color'       => '#873eff',
+                            'filled_bar_icon_border_radius' => '50',
+                            'filled_bar_icon_border_color_active' => '#873eff',
+                            'filled_bar_icon_border_color_inactive' => '#e9d5ff',
+                        ],
                     ],
                 ]
             ),

@@ -68,6 +68,59 @@ class TemplateHelpers {
         );
     }
 
+    /**
+     * Inner border radius for column_layout children: only the four outer corners of the row
+     * (first column left, last column right; single column gets all four).
+     *
+     * @param array $inner_border_radius Keys top_left, top_right, bottom_left, bottom_right.
+     * @param int   $total_columns       amount_of_columns from parent column_layout.
+     * @param int   $column_index        Zero-based column index.
+     * @return array{top_left:int,top_right:int,bottom_right:int,bottom_left:int}
+     */
+    public static function get_inner_column_border_radius( $inner_border_radius, $total_columns, $column_index ) {
+        $tl = isset( $inner_border_radius['top_left'] ) ? (int) $inner_border_radius['top_left'] : 0;
+        $tr = isset( $inner_border_radius['top_right'] ) ? (int) $inner_border_radius['top_right'] : 0;
+        $br = isset( $inner_border_radius['bottom_right'] ) ? (int) $inner_border_radius['bottom_right'] : 0;
+        $bl = isset( $inner_border_radius['bottom_left'] ) ? (int) $inner_border_radius['bottom_left'] : 0;
+
+        $total_columns = max( 1, (int) $total_columns );
+        $column_index  = max( 0, (int) $column_index );
+
+        if ( 1 === $total_columns ) {
+            return [
+                'top_left'     => $tl,
+                'top_right'    => $tr,
+                'bottom_right' => $br,
+                'bottom_left'  => $bl,
+            ];
+        }
+
+        if ( 0 === $column_index ) {
+            return [
+                'top_left'     => $tl,
+                'top_right'    => 0,
+                'bottom_right' => 0,
+                'bottom_left'  => $bl,
+            ];
+        }
+
+        if ( $column_index === $total_columns - 1 ) {
+            return [
+                'top_left'     => 0,
+                'top_right'    => $tr,
+                'bottom_right' => $br,
+                'bottom_left'  => 0,
+            ];
+        }
+
+        return [
+            'top_left'     => 0,
+            'top_right'    => 0,
+            'bottom_right' => 0,
+            'bottom_left'  => 0,
+        ];
+    }
+
     public static function get_dimension_value( $dimension, $unit = 'px' ) {
         $unit      = esc_attr( $unit );
         $dimension = floatval( $dimension );

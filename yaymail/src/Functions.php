@@ -5,7 +5,6 @@ use YayMail\Utils\TemplateHelpers;
 use YayMail\Constants\TemplatesData;
 use YayMail\Elements\ColumnLayout;
 use YayMail\Elements\ElementsLoader;
-use YayMail\Integrations\TranslationModule;
 use YayMail\YayMailEmails;
 use YayMail\Utils\Logger;
 
@@ -61,7 +60,12 @@ if ( ! function_exists( 'yaymail_get_email' ) ) {
 
 if ( ! function_exists( 'yaymail_is_wc_installed' ) ) {
     function yaymail_is_wc_installed() {
-        return function_exists( 'WC' ) && defined( 'YAYMAIL_VERSION' );
+        if ( ! function_exists( 'WC' ) ) {
+            return false;
+        }
+
+        $plugin_work = \YayMail\Utils\Helpers::get_plugin_work_info();
+        return $plugin_work['yaymail'];
     }
 }
 
@@ -388,36 +392,38 @@ if ( ! function_exists( 'yaymail_get_email_direction' ) ) {
  *
  * @return string
  */
-function yaymail_get_email_recipient_zone( $email ) {
-    $is_customer_email = $email instanceof \WC_Email && method_exists( $email, 'is_customer_email' ) ? $email->is_customer_email() : true;
-    if ( $is_customer_email ) {
-        return __( 'Customer', 'woocommerce' );
-    }
-
-    $recipient = '';
-    if ( $email instanceof \WC_Email ) {
-        $recipient = ! empty( $email->recipient ) ? $email->recipient : $email->get_recipient();
-        if ( empty( $recipient ) ) {
-            $recipient = __( 'Recipient', 'yaymail' );
+if ( ! function_exists( 'yaymail_get_email_recipient_zone' ) ) {
+    function yaymail_get_email_recipient_zone( $email ) {
+        $is_customer_email = $email instanceof \WC_Email && method_exists( $email, 'is_customer_email' ) ? $email->is_customer_email() : true;
+        if ( $is_customer_email ) {
+            return __( 'Customer', 'woocommerce' );
         }
-    }
 
-    $recipients = array_map(
-        function( $email_recipient ) {
-            $recipient_user = get_user_by( 'email', $email_recipient );
-            if ( $recipient_user && user_can( $recipient_user, 'manage_options' ) ) {
-                    return __( 'Admin', 'woocommerce' );
+        $recipient = '';
+        if ( $email instanceof \WC_Email ) {
+            $recipient = ! empty( $email->recipient ) ? $email->recipient : $email->get_recipient();
+            if ( empty( $recipient ) ) {
+                $recipient = __( 'Recipient', 'yaymail' );
             }
-            if ( empty( $email_recipient ) ) {
-                return __( 'Recipient', 'yaymail' );
-            }
-            return $email_recipient;
-        },
-        explode( ',', $recipient )
-    );
-    $recipients = array_unique( $recipients );
-    return implode( ', ', $recipients );
-}
+        }
+
+        $recipients = array_map(
+            function( $email_recipient ) {
+                $recipient_user = get_user_by( 'email', $email_recipient );
+                if ( $recipient_user && user_can( $recipient_user, 'manage_options' ) ) {
+                        return __( 'Admin', 'woocommerce' );
+                }
+                if ( empty( $email_recipient ) ) {
+                    return __( 'Recipient', 'yaymail' );
+                }
+                return $email_recipient;
+            },
+            explode( ',', $recipient )
+        );
+        $recipients = array_unique( $recipients );
+        return implode( ', ', $recipients );
+    }
+}//end if
 
 if ( ! function_exists( 'yaymail_get_template' ) ) {
     function yaymail_get_template( $template_name, $template_path = '', $default_path = '' ) {

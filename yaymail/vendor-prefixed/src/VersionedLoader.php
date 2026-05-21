@@ -43,7 +43,7 @@ class VersionedLoader
         // Schedule election to run after all plugins_loaded callbacks.
         // We use priority 999 so all candidates at default priority register first.
         if (!self::$elected) {
-            add_action('plugins_loaded', [self::class, 'elect'], 999);
+            \add_action('plugins_loaded', [self::class, 'elect'], 999);
         }
     }
     /**

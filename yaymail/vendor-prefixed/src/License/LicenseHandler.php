@@ -41,21 +41,21 @@ class LicenseHandler
     }
     public function do_hooks() : void
     {
-        add_action('admin_notices', [$this, 'not_activate_license_notice']);
-        add_action('admin_enqueue_scripts', [$this, 'enqueue_license_scripts']);
-        add_action('yaycommerce_licenses_page', [$this, 'render_license_settings'], 100);
+        \add_action('admin_notices', [$this, 'not_activate_license_notice']);
+        \add_action('admin_enqueue_scripts', [$this, 'enqueue_license_scripts']);
+        \add_action('yaycommerce_licenses_page', [$this, 'render_license_settings'], 100);
         // Legacy filter — new code uses LicenseRegistry, but this keeps
         // backward compat so old Licenses page views still work during transition.
-        add_filter('yaycommerce_licensing_plugins', [$this, 'register_licensing_plugins'], 100);
+        \add_filter('yaycommerce_licensing_plugins', [$this, 'register_licensing_plugins'], 100);
         /** Expired license admin notice */
-        add_action('admin_notices', [$this, 'license_expired_admin_notice']);
+        \add_action('admin_notices', [$this, 'license_expired_admin_notice']);
         // License-specific action link: "Enter license key" when inactive
         if (!$this->license->is_active() || $this->license->is_expired()) {
-            add_filter('plugin_action_links_' . $this->adapter->get_plugin_basename(), [$this, 'add_license_action_link']);
+            \add_filter('plugin_action_links_' . $this->adapter->get_plugin_basename(), [$this, 'add_license_action_link']);
         }
-        add_action('admin_init', [$this, 'auto_update']);
-        add_filter('auto_update_plugin', [$this, 'add_disabled_auto_update_text'], 100, 2);
-        add_filter('plugins_list', [$this, 'support_auto_update'], 100);
+        \add_action('admin_init', [$this, 'auto_update']);
+        \add_filter('auto_update_plugin', [$this, 'add_disabled_auto_update_text'], 100, 2);
+        \add_filter('plugins_list', [$this, 'support_auto_update'], 100);
     }
     /**
      * Handle POST-based license form submissions (legacy AJAX path).
@@ -68,11 +68,11 @@ class LicenseHandler
     }
     public function do_cron_job() : void
     {
-        add_filter('cron_schedules', [$this, 'custom_schedules']);
-        add_action('check_license_cron_' . $this->adapter->get_plugin_slug(), [$this, 'check_license_cron_run']);
+        \add_filter('cron_schedules', [$this, 'custom_schedules']);
+        \add_action('check_license_cron_' . $this->adapter->get_plugin_slug(), [$this, 'check_license_cron_run']);
         $cron_hook = 'check_license_cron_' . $this->adapter->get_plugin_slug();
-        if (!wp_next_scheduled($cron_hook)) {
-            wp_schedule_event(\time(), 'daily', $cron_hook);
+        if (!\wp_next_scheduled($cron_hook)) {
+            \wp_schedule_event(\time(), 'daily', $cron_hook);
         }
     }
     public function custom_schedules(array $schedules) : array
@@ -92,8 +92,8 @@ class LicenseHandler
         }
         $slug = $this->adapter->get_plugin_slug();
         $assets_url = \plugin_dir_url(__FILE__) . '../../assets/';
-        wp_enqueue_script('yaycommerce-license', $assets_url . 'js/license.js', ['jquery'], $this->adapter->get_plugin_version(), \true);
-        wp_localize_script('yaycommerce-license', Slug::to_var_name($slug) . 'LicenseData', ['slug' => $slug, 'apiSettings' => ['restNonce' => wp_create_nonce('wp_rest'), 'restUrl' => \esc_url_raw(rest_url(Slug::to_var_name($slug) . '/v1')), 'adminUrl' => \admin_url()]]);
+        \wp_enqueue_script('yaycommerce-license', $assets_url . 'js/license.js', ['jquery'], $this->adapter->get_plugin_version(), \true);
+        \wp_localize_script('yaycommerce-license', Slug::to_var_name($slug) . 'LicenseData', ['slug' => $slug, 'apiSettings' => ['restNonce' => \wp_create_nonce('wp_rest'), 'restUrl' => \esc_url_raw(\rest_url(Slug::to_var_name($slug) . '/v1')), 'adminUrl' => \admin_url()]]);
     }
     public function render_license_settings() : void
     {
@@ -112,8 +112,8 @@ class LicenseHandler
     }
     public function not_activate_license_notice() : void
     {
-        $current_screen = get_current_screen();
-        if (isset($current_screen->id) && 'yaycommerce_page_yaycommerce-licenses' === $current_screen->id) {
+        $current_screen = \get_current_screen();
+        if (!$current_screen || $current_screen->id !== 'plugins') {
             return;
         }
         if ($this->license->is_active()) {
@@ -156,7 +156,7 @@ class LicenseHandler
     }
     public function show_plugin_page_notification() : void
     {
-        add_action('after_plugin_row_' . $this->adapter->get_plugin_basename(), [$this, 'plugin_notifications'], 10, 2);
+        \add_action('after_plugin_row_' . $this->adapter->get_plugin_basename(), [$this, 'plugin_notifications'], 10, 2);
     }
     public function plugin_notifications(string $file) : void
     {
@@ -235,14 +235,14 @@ class LicenseHandler
         if ('plugin-install.php' === $pagenow) {
             return;
         }
-        if (!\function_exists('YayMailScoped\\get_plugin_data')) {
+        if (!\function_exists('get_plugin_data')) {
             require_once \ABSPATH . 'wp-admin/includes/plugin.php';
         }
         $basename = $adapter->get_plugin_basename();
-        $site_transient_update_plugins = get_site_transient('update_plugins');
+        $site_transient_update_plugins = \get_site_transient('update_plugins');
         if (isset($site_transient_update_plugins->checked[$basename])) {
             unset($site_transient_update_plugins->checked[$basename]);
-            set_site_transient('update_plugins', $site_transient_update_plugins);
+            \set_site_transient('update_plugins', $site_transient_update_plugins);
         }
     }
     public function support_auto_update(array $plugins) : array
