@@ -117,6 +117,8 @@ class OrderDetailsDownload extends BaseElement {
                     'component'     => 'RichTextEditor',
                     'title'         => __( 'Title', 'yaymail' ),
                     'default_value' => isset( $attributes['title'] ) ? $attributes['title'] : '<span style="font-size: 20px;font-weight:600;">Downloads</span>',
+                    'text_color_path' => 'title_color',
+                    'background_color_path' => 'background_color',
                     'type'          => 'content',
                 ],
                 'title_color'                    => [

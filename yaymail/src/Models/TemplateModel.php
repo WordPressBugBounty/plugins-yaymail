@@ -334,6 +334,10 @@ class TemplateModel {
             update_post_meta( $template_id, self::$meta_keys['global_footer_settings'], $data['global_footer_settings'] );
         }
 
+        if ( isset( $data['preheader'] ) && isset( self::$meta_keys['preheader'] ) ) {
+            update_post_meta( $template_id, self::$meta_keys['preheader'], sanitize_text_field( $data['preheader'] ) );
+        }
+
         // Update post_modified
         $post_data = [
             'ID'                => $template_id,
@@ -444,6 +448,7 @@ class TemplateModel {
             $content_text_color       = self::query_meta_data( $template_post_id, self::$meta_keys['content_text_color'], YayMailTemplate::DEFAULT_DATA['content_text_color'] );
             $global_header_settings   = self::query_meta_data( $template_post_id, self::$meta_keys['global_header_settings'], YayMailTemplate::DEFAULT_DATA['global_header_settings'] );
             $global_footer_settings   = self::query_meta_data( $template_post_id, self::$meta_keys['global_footer_settings'], YayMailTemplate::DEFAULT_DATA['global_footer_settings'] );
+            $preheader                = self::query_meta_data( $template_post_id, self::$meta_keys['preheader'], YayMailTemplate::DEFAULT_DATA['preheader'] );
         }
 
         return [
@@ -462,7 +467,53 @@ class TemplateModel {
             'post_modified'            => $post_modified,
             'global_header_settings'   => isset( $global_header_settings ) ? $global_header_settings : [],
             'global_footer_settings'   => isset( $global_footer_settings ) ? $global_footer_settings : [],
+            'preheader'                => isset( $preheader ) ? $preheader : YayMailTemplate::DEFAULT_DATA['preheader'],
+            'email_subject'            => self::get_email_subject( $template_name ),
         ];
+    }
+
+    /**
+     * Get email subject from WooCommerce email settings.
+     *
+     * @param string $template_name Email / template id.
+     * @return string|null
+     */
+    private static function get_email_subject( $template_name ) {
+        $settings = self::get_wc_email_settings( $template_name );
+        return is_array( $settings ) && isset( $settings['subject'] ) ? (string) $settings['subject'] : null;
+    }
+
+    /**
+     * Save email subject to WooCommerce email settings (same option as Woo admin).
+     *
+     * @param string $template_name Email / template id.
+     * @param string $subject       Subject line.
+     */
+    public static function save_email_subject( $template_name, $subject ) {
+        if ( ! is_string( $template_name ) || '' === $template_name ) {
+            return;
+        }
+
+        $settings            = self::get_wc_email_settings( $template_name );
+        $settings['subject'] = sanitize_text_field( $subject );
+        update_option( self::get_wc_email_settings_option_name( $template_name ), $settings );
+    }
+
+    /**
+     * @param string $template_name Email / template id.
+     * @return string
+     */
+    private static function get_wc_email_settings_option_name( $template_name ) {
+        return "woocommerce_{$template_name}_settings";
+    }
+
+    /**
+     * @param string $template_name Email / template id.
+     * @return array
+     */
+    private static function get_wc_email_settings( $template_name ) {
+        $settings = get_option( self::get_wc_email_settings_option_name( $template_name ), [] );
+        return is_array( $settings ) ? $settings : [];
     }
 
     private static function get_uneditable_template_placeholder_elements( array $support_info ): array {

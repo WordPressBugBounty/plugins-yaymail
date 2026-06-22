@@ -79,12 +79,13 @@ class NoticeMain {
                 $plugin_data           = $plugins[ $key ];
                 $is_yaycommerce_author = isset( $plugin_data['Author'] ) && strpos( $plugin_data['Author'], 'YayCommerce' ) !== false;
 
+                $is_yay_wp             = strpos( $key, 'yay-wp-email' ) !== false;
                 return $is_yaycommerce_author && (
                     strpos( $key, 'yaymail-addon' ) !== false ||
                     strpos( $key, 'email-customizer' ) !== false ||
                     strpos( $key, 'yaymail-premium-addon' ) !== false ||
                     strpos( $key, 'yaymail-conditional-logic' ) !== false
-                );
+                ) && ! $is_yay_wp;
             },
             ARRAY_FILTER_USE_KEY
         );

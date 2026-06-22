@@ -10,6 +10,7 @@ namespace YayMailScoped\YayCommerce\AdminShell\Support;
  * and URL paths but invalid as JavaScript identifiers (e.g. hyphens, '&').
  * This helper sanitizes a slug for use as a JS variable name while the
  * original slug stays intact for option-key and REST-URL contexts.
+ * @internal
  */
 class Slug
 {

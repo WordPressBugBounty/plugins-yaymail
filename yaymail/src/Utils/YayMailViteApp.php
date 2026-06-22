@@ -103,7 +103,7 @@ class YayMailViteApp {
 
             } else {
                 $url = $this->get_plugin_url() . 'assets/dist/yaymail/' . $this->get_module_opts( $entry_key )['file'];
-                wp_register_script( "module/yaymail/$entry_key", $url, $entry_opts['deps'], time(), true );
+                wp_register_script( "module/yaymail/$entry_key", $url, $entry_opts['deps'], yaymail_version(), true );
             }
 
             wp_enqueue_script( "module/yaymail/$entry_key" );

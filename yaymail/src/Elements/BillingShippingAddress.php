@@ -119,6 +119,13 @@ class BillingShippingAddress extends BaseElement {
                         'value_path'    => 'border_color',
                         'title'         => __( 'Table border color', 'yaymail' ),
                         'default_value' => YAYMAIL_COLOR_BORDER_DEFAULT,
+                        'conditions' => [
+                            'condition_1' => [
+                                'attribute'  => 'layout_type',
+                                'comparison' => '!=',
+                                'value'      => 'modern',
+                            ],
+                        ]
                     ]
                 ),
                 'font_family'                => ElementsHelper::get_font_family_selector( $attributes ),
@@ -129,6 +136,8 @@ class BillingShippingAddress extends BaseElement {
                         'title'         => __( 'Billing title', 'yaymail' ),
                         'default_value' => '<span style="font-size: 20px;font-weight:600;">' . __( 'Billing Address', 'woocommerce' ) . '</span>',
                         'editor_id'     => 'bsa_billing_title',
+                        'text_color_path' => 'title_color',
+                        'background_color_path' => 'background_color',
                     ]
                 ),
                 'billing_content_font_size' => ElementsHelper::get_dimension(
@@ -165,6 +174,8 @@ class BillingShippingAddress extends BaseElement {
                         'title'         => __( 'Shipping title', 'yaymail' ),
                         'default_value' => '<span style="font-size: 20px;font-weight:600;">' . __( 'Shipping Address', 'woocommerce' ) . '</span>',
                         'editor_id'     => 'bsa_shipping_title',
+                        'text_color_path' => 'title_color',
+                        'background_color_path' => 'background_color',
                     ]
                 ),
                 'shipping_content_font_size' => ElementsHelper::get_dimension(

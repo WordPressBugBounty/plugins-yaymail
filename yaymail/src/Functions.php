@@ -77,7 +77,10 @@ if ( ! function_exists( 'yaymail_is_wp_mail_installed' ) ) {
 
 if ( ! function_exists( 'yaymail_version' ) ) {
     function yaymail_version() {
-        return yaymail_is_wp_mail_installed() ? YAYMAIL_WP_VERSION : YAYMAIL_VERSION;
+        if ( defined( 'YAYMAIL_VERSION' ) ) {
+            return YAYMAIL_VERSION;
+        }
+        return false;
     }
 }
 

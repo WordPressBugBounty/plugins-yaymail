@@ -2,6 +2,7 @@
 namespace YayMail\Elements;
 
 use YayMail\Abstracts\BaseElement;
+use YayMail\Constants\AttributesData;
 use YayMail\Utils\SingletonTrait;
 
 /**
@@ -92,6 +93,13 @@ class ColumnLayout extends BaseElement {
                         'bottom' => '15',
                         'left'   => '0',
                     ],
+                    'type'          => 'style',
+                ],
+                'border'                             => [
+                    'value_path'    => 'border',
+                    'component'     => 'Border',
+                    'title'         => __( 'Border', 'yaymail' ),
+                    'default_value' => isset( $attributes['border'] ) ? $attributes['border'] : AttributesData::BORDER_DEFAULT,
                     'type'          => 'style',
                 ],
                 'border_radius'                      => [

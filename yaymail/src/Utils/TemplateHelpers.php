@@ -3,7 +3,8 @@
 namespace YayMail\Utils;
 
 use YayMail\Constants\AttributesData;
-use YayMail\Constants\TemplatesData;
+use YayMail\Shortcodes\ShortcodesExecutor;
+use YayMail\YayMailTemplate;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -418,5 +419,107 @@ class TemplateHelpers {
 
     public static function replace_color_paths( $value ) {
         return $value;
+    }
+
+    /**
+     * Append invisible characters so inbox clients do not pull body text into the preview line.
+     *
+     * @param string $preheader     Visible preheader text.
+     * @param int    $target_length Approximate preview window (Gmail ~90–140, Outlook ~130).
+     * @return string
+     */
+    public static function pad_preheader( $preheader, $target_length = 150 ) {
+        $preheader = trim( (string) $preheader );
+
+        if ( '' === $preheader ) {
+            return '';
+        }
+
+        /**
+         * Filter the target length for invisible preheader padding.
+         *
+         * @param int    $target_length Default padding target length.
+         * @param string $preheader     Visible preheader text.
+         */
+        $target_length = (int) apply_filters( 'yaymail_email_preheader_pad_length', $target_length, $preheader );
+
+        if ( $target_length <= 0 ) {
+            return $preheader;
+        }
+
+        $visible_length = mb_strlen( $preheader );
+
+        if ( $visible_length >= $target_length ) {
+            return $preheader;
+        }
+
+        // Litmus preview-text hack: zero-width non-joiner + non-breaking space.
+        $pad_unit = "\u{200C}\u{00A0}";
+
+        return $preheader . str_repeat( $pad_unit, $target_length - $visible_length );
+    }
+
+    /**
+     * Process preheader text (YayMail shortcodes).
+     *
+     * @param string          $preheader   Raw preheader from template meta.
+     * @param YayMailTemplate $template    Email template.
+     * @param array           $render_data Render context.
+     * @return string Plain-text preheader for inbox preview.
+     */
+    public static function process_email_preheader( $preheader, $template, $args = [] ) {
+        $preheader = trim( (string) $preheader );
+
+        if ( '' === $preheader || ! $template instanceof YayMailTemplate ) {
+            return '';
+        }
+
+        $template_name = $template->get_name();
+
+        if ( false !== strpos( $preheader, '[' ) && $template_name ) {
+
+            $shortcodes = yaymail_get_email_shortcodes( $template_name );
+            new ShortcodesExecutor( $shortcodes, $args );
+            $preheader = do_shortcode( $preheader );
+        }//end if
+
+        $preheader = self::pad_preheader( wp_strip_all_tags( $preheader ) );
+
+        return $preheader;
+    }
+
+    /**
+     * Output hidden preheader row at the top of the email body (Woo block-editor style).
+     *
+     * @param YayMailTemplate $template    Email template.
+     * @param array           $args Render context.
+     */
+    public static function render_email_preheader( $template, $args = [] ) {
+        if ( ! $template instanceof YayMailTemplate ) {
+            return;
+        }
+
+        $template_name = $template->get_name();
+
+        if ( str_starts_with( $template_name, 'pattern_' ) || 'yaymail_global_header_footer' === $template_name ) {
+            return;
+        }
+
+        $preheader = self::process_email_preheader( $template->get_preheader(), $template, $args );
+
+        if ( '' === $preheader ) {
+            return;
+        }
+
+        $preheader_html = yaymail_get_content(
+            'templates/emails/email-preheader.php',
+            [
+                'preheader' => $preheader,
+            ]
+        );
+
+        if ( '' !== $preheader_html ) {
+            yaymail_kses_post_e( $preheader_html );
+        }
     }
 }

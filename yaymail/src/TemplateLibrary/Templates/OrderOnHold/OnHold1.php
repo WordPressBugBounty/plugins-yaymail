@@ -1319,7 +1319,7 @@ class OnHold1 extends BaseTemplate {
                                             ],
                                             'font_family' => '"Outfit", "DM Sans", sans-serif',
                                             'text_color'  => '#1c672f',
-                                            'rich_text'   => '<p style="margin: 0px;font-weight: 300;text-align: left"><span style="font-size: 16px">For questions, contact <u>hi@yaycommerce.com</u>, visit our <u>FAQs</u>, or <u>chat</u> with us during operating hours for account support</span></p>',
+                                            'rich_text'   => '<p style="margin: 0px;font-weight: 300;text-align: left"><span style="font-size: 16px">For questions, contact <u>hello@example.com</u>, visit our <u>FAQs</u>, or <u>chat</u> with us during operating hours for account support</span></p>',
                                         ]
                                     ),
                                     Divider::get_object_data(

@@ -185,14 +185,14 @@
     "src": "features/email-customizer/components/notice/notice-icon.svg"
   },
   "yaymail-main.css": {
-    "file": "yaymail-main-ee58d373.css",
+    "file": "yaymail-main-e92791ec.css",
     "src": "yaymail-main.css"
   },
   "yaymail-main.tsx": {
     "css": [
-      "yaymail-main-ee58d373.css"
+      "yaymail-main-e92791ec.css"
     ],
-    "file": "yaymail-main.tsx-c83b9fed.js",
+    "file": "yaymail-main.tsx-60ea0a5f.js",
     "imports": [
       "_vendor_antd_form-f8ce9ec8.js",
       "_vendor_antd_table-4202b54e.js"

@@ -74,10 +74,11 @@ class AddonController extends BaseController {
         return $this->exec( [ $this, 'deactivate_addon' ], $request );
     }
 
-    public function get_addons() {
-        $data = AddonModel::get_all();
-        $data = $this->filter_addons_by_platform( $data );
-        $data = $this->reorder_addons_for_catalog( $data );
+    public function get_addons( \WP_REST_Request $request ) {
+        $data     = AddonModel::get_all();
+        $platform = $request->get_param( 'platform' );
+        $data     = $this->filter_addons_by_platform( $data, $platform );
+        $data     = $this->reorder_addons_for_catalog( $data );
 
         return array_values( $data );
     }
@@ -88,30 +89,18 @@ class AddonController extends BaseController {
      * @param array<string, array<string, mixed>> $data Addon rows keyed by namespace.
      * @return array<string, array<string, mixed>>
      */
-    private function filter_addons_by_platform( array $data ): array {
-        $plugin_works = Helpers::get_plugin_work_info();
-
-        $has_wc = $plugin_works['yaymail'];
-        $has_wp = $plugin_works['yay-wp-email-customizer'];
-
-        if ( ( $has_wc && $has_wp ) || ( ! $has_wc && ! $has_wp ) ) {
-            return $data;
-        }
+    private function filter_addons_by_platform( array $data, string $platform ): array {
+        $is_yaymail = ( $platform === 'yaymail' ) ? true : false;
 
         return array_filter(
             $data,
-            function ( $addon ) use ( $has_wc, $has_wp ) {
-                $categories             = isset( $addon['categories'] ) && is_array( $addon['categories'] ) ? $addon['categories'] : [];
-                $has_wordpress_category = in_array( 'wordpress', $categories, true );
-
-                if ( $has_wc && ! $has_wp ) {
-                    return ! $has_wordpress_category;
+            function ( $addon ) use ( $is_yaymail ) {
+                $categories = isset( $addon['categories'] ) && is_array( $addon['categories'] ) ? $addon['categories'] : [];
+                if ( $is_yaymail ) {
+                    return ! in_array( 'wordpress', $categories, true ); //phpcs:ignore
+                } else {
+                    return in_array( 'wordpress', $categories, true ); //phpcs:ignore
                 }
-                if ( $has_wp && ! $has_wc ) {
-                    return $has_wordpress_category;
-                }
-
-                return true;
             }
         );
     }

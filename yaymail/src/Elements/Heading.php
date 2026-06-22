@@ -2,6 +2,7 @@
 namespace YayMail\Elements;
 
 use YayMail\Abstracts\BaseElement;
+use YayMail\Constants\AttributesData;
 use YayMail\Utils\SingletonTrait;
 use YayMail\Utils\TemplateHelpers;
 /**
@@ -69,6 +70,13 @@ class Heading extends BaseElement {
                     'component'     => 'Color',
                     'title'         => __( 'Background color', 'yaymail' ),
                     'default_value' => isset( $attributes['background_color'] ) ? $attributes['background_color'] : YAYMAIL_COLOR_WC_DEFAULT,
+                    'type'          => 'style',
+                ],
+                'border'                     => [
+                    'value_path'    => 'border',
+                    'component'     => 'Border',
+                    'title'         => __( 'Border', 'yaymail' ),
+                    'default_value' => isset( $attributes['border'] ) ? $attributes['border'] : AttributesData::BORDER_DEFAULT,
                     'type'          => 'style',
                 ],
                 'content_breaker'            => [

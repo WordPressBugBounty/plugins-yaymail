@@ -30,6 +30,42 @@ $wrapper_style = TemplateHelpers::get_style(
     ]
 );
 
+if ( isset( $data['background_image'], $data['background_image']['url'] ) ) {
+    $background_image = $data['background_image'];
+    // Calculate background-position
+    $background_position = str_replace( '_', ' ', $background_image['position'] );
+    if ( ! isset( $background_image['position'] ) || 'default' === $background_image['position'] ) {
+        $background_position = 'unset';
+    } elseif ( 'custom' === $background_image['position'] ) {
+        $background_position = "{$background_image['x_position']}% {$background_image['y_position']}%";
+    }
+
+    // Calculate background-repeat
+    if ( ! isset( $background_image['repeat'] ) || 'default' === $background_image['repeat'] ) {
+        $background_repeat = 'unset';
+    } else {
+        $background_repeat = $background_image['repeat'];
+    }
+
+    // Calculate background-size
+    $background_size = $background_image['size'];
+
+    if ( 'default' === $background_size ) {
+        $background_size = 'unset';
+    } elseif ( 'custom' === $background_size ) {
+        $background_size = "{$background_image['custom_size']}%";
+    }
+
+    $wrapper_style .= TemplateHelpers::get_style(
+        [
+            'background-image'    => "url({$background_image['url']})",
+            'background-position' => $background_position,
+            'background-repeat'   => $background_repeat,
+            'background-size'     => $background_size,
+        ]
+    );
+}//end if
+
 $inner_style = TemplateHelpers::get_style(
     [
         'width'    => '100%',

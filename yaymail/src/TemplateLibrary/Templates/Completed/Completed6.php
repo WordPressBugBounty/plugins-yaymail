@@ -430,43 +430,44 @@ class Completed6 extends BaseTemplate {
                                             'connector_height' => 8,
                                             'connector_active_color' => '#873eff',
                                             'connector_inactive_color' => '#E2E6EE',
+                                            'label_active_color' => '#636363',
+                                            'label_inactive_color' => '#71717a',
                                             'icon_size'   => '18',
-                                            'filled_bar_icon_border_radius' => '50',
                                             'label_font_size' => 12,
                                             'font_family' => 'Georgia, "Times New Roman", Times, serif',
                                             'steps'       => [
                                                 '0' => [
                                                     'title' => 'Ordered',
-                                                    'label_active_color' => '#636363',
-                                                    'label_inactive_color' => '#71717a',
-                                                    'image_active_url' => YAYMAIL_PLUGIN_URL . 'assets/images/union.png',
-                                                    'image_inactive_url' => YAYMAIL_PLUGIN_URL . 'assets/images/union.png',
+                                                    'image_url' => YAYMAIL_PLUGIN_URL . '/assets/images/check.png',
+
                                                     'image_bg_color' => '#873eff',
-                                                    'filled_bar_icon_border_radius' => '50',
-                                                    'filled_bar_icon_border_color_active' => '#636363',
-                                                    'filled_bar_icon_border_color_inactive' => '#e9d5ff',
+                                                    'icon_border_color' => '#636363',
+
+                                                    'icon_border_style' => 'solid',
+
+                                                    'icon_border_width' => 2,
                                                 ],
                                                 '1' => [
                                                     'title' => 'Processing',
-                                                    'label_active_color' => '#636363',
-                                                    'label_inactive_color' => '#71717a',
-                                                    'image_active_url' => YAYMAIL_PLUGIN_URL . 'assets/images/union.png',
-                                                    'image_inactive_url' => YAYMAIL_PLUGIN_URL . 'assets/images/union.png',
+                                                    'image_url' => YAYMAIL_PLUGIN_URL . '/assets/images/check.png',
+
                                                     'image_bg_color' => '#873eff',
-                                                    'filled_bar_icon_border_radius' => '50',
-                                                    'filled_bar_icon_border_color_active' => '#c4b5fd',
-                                                    'filled_bar_icon_border_color_inactive' => '#e9d5ff',
+                                                    'icon_border_color' => '#c4b5fd',
+
+                                                    'icon_border_style' => 'solid',
+
+                                                    'icon_border_width' => 2,
                                                 ],
                                                 '2' => [
                                                     'title' => 'Completed',
-                                                    'label_active_color' => '#636363',
-                                                    'label_inactive_color' => '#71717a',
-                                                    'image_active_url' => YAYMAIL_PLUGIN_URL . 'assets/images/union.png',
-                                                    'image_inactive_url' => YAYMAIL_PLUGIN_URL . 'assets/images/union.png',
+                                                    'image_url' => YAYMAIL_PLUGIN_URL . '/assets/images/check.png',
+
                                                     'image_bg_color' => '#873eff',
-                                                    'filled_bar_icon_border_radius' => '50',
-                                                    'filled_bar_icon_border_color_active' => '#c4b5fd',
-                                                    'filled_bar_icon_border_color_inactive' => '#e9d5ff',
+                                                    'icon_border_color' => '#c4b5fd',
+
+                                                    'icon_border_style' => 'solid',
+
+                                                    'icon_border_width' => 2,
                                                 ],
                                             ],
                                         ]
@@ -976,7 +977,7 @@ class Completed6 extends BaseTemplate {
                                             ],
                                             'font_family' => '"Outfit", "DM Sans", sans-serif',
                                             'text_color'  => '#0d0d25',
-                                            'rich_text'   => '<p style="margin: 0px;font-weight: 300;text-align: left"><span style="font-size: 16px">For questions, contact <u>hi@yaycommerce.com</u>, visit our <u>FAQs</u>, or <u>chat</u> with us during operating hours for account support</span></p>',
+                                            'rich_text'   => '<p style="margin: 0px;font-weight: 300;text-align: left"><span style="font-size: 16px">For questions, contact <u>hello@example.com</u>, visit our <u>FAQs</u>, or <u>chat</u> with us during operating hours for account support</span></p>',
                                         ]
                                     ),
                                     Divider::get_object_data(

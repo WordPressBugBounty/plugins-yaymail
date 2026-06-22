@@ -7,6 +7,7 @@ namespace YayMailScoped\YayCommerce\AdminShell\Registry;
  *
  * APPEND-ONLY — existing public properties must never be renamed or removed.
  * New properties may be added in MINOR versions; removing/renaming requires MAJOR bump.
+ * @internal
  */
 final class PluginLicenseInfo
 {

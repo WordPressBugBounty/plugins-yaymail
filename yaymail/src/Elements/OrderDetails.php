@@ -126,6 +126,8 @@ class OrderDetails extends BaseElement {
                     'component'     => 'RichTextEditor',
                     'title'         => __( 'Title', 'yaymail' ),
                     'default_value' => isset( $attributes['title'] ) ? $attributes['title'] : '<span style="font-size: 20px;">Order #[yaymail_order_number] <b>([yaymail_order_date])</b></span>',
+                    'text_color_path' => 'title_color',
+                    'background_color_path' => 'background_color',
                     'type'          => 'content',
                 ],
                 'title_color'                    => [

@@ -60,13 +60,14 @@ $table_style = TemplateHelpers::get_style(
     ]
 );
 
-$connector_height         = (int) ( $data['connector_height'] ?? 2 );
-$connector_height         = max( 1, min( $connector_height, 10 ) );
+$connector_height = (int) ( $data['connector_height'] ?? 2 );
+$connector_height = max( 1, min( $connector_height, 10 ) );
+
 $connector_active_color   = TemplateHelpers::replace_color_paths(
-    (string) ( $data['connector_active_color'] ?? '#000000' )
+    (string) ( $data['connector_active_color'] ?? '#873eff' )
 );
 $connector_inactive_color = TemplateHelpers::replace_color_paths(
-    (string) ( $data['connector_inactive_color'] ?? '#E5E5E5' )
+    (string) ( $data['connector_inactive_color'] ?? '#E2E6EE' )
 );
 
 $icon_size = (int) ( $data['icon_size'] ?? 18 );

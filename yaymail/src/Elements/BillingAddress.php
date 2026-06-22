@@ -92,6 +92,13 @@ class BillingAddress extends BaseElement {
                         'value_path'    => 'border_color',
                         'title'         => __( 'Table border color', 'yaymail' ),
                         'default_value' => YAYMAIL_COLOR_BORDER_DEFAULT,
+                        'conditions' => [
+                            'condition_1' => [
+                                'attribute'  => 'layout_type',
+                                'comparison' => '!=',
+                                'value'      => 'modern',
+                            ],
+                        ]
                     ]
                 ),
                 'font_family'                => ElementsHelper::get_font_family_selector( $attributes ),
@@ -101,6 +108,8 @@ class BillingAddress extends BaseElement {
                         'value_path'    => 'title',
                         'title'         => __( 'Billing title', 'yaymail' ),
                         'default_value' => '<span style="font-size: 20px;font-weight:600;">' . __( 'Billing Address', 'woocommerce' ) . '</span>',
+                        'text_color_path' => 'title_color',
+                        'background_color_path' => 'background_color',
                     ]
                 ),
                 'billing_content_font_size' => ElementsHelper::get_dimension(

@@ -16,44 +16,45 @@ class OrderProgress extends BaseElement {
     public $available_email_ids = [ YAYMAIL_WITH_ORDER_EMAILS ];
 
     public static function get_data( $attributes = [] ) {
-        $default_icon = esc_url( YAYMAIL_PLUGIN_URL . 'assets/images/union.png' );
-
         self::$icon = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M3,2.5h14v1.75H3Z"/><path fill-rule="evenodd" d="M3.5,4.25h13v6.5h-13ZM4.25,5h11.5v5h-11.5Z"/><path d="M9.5,2.5h1v8.25h-1Z"/><path d="M4,15.5h12v.6H4Z"/><path d="M2.5,15.8a1.8,1.8 0 1,0 3.6,0a1.8,1.8 0 1,0 -3.6,0Z"/><path fill-rule="evenodd" d="M8.2,15.8a1.8,1.8 0 1,0 3.6,0a1.8,1.8 0 1,0 -3.6,0ZM9.15,15.8a.85,.85 0 1,1 1.7,0a.85,.85 0 1,1 -1.7,0Z"/><path fill-rule="evenodd" d="M13.7,15.8a1.8,1.8 0 1,0 3.6,0a1.8,1.8 0 1,0 -3.6,0ZM14.65,15.8a.85,.85 0 1,1 1.7,0a.85,.85 0 1,1 -1.7,0Z"/></svg>';
 
+        $default_icon = esc_url( YAYMAIL_PLUGIN_URL . 'assets/images/check.png' );
+
+        $inactive_step_fields = [
+            'image_url'         => $default_icon,
+            'image_bg_color'    => '#E2E6EE',
+            'icon_border_color' => '#E2E6EE',
+            'icon_border_style' => 'solid',
+            'icon_border_width' => 2,
+        ];
+
+        $active_step_fields = [
+            'image_url'         => $default_icon,
+            'image_bg_color'    => '#873eff',
+            'icon_border_color' => '#873eff',
+            'icon_border_style' => 'solid',
+            'icon_border_width' => 2,
+        ];
+
         $default_steps = [
-            [
-                'title'                                 => __( 'Ordered', 'yaymail' ),
-                'label_active_color'                    => '#636363',
-                'label_inactive_color'                  => '#71717a',
-                'image_active_url'                      => $default_icon,
-                'image_inactive_url'                    => $default_icon,
-                'image_bg_color'                        => '#873eff',
-                'filled_bar_icon_border_radius'         => '50',
-                'filled_bar_icon_border_color_active'   => '#636363',
-                'filled_bar_icon_border_color_inactive' => '#e9d5ff',
-            ],
-            [
-                'title'                                 => __( 'Processing', 'yaymail' ),
-                'label_active_color'                    => '#636363',
-                'label_inactive_color'                  => '#71717a',
-                'image_active_url'                      => $default_icon,
-                'image_inactive_url'                    => $default_icon,
-                'image_bg_color'                        => '#873eff',
-                'filled_bar_icon_border_radius'         => '50',
-                'filled_bar_icon_border_color_active'   => '#c4b5fd',
-                'filled_bar_icon_border_color_inactive' => '#e9d5ff',
-            ],
-            [
-                'title'                                 => __( 'Completed', 'yaymail' ),
-                'label_active_color'                    => '#636363',
-                'label_inactive_color'                  => '#71717a',
-                'image_active_url'                      => $default_icon,
-                'image_inactive_url'                    => $default_icon,
-                'image_bg_color'                        => '#873eff',
-                'filled_bar_icon_border_radius'         => '50',
-                'filled_bar_icon_border_color_active'   => '#c4b5fd',
-                'filled_bar_icon_border_color_inactive' => '#e9d5ff',
-            ],
+            array_merge(
+                [
+                    'title' => __( 'Ordered', 'yaymail' ),
+                ],
+                $active_step_fields
+            ),
+            array_merge(
+                [
+                    'title' => __( 'Processing', 'yaymail' ),
+                ],
+                $inactive_step_fields
+            ),
+            array_merge(
+                [
+                    'title' => __( 'Completed', 'yaymail' ),
+                ],
+                $inactive_step_fields
+            ),
         ];
 
         return [
@@ -124,7 +125,7 @@ class OrderProgress extends BaseElement {
                 'current_step_index'            => [
                     'value_path'    => 'current_step_index',
                     'component'     => 'OrderProgressCurrentStep',
-                    'title'         => __( 'Current step', 'yaymail' ),
+                    'title'         => __( 'Active step', 'yaymail' ),
                     'description'   => __( 'Choose the active step.', 'yaymail' ),
                     'default_value' => isset( $attributes['current_step_index'] ) ? $attributes['current_step_index'] : 0,
                     'type'          => 'content',
@@ -155,6 +156,22 @@ class OrderProgress extends BaseElement {
                         'value_path'    => 'connector_inactive_color',
                         'title'         => __( 'Connector color (inactive)', 'yaymail' ),
                         'default_value' => isset( $attributes['connector_inactive_color'] ) ? $attributes['connector_inactive_color'] : '#E2E6EE',
+                    ]
+                ),
+                'label_active_color'            => ElementsHelper::get_color(
+                    $attributes,
+                    [
+                        'value_path'    => 'label_active_color',
+                        'title'         => __( 'Label color (active)', 'yaymail' ),
+                        'default_value' => isset( $attributes['label_active_color'] ) ? $attributes['label_active_color'] : '#111827',
+                    ]
+                ),
+                'label_inactive_color'          => ElementsHelper::get_color(
+                    $attributes,
+                    [
+                        'value_path'    => 'label_inactive_color',
+                        'title'         => __( 'Label color (inactive)', 'yaymail' ),
+                        'default_value' => isset( $attributes['label_inactive_color'] ) ? $attributes['label_inactive_color'] : '#9CA3AF',
                     ]
                 ),
                 'icon_size'                     => ElementsHelper::get_dimension(
@@ -204,7 +221,7 @@ class OrderProgress extends BaseElement {
                 'appearance_group_definition'   => [
                     'component'   => 'GroupDefinition',
                     'title'       => __( 'Appearance', 'yaymail' ),
-                    'description' => __( 'Handle step label colors and icon background color.', 'yaymail' ),
+                    'description' => __( 'Handle per-step icon and background colors.', 'yaymail' ),
                 ],
                 'steps'                         => [
                     'value_path'    => 'steps',

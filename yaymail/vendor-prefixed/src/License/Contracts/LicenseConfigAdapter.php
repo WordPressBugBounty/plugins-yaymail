@@ -8,6 +8,7 @@ use YayMailScoped\YayCommerce\AdminShell\Contracts\PluginMenuAdapter;
  * Extends PluginMenuAdapter — pro plugins implement this single interface.
  *
  * APPEND-ONLY — adding methods requires a MAJOR version bump per CONTRIBUTING.md.
+ * @internal
  */
 interface LicenseConfigAdapter extends PluginMenuAdapter
 {

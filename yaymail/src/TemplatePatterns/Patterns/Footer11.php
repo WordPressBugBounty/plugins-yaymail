@@ -153,7 +153,7 @@ class Footer11 extends BasePattern {
                                     ),
                                     Text::get_object_data(
                                         [
-                                            'rich_text'  => '<p style="margin: 0px; text-align: center;"><span>Call us <u>+1345 678 900</u> or say hi at <u>hi@yaycommerce.com</u></span></p>',
+                                            'rich_text'  => '<p style="margin: 0px; text-align: center;"><span>Call us <u>+1345 678 900</u> or say hi at <u>hello@example.com</u></span></p>',
                                             'padding'    => [
                                                 'top'    => 0,
                                                 'bottom' => 0,

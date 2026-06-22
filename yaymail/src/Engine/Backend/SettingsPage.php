@@ -19,6 +19,8 @@ class SettingsPage {
 
     private $yaymail_hook_surfix = null;
 
+    private $yay_wp_hook_surfix = null;
+
     /**
      * Constructor
      */
@@ -34,8 +36,9 @@ class SettingsPage {
         if ( defined( 'YAYMAIL_PREFIX' ) ) {
             $this->yaymail_hook_surfix = 'yaycommerce_page_' . YAYMAIL_PREFIX . '-settings';
         }
-
-        // Register Menu
+        if ( defined( 'YAYMAIL_WP_VERSION' ) ) {
+            $this->yay_wp_hook_surfix = 'yaycommerce_page_yay-wp-email-customizer-settings';
+        }
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ], 30 );
         add_filter( 'mce_external_plugins', [ $this, 'register_wp_editor_plugins_script' ] );
 
@@ -47,13 +50,6 @@ class SettingsPage {
 
         // Fix conflict plugins styles in Settings page
         add_action( 'admin_enqueue_scripts', [ $this, 'fix_conflict_plugins_styles' ], PHP_INT_MAX );
-    }
-
-    /**
-     * Render the settings page
-     */
-    public function render_yaymail_page() {
-        include_once YAYMAIL_PLUGIN_PATH . 'templates/pages/settings.php';
     }
 
     /**
@@ -73,7 +69,7 @@ class SettingsPage {
     }
 
     public function admin_enqueue_scripts( $hook_suffix ) {
-        if ( in_array( $hook_suffix, [ $this->yaymail_hook_surfix ], true ) ) {
+        if ( in_array( $hook_suffix, [ $this->yaymail_hook_surfix, $this->yay_wp_hook_surfix ], true ) ) {
             do_action( 'yaymail_before_enqueue_settings_page_scripts' );
             // Enqueue script here
             YayMailViteApp::get_instance()->enqueue_entry( 'yaymail-main.tsx', [ 'react', 'react-dom', 'wp-i18n' ] );
@@ -90,7 +86,8 @@ class SettingsPage {
      * Register localize data
      */
     public function localize_js_vars() {
-        if ( yaymail_is_wc_installed() ) {
+        $screen = get_current_screen();
+        if ( $screen->id === $this->yaymail_hook_surfix ) {
             $_wc_emails = wc()->mailer()->emails;
 
             // override template base for wc emails
@@ -198,11 +195,7 @@ class SettingsPage {
                     'supported_plugins'              => SupportedPlugins::get_instance()->get_slug_name_supported_plugins(),
                     'show_multi_select_notice'       => get_option( 'yaymail_show_multi_select_notice', 'yes' ),
                     'viewed_new_elements'            => ! empty( get_option( 'yaymail_viewed_new_elements', [] ) ) ? get_option( 'yaymail_viewed_new_elements' ) : [],
-                    'is_yaymail_loader'              => function_exists( 'YayMail\\init' ),
-                    'addons_platform'                => [
-                        'has_wc_customizer' => $plugin_work['yaymail'],
-                        'has_wp_customizer' => $plugin_work['yay-wp-email-customizer'],
-                    ],
+                    'platform'                       => $screen->id === $this->yay_wp_hook_surfix ? 'email-builder' : 'yaymail',
                     'woocommerce_email_styles'       => $this->get_scoped_woocommerce_email_styles(),
                 ],
                 apply_filters( 'yaymail_additional_localized_variables', [] )
@@ -256,7 +249,7 @@ class SettingsPage {
             return;
         }
         $screen = get_current_screen();
-        if ( $this->yaymail_hook_surfix === $screen->id ) {
+        if ( in_array( $screen->id, [ $this->yaymail_hook_surfix, $this->yay_wp_hook_surfix ], true ) ) {
             wp_dequeue_style( 'real-media-library-lite-rml' );
             wp_dequeue_script( 'real-media-library-lite-rml' );
             wp_dequeue_style( 'real-media-library-rml' );

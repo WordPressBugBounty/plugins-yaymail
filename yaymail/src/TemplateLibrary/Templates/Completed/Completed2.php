@@ -811,7 +811,7 @@ class Completed2 extends BaseTemplate {
                                             ],
                                             'font_family' => '"Outfit", "DM Sans", sans-serif',
                                             'text_color'  => '#333439',
-                                            'rich_text'   => '<p style="text-align: center;margin: 0;font-weight: 300"><span style="font-size: 16px">For questions, contact <u>hi@yaycommerce.com</u>, visit our <u>FAQs</u>, or <u>chat</u> with us during operating hours for account support</span></p>',
+                                            'rich_text'   => '<p style="text-align: center;margin: 0;font-weight: 300"><span style="font-size: 16px">For questions, contact <u>hello@example.com</u>, visit our <u>FAQs</u>, or <u>chat</u> with us during operating hours for account support</span></p>',
                                         ]
                                     ),
                                     SocialIcon::get_object_data(

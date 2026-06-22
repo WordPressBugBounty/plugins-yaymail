@@ -4,7 +4,7 @@ Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: woocommerce email customizer, email templates, email builder, woocommerce emails, drag and drop
 Requires at least: 3.0
 Tested up to: 7.0
-Stable tag: 4.4.1
+Stable tag: 4.4.2
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -19,10 +19,7 @@ YayMail is the #1 Free drag-and-drop email template customizer that lets you des
 
 Plus, expand your design possibilities with premade blocks and extensive plugin compatibility.
 
-**NEW RELEASES**
-
-- [Conditional Logic for your email blocks](https://yaycommerce.com/yaymail-addons/conditional-logic-addon-for-yaymail?utm_source=wp-org&utm_medium=yaymail) 
-- [Email Customizer for Woodmart Wishlist](https://yaycommerce.com/yaymail-addons/yaymail-addon-for-woodmart/?utm_source=wp-org&utm_medium=yaymail)
+[**QUICK ADMIN DEMO**](https://demo.yaycommerce.com/try-yaymail/) | [**YAYMAIL PRO**](https://yaycommerce.com/yaymail-woocommerce-email-customizer/?utm_source=wp-org&utm_medium=yaymail) 💎
 
 👋 **Works with Any WooCommerce Themes**
 
@@ -36,6 +33,11 @@ Plus, expand your design possibilities with premade blocks and extensive plugin 
 - Kubio
 - YITH Wonder
 
+**NEW RELEASES**
+
+- [YayMail Addon for PDF Invoices & Packing Slips by WP Overnight](https://yaycommerce.com/downloads/yaymail-addon-for-pdf-invoices-packing-slips-by-wp-overnight/?utm_source=wp-org&utm_medium=yaymail) 
+- [YayMail Addon for YITH Donations](https://yaycommerce.com/downloads/yaymail-addon-for-yith-donations/?utm_source=wp-org&utm_medium=yaymail)
+
 Here's how YayMail makes email customization easy:
 
 - 30+ elements are built-in
@@ -47,8 +49,6 @@ Here's how YayMail makes email customization easy:
 - Import/export templates quickly
 - One-click to send a test email
 - Premade patterns and blocks
-
-[**QUICK ADMIN DEMO**](https://demo.yaycommerce.com/try-yaymail/) | [**YAYMAIL PRO**](https://yaycommerce.com/yaymail-woocommerce-email-customizer/?utm_source=wp-org&utm_medium=yaymail) 💎
  
 [youtube https://youtu.be/sfVwCGV5RBQ]
 
@@ -234,6 +234,18 @@ We offer single-site licenses and also unlimited site licenses to better support
 9. Break free from default WooCommerce styles, go bold with dark theme email templates
 
 == Changelog ==
+
+= Jun 22, 2026 - Version 4.4.2 =
+- Added: Border settings for Heading and Column elements
+- Added: Background image settings for the Container element
+- Added: Email pre-header settings
+- Added: Allow users to change the email subject in YayMail
+- Added: Save template to library (Pro)
+- Updated: Improved UX for the Order Progress element
+- Updated: Admin UI with WP 7
+- Updated: Clearer visibility in the rich text editor
+- Fixed: Weird layout when previewing global header/footer
+- Fixed: Minor issues
 
 = May 21, 2026 - Version 4.4.1 =
 - Added: Ability to keep content when applying pre-built template

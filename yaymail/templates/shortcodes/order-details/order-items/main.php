@@ -57,7 +57,7 @@ foreach ( $order_items as $item_id => $item ) :
     if ( is_object( $product ) ) {
         $sku                   = $product->get_sku();
         $purchase_note         = $product->get_purchase_note();
-        $image_url             = current( wp_get_attachment_image_src( $product->get_image_id(), 'full' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'full' ) : [] );
+        $image_url             = current( wp_get_attachment_image_src( $product->get_image_id(), 'full' ) ? wp_get_attachment_image_src( $product->get_image_id(), 'full' ) : [ wc_placeholder_img_src() ] );
         $image                 = $is_placeholder ? "<img style='margin-right:0;' width='{{product_image_width}}px' height='{{product_image_height}}px' src='{$image_url}' alt='product image'/>" : "<img style='margin-right:0; width: {$image_width}px; height: {$image_height}px;' src='{$image_url}' alt='product image'/>";
         $short_description     = $product->get_short_description();
         $product_permalink     = method_exists( $product, 'get_permalink' ) ? $product->get_permalink() : '#';

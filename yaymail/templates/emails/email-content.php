@@ -44,12 +44,14 @@ $style_container_wrap = TemplateHelpers::get_style(
  *
  * @since 4.1.0
  */
-$global_header_footer_elements = GlobalHeaderFooter::get_elements( $template );
+$global_header_footer_elements    = GlobalHeaderFooter::get_elements( $template );
+$is_global_header_footer_template = ! empty( $template ) && 'yaymail_global_header_footer' === $template->get_name();
 
 if ( ! empty( $template ) ) :
     ?>
 
     <?php do_action( 'yaymail_before_email_content', $template, $render_data ); ?>
+    <?php TemplateHelpers::render_email_preheader( $template, $args ); ?>
     <table style="<?php echo esc_attr( $style_container_wrap ); ?>" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%">
         <tr>
             <td style="padding: 0;">
@@ -58,13 +60,13 @@ if ( ! empty( $template ) ) :
                         <td style="padding: 0;">
                             <table style="<?php echo esc_attr( $style_container ); ?>" border="0" cellpadding="0" cellspacing="0" height="100%" width="100%" class="yaymail-customizer-email-template-container <?php echo esc_attr( 'yaymail-template-' . $template->get_name() ); ?>">
                                 <?php
-                                if ( ! empty( $global_header_footer_elements['global_header_elements'] ) ) {
+                                if ( ! $is_global_header_footer_template && ! empty( $global_header_footer_elements['global_header_elements'] ) && ! $template instanceof YayMail\YayMailPatternTemplate ) {
                                     ElementsLoader::render_elements( $global_header_footer_elements['global_header_elements'], $args );
                                 }
                                 ?>
                                 <?php ElementsLoader::render_elements( $template->get_elements(), $args ); ?>
                                 <?php
-                                if ( ! empty( $global_header_footer_elements['global_footer_elements'] ) ) {
+                                if ( ! $is_global_header_footer_template && ! empty( $global_header_footer_elements['global_footer_elements'] ) && ! $template instanceof YayMail\YayMailPatternTemplate ) {
                                     ElementsLoader::render_elements( $global_header_footer_elements['global_footer_elements'], $args );
                                 }
                                 ?>

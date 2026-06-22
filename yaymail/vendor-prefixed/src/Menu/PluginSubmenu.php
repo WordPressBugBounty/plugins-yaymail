@@ -5,12 +5,14 @@ namespace YayMailScoped\YayCommerce\AdminShell\Menu;
 use YayMailScoped\YayCommerce\AdminShell\Contracts\PluginMenuAdapter;
 use YayMailScoped\YayCommerce\AdminShell\License\Contracts\LicenseConfigAdapter;
 use YayMailScoped\YayCommerce\AdminShell\License\License;
+use YayMailScoped\YayCommerce\AdminShell\Support\AdminContext;
 /**
  * Registers a plugin-named submenu under YayCommerce.
  * Works with any PluginMenuAdapter (lite or pro).
  *
  * For pro plugins: automatically redirects to Licenses page when license
  * is not active — no developer action needed.
+ * @internal
  */
 class PluginSubmenu
 {
@@ -21,10 +23,22 @@ class PluginSubmenu
     }
     public function init() : void
     {
-        \add_action('admin_menu', [$this, 'register'], 10);
+        // Bound to both hooks; the context gate in register() decides whether the
+        // plugin actually registers in the current (site vs network) context.
+        AdminContext::bind_menu([$this, 'register'], 10);
     }
     public function register() : void
     {
+        // Context gate: register only where the plugin opted in. Network Admin
+        // requires wants_network_menu(); site dashboard requires wants_site_menu().
+        // Defaults (legacy adapters): site=true, network=false.
+        if (AdminContext::is_network()) {
+            if (!AdminContext::wants_network($this->adapter)) {
+                return;
+            }
+        } elseif (!AdminContext::wants_site($this->adapter)) {
+            return;
+        }
         $menu_slug = $this->adapter->get_menu_slug();
         if (empty($menu_slug)) {
             return;
@@ -37,7 +51,7 @@ class PluginSubmenu
             foreach ($yaycommerce_menu as $key => $value) {
                 if ($value[2] === $menu_slug) {
                     if (\method_exists($this->adapter, 'is_licensed') && $this->adapter->is_licensed() || !\method_exists($this->adapter, 'is_licensed')) {
-                        \remove_submenu_page('yaycommerce', $menu_slug);
+                        remove_submenu_page('yaycommerce', $menu_slug);
                         $is_override = \true;
                     } else {
                         $has_menu = \true;
@@ -63,17 +77,34 @@ class PluginSubmenu
                 $callback = null;
             }
         }
-        $page_id = \add_submenu_page('yaycommerce', $this->adapter->get_page_title(), $this->adapter->get_menu_title(), $this->adapter->get_capability(), $menu_slug, $callback ?? '__return_false', $this->adapter->get_settings_page_position());
+        $page_id = add_submenu_page(
+            'yaycommerce',
+            $this->adapter->get_page_title(),
+            $this->adapter->get_menu_title(),
+            // In Network Admin, elevate to manage_network (super-admin only).
+            AdminContext::capability($this->adapter->get_capability()),
+            $menu_slug,
+            $callback ?? '__return_false',
+            // Position intentionally null here. WP treats add_submenu_page()'s
+            // $position as a fragile array insertion index, not an ordering rank.
+            // Final ordering is applied later by SubmenuPositioner, which reorders
+            // the assembled $submenu['yaycommerce'] from the shared position map.
+            null
+        );
         if ($is_override) {
             \remove_all_actions('load-' . $page_id);
         }
         if ($needs_redirect) {
-            \add_action('load-' . $page_id, [__CLASS__, 'redirect_to_licenses']);
+            add_action('load-' . $page_id, [__CLASS__, 'redirect_to_licenses']);
         }
     }
     public static function redirect_to_licenses() : void
     {
-        \wp_safe_redirect(\admin_url('admin.php?page=yaycommerce-licenses'));
+        // The load hook fires in the current context — target the matching dashboard
+        // so a network-flagged pro plugin redirects within Network Admin, not the site.
+        $path = 'admin.php?page=yaycommerce-licenses';
+        $url = AdminContext::is_network() ? network_admin_url($path) : \admin_url($path);
+        wp_safe_redirect($url);
         exit;
     }
 }

@@ -140,6 +140,13 @@ class CrossUpSellsProducts extends BaseElement {
                     <p style="font-size: 14px; text-align: center;">&nbsp;</p>
                     <p style="text-align: center;">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>',
                     'type'          => 'content',
+                    'conditions'    => [
+                        [
+                            'comparison' => 'contain',
+                            'value'      => [ 'top_content' ],
+                            'attribute'  => 'showing_items',
+                        ],
+                    ]
                 ],
                 'sale_price_color'            => [
                     'value_path'    => 'sale_price_color',

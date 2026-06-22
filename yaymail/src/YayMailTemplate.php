@@ -43,6 +43,7 @@ class YayMailTemplate {
         'is_v4_supported'          => '_yaymail_is_v4_supported',
         'global_header_settings'   => '_yaymail_global_header_settings',
         'global_footer_settings'   => '_yaymail_global_footer_settings',
+        'preheader'                => '_yaymail_preheader',
     ];
 
     public const DEFAULT_DATA = [
@@ -57,6 +58,8 @@ class YayMailTemplate {
         'language'                 => '',
         'modified_by'              => '',
         'is_v4_supported'          => false,
+        'attachments'              => [],
+        'preheader'                => '',
         'global_header_settings'   => [
             'content_override' => false,
             'heading_content'  => '<h1 style="font-size: 30px; font-weight: 300; line-height: normal; margin: 0px; color: inherit;">Hello YayMail</h1>',
@@ -80,6 +83,8 @@ class YayMailTemplate {
         'text_link_color'        => self::DEFAULT_DATA['text_link_color'],
         'language'               => self::DEFAULT_DATA['language'],
         'title_color'            => self::DEFAULT_DATA['title_color'],
+        'attachments'            => self::DEFAULT_DATA['attachments'],
+        'preheader'              => self::DEFAULT_DATA['preheader'],
         'global_header_settings' => self::DEFAULT_DATA['global_header_settings'],
         'global_footer_settings' => self::DEFAULT_DATA['global_footer_settings'],
     ];
@@ -196,6 +201,14 @@ class YayMailTemplate {
         return $this->get_prop( 'title_color', $context );
     }
 
+    public function get_attachments( $context = 'view' ) {
+        return $this->get_prop( 'attachments', $context );
+    }
+
+    public function get_preheader( $context = 'view' ) {
+        return $this->get_prop( 'preheader', $context );
+    }
+
     /**
      * Get global header
      *
@@ -283,6 +296,12 @@ class YayMailTemplate {
     public function set_language( $value ) {
         if ( ! is_null( $value ) && is_string( $value ) ) {
             $this->set_prop( 'language', $value );
+        }
+    }
+
+    public function set_preheader( $value ) {
+        if ( is_string( $value ) ) {
+            $this->set_prop( 'preheader', $value );
         }
     }
 

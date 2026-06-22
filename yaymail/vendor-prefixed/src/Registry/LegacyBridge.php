@@ -9,6 +9,7 @@ namespace YayMailScoped\YayCommerce\AdminShell\Registry;
  *
  * This enables the unified Licenses page to display un-migrated plugins
  * alongside migrated ones during incremental rollout.
+ * @internal
  */
 class LegacyBridge
 {
@@ -30,7 +31,7 @@ class LegacyBridge
      */
     public function init() : void
     {
-        \add_action('plugins_loaded', [$this, 'load_legacy_plugins'], 9999);
+        add_action('plugins_loaded', [$this, 'load_legacy_plugins'], 9999);
     }
     /**
      * Read legacy filter and convert entries to PluginLicenseInfo stubs.
@@ -61,11 +62,11 @@ class LegacyBridge
     private function build_legacy_info(array $plugin) : PluginLicenseInfo
     {
         $slug = $plugin['slug'] ?? '';
-        $raw_info = \get_option($slug . '_license_info', []);
+        $raw_info = get_option($slug . '_license_info', []);
         if (\is_string($raw_info)) {
             $raw_info = \json_decode($raw_info, \true) ?: [];
         }
-        $license_key = (string) \get_option($slug . '_license_key', '');
+        $license_key = (string) get_option($slug . '_license_key', '');
         $expires_raw = $raw_info['expires'] ?? null;
         $status = $this->derive_status($license_key, $raw_info);
         $info = new PluginLicenseInfo();

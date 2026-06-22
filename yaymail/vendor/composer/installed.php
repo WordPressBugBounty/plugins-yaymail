@@ -3,7 +3,7 @@
         'name' => 'yaycommerce/yaymail',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '6375e04d2b2611e07ec9b0150807942d4a2a64d6',
+        'reference' => 'dcdbaa11e75f588d4069e99fcea6f768e23d4678',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'yaycommerce/admin-shell' => array(
-            'pretty_version' => 'v2.6.2',
-            'version' => '2.6.2.0',
-            'reference' => '804c35ad454232d5348672bd251e3e81b3297edc',
+            'pretty_version' => 'v2.7.3',
+            'version' => '2.7.3.0',
+            'reference' => 'fae519b59997587d4d53a0b1fab5d9d5ed523a02',
             'type' => 'library',
             'install_path' => __DIR__ . '/../yaycommerce/admin-shell',
             'aliases' => array(),
@@ -22,7 +22,7 @@
         'yaycommerce/yaymail' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '6375e04d2b2611e07ec9b0150807942d4a2a64d6',
+            'reference' => 'dcdbaa11e75f588d4069e99fcea6f768e23d4678',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

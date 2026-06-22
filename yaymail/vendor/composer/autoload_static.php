@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit96acdeffe5040d8022531bf12a887c4a
+class ComposerStaticInit812314074c1405be8e970bd6abde62ce
 {
     public static $prefixLengthsPsr4 = array (
         'Y' => 
@@ -41,6 +41,7 @@ class ComposerStaticInit96acdeffe5040d8022531bf12a887c4a
         'YayCommerce\\AdminShell\\Menu\\MenuSuppressor' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Menu/MenuSuppressor.php',
         'YayCommerce\\AdminShell\\Menu\\PagesRouter' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Menu/PagesRouter.php',
         'YayCommerce\\AdminShell\\Menu\\PluginSubmenu' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Menu/PluginSubmenu.php',
+        'YayCommerce\\AdminShell\\Menu\\SubmenuPositioner' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Menu/SubmenuPositioner.php',
         'YayCommerce\\AdminShell\\Menu\\TopLevelMenu' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Menu/TopLevelMenu.php',
         'YayCommerce\\AdminShell\\Pages\\HelpPage' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Pages/HelpPage.php',
         'YayCommerce\\AdminShell\\Pages\\LicensesPage' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Pages/LicensesPage.php',
@@ -50,6 +51,7 @@ class ComposerStaticInit96acdeffe5040d8022531bf12a887c4a
         'YayCommerce\\AdminShell\\Registry\\LegacyBridge' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Registry/LegacyBridge.php',
         'YayCommerce\\AdminShell\\Registry\\LicenseRegistry' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Registry/LicenseRegistry.php',
         'YayCommerce\\AdminShell\\Registry\\PluginLicenseInfo' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Registry/PluginLicenseInfo.php',
+        'YayCommerce\\AdminShell\\Support\\AdminContext' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Support/AdminContext.php',
         'YayCommerce\\AdminShell\\Support\\Slug' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Support/Slug.php',
         'YayCommerce\\AdminShell\\VersionedLoader' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/VersionedLoader.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\AdminShell' => __DIR__ . '/../..' . '/vendor-prefixed/src/AdminShell.php',
@@ -66,6 +68,7 @@ class ComposerStaticInit96acdeffe5040d8022531bf12a887c4a
         'YayMailScoped\\YayCommerce\\AdminShell\\Menu\\MenuSuppressor' => __DIR__ . '/../..' . '/vendor-prefixed/src/Menu/MenuSuppressor.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\Menu\\PagesRouter' => __DIR__ . '/../..' . '/vendor-prefixed/src/Menu/PagesRouter.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\Menu\\PluginSubmenu' => __DIR__ . '/../..' . '/vendor-prefixed/src/Menu/PluginSubmenu.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Menu\\SubmenuPositioner' => __DIR__ . '/../..' . '/vendor-prefixed/src/Menu/SubmenuPositioner.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\Menu\\TopLevelMenu' => __DIR__ . '/../..' . '/vendor-prefixed/src/Menu/TopLevelMenu.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\Pages\\HelpPage' => __DIR__ . '/../..' . '/vendor-prefixed/src/Pages/HelpPage.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\Pages\\LicensesPage' => __DIR__ . '/../..' . '/vendor-prefixed/src/Pages/LicensesPage.php',
@@ -75,6 +78,7 @@ class ComposerStaticInit96acdeffe5040d8022531bf12a887c4a
         'YayMailScoped\\YayCommerce\\AdminShell\\Registry\\LegacyBridge' => __DIR__ . '/../..' . '/vendor-prefixed/src/Registry/LegacyBridge.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\Registry\\LicenseRegistry' => __DIR__ . '/../..' . '/vendor-prefixed/src/Registry/LicenseRegistry.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\Registry\\PluginLicenseInfo' => __DIR__ . '/../..' . '/vendor-prefixed/src/Registry/PluginLicenseInfo.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Support\\AdminContext' => __DIR__ . '/../..' . '/vendor-prefixed/src/Support/AdminContext.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\Support\\Slug' => __DIR__ . '/../..' . '/vendor-prefixed/src/Support/Slug.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\VersionedLoader' => __DIR__ . '/../..' . '/vendor-prefixed/src/VersionedLoader.php',
         'YayMail\\Abstracts\\BaseController' => __DIR__ . '/../..' . '/src/Abstracts/BaseController.php',
@@ -171,6 +175,7 @@ class ComposerStaticInit96acdeffe5040d8022531bf12a887c4a
         'YayMail\\Migrations\\Versions\\Ver_4_0_7' => __DIR__ . '/../..' . '/src/Migrations/Versions/Ver_4_0_7.php',
         'YayMail\\Migrations\\Versions\\Ver_4_1_0' => __DIR__ . '/../..' . '/src/Migrations/Versions/Ver_4_1_0.php',
         'YayMail\\Models\\AddonModel' => __DIR__ . '/../..' . '/src/Models/AddonModel.php',
+        'YayMail\\Models\\LibraryTemplateModel' => __DIR__ . '/../..' . '/src/Models/LibraryTemplateModel.php',
         'YayMail\\Models\\MigrationModel' => __DIR__ . '/../..' . '/src/Models/MigrationModel.php',
         'YayMail\\Models\\ProductModel' => __DIR__ . '/../..' . '/src/Models/ProductModel.php',
         'YayMail\\Models\\RevisionModel' => __DIR__ . '/../..' . '/src/Models/RevisionModel.php',
@@ -198,6 +203,7 @@ class ComposerStaticInit96acdeffe5040d8022531bf12a887c4a
         'YayMail\\Shortcodes\\ShortcodesExecutor' => __DIR__ . '/../..' . '/src/Shortcodes/ShortcodesExecutor.php',
         'YayMail\\Shortcodes\\ShortcodesLoader' => __DIR__ . '/../..' . '/src/Shortcodes/ShortcodesLoader.php',
         'YayMail\\SupportedPlugins' => __DIR__ . '/../..' . '/src/SupportedPlugins.php',
+        'YayMail\\TemplateLibrary\\LibraryTemplateSchema' => __DIR__ . '/../..' . '/src/TemplateLibrary/LibraryTemplateSchema.php',
         'YayMail\\TemplateLibrary\\TemplateLibraryLoader' => __DIR__ . '/../..' . '/src/TemplateLibrary/TemplateLibraryLoader.php',
         'YayMail\\TemplateLibrary\\TemplateLibraryService' => __DIR__ . '/../..' . '/src/TemplateLibrary/TemplateLibraryService.php',
         'YayMail\\TemplateLibrary\\Templates\\CancelledOrder\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/CancelledOrder/Classic.php',
@@ -306,9 +312,9 @@ class ComposerStaticInit96acdeffe5040d8022531bf12a887c4a
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit96acdeffe5040d8022531bf12a887c4a::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit96acdeffe5040d8022531bf12a887c4a::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit96acdeffe5040d8022531bf12a887c4a::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit812314074c1405be8e970bd6abde62ce::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit812314074c1405be8e970bd6abde62ce::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit812314074c1405be8e970bd6abde62ce::$classMap;
 
         }, null, ClassLoader::class);
     }

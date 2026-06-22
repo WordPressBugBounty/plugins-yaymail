@@ -7,6 +7,7 @@ namespace YayMailScoped\YayCommerce\AdminShell\Registry;
  *
  * Plugins call register() during 'yaycommerce_admin_shell_booted' action.
  * The Licenses page calls all() to render the unified list.
+ * @internal
  */
 class LicenseRegistry
 {

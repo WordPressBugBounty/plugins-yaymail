@@ -56,6 +56,20 @@ class Container extends BaseElement {
                     'default_value' => isset( $attributes['background_color'] ) ? $attributes['background_color'] : '#fff',
                     'type'          => 'style',
                 ],
+                'background_image' => [
+                    'value_path'    => 'background_image',
+                    'component'     => 'BackgroundImage',
+                    'title'         => __( 'Background image', 'yaymail' ),
+                    'default_value' => isset( $attributes['background_image'] ) ? $attributes['background_image'] : [
+                        'url'        => '',
+                        'position'   => 'default',
+                        'x_position' => 0,
+                        'y_position' => 0,
+                        'repeat'     => 'default',
+                        'size'       => 'default',
+                    ],
+                    'type'          => 'style',
+                ],
                 'direction'        => [
                     'value_path'    => 'direction',
                     'component'     => 'Selector',

@@ -13,6 +13,7 @@ namespace YayMailScoped\YayCommerce\AdminShell\Contracts;
  * Example: YayMail Lite's adapter implements both PluginMenuAdapter
  * and AddonHostAdapter, returning 'yaymail_available_licensing_plugins'.
  * All existing addons continue using that filter unchanged.
+ * @internal
  */
 interface AddonHostAdapter
 {

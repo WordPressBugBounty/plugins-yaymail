@@ -100,6 +100,13 @@ class ShippingAddress extends BaseElement {
                     'title'         => __( 'Table border color', 'yaymail' ),
                     'default_value' => isset( $attributes['border_color'] ) ? $attributes['border_color'] : YAYMAIL_COLOR_BORDER_DEFAULT,
                     'type'          => 'style',
+                    'conditions' => [
+                        'condition_1' => [
+                            'attribute'  => 'layout_type',
+                            'comparison' => '!=',
+                            'value'      => 'modern',
+                        ],
+                    ]
                 ],
                 'font_family'                => [
                     'value_path'    => 'font_family',
@@ -113,6 +120,8 @@ class ShippingAddress extends BaseElement {
                     'component'     => 'RichTextEditor',
                     'title'         => __( 'Shipping title', 'yaymail' ),
                     'default_value' => isset( $attributes['title'] ) ? $attributes['title'] : ( '<span style="font-size: 20px;font-weight:600;">' . __( 'Shipping Address', 'woocommerce' ) . '</span>' ),
+                    'text_color_path' => 'title_color',
+                    'background_color_path' => 'background_color',
                     'type'          => 'content',
                 ],
                 'shipping_content_font_size' => ElementsHelper::get_dimension(

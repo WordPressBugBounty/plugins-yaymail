@@ -202,6 +202,7 @@ class TemplateController extends BaseController {
         $content_background_color = sanitize_text_field( $data['content_background_color'] );
         $content_text_color       = sanitize_text_field( $data['content_text_color'] );
         $title_color              = sanitize_text_field( $data['title_color'] );
+        $preheader                = sanitize_text_field( $data['preheader'] );
         $global_header_settings   = $data['global_header_settings'] ?? YayMailTemplate::DEFAULT_DATA['global_header_settings'];
         $global_footer_settings   = $data['global_footer_settings'] ?? YayMailTemplate::DEFAULT_DATA['global_footer_settings'];
         $update_data              = [
@@ -213,9 +214,15 @@ class TemplateController extends BaseController {
             'title_color'              => $title_color,
             'global_header_settings'   => $global_header_settings,
             'global_footer_settings'   => $global_footer_settings,
+            'preheader'                => $preheader,
         ];
-        $updated_data             = $this->model::update( $id, $update_data, true );
-        return $updated_data;
+
+        if ( isset( $data['email_subject'] ) ) {
+            $template_name = get_post_meta( (int) $id, YayMailTemplate::META_KEYS['name'], true );
+            $this->model::save_email_subject( $template_name, $data['email_subject'] );
+        }
+
+        return $this->model::update( $id, $update_data, true );
     }
 
     public function exec_delete_template( \WP_REST_Request $request ) {

@@ -2,6 +2,7 @@
 
 namespace YayMailScoped\YayCommerce\AdminShell\Menu;
 
+use YayMailScoped\YayCommerce\AdminShell\Support\AdminContext;
 /**
  * Registers the shared YayCommerce top-level admin menu.
  *
@@ -11,6 +12,7 @@ namespace YayMailScoped\YayCommerce\AdminShell\Menu;
  * LicenseRegistry now handles plugin discovery.
  *
  * Position 56 (after WooCommerce), capability manage_options, slug yaycommerce.
+ * @internal
  */
 class TopLevelMenu
 {
@@ -18,7 +20,7 @@ class TopLevelMenu
     public static string $capability = 'manage_options';
     public function init() : void
     {
-        \add_action('admin_menu', [$this, 'register_menu'], 9);
+        AdminContext::bind_menu([$this, 'register_menu'], 9);
     }
     /**
      * Register top-level menu. Guard ensures only the first plugin wins.
@@ -32,7 +34,7 @@ class TopLevelMenu
         if (isset($admin_page_hooks['yaycommerce'])) {
             return;
         }
-        \add_menu_page(
+        add_menu_page(
             'yaycommerce',
             'YayCommerce',
             self::$capability,
@@ -43,7 +45,9 @@ class TopLevelMenu
             self::$position
         );
         // Remove the auto-created "YayCommerce" submenu AFTER all submenus are registered.
-        \add_action('admin_menu', [__CLASS__, 'remove_parent_submenu'], 999);
+        // This runs inside the firing menu hook, so the context is known — bind only
+        // to the current hook (admin_menu or network_admin_menu) rather than both.
+        add_action(AdminContext::hook(), [__CLASS__, 'remove_parent_submenu'], 999);
     }
     /**
      * WP auto-creates a submenu matching the parent slug. Remove it late
@@ -51,7 +55,7 @@ class TopLevelMenu
      */
     public static function remove_parent_submenu() : void
     {
-        \remove_submenu_page('yaycommerce', 'yaycommerce');
+        remove_submenu_page('yaycommerce', 'yaycommerce');
     }
     /**
      * Inline base64 SVG logo — copied as-is from YayMail Pro RegisterMenu.php.

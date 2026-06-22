@@ -247,6 +247,8 @@ class ElementsHelper {
                 'value_path'    => 'rich_text',
                 'title'         => __( 'Content', 'yaymail' ),
                 'default_value' => '',
+                'text_color_path' => 'text_color',
+                'background_color_path' => 'background_color',
             ];
 
             $result              = self::get_component_data( $attributes, $config, $default_config );

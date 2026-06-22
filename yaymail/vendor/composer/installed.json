@@ -2,17 +2,17 @@
     "packages": [
         {
             "name": "yaycommerce/admin-shell",
-            "version": "v2.6.2",
-            "version_normalized": "2.6.2.0",
+            "version": "v2.7.3",
+            "version_normalized": "2.7.3.0",
             "source": {
                 "type": "git",
                 "url": "git@github.com:YayCommerce/yaycommerce-plugin-admin-shell.git",
-                "reference": "804c35ad454232d5348672bd251e3e81b3297edc"
+                "reference": "fae519b59997587d4d53a0b1fab5d9d5ed523a02"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/YayCommerce/yaycommerce-plugin-admin-shell/zipball/804c35ad454232d5348672bd251e3e81b3297edc",
-                "reference": "804c35ad454232d5348672bd251e3e81b3297edc",
+                "url": "https://api.github.com/repos/YayCommerce/yaycommerce-plugin-admin-shell/zipball/fae519b59997587d4d53a0b1fab5d9d5ed523a02",
+                "reference": "fae519b59997587d4d53a0b1fab5d9d5ed523a02",
                 "shasum": ""
             },
             "require": {
@@ -21,7 +21,7 @@
             "require-dev": {
                 "phpunit/phpunit": "^9.0"
             },
-            "time": "2026-05-11T08:12:50+00:00",
+            "time": "2026-06-11T06:52:09+00:00",
             "bin": [
                 "bin/yaycommerce-init",
                 "bin/yaycommerce-update",
@@ -44,7 +44,7 @@
             ],
             "description": "Shared admin shell for YayCommerce plugins: top-level menu, Licenses page, Other Plugins, Help, optional license subsystem",
             "support": {
-                "source": "https://github.com/YayCommerce/yaycommerce-plugin-admin-shell/tree/v2.6.2",
+                "source": "https://github.com/YayCommerce/yaycommerce-plugin-admin-shell/tree/v2.7.3",
                 "issues": "https://github.com/YayCommerce/yaycommerce-plugin-admin-shell/issues"
             },
             "install-path": "../yaycommerce/admin-shell"

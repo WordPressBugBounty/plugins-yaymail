@@ -22,7 +22,7 @@ $element = $args['element'];
 $data    = $element['data'];
 
 $yaymail_op_max_steps = 5;
-$display_steps        = array_slice( $steps, 0, $yaymail_op_max_steps );
+$display_steps        = array_values( array_slice( $steps, 0, $yaymail_op_max_steps ) );
 $step_count           = count( $display_steps );
 
 if ( $step_count < 1 ) {
@@ -31,9 +31,10 @@ if ( $step_count < 1 ) {
 
 $active_index = min( max( 0, (int) $current_step_index ), max( 0, $step_count - 1 ) );
 
-$bubble_pad       = 6;
-$bubble_size      = $icon_size + ( $bubble_pad * 2 );
-$bubble_cell_size = max( 44, $bubble_size );
+$pill_padding_px  = 10;
+$bubble_cell_size = 44;
+$small_dot_px     = 14;
+$connector_gap_px = 8;
 
 // Connector bar: at least 1px (customizer clamps connector_height to 1–10).
 $bar_height = max( 1, (int) $connector_height );
@@ -52,32 +53,34 @@ $column_width_percents = $yaymail_step_marker_presets[ $preset_key ]['widths'];
                         <tr>
                             <?php foreach ( $display_steps as $index => $step ) : ?> 
                                 <?php
-                                $is_step_active = $index <= $active_index;
+                                $step_index     = (int) $index;
+                                $is_step_active = $step_index <= $active_index;
+                                $step_array     = is_array( $step ) ? $step : [];
 
-                                $image_active_url   = is_array( $step ) ? (string) ( $step['image_active_url'] ?? '' ) : '';
-                                $image_inactive_url = is_array( $step ) ? (string) ( $step['image_inactive_url'] ?? '' ) : '';
-
-                                $image_url = OrderProgressVariantHelpers::resolve_step_image_url( $is_step_active, $image_active_url, $image_inactive_url );
+                                $image_url      = OrderProgressVariantHelpers::get_step_image_url( $step_array );
+                                $show_icon_pill = '' !== $image_url;
 
                                 $raw_image_bg_color = is_array( $step ) ? (string) ( $step['image_bg_color'] ?? '' ) : '';
-                                $image_bg_color     = OrderProgressVariantHelpers::resolve_filled_bar_icon_background(
-                                    $is_step_active,
-                                    $raw_image_bg_color,
-                                    $connector_active_color
-                                );
+                                $trimmed_bg         = trim( $raw_image_bg_color );
+                                if ( '' !== $trimmed_bg ) {
+                                    $image_bg_color = $trimmed_bg;
+                                } elseif ( $is_step_active ) {
+                                    $image_bg_color = $connector_active_color;
+                                } else {
+                                    $image_bg_color = $connector_inactive_color;
+                                }
 
                                 $raw_global_border_radius = is_array( $data ) ? (string) ( $data['filled_bar_icon_border_radius'] ?? '' ) : '';
-                                $raw_border_active        = is_array( $step ) ? (string) ( $step['filled_bar_icon_border_color_active'] ?? '' ) : '';
-                                $raw_border_inactive      = is_array( $step ) ? (string) ( $step['filled_bar_icon_border_color_inactive'] ?? '' ) : '';
                                 $icon_border_radius       = trim( (string) $raw_global_border_radius ) === ''
                                     ? 50
                                     : max( 0, (int) $raw_global_border_radius );
 
-                                $icon_border_color = OrderProgressVariantHelpers::resolve_filled_bar_icon_border_color(
-                                    $is_step_active,
-                                    $raw_border_active,
-                                    $raw_border_inactive
-                                );
+                                $step_icon_border  = OrderProgressVariantHelpers::get_step_icon_border( $step_array );
+                                $icon_border_color = $step_icon_border['color'];
+                                $icon_border_style = $step_icon_border['style'];
+                                $icon_border_width = $step_icon_border['width_px'];
+
+                                $plain_dot_fill = $is_step_active ? $connector_active_color : $connector_inactive_color;
 
                                 $pct = isset( $column_width_percents[ $index ] ) ? (int) $column_width_percents[ $index ] : (int) floor( 100 / max( 1, $step_count ) );
 
@@ -98,9 +101,38 @@ $column_width_percents = $yaymail_step_marker_presets[ $preset_key ]['widths'];
                                         'border-radius'    => $icon_border_radius . 'px',
                                         'padding'          => '10px',
                                         'vertical-align'   => 'middle',
-                                        'border-width'     => '2px',
-                                        'border-style'     => 'solid',
+                                        'border-width'     => $icon_border_width . 'px',
+                                        'border-style'     => $icon_border_style,
                                         'border-color'     => $icon_border_color,
+                                    ]
+                                );
+
+                                $icon_img_style = TemplateHelpers::get_style(
+                                    [
+                                        'display'         => 'block',
+                                        'margin'          => '0 auto',
+                                        'border'          => '0',
+                                        'outline'         => 'none',
+                                        'text-decoration' => 'none',
+                                        'width'           => $icon_size . 'px',
+                                        'height'          => $icon_size . 'px',
+                                        'opacity'         => $is_step_active ? '1' : '0.55',
+                                    ]
+                                );
+
+                                $pill_outer_px = (int) ( $icon_size + ( $pill_padding_px * 2 ) + ( max( 0, (int) $icon_border_width ) * 2 ) );
+                                $marker_cell_w = $show_icon_pill ? max( $bubble_cell_size, $pill_outer_px ) : $small_dot_px;
+
+                                $small_dot_style = TemplateHelpers::get_style(
+                                    [
+                                        'width'            => $small_dot_px . 'px',
+                                        'height'           => $small_dot_px . 'px',
+                                        'border-radius'    => ( (int) ( $small_dot_px / 2 ) ) . 'px',
+                                        'background-color' => $plain_dot_fill,
+                                        'margin'           => '0 auto',
+                                        'font-size'        => '0',
+                                        'line-height'      => '0',
+                                        'outline'          => '3px solid #ffffff',
                                     ]
                                 );
 
@@ -142,6 +174,7 @@ $column_width_percents = $yaymail_step_marker_presets[ $preset_key ]['widths'];
                                                             [
                                                                 'vertical-align' => 'middle',
                                                                 'padding'        => '0',
+                                                                'padding-right'  => $connector_gap_px . 'px',
                                                             ]
                                                         )
                                                     );
@@ -165,25 +198,13 @@ $column_width_percents = $yaymail_step_marker_presets[ $preset_key ]['widths'];
                                                     </td>
                                                 <?php endif; ?>
 
-                                                <td width="50" align="center" valign="middle" style="<?php echo esc_attr( $icon_middle_td_style ); ?>">
-                                                    <?php if ( ! empty( $image_url ) ) : ?>
+                                                <td width="<?php echo esc_attr( (string) $marker_cell_w ); ?>" align="center" valign="middle" style="<?php echo esc_attr( $icon_middle_td_style ); ?>">
+                                                    <?php if ( $show_icon_pill ) : ?>
                                                         <span style="<?php echo esc_attr( $icon_wrap_style ); ?>">
-                                                            <img src="<?php echo esc_url( $image_url ); ?>" alt="" width="<?php echo esc_attr( (string) $icon_size ); ?>" height="<?php echo esc_attr( (string) $icon_size ); ?>" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;width:<?php echo esc_attr( (string) $icon_size ); ?>px;height:<?php echo esc_attr( (string) $icon_size ); ?>px;"/>
+                                                            <img src="<?php echo esc_url( $image_url ); ?>" alt="" width="<?php echo esc_attr( (string) $icon_size ); ?>" height="<?php echo esc_attr( (string) $icon_size ); ?>" style="<?php echo esc_attr( $icon_img_style ); ?>"/>
                                                         </span>
                                                     <?php else : ?>
-                                                        <span style="
-                                                        <?php
-                                                        echo esc_attr(
-                                                            TemplateHelpers::get_style(
-                                                                [
-                                                                    'display'    => 'inline-block',
-                                                                    'width'      => $bubble_cell_size . 'px',
-                                                                    'min-height' => $bubble_cell_size . 'px',
-                                                                ]
-                                                            )
-                                                        );
-                                                        ?>
-                                                                        ">&nbsp;</span>
+                                                        <div style="<?php echo esc_attr( $small_dot_style ); ?>">&nbsp;</div>
                                                     <?php endif; ?>
                                                 </td>
 
@@ -195,6 +216,7 @@ $column_width_percents = $yaymail_step_marker_presets[ $preset_key ]['widths'];
                                                             [
                                                                 'vertical-align' => 'middle',
                                                                 'padding'        => '0',
+                                                                'padding-left'   => $connector_gap_px . 'px',
                                                             ]
                                                         )
                                                     );
@@ -239,20 +261,14 @@ $column_width_percents = $yaymail_step_marker_presets[ $preset_key ]['widths'];
 
                                 $title = is_array( $step ) ? (string) ( $step['title'] ?? $step['label'] ?? '' ) : '';
 
-                                $step_label_color          = is_array( $step ) ? (string) ( $step['label_color'] ?? '' ) : '';
-                                $step_label_active_color   = is_array( $step ) ? (string) ( $step['label_active_color'] ?? '' ) : '';
-                                $step_label_inactive_color = is_array( $step ) ? (string) ( $step['label_inactive_color'] ?? '' ) : '';
-
                                 // Mirror filled-bar.tsx: first column left, last right, else center.
                                 $label_td_align = ( 0 === (int) $index )
                                     ? 'left'
                                     : ( (int) $index === $step_count - 1 ? 'right' : 'center' );
 
-                                $label_color = OrderProgressVariantHelpers::resolve_filled_bar_label_color(
-                                    $step_label_color,
+                                $label_color = OrderProgressVariantHelpers::get_step_label_color(
+                                    is_array( $step ) ? $step : [],
                                     $is_step_active,
-                                    $step_label_active_color,
-                                    $step_label_inactive_color,
                                     $legacy_label_active_color,
                                     $legacy_label_inactive_color
                                 );

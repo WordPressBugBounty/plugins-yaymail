@@ -7,6 +7,7 @@ use YayMailScoped\YayCommerce\AdminShell\License\Contracts\LicenseConfigAdapter;
  * Minimal LicenseConfigAdapter built from addon filter data.
  * Used by AddonBridge to satisfy License constructor and card templates
  * without requiring a full plugin adapter implementation.
+ * @internal
  */
 class AddonLicenseAdapter implements LicenseConfigAdapter
 {

@@ -6,6 +6,7 @@ use YayMailScoped\YayCommerce\AdminShell\License\Contracts\LicenseConfigAdapter;
 use YayMailScoped\YayCommerce\AdminShell\Registry\PluginLicenseInfo;
 /**
  * Builds a PluginLicenseInfo data object from a LicenseHandler's current state.
+ * @internal
  */
 class PluginInfoFactory
 {

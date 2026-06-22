@@ -72,12 +72,111 @@ class OrderProgressVariantHelpers {
     }
 
     /**
-     * Choose displayed step image URL (same rules as step-marker / filled-bar TS).
+     * Read step image URL from step array (new key with legacy fallback).
      *
-     * @param bool   $is_step_active Whether step is active or completed.
-     * @param string $active_url Active image URL.
-     * @param string $inactive_url Inactive image URL.
+     * @param array<string, mixed> $step Step data.
      * @return string
+     */
+    public static function get_step_image_url( $step ) {
+        if ( ! is_array( $step ) ) {
+            return '';
+        }
+        $image_url = isset( $step['image_url'] ) ? trim( (string) $step['image_url'] ) : '';
+        if ( '' !== $image_url ) {
+            return $image_url;
+        }
+        $active = isset( $step['image_active_url'] ) ? trim( (string) $step['image_active_url'] ) : '';
+        if ( '' !== $active ) {
+            return $active;
+        }
+        return isset( $step['image_inactive_url'] ) ? trim( (string) $step['image_inactive_url'] ) : '';
+    }
+
+    /**
+     * Element-level active/inactive label color (per-step legacy overrides on read).
+     *
+     * @param array<string, mixed> $step Step data.
+     * @param bool                 $is_step_active Whether the step is active or completed.
+     * @param string               $label_active_color Element label color (active).
+     * @param string               $label_inactive_color Element label color (inactive).
+     * @return string
+     */
+    public static function get_step_label_color(
+        $step,
+        $is_step_active,
+        $label_active_color = '#111827',
+        $label_inactive_color = '#9CA3AF'
+    ) {
+        if ( is_array( $step ) ) {
+            $label_color = isset( $step['label_color'] ) ? trim( (string) $step['label_color'] ) : '';
+            if ( '' !== $label_color ) {
+                return $label_color;
+            }
+            if ( $is_step_active ) {
+                $legacy_active = isset( $step['label_active_color'] ) ? trim( (string) $step['label_active_color'] ) : '';
+                if ( '' !== $legacy_active ) {
+                    return $legacy_active;
+                }
+            } else {
+                $legacy_inactive = isset( $step['label_inactive_color'] ) ? trim( (string) $step['label_inactive_color'] ) : '';
+                if ( '' !== $legacy_inactive ) {
+                    return $legacy_inactive;
+                }
+            }
+        }
+
+        $active_color   = trim( (string) $label_active_color );
+        $inactive_color = trim( (string) $label_inactive_color );
+
+        if ( $is_step_active ) {
+            return '' !== $active_color ? $active_color : '#111827';
+        }
+
+        return '' !== $inactive_color ? $inactive_color : '#9CA3AF';
+    }
+
+    /**
+     * Filled-bar icon border from step (new keys with legacy fallback).
+     *
+     * @param array<string, mixed> $step Step data.
+     * @return array{color: string, style: string, width_px: int}
+     */
+    public static function get_step_icon_border( $step ) {
+        $fallback_color = '#c9a8ff';
+        if ( ! is_array( $step ) ) {
+            return [
+                'color'    => $fallback_color,
+                'style'    => 'solid',
+                'width_px' => 2,
+            ];
+        }
+        $color = isset( $step['icon_border_color'] ) ? trim( (string) $step['icon_border_color'] ) : '';
+        if ( '' === $color && isset( $step['filled_bar_icon_border_color_active'] ) ) {
+            $color = trim( (string) $step['filled_bar_icon_border_color_active'] );
+        }
+        if ( '' === $color && isset( $step['filled_bar_icon_border_color_inactive'] ) ) {
+            $color = trim( (string) $step['filled_bar_icon_border_color_inactive'] );
+        }
+        if ( '' === $color ) {
+            $color = $fallback_color;
+        }
+        $style = isset( $step['icon_border_style'] ) ? strtolower( trim( (string) $step['icon_border_style'] ) ) : 'solid';
+        if ( ! in_array( $style, [ 'solid', 'dashed', 'dotted' ], true ) ) {
+            $style = 'solid';
+        }
+        $width_px = 2;
+        if ( isset( $step['icon_border_width'] ) ) {
+            $width_px = max( 0, min( 10, (int) round( (float) $step['icon_border_width'] ) ) );
+        }
+        return [
+            'color'    => $color,
+            'style'    => $style,
+            'width_px' => $width_px,
+        ];
+    }
+
+    /**
+     * @deprecated Use get_step_image_url() on step array.
      */
     public static function resolve_step_image_url( $is_step_active, $active_url, $inactive_url ) {
         $active_url   = (string) $active_url;
@@ -90,70 +189,74 @@ class OrderProgressVariantHelpers {
     }
 
     /**
-     * Filled-bar icon pill background: inactive steps always use #E2E6EE.
+     * Filled-bar label text color (per-step label_color with legacy fallbacks).
      *
-     * @param bool   $is_step_active Whether step is active or completed.
-     * @param string $raw_image_bg_color Per-step image background (may be empty).
-     * @param string $connector_active_color Fallback when active and no per-step color.
-     * @return string
-     */
-    public static function resolve_filled_bar_icon_background( $is_step_active, $raw_image_bg_color, $connector_active_color ) {
-        $raw_image_bg_color = (string) $raw_image_bg_color;
-        if ( ! $is_step_active ) {
-            return '#E2E6EE';
-        }
-        return '' !== $raw_image_bg_color ? $raw_image_bg_color : $connector_active_color;
-    }
-
-    /**
-     * Filled-bar label text color (legacy label_color overrides per-step / global).
-     *
-     * @param string $legacy_label_color Legacy single label color override.
-     * @param bool   $is_step_active Whether label is for active step.
-     * @param string $step_label_active_color Per-step active color.
-     * @param string $step_label_inactive_color Per-step inactive color.
-     * @param string $global_label_active_color Element default active label color.
-     * @param string $global_label_inactive_color Element default inactive label color.
+     * @param array<string, mixed> $step Step data.
+     * @param string               $legacy_label_color Legacy single label color on step.
+     * @param string               $global_label_active_color Element default (legacy).
+     * @param string               $global_label_inactive_color Element default (legacy).
      * @return string
      */
     public static function resolve_filled_bar_label_color(
-        $legacy_label_color,
+        $step,
         $is_step_active,
-        $step_label_active_color,
-        $step_label_inactive_color,
-        $global_label_active_color,
-        $global_label_inactive_color
+        $label_active_color = '#111827',
+        $label_inactive_color = '#9CA3AF'
     ) {
-        $legacy_label_color = (string) $legacy_label_color;
-        if ( '' !== $legacy_label_color ) {
-            return $legacy_label_color;
-        }
-        $step_label_active_color   = (string) $step_label_active_color;
-        $step_label_inactive_color = (string) $step_label_inactive_color;
-        if ( $is_step_active ) {
-            return '' !== $step_label_active_color ? $step_label_active_color : $global_label_active_color;
-        }
-        return '' !== $step_label_inactive_color ? $step_label_inactive_color : $global_label_inactive_color;
+        return self::get_step_label_color(
+            $step,
+            $is_step_active,
+            $label_active_color,
+            $label_inactive_color
+        );
     }
 
     /**
-     * Filled-bar icon wrapper border-color by step state.
+     * Filled-bar icon wrapper border color (single per-step color).
      *
-     * @param bool   $is_step_active Whether step is active or completed.
-     * @param string $raw_active Per-step border color when active.
-     * @param string $raw_inactive Per-step border color when inactive.
+     * @param array<string, mixed> $step Step data.
      * @return string
      */
-    public static function resolve_filled_bar_icon_border_color( $is_step_active, $raw_active, $raw_inactive ) {
-        $fallback_active   = '#c9a8ff';
-        $fallback_inactive = '#e2e6ee';
-        $raw_active        = trim( (string) $raw_active );
-        $raw_inactive      = trim( (string) $raw_inactive );
+    public static function resolve_filled_bar_icon_border_color( $step ) {
+        $border = self::get_step_icon_border( $step );
+        return $border['color'];
+    }
 
-        if ( $is_step_active ) {
-            return '' !== $raw_active ? $raw_active : $fallback_active;
+    /**
+     * Step-marker current-step accent: per-step image_bg_color when set, else connector active.
+     *
+     * @param array<string, mixed> $step Step data.
+     * @param string               $connector_active_color Element connector active color.
+     * @return string
+     */
+    public static function resolve_step_marker_accent_color( $step, $connector_active_color ) {
+        if ( is_array( $step ) ) {
+            $bg = trim( (string) ( $step['image_bg_color'] ?? '' ) );
+            if ( '' !== $bg ) {
+                return $bg;
+            }
         }
+        return (string) $connector_active_color;
+    }
 
-        return '' !== $raw_inactive ? $raw_inactive : $fallback_inactive;
+    /**
+     * Blend a hex color toward white (step-marker ring border).
+     *
+     * @param string $hex    Color such as #2563eb.
+     * @param float  $amount Blend amount 0–1.
+     * @return string
+     */
+    public static function blend_hex_with_white( $hex, $amount = 0.55 ) {
+        $raw = ltrim( (string) $hex, '#' );
+        if ( 6 !== strlen( $raw ) || ! ctype_xdigit( $raw ) ) {
+            return '#C4B0E8';
+        }
+        $r0  = hexdec( substr( $raw, 0, 2 ) );
+        $g0  = hexdec( substr( $raw, 2, 2 ) );
+        $b0  = hexdec( substr( $raw, 4, 2 ) );
+        $mix = static function ( $c ) use ( $amount ) {
+            return (int) round( $c + ( 255 - $c ) * $amount );
+        };
+        return sprintf( '#%02x%02x%02x', $mix( $r0 ), $mix( $g0 ), $mix( $b0 ) );
     }
 }

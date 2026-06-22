@@ -36,28 +36,21 @@ $bubble_pad        = 6;
 $bubble_size       = $icon_size + ( $bubble_pad * 2 );
 $bubble_cell_size  = max( 42, $bubble_size );
 $bubble_row_height = max( $bubble_size, $bubble_cell_size );
-// First/last column inset scales with bubble width (mirror TSX getEdgeTrackPaddingPx).
-$edge_track_padding_px = max( 8, (int) round( 8 + ( $bubble_cell_size - 44 ) * 0.5 ) );
+$small_dot_px      = 14;
+$ring_outer_px     = 24;
+$inner_dot_px      = 14;
+// First/last column inset: align marker center with teardrop bubble center (mirror getStepMarkerEdgeTrackPaddingPx).
+$edge_track_padding_px = max( 0, (int) round( $bubble_cell_size / 2 - $ring_outer_px / 2 ) );
 // Connector bar: at least 1px (parent already clamps connector_height to 1–10).
 $bar_height    = max( 1, (int) $connector_height );
 $dot_ring_size = 3;
-$small_dot_px  = 14;
-$ring_outer_px = 24;
-$inner_dot_px  = 14;
 
-// Ring border: blend connector active color toward white (fallback #C4B0E8).
-$yaymail_connector_hex = ltrim( (string) $connector_active_color, '#' );
-$yaymail_ring_border   = '#C4B0E8';
-if ( 6 === strlen( $yaymail_connector_hex ) && ctype_xdigit( $yaymail_connector_hex ) ) {
-    $r0                  = hexdec( substr( $yaymail_connector_hex, 0, 2 ) );
-    $g0                  = hexdec( substr( $yaymail_connector_hex, 2, 2 ) );
-    $b0                  = hexdec( substr( $yaymail_connector_hex, 4, 2 ) );
-    $amt                 = 0.55;
-    $mix                 = static function ( $c ) use ( $amt ) {
-        return (int) round( $c + ( 255 - $c ) * $amt );
-    };
-    $yaymail_ring_border = sprintf( '#%02x%02x%02x', $mix( $r0 ), $mix( $g0 ), $mix( $b0 ) );
-}
+$current_step_for_accent = isset( $display_steps[ $active_index ] ) ? $display_steps[ $active_index ] : [];
+$current_step_accent     = OrderProgressVariantHelpers::resolve_step_marker_accent_color(
+    is_array( $current_step_for_accent ) ? $current_step_for_accent : [],
+    $connector_active_color
+);
+$yaymail_ring_border     = OrderProgressVariantHelpers::blend_hex_with_white( $current_step_accent, 0.55 );
 
 $yaymail_step_marker_presets = OrderProgressVariantHelpers::get_step_marker_presets();
 
@@ -88,10 +81,9 @@ $step_marker_table_class = 'yaymail-element-order-progress yaymail-element-order
 
                 $cell_align = isset( $yaymail_step_edge_aligns[ $index ] ) ? $yaymail_step_edge_aligns[ $index ] : 'center';
 
-                $image_active_url   = is_array( $step ) ? (string) ( $step['image_active_url'] ?? '' ) : '';
-                $image_inactive_url = is_array( $step ) ? (string) ( $step['image_inactive_url'] ?? '' ) : '';
-
-                $image_url = OrderProgressVariantHelpers::resolve_step_image_url( $is_step_active, $image_active_url, $image_inactive_url );
+                $image_url = $is_current_step && is_array( $step )
+                    ? OrderProgressVariantHelpers::get_step_image_url( $step )
+                    : '';
 
                 $raw_image_bg_color = is_array( $step ) ? (string) ( $step['image_bg_color'] ?? '' ) : '';
                 $image_bg_color     = $raw_image_bg_color ? $raw_image_bg_color : ( $is_step_active ? $connector_active_color : $connector_inactive_color );
@@ -169,7 +161,21 @@ $step_marker_table_class = 'yaymail-element-order-progress yaymail-element-order
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>
+                                    <td width="<?php echo esc_attr( (string) $bubble_cell_size ); ?>" align="center" style="
+                                    <?php
+                                    echo esc_attr(
+                                        TemplateHelpers::get_style(
+                                            [
+                                                'width'   => $bubble_cell_size . 'px',
+                                                'padding' => '0',
+                                                'text-align' => 'center',
+                                                'line-height' => '0',
+                                                'font-size' => '0',
+                                            ]
+                                        )
+                                    );
+                                    ?>
+                                                    ">
                                         <div style="<?php echo esc_attr( $icon_pointer_style ); ?>">&nbsp;</div>
                                     </td>
                                 </tr>
@@ -289,7 +295,10 @@ $step_marker_table_class = 'yaymail-element-order-progress yaymail-element-order
                                                             ">
                                                     <?php if ( $is_current_step ) : ?>
                                                         <?php
-                                                        $inner_dot_margin_top = (int) ( ( $ring_outer_px - $inner_dot_px ) / 2 - $dot_ring_size ) + 3;
+                                                        $inner_dot_margin_top = max(
+                                                            0,
+                                                            (int) floor( ( $ring_outer_px - ( 2 * $dot_ring_size ) - $inner_dot_px ) / 2 )
+                                                        );
                                                         $ring_outer_div_style = TemplateHelpers::get_style(
                                                             [
                                                                 'width'         => $ring_outer_px . 'px',
@@ -306,8 +315,8 @@ $step_marker_table_class = 'yaymail-element-order-progress yaymail-element-order
                                                                 'width'         => $inner_dot_px . 'px',
                                                                 'height'        => $inner_dot_px . 'px',
                                                                 'border-radius' => ( (int) ( $inner_dot_px ) ) . 'px',
-                                                                'background'    => $connector_active_color,
-                                                                'margin'        => $inner_dot_margin_top . 'px auto 0',
+                                                                'background'    => $current_step_accent,
+                                                                'margin'        => $inner_dot_margin_top + 3 . 'px auto 0',
                                                                 'font-size'     => '0',
                                                                 'line-height'   => '0',
                                                             ]
@@ -389,15 +398,9 @@ $step_marker_table_class = 'yaymail-element-order-progress yaymail-element-order
 
                                 $title = is_array( $step ) ? (string) ( $step['title'] ?? $step['label'] ?? '' ) : '';
 
-                                $step_label_color          = is_array( $step ) ? (string) ( $step['label_color'] ?? '' ) : '';
-                                $step_label_active_color   = is_array( $step ) ? (string) ( $step['label_active_color'] ?? '' ) : '';
-                                $step_label_inactive_color = is_array( $step ) ? (string) ( $step['label_inactive_color'] ?? '' ) : '';
-
-                                $label_color = OrderProgressVariantHelpers::resolve_filled_bar_label_color(
-                                    $step_label_color,
+                                $label_color = OrderProgressVariantHelpers::get_step_label_color(
+                                    is_array( $step ) ? $step : [],
                                     $is_step_active,
-                                    $step_label_active_color,
-                                    $step_label_inactive_color,
                                     $legacy_label_active_color,
                                     $legacy_label_inactive_color
                                 );

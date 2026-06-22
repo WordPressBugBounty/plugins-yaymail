@@ -110,7 +110,7 @@ class Footer3 extends BasePattern {
                                 'children' => [
                                     Text::get_object_data(
                                         [
-                                            'rich_text'  => '<p style="text-align: center; margin: 0; font-weight: 300;"><span style="font-size: 14px; margin: 0;"> If you have any questions, please email us at <u style="font-weight: 400;">hi@yaycommerce.com</u> </span></p>',
+                                            'rich_text'  => '<p style="text-align: center; margin: 0; font-weight: 300;"><span style="font-size: 14px; margin: 0;"> If you have any questions, please email us at <u style="font-weight: 400;">hello@example.com</u> </span></p>',
                                             'padding'    => [
                                                 'top'    => 0,
                                                 'right'  => 0,
