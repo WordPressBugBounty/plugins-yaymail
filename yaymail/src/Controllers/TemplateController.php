@@ -394,7 +394,10 @@ class TemplateController extends BaseController {
     }
 
     public function change_global_header_footer_status( \WP_REST_Request $request ) {
-        $status = sanitize_text_field( $request->get_param( 'status' ) );
-        return SettingModel::update( [ 'global_header_footer_enabled' => $status ] );
+        $status       = filter_var( $request->get_param( 'status' ), FILTER_VALIDATE_BOOLEAN );
+        $platform     = sanitize_text_field( $request->get_param( 'platform' ) ?? 'yaymail' );
+        $platform_obj = \YayMail\Platform\PlatformRegistry::get( $platform ) ?? \YayMail\Platform\PlatformRegistry::get( 'yaymail' );
+        $key          = $platform_obj ? $platform_obj->ghf_option_key( 'enabled' ) : 'global_header_footer_enabled';
+        return SettingModel::update( [ $key => $status ] );
     }
 }

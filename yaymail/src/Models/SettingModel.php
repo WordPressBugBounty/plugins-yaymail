@@ -29,7 +29,8 @@ class SettingModel {
         'show_product_item_cost'       => 'show_product_item_cost',
         'enable_custom_css'            => 'enable_custom_css',
         'custom_css'                   => 'custom_css',
-        'global_header_footer_enabled' => 'global_header_footer_enabled',
+        'global_header_footer_enabled'    => 'global_header_footer_enabled',
+        'wp_global_header_footer_enabled' => 'wp_global_header_footer_enabled',
     ];
 
     // TODO: change variable name to be more meaning in db ( when initialize )
@@ -48,7 +49,8 @@ class SettingModel {
         self::META_KEYS['show_product_item_cost']       => false,
         self::META_KEYS['enable_custom_css']            => false,
         self::META_KEYS['custom_css']                   => '',
-        self::META_KEYS['global_header_footer_enabled'] => false,
+        self::META_KEYS['global_header_footer_enabled']    => false,
+        self::META_KEYS['wp_global_header_footer_enabled'] => false,
     ];
 
     public static function find_by_name( $name ) {

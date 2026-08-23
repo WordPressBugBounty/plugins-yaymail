@@ -2,6 +2,8 @@
 
 namespace YayMail\Abstracts;
 
+use YayMail\Utils\TemplateHelpers;
+
 /**
  * Base class for code-defined email templates in Template Library.
  */
@@ -35,6 +37,13 @@ abstract class BaseTemplate {
      * @var string
      */
     protected $description;
+
+    /**
+     * Categories for filtering templates in the UI.
+     *
+     * @var array
+     */
+    protected $categories = [];
 
     /**
      * Optional position for ordering in the UI.
@@ -76,6 +85,13 @@ abstract class BaseTemplate {
      */
     protected $template_settings = [];
 
+    /**
+     * Last updated date of the template.
+     *
+     * @var string
+     */
+    protected $modified_date = '';
+
     public function __construct() {
     }
 
@@ -93,6 +109,10 @@ abstract class BaseTemplate {
 
     public function get_description() {
         return $this->description;
+    }
+
+    public function get_categories() {
+        return $this->categories;
     }
 
     public function get_available() {
@@ -115,6 +135,10 @@ abstract class BaseTemplate {
         return $this->template_settings;
     }
 
+    public function get_modified_date() {
+        return $this->modified_date;
+    }
+
     /**
      * Get full template payload including elements.
      *
@@ -124,15 +148,19 @@ abstract class BaseTemplate {
         // Always recompute availability before exposing data to REST.
         $this->available = $this->determine_availability();
 
+        $elements = TemplateHelpers::normalize_elements_parent_ids( $this->get_elements() );
+
         $data = [
             'id'             => $this->get_id(),
             'email_type'     => $this->get_email_type(),
             'name'           => $this->get_name(),
             'description'    => $this->get_description(),
+            'categories'     => $this->get_categories(),
             'position'       => $this->get_position(),
+            'modified_date'  => $this->get_modified_date(),
             'available'      => $this->get_available(),
             'access'         => $this->get_access(),
-            'elements'       => $this->get_elements(),
+            'elements'       => $elements,
             'email_settings' => $this->get_email_settings(),
         ];
 

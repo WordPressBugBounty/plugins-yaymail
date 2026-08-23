@@ -29,7 +29,7 @@ class Container extends BaseElement {
             'group'           => 'general',
             'available'       => false,
             'disabled_reason' => [
-                'html' => __( 'This element is available in YayMail Pro', 'yaymail' ),
+                'html' => self::get_pro_upgrade_text(),
             ],
             'position'        => 145,
             'children'        => isset( $attributes['children'] ) ? $attributes['children'] : [],

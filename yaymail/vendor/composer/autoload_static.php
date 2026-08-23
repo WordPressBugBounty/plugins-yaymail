@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit812314074c1405be8e970bd6abde62ce
+class ComposerStaticInita75e777207e60db6f768782025c7cd06
 {
     public static $prefixLengthsPsr4 = array (
         'Y' => 
@@ -46,6 +46,7 @@ class ComposerStaticInit812314074c1405be8e970bd6abde62ce
         'YayCommerce\\AdminShell\\Pages\\HelpPage' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Pages/HelpPage.php',
         'YayCommerce\\AdminShell\\Pages\\LicensesPage' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Pages/LicensesPage.php',
         'YayCommerce\\AdminShell\\Pages\\RecommendedPluginsPage' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Pages/RecommendedPluginsPage.php',
+        'YayCommerce\\AdminShell\\Pages\\WooCommerceRequiredPage' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Pages/WooCommerceRequiredPage.php',
         'YayCommerce\\AdminShell\\Registry\\AddonBridge' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Registry/AddonBridge.php',
         'YayCommerce\\AdminShell\\Registry\\AddonLicenseAdapter' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Registry/AddonLicenseAdapter.php',
         'YayCommerce\\AdminShell\\Registry\\LegacyBridge' => __DIR__ . '/..' . '/yaycommerce/admin-shell/src/Registry/LegacyBridge.php',
@@ -73,6 +74,7 @@ class ComposerStaticInit812314074c1405be8e970bd6abde62ce
         'YayMailScoped\\YayCommerce\\AdminShell\\Pages\\HelpPage' => __DIR__ . '/../..' . '/vendor-prefixed/src/Pages/HelpPage.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\Pages\\LicensesPage' => __DIR__ . '/../..' . '/vendor-prefixed/src/Pages/LicensesPage.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\Pages\\RecommendedPluginsPage' => __DIR__ . '/../..' . '/vendor-prefixed/src/Pages/RecommendedPluginsPage.php',
+        'YayMailScoped\\YayCommerce\\AdminShell\\Pages\\WooCommerceRequiredPage' => __DIR__ . '/../..' . '/vendor-prefixed/src/Pages/WooCommerceRequiredPage.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\Registry\\AddonBridge' => __DIR__ . '/../..' . '/vendor-prefixed/src/Registry/AddonBridge.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\Registry\\AddonLicenseAdapter' => __DIR__ . '/../..' . '/vendor-prefixed/src/Registry/AddonLicenseAdapter.php',
         'YayMailScoped\\YayCommerce\\AdminShell\\Registry\\LegacyBridge' => __DIR__ . '/../..' . '/vendor-prefixed/src/Registry/LegacyBridge.php',
@@ -98,6 +100,7 @@ class ComposerStaticInit812314074c1405be8e970bd6abde62ce
         'YayMail\\Constants\\YayMailStyles' => __DIR__ . '/../..' . '/src/Constants/YayMailStyles.php',
         'YayMail\\Controllers\\AddonController' => __DIR__ . '/../..' . '/src/Controllers/AddonController.php',
         'YayMail\\Controllers\\MigrationController' => __DIR__ . '/../..' . '/src/Controllers/MigrationController.php',
+        'YayMail\\Controllers\\PostController' => __DIR__ . '/../..' . '/src/Controllers/PostController.php',
         'YayMail\\Controllers\\ProductController' => __DIR__ . '/../..' . '/src/Controllers/ProductController.php',
         'YayMail\\Controllers\\RevisionController' => __DIR__ . '/../..' . '/src/Controllers/RevisionController.php',
         'YayMail\\Controllers\\SettingController' => __DIR__ . '/../..' . '/src/Controllers/SettingController.php',
@@ -114,6 +117,7 @@ class ComposerStaticInit812314074c1405be8e970bd6abde62ce
         'YayMail\\Elements\\Divider' => __DIR__ . '/../..' . '/src/Elements/Divider.php',
         'YayMail\\Elements\\ElementsHelper' => __DIR__ . '/../..' . '/src/Elements/ElementsHelper.php',
         'YayMail\\Elements\\ElementsLoader' => __DIR__ . '/../..' . '/src/Elements/ElementsLoader.php',
+        'YayMail\\Elements\\FeaturedPosts' => __DIR__ . '/../..' . '/src/Elements/FeaturedPosts.php',
         'YayMail\\Elements\\FeaturedProducts' => __DIR__ . '/../..' . '/src/Elements/FeaturedProducts.php',
         'YayMail\\Elements\\Footer' => __DIR__ . '/../..' . '/src/Elements/Footer.php',
         'YayMail\\Elements\\HTML' => __DIR__ . '/../..' . '/src/Elements/HTML.php',
@@ -167,6 +171,7 @@ class ComposerStaticInit812314074c1405be8e970bd6abde62ce
         'YayMail\\Integrations\\F4ShippingPhoneAndEmailForWooCommerce\\F4ShippingPhoneAndEmailForWooCommerce' => __DIR__ . '/../..' . '/src/Integrations/F4ShippingPhoneAndEmailForWooCommerce/F4ShippingPhoneAndEmailForWooCommerce.php',
         'YayMail\\Integrations\\IntegrationsLoader' => __DIR__ . '/../..' . '/src/Integrations/IntegrationsLoader.php',
         'YayMail\\Integrations\\RankMath' => __DIR__ . '/../..' . '/src/Integrations/RankMath.php',
+        'YayMail\\Integrations\\TranslationModule' => __DIR__ . '/../..' . '/src/Integrations/TranslationModule.php',
         'YayMail\\Migrations\\AbstractAddonMigrationManager' => __DIR__ . '/../..' . '/src/Migrations/AbstractAddonMigrationManager.php',
         'YayMail\\Migrations\\AbstractMigration' => __DIR__ . '/../..' . '/src/Migrations/AbstractMigration.php',
         'YayMail\\Migrations\\MainMigration' => __DIR__ . '/../..' . '/src/Migrations/MainMigration.php',
@@ -177,13 +182,16 @@ class ComposerStaticInit812314074c1405be8e970bd6abde62ce
         'YayMail\\Models\\AddonModel' => __DIR__ . '/../..' . '/src/Models/AddonModel.php',
         'YayMail\\Models\\LibraryTemplateModel' => __DIR__ . '/../..' . '/src/Models/LibraryTemplateModel.php',
         'YayMail\\Models\\MigrationModel' => __DIR__ . '/../..' . '/src/Models/MigrationModel.php',
+        'YayMail\\Models\\PostModel' => __DIR__ . '/../..' . '/src/Models/PostModel.php',
         'YayMail\\Models\\ProductModel' => __DIR__ . '/../..' . '/src/Models/ProductModel.php',
         'YayMail\\Models\\RevisionModel' => __DIR__ . '/../..' . '/src/Models/RevisionModel.php',
         'YayMail\\Models\\SettingModel' => __DIR__ . '/../..' . '/src/Models/SettingModel.php',
         'YayMail\\Models\\TemplateModel' => __DIR__ . '/../..' . '/src/Models/TemplateModel.php',
         'YayMail\\Notices\\Ajax' => __DIR__ . '/../..' . '/src/Notices/Ajax.php',
         'YayMail\\Notices\\NoticeMain' => __DIR__ . '/../..' . '/src/Notices/NoticeMain.php',
-        'YayMail\\Notices\\NoticeWPMail' => __DIR__ . '/../..' . '/src/Notices/NoticeWPMail.php',
+        'YayMail\\Platform\\PlatformInterface' => __DIR__ . '/../..' . '/src/Platform/PlatformInterface.php',
+        'YayMail\\Platform\\PlatformRegistry' => __DIR__ . '/../..' . '/src/Platform/PlatformRegistry.php',
+        'YayMail\\Platform\\YaymailPlatform' => __DIR__ . '/../..' . '/src/Platform/YaymailPlatform.php',
         'YayMail\\PostTypes\\TemplatePostType' => __DIR__ . '/../..' . '/src/PostTypes/TemplatePostType.php',
         'YayMail\\PreviewEmail\\Integration\\WcSubscriptions' => __DIR__ . '/../..' . '/src/PreviewEmail/Integration/WcSubscriptions.php',
         'YayMail\\PreviewEmail\\PreviewEmailWoo' => __DIR__ . '/../..' . '/src/PreviewEmail/PreviewEmailWoo.php',
@@ -202,6 +210,8 @@ class ComposerStaticInit812314074c1405be8e970bd6abde62ce
         'YayMail\\Shortcodes\\ShippingShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/ShippingShortcodes.php',
         'YayMail\\Shortcodes\\ShortcodesExecutor' => __DIR__ . '/../..' . '/src/Shortcodes/ShortcodesExecutor.php',
         'YayMail\\Shortcodes\\ShortcodesLoader' => __DIR__ . '/../..' . '/src/Shortcodes/ShortcodesLoader.php',
+        'YayMail\\SocialIcons\\SocialIconEndpoint' => __DIR__ . '/../..' . '/src/SocialIcons/SocialIconEndpoint.php',
+        'YayMail\\SocialIcons\\SocialIconImageCache' => __DIR__ . '/../..' . '/src/SocialIcons/SocialIconImageCache.php',
         'YayMail\\SupportedPlugins' => __DIR__ . '/../..' . '/src/SupportedPlugins.php',
         'YayMail\\TemplateLibrary\\LibraryTemplateSchema' => __DIR__ . '/../..' . '/src/TemplateLibrary/LibraryTemplateSchema.php',
         'YayMail\\TemplateLibrary\\TemplateLibraryLoader' => __DIR__ . '/../..' . '/src/TemplateLibrary/TemplateLibraryLoader.php',
@@ -209,13 +219,13 @@ class ComposerStaticInit812314074c1405be8e970bd6abde62ce
         'YayMail\\TemplateLibrary\\Templates\\CancelledOrder\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/CancelledOrder/Classic.php',
         'YayMail\\TemplateLibrary\\Templates\\CancelledOrder\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/CancelledOrder/Modern.php',
         'YayMail\\TemplateLibrary\\Templates\\Completed\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Classic.php',
-        'YayMail\\TemplateLibrary\\Templates\\Completed\\Completed1' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Completed1.php',
-        'YayMail\\TemplateLibrary\\Templates\\Completed\\Completed2' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Completed2.php',
-        'YayMail\\TemplateLibrary\\Templates\\Completed\\Completed4' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Completed4.php',
-        'YayMail\\TemplateLibrary\\Templates\\Completed\\Completed5' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Completed5.php',
-        'YayMail\\TemplateLibrary\\Templates\\Completed\\Completed6' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Completed6.php',
+        'YayMail\\TemplateLibrary\\Templates\\Completed\\CleanJourney' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/CleanJourney.php',
         'YayMail\\TemplateLibrary\\Templates\\Completed\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/Modern.php',
         'YayMail\\TemplateLibrary\\Templates\\Completed\\ModernMinimal' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/ModernMinimal.php',
+        'YayMail\\TemplateLibrary\\Templates\\Completed\\ModernSteps' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/ModernSteps.php',
+        'YayMail\\TemplateLibrary\\Templates\\Completed\\OrderFlow' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/OrderFlow.php',
+        'YayMail\\TemplateLibrary\\Templates\\Completed\\SimpleReceipt' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/SimpleReceipt.php',
+        'YayMail\\TemplateLibrary\\Templates\\Completed\\SuccessPath' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Completed/SuccessPath.php',
         'YayMail\\TemplateLibrary\\Templates\\CustomerCancelledOrder\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/CustomerCancelledOrder/Classic.php',
         'YayMail\\TemplateLibrary\\Templates\\CustomerCancelledOrder\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/CustomerCancelledOrder/Modern.php',
         'YayMail\\TemplateLibrary\\Templates\\CustomerFailedOrder\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/CustomerFailedOrder/Classic.php',
@@ -229,9 +239,24 @@ class ComposerStaticInit812314074c1405be8e970bd6abde62ce
         'YayMail\\TemplateLibrary\\Templates\\OrderOnHold\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/OrderOnHold/Modern.php',
         'YayMail\\TemplateLibrary\\Templates\\OrderOnHold\\ModernMinimal' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/OrderOnHold/ModernMinimal.php',
         'YayMail\\TemplateLibrary\\Templates\\OrderOnHold\\OnHold1' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/OrderOnHold/OnHold1.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\BlueReceipt' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/BlueReceipt.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\BoldThanks' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/BoldThanks.php',
         'YayMail\\TemplateLibrary\\Templates\\Processing\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/Classic.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\ClassicCart' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/ClassicCart.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\CleanCheck' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/CleanCheck.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\CozyPaws' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/CozyPaws.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\DigitalPicks' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/DigitalPicks.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\Fashion' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/Fashion.php',
         'YayMail\\TemplateLibrary\\Templates\\Processing\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/Modern.php',
         'YayMail\\TemplateLibrary\\Templates\\Processing\\ModernMinimal' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/ModernMinimal.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\NeonGlow' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/NeonGlow.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\NextGen' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/NextGen.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\OrderJourney' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/OrderJourney.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\PetPicks' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/PetPicks.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\Processing1' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/Processing1.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\ShoePicks' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/ShoePicks.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\SoftThanks' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/SoftThanks.php',
+        'YayMail\\TemplateLibrary\\Templates\\Processing\\TechJourney' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/Processing/TechJourney.php',
         'YayMail\\TemplateLibrary\\Templates\\RefundedOrder\\Classic' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/RefundedOrder/Classic.php',
         'YayMail\\TemplateLibrary\\Templates\\RefundedOrder\\Modern' => __DIR__ . '/../..' . '/src/TemplateLibrary/Templates/RefundedOrder/Modern.php',
         'YayMail\\TemplatePatterns\\PatternService' => __DIR__ . '/../..' . '/src/TemplatePatterns/PatternService.php',
@@ -312,9 +337,9 @@ class ComposerStaticInit812314074c1405be8e970bd6abde62ce
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit812314074c1405be8e970bd6abde62ce::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit812314074c1405be8e970bd6abde62ce::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit812314074c1405be8e970bd6abde62ce::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInita75e777207e60db6f768782025c7cd06::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInita75e777207e60db6f768782025c7cd06::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInita75e777207e60db6f768782025c7cd06::$classMap;
 
         }, null, ClassLoader::class);
     }

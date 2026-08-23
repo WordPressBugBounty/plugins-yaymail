@@ -3,6 +3,7 @@
 namespace YayMail\TemplatePatterns;
 
 use YayMail\TemplatePatterns\SectionTemplateService;
+use YayMail\Utils\Helpers;
 use YayMail\Utils\SingletonTrait;
 
 /**
@@ -21,7 +22,7 @@ class SectionTemplatesLoader {
 
         $this->service = SectionTemplateService::get_instance();
 
-        $dir = new \DirectoryIterator( YAYMAIL_PLUGIN_PATH . '/src/TemplatePatterns/SectionTemplates' );
+        $dir = new \DirectoryIterator( Helpers::get_plugin_path() . '/src/TemplatePatterns/SectionTemplates' );
         foreach ( $dir as $fileinfo ) {
             if ( ! $fileinfo->isDot() ) {
                 $file_name  = $fileinfo->getFilename();

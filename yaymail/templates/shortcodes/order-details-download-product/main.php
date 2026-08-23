@@ -62,7 +62,7 @@ if ( ! empty( $order_data ) ) :
                 <?php
                 if ( $show_product_image ) :
                     $product        = wc_get_product( $download['product_id'] );
-                    $image_url      = ( $product->get_image_id() ? current( wp_get_attachment_image_src( $product->get_image_id(), 'full' ) ) : wc_placeholder_img_src() );
+                    $image_url      = yaymail_get_attachment_image_url( $product->get_image_id(), 'full' ) ?: wc_placeholder_img_src();
                     $image_width    = isset( $settings['product_image_width'] ) ? $settings['product_image_width'] : '30';
                     $image_height   = isset( $settings['product_image_height'] ) ? $settings['product_image_height'] : '30';
                     $image_position = isset( $settings['product_image_position'] ) ? $settings['product_image_position'] : 'top';

@@ -4,12 +4,21 @@ namespace YayMail\Utils;
 
 defined( 'ABSPATH' ) || exit;
 
+use YayMail\Integrations\TranslationModule;
 use YayMail\Models\TemplateModel;
 
 /**
  * Localize Classes
  */
 class Localize {
+
+    public static function get_translate_integrations() {
+        $current_integration = TranslationModule::get_instance()->current_integration;
+        return [
+            'available'           => [],
+            'current_translation' => is_null( $current_integration ) ? null : $current_integration->get_data(),
+        ];
+    }
 
     public static function get_list_orders() {
         if ( yaymail_is_wc_installed() ) {
@@ -83,7 +92,7 @@ class Localize {
             'zillow',
         ];
         $resource_prefix_url = YAYMAIL_PLUGIN_URL . 'assets/images/social-icons/';
-        $themes              = [ 'colorful', 'line-dark', 'line-light', 'solid-dark', 'solid-light' ];
+        $themes              = [ 'colorful', 'line-dark', 'line-light', 'solid-dark', 'solid-light', 'custom' ];
         $themes_pascal       = array_map( [ self::class, 'kebab_to_pascal' ], $themes );
         $images              = [];
         foreach ( $socials as $social ) {
@@ -109,9 +118,9 @@ class Localize {
         ];
     }
 
-    public static function get_global_headers_footers() {
+    public static function get_global_headers_footers( $template_name = 'yaymail_global_header_footer' ) {
         $template_model         = TemplateModel::get_instance();
-        $global_headers_footers = $template_model->get_global_header_and_footer();
+        $global_headers_footers = $template_model->get_global_headers_and_footers_for_all_available_languages( $template_name );
         return $global_headers_footers;
     }
 

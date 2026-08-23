@@ -31,8 +31,10 @@ class Ajax {
             wp_send_json_success();
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }
     }
 
@@ -47,8 +49,10 @@ class Ajax {
             wp_send_json_success();
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }
     }
 }

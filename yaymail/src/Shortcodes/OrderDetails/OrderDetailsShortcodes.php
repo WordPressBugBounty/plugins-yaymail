@@ -482,7 +482,7 @@ class OrderDetailsShortcodes extends BaseShortcode {
             /**
              * Is sample order
              */
-            return date_i18n( wc_date_format() );
+            return date_i18n( function_exists( 'wc_date_format' ) ? wc_date_format() : get_option( 'date_format' ) );
         }
 
         $order = Helpers::get_order_from_shortcode_data( $render_data );
@@ -500,7 +500,7 @@ class OrderDetailsShortcodes extends BaseShortcode {
             return '';
         }
 
-        return $order_created_date->date_i18n( wc_date_format() );
+        return $order_created_date->date_i18n( function_exists( 'wc_date_format' ) ? wc_date_format() : get_option( 'date_format' ) );
     }
 
     public function yaymail_order_status( $data ) {
@@ -798,10 +798,12 @@ class OrderDetailsShortcodes extends BaseShortcode {
         $products_in_order = [];
         foreach ( $order->get_items() as $item ) {
             $product = $item->get_product();
-            if ( $product->is_type( 'variation' ) ) {
-                $products_in_order[] = $product->get_parent_id();
-            } else {
-                $products_in_order[] = $product->get_id();
+            if ( ! empty( $product ) ) {
+                if ( $product->is_type( 'variation' ) ) {
+                    $products_in_order[] = $product->get_parent_id();
+                } else {
+                    $products_in_order[] = $product->get_id();
+                }
             }
         }
 
@@ -829,8 +831,10 @@ class OrderDetailsShortcodes extends BaseShortcode {
 
         $products_in_order = [];
         foreach ( $order->get_items() as $item ) {
-            $product             = $item->get_product();
-            $products_in_order[] = $product->get_id();
+            $product = $item->get_product();
+            if ( ! empty( $product ) ) {
+                $products_in_order[] = $product->get_id();
+            }
         }
 
         return count( array_unique( $products_in_order ) );

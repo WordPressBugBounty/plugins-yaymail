@@ -3,6 +3,7 @@
 namespace YayMail\TemplatePatterns;
 
 use YayMail\TemplatePatterns\PatternService;
+use YayMail\Utils\Helpers;
 use YayMail\Utils\SingletonTrait;
 
 /**
@@ -20,7 +21,7 @@ class PatternsLoader {
 
         $this->service = PatternService::get_instance();
 
-        $dir = new \DirectoryIterator( YAYMAIL_PLUGIN_PATH . '/src/TemplatePatterns/Patterns' );
+        $dir = new \DirectoryIterator( Helpers::get_plugin_path() . '/src/TemplatePatterns/Patterns' );
         foreach ( $dir as $fileinfo ) {
             if ( ! $fileinfo->isDot() ) {
                 $file_name  = $fileinfo->getFilename();

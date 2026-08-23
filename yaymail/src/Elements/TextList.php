@@ -143,7 +143,7 @@ class TextList extends BaseElement {
                         ],
 
                         'button_background_color' => [
-                            'value' => isset( $attributes['column_1']['button_background_color'] ) ? $attributes['column_1']['button_background_color'] : YAYMAIL_COLOR_WC_DEFAULT,
+                            'value' => isset( $attributes['column_1']['button_background_color'] ) ? $attributes['column_1']['button_background_color'] : yaymail_get_default_brand_color(),
                             'type'  => 'style',
                         ],
 
@@ -244,7 +244,7 @@ class TextList extends BaseElement {
                         ],
 
                         'button_background_color' => [
-                            'value' => isset( $attributes['column_2']['button_background_color'] ) ? $attributes['column_2']['button_background_color'] : YAYMAIL_COLOR_WC_DEFAULT,
+                            'value' => isset( $attributes['column_2']['button_background_color'] ) ? $attributes['column_2']['button_background_color'] : yaymail_get_default_brand_color(),
                             'type'  => 'style',
                         ],
 
@@ -345,7 +345,7 @@ class TextList extends BaseElement {
                         ],
 
                         'button_background_color' => [
-                            'value' => isset( $attributes['column_3']['button_background_color'] ) ? $attributes['column_3']['button_background_color'] : YAYMAIL_COLOR_WC_DEFAULT,
+                            'value' => isset( $attributes['column_3']['button_background_color'] ) ? $attributes['column_3']['button_background_color'] : yaymail_get_default_brand_color(),
                             'type'  => 'style',
                         ],
 

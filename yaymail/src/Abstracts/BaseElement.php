@@ -85,6 +85,28 @@ abstract class BaseElement {
     }
 
     /**
+     * "This element is available in {brand} Pro" text for PRO-only elements'
+     * disabled_reason. Brand name follows the email currently being edited (set
+     * via the $yaymail_current_email_id global in
+     * yaymail_get_email_elements_data()) -- WordPress-platform emails use the
+     * 'wp-core-' id prefix.
+     *
+     * @return string
+     */
+    public static function get_pro_upgrade_text() {
+        global $yaymail_current_email_id;
+        $is_wp_platform_email = ! empty( $yaymail_current_email_id )
+            && ( 0 === strpos( $yaymail_current_email_id, 'wp-core-' ) || 0 === strpos( $yaymail_current_email_id, 'wp_' ) );
+        $brand_name = $is_wp_platform_email ? 'Email Builder' : 'YayMail';
+
+        return sprintf(
+            // translators: %s: brand name (YayMail or Email Builder)
+            __( 'This element is available in %s Pro', 'yaymail' ),
+            $brand_name
+        );
+    }
+
+    /**
      * Converts an element's data to use default values.
      *
      * This function iterates through the 'data' array of an element, replacing each value with its 'default_value'.

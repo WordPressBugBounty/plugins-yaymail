@@ -482,16 +482,10 @@ class Helpers {
         );
     }
 
-    public static function is_yaymail_lite_and_yay_wp_pro_active() {
-        $is_yaymail_active    = function_exists( 'is_plugin_active' ) && is_plugin_active( 'yaymail/yaymail.php' );
-        $is_yay_wp_pro_active = function_exists( 'YayMail\wp_mail_init' ) && class_exists( 'YaymailWpPluginAdapter', false ) && method_exists( 'YaymailWpPluginAdapter', 'is_licensed' );
-        return $is_yaymail_active && $is_yay_wp_pro_active;
-    }
-
     public static function get_plugin_work_info() {
         $plugin_work = [
             'yaymail'                 => false,
-            'yay-wp-email-customizer' => false,
+            'email-builder' => false,
         ];
 
         if ( function_exists( '\YayMail\init' ) && function_exists( 'WC' ) ) {
@@ -504,9 +498,9 @@ class Helpers {
 
         if ( function_exists( '\YayMail\wp_mail_init' ) ) {
             if ( class_exists( 'YaymailWpPluginAdapter', false ) && method_exists( 'YaymailWpPluginAdapter', 'is_licensed' ) ) {
-                $plugin_work['yay-wp-email-customizer'] = \YaymailWpPluginAdapter::is_licensed();
+                $plugin_work['email-builder'] = \YaymailWpPluginAdapter::is_licensed();
             } else {
-                $plugin_work['yay-wp-email-customizer'] = true;
+                $plugin_work['email-builder'] = true;
             }
         }
 
@@ -514,11 +508,11 @@ class Helpers {
     }
 
     public static function get_plugin_path() {
-        return self::is_yaymail_lite_and_yay_wp_pro_active() ? YAYMAIL_WP_PLUGIN_PATH : YAYMAIL_PLUGIN_PATH;
+        return \YayMail\Platform\PlatformRegistry::host_platform()->plugin_path();
     }
 
     public static function get_plugin_url() {
-        return self::is_yaymail_lite_and_yay_wp_pro_active() ? YAYMAIL_WP_PLUGIN_URL : YAYMAIL_PLUGIN_URL;
+        return \YayMail\Platform\PlatformRegistry::host_platform()->plugin_url();
     }
     public static function scope_css_block( $css, $scope_selector ) {
         $result = '';

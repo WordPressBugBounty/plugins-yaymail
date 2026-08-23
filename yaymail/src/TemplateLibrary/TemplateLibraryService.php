@@ -68,14 +68,18 @@ class TemplateLibraryService {
         usort(
             $results,
             function( $a, $b ) {
-                $pos_a = isset( $a['position'] ) ? (int) $a['position'] : 10;
-                $pos_b = isset( $b['position'] ) ? (int) $b['position'] : 10;
+                $date_a = strtotime( (string) ( $a['modified_date'] ?? '' ) );
+                $date_b = strtotime( (string) ( $b['modified_date'] ?? '' ) );
+                $date_a = false === $date_a ? 0 : (int) $date_a;
+                $date_b = false === $date_b ? 0 : (int) $date_b;
+                $day_a  = $date_a > 0 ? date( 'Y-m-d', $date_a ) : '';
+                $day_b  = $date_b > 0 ? date( 'Y-m-d', $date_b ) : '';
 
-                if ( $pos_a === $pos_b ) {
-                    return strcmp( (string) ( $a['name'] ?? '' ), (string) ( $b['name'] ?? '' ) );
+                if ( $day_a === $day_b ) {
+                    return strnatcasecmp( (string) ( $a['name'] ?? '' ), (string) ( $b['name'] ?? '' ) );
                 }
 
-                return $pos_a - $pos_b;
+                return strcmp( $day_b, $day_a );
             }
         );
 
@@ -84,7 +88,7 @@ class TemplateLibraryService {
 
     /**
      * Built-in + user-saved templates for the library modal.
-     * Order: saved (newest first via DB query), then builtin (by position).
+     * Order: saved (newest first via DB query), then builtin (newest update first, then name).
      *
      * @param string $email_type Email type slug.
      *

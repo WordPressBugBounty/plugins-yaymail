@@ -38,10 +38,17 @@ if ( ! empty( $border_style ) && 'button' !== $element['type'] ) {
 
 $user_custom_classes = isset( $element['data']['custom_css_classes'] ) ? $element['data']['custom_css_classes'] : '';
 $settings            = yaymail_settings();
+$margin              = isset( $element['data']['margin'] ) ? $element['data']['margin'] : [];
+$outer_style         = TemplateHelpers::get_style(
+    [
+        'width'  => '100%',
+        'margin' => TemplateHelpers::get_spacing_value( $margin ),
+    ]
+);
 
 if ( ! empty( trim( wp_kses_post( $content_html ) ) ) ) {
     ?>
-    <div class="yaymail-element yaymail-element-<?php echo esc_attr( $element['id'] ); ?> <?php echo esc_attr( $user_custom_classes ); ?>" data-yaymail-element-type="<?php echo esc_attr( $element['type'] ); ?>" style="width: 100%; margin: 0 auto;" data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>">
+    <div class="yaymail-element yaymail-element-<?php echo esc_attr( $element['id'] ); ?> <?php echo esc_attr( $user_custom_classes ); ?>" data-yaymail-element-type="<?php echo esc_attr( $element['type'] ); ?>" style="<?php echo esc_attr( $outer_style ); ?>" data-yaymail-element-id="<?php echo esc_attr( $element['id'] ); ?>">
         <table cellpadding="0" cellspacing="0"  class="yaymail-element__content" style="<?php echo esc_attr( $wrapper_style ); ?>">
             <tbody>
                 <tr>

@@ -518,7 +518,7 @@ final class Ver_4_0_0 extends AbstractMigration {
 
         if ( $element['type'] === 'button' ) {
             // Increase button's width
-            $data['width'] = min( $element['data']['width'] + 20, 100 );
+            $data['width'] = min( (int) $element['data']['width'] + 20, 100 );
         }
 
         if ( $element['type'] === 'video' ) {
@@ -536,7 +536,7 @@ final class Ver_4_0_0 extends AbstractMigration {
         if ( $element['type'] === 'image_list' ) {
 
             if ( ! empty( $element['data']['number_column'] ) ) {
-                $element['data']['number_column'] = $number_column_value_map[ $element['data']['number_column'] ];
+                $element['data']['number_column'] = $number_column_value_map[ $element['data']['number_column'] ] ?? $element['data']['number_column'];
                 return;
             }
             return;
@@ -546,7 +546,7 @@ final class Ver_4_0_0 extends AbstractMigration {
         // Map data for text_list
         if ( $element['type'] === 'text_list' ) {
             if ( ! empty( $element['data']['number_column'] ) ) {
-                $element['data']['number_column'] = $number_column_value_map[ $element['data']['number_column'] ];
+                $element['data']['number_column'] = $number_column_value_map[ $element['data']['number_column'] ] ?? $element['data']['number_column'];
             }
 
             foreach ( [ 'column_1', 'column_2', 'column_3' ] as $column ) {

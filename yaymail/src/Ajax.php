@@ -8,7 +8,6 @@ use YayMail\Models\TemplateModel;
 use YayMail\Models\RevisionModel;
 use YayMail\Migrations\MainMigration;
 use YayMail\Utils\Helpers;
-use YayMail\Migrations\AbstractMigration;
 
 /**
  * I18n Logic
@@ -62,7 +61,10 @@ class Ajax {
             $state_data = null;
             for ( $i = 0; $i < $zip->numFiles; $i++ ) {
                 $filename = $zip->getNameIndex( $i );
-                if ( $filename === 'yaymail_backup.json' ) {
+                // Matches both "yaymail_backup.json" (YayMail) and "email_builder_backup.json"
+                // (Email Builder) -- the zip always holds exactly this one entry, named per
+                // getBrandName() in backup/index.tsx.
+                if ( 1 === preg_match( '/_backup\.json$/', (string) $filename ) ) {
                     $state_data = $zip->getFromIndex( $i );
                     break;
                 }
@@ -71,7 +73,7 @@ class Ajax {
             $zip->close();
 
             if ( ! $state_data ) {
-                return wp_send_json_error( [ 'mess' => __( 'Cannot find yaymail_backup.json in the ZIP file.', 'yaymail' ) ] );
+                return wp_send_json_error( [ 'mess' => __( 'Cannot find the backup JSON file in the ZIP file.', 'yaymail' ) ] );
             }
 
             $imported_data = json_decode( $state_data );
@@ -197,7 +199,20 @@ class Ajax {
             $backup_data['options'] = $yaymail_options;
 
             $backup_data['created_date'] = current_datetime()->format( 'Y-m-d H:i:s' );
-            $backup_data['version']      = get_option( 'yaymail_version_backup' );
+
+            // Fall back through running version / YAYWP_VERSION / '1.0' when the
+            // backup option hasn't been set yet (e.g. init_modules() hasn't
+            // recorded it), otherwise a falsy 'version' gets baked into the
+            // exported ZIP and MigrationModel::reset() rejects it on import with
+            // "Back up does not exist".
+            $version_backup = get_option( 'yaymail_version_backup' );
+            if ( ! empty( $version_backup ) ) {
+                $backup_data['version'] = $version_backup;
+            } elseif ( ! empty( yaymail_version() ) ) {
+                $backup_data['version'] = yaymail_version();
+            } else {
+                $backup_data['version'] = defined( 'YAYWP_VERSION' ) ? YAYWP_VERSION : '1.0';
+            }
 
             $backup_data = apply_filters( 'yaymail_backup_state_data', $backup_data );
 
@@ -205,20 +220,34 @@ class Ajax {
                 [
                     'message'   => 'success',
                     'data'      => $backup_data,
-                    'file_name' => 'yaymail_export_backup_' . gmdate( 'm-d-Y' ),
+                    'file_name' => $this->export_file_name_prefix() . '_export_backup_' . gmdate( 'm-d-Y' ),
                 ]
             );
 
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }//end try
     }
 
     public function sanitize( $array ) {
 
         return wp_kses_post_deep( $array );
+    }
+
+    /**
+     * File name prefix for exported/backup downloads, matching the frontend's
+     * brand name per platform (constants/theme.ts WP_COLORS vs the free "yaymail"
+     * default). Reads the "platform" the frontend sends alongside these AJAX
+     * requests (see common/ajax's getPlatform() calls) since these admin-ajax.php
+     * requests don't reliably expose the calling screen via get_current_screen().
+     */
+    private function export_file_name_prefix() {
+        $platform = isset( $_POST['platform'] ) ? sanitize_text_field( wp_unslash( $_POST['platform'] ) ) : ''; //phpcs:ignore WordPress.Security.NonceVerification.Missing
+        return 'email-builder' === $platform ? 'email_builder' : 'yaymail';
     }
 
     public function process_plugin_installer( $slug ) {
@@ -298,8 +327,10 @@ class Ajax {
 
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }//end try
     }
 
@@ -350,6 +381,14 @@ class Ajax {
                 $class_wc_email = \WC_Emails::instance();
                 $send_mail      = $class_wc_email->send( $email, $subject, $html, $headers, [] );
             } else {
+                // $html is already the fully-rendered wp-core-mail template output.
+                // Without this marker, WpMail::custom_wp_mail_body() (hooked on the
+                // 'wp_mail' filter, meant to wrap *raw* WP core messages like a
+                // password-reset email) can't tell it apart from unrendered content
+                // and wraps it in the template a second time -- the same marker
+                // AddonWpMailController::woocommerce_mail_content() uses for real
+                // WooCommerce sends.
+                $html      = '<!-- yaymail:wp-has-template-email-content -->' . $html;
                 $send_mail = wp_mail( $email, $subject, $html, $headers, [] );
             }
             if ( ! $send_mail ) {
@@ -364,8 +403,10 @@ class Ajax {
             );
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }//end try
     }
 
@@ -447,8 +488,10 @@ class Ajax {
             );
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }//end try
     }
 
@@ -488,8 +531,10 @@ class Ajax {
             );
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }//end try
     }
 
@@ -525,22 +570,27 @@ class Ajax {
                     $background_color         = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['background_color'], true );
                     $content_background_color = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['content_background_color'], true );
                     $content_text_color       = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['content_text_color'], true );
+                    $title_color              = get_post_meta( $post->ID, YayMailTemplate::META_KEYS['title_color'], true );
                     $file_name                = "{$template_name}.json";
-                    if ( empty( $language ) ) {
-                        $export_data[] = [
-                            'file_name'      => $file_name,
-                            'templates_data' => [
-                                'template'                 => $template_name,
-                                'elements'                 => $elements,
-                                'language'                 => '',
-                                'text_link_color'          => $text_link_color,
-                                'background_color'         => $background_color,
-                                'content_background_color' => $content_background_color,
-                                'content_text_color'       => $content_text_color,
-                                'title_color'              => $title_color,
-                            ],
-                        ];
-                    }
+                    // Every WP-core template (e.g. wp-core-mail) is saved with a
+                    // non-empty language meta (the site locale), unlike WooCommerce
+                    // templates -- gating on "no language" here used to silently
+                    // drop every WP-core template from the export with no error.
+                    // find_by_name() below only ever looks templates up by name, so
+                    // there's no separate per-language row to disambiguate against.
+                    $export_data[] = [
+                        'file_name'      => $file_name,
+                        'templates_data' => [
+                            'template'                 => $template_name,
+                            'elements'                 => $elements,
+                            'language'                 => $language,
+                            'text_link_color'          => $text_link_color,
+                            'background_color'         => $background_color,
+                            'content_background_color' => $content_background_color,
+                            'content_text_color'       => $content_text_color,
+                            'title_color'              => $title_color,
+                        ],
+                    ];
                 }//end foreach
             }//end if
             wp_reset_postdata();
@@ -548,13 +598,15 @@ class Ajax {
                 [
                     'message'   => __( 'Export successfully', 'yaymail' ),
                     'data'      => $export_data,
-                    'file_name' => 'yaymail_customizer_templates_' . gmdate( 'm-d-Y' ),
+                    'file_name' => $this->export_file_name_prefix() . '_customizer_templates_' . gmdate( 'm-d-Y' ),
                 ]
             );
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }//end try
     }
 
@@ -576,8 +628,10 @@ class Ajax {
             }
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }
     }
 
@@ -637,11 +691,13 @@ class Ajax {
     }
 
     public function processing_import_update_data( $data, $is_legacy = false ) {
-        $template_name    = $data['template'] ?? null;
-        $elements         = $data['elements'] ?? null;
-        $text_link_color  = $data['text_link_color'] ?? null;
-        $background_color = $data['background_color'] ?? null;
-        $title_color      = $data['title_color'] ?? null;
+        $template_name            = $data['template'] ?? null;
+        $elements                 = $data['elements'] ?? null;
+        $text_link_color          = $data['text_link_color'] ?? null;
+        $background_color         = $data['background_color'] ?? null;
+        $title_color              = $data['title_color'] ?? null;
+        $content_background_color = $data['content_background_color'] ?? null;
+        $content_text_color       = $data['content_text_color'] ?? null;
 
         if ( empty( $template_name ) ) {
             return null;
@@ -726,8 +782,10 @@ class Ajax {
             );
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }//end try
     }
 
@@ -743,8 +801,8 @@ class Ajax {
             $setting_model = SettingModel::get_instance();
             $settings_data = $setting_model->find_all();
 
-            $template_name = isset( $_POST['data']['template_name'] ) ? sanitize_text_field( $_POST['data']['template_name'] ) : 'new_order';
-            $order_id      = isset( $_POST['data']['order_id'] ) ? sanitize_text_field( $_POST['data']['order_id'] ) : 'sample_order';
+            $template_name = isset( $_POST['data']['template_name'] ) ? sanitize_text_field( wp_unslash( $_POST['data']['template_name'] ) ) : 'new_order';
+            $order_id      = isset( $_POST['data']['order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['data']['order_id'] ) ) : 'sample_order';
 
             $template_model = TemplateModel::get_instance();
 
@@ -798,8 +856,10 @@ class Ajax {
 
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }
     }
 
@@ -820,8 +880,10 @@ class Ajax {
             );
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }
     }
 
@@ -841,8 +903,10 @@ class Ajax {
             );
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );
+            wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }
     }
 
@@ -869,6 +933,7 @@ class Ajax {
             wp_send_json_error( [ 'mess' => $error->getMessage() ] );
         } catch ( \Exception $exception ) {
             yaymail_get_logger( $exception );
+            wp_send_json_error( [ 'mess' => $exception->getMessage() ] );
         }
     }
 }

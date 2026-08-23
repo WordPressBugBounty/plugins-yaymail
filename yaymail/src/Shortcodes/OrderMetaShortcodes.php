@@ -129,7 +129,7 @@ class OrderMetaShortcodes {
                 : \DateTime::createFromFormat( 'Ymd', $value );
 
             if ( $date ) {
-                return date_i18n( wc_date_format(), $date->getTimestamp() );
+                return date_i18n( function_exists( 'wc_date_format' ) ? wc_date_format() : get_option( 'date_format' ), $date->getTimestamp() );
             }
 
             $this->logger->log( "Order meta shortcode: field {$field} with value {$value} is not a valid date" );
@@ -164,7 +164,7 @@ class OrderMetaShortcodes {
         }
 
         if ( strtotime( $value ) ) {
-            return date_i18n( wc_date_format(), strtotime( $value ) );
+            return date_i18n( function_exists( 'wc_date_format' ) ? wc_date_format() : get_option( 'date_format' ), strtotime( $value ) );
         }
 
         return $value;

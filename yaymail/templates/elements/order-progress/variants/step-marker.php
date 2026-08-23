@@ -157,7 +157,7 @@ $step_marker_table_class = 'yaymail-element-order-progress yaymail-element-order
                             <tbody>
                                 <tr>
                                     <td width="<?php echo esc_attr( (string) $bubble_cell_size ); ?>" height="<?php echo esc_attr( (string) $bubble_cell_size ); ?>" align="center" valign="middle" style="<?php echo esc_attr( $teardrop_style ); ?>">
-                                        <img src="<?php echo esc_url( $image_url ); ?>" alt="" width="<?php echo esc_attr( (string) $icon_size ); ?>" height="<?php echo esc_attr( (string) $icon_size ); ?>" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;width:<?php echo esc_attr( (string) $icon_size ); ?>px;height:<?php echo esc_attr( (string) $icon_size ); ?>px;"/>
+                                        <img src="<?php echo esc_url( $image_url ); ?>" alt="" width="<?php echo esc_attr( (string) $icon_size ); ?>" height="<?php echo esc_attr( (string) $icon_size ); ?>" style="display:block;margin:0 auto;border:0;outline:none;text-decoration:none;width:<?php echo esc_attr( (string) $icon_size ); ?>px;height:<?php echo esc_attr( (string) $icon_size ); ?>px;object-fit:contain;"/>
                                     </td>
                                 </tr>
                                 <tr>

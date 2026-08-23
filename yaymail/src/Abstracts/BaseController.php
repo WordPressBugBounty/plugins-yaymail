@@ -21,12 +21,16 @@ abstract class BaseController {
      * @return \WP_REST_Response
      */
     public function nonce_failure_response() {
+        // 403 so HTTP clients reject instead of treating this object as payload
+        // (a 200 here used to flow into array states and crash the customizer).
         return new \WP_REST_Response(
             [
                 'success' => false,
+                'isError' => true,
                 'code'    => 'nonce_failure',
                 'message' => __( 'Verify nonce failed', 'yaymail' ),
-            ]
+            ],
+            403
         );
     }
 
@@ -50,7 +54,7 @@ abstract class BaseController {
     public function exec( $callable, \WP_REST_Request $request ) {
 
         if ( ! $this->verify_nonce( $request ) ) {
-            return rest_ensure_request( $this->nonce_failure_response() );
+            return rest_ensure_response( $this->nonce_failure_response() );
         }
 
         try {

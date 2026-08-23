@@ -6,6 +6,7 @@ use YayMail\Controllers\RevisionController;
 use YayMail\Utils\SingletonTrait;
 use YayMail\Controllers\SettingController;
 use YayMail\Controllers\TemplateController;
+use YayMail\Controllers\PostController;
 use YayMail\Controllers\ProductController;
 use YayMail\Controllers\AddonController;
 use YayMail\Controllers\TemplateLibraryController;
@@ -32,6 +33,7 @@ class RestAPI {
         TemplateController::get_instance();
         SettingController::get_instance();
         RevisionController::get_instance();
+        PostController::get_instance();
         MigrationController::get_instance();
         ProductController::get_instance();
         AddonController::get_instance();

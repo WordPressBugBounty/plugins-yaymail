@@ -27,6 +27,11 @@ class YayMailStyles {
             define( 'YAYMAIL_COLOR_WC_DEFAULT', '#873EFF' );
         }
 
+        if ( ! defined( 'YAYMAIL_COLOR_WP_DEFAULT' ) ) {
+            // WordPress admin default theme color (matches the frontend's WP_PRIMARY_COLOR).
+            define( 'YAYMAIL_COLOR_WP_DEFAULT', '#3858e9' );
+        }
+
         if ( ! defined( 'YAYMAIL_COLOR_BORDER_DEFAULT' ) ) {
             define( 'YAYMAIL_COLOR_BORDER_DEFAULT', '#e5e5e5' );
         }

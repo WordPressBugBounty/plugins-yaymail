@@ -92,6 +92,20 @@ class SocialIcon extends BaseElement {
                     'default_value' => isset( $attributes['style'] ) ? $attributes['style'] : 'Colorful',
                     'type'          => 'style',
                 ],
+                'icon_color'                 => [
+                    'value_path'    => 'icon_color',
+                    'component'     => 'Color',
+                    'title'         => __( 'Icon color', 'yaymail' ),
+                    'default_value' => isset( $attributes['icon_color'] ) ? $attributes['icon_color'] : '#333333',
+                    'type'          => 'style',
+                    'conditions'    => [
+                        'condition_1' => [
+                            'attribute'  => 'theme',
+                            'comparison' => '==',
+                            'value'      => 'Custom',
+                        ],
+                    ],
+                ],
                 'icon_list'                  => [
                     'value_path'    => 'icon_list',
                     'component'     => 'SocialList',

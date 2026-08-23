@@ -69,7 +69,7 @@ class Heading extends BaseElement {
                     'value_path'    => 'background_color',
                     'component'     => 'Color',
                     'title'         => __( 'Background color', 'yaymail' ),
-                    'default_value' => isset( $attributes['background_color'] ) ? $attributes['background_color'] : YAYMAIL_COLOR_WC_DEFAULT,
+                    'default_value' => isset( $attributes['background_color'] ) ? $attributes['background_color'] : yaymail_get_default_brand_color(),
                     'type'          => 'style',
                 ],
                 'border'                     => [

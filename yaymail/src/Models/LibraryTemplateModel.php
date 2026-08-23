@@ -127,7 +127,7 @@ class LibraryTemplateModel {
      * @return array[]
      */
     public static function list_by_email_type( $email_type ) {
-        return array();
+        return [];
     }
 
     /**

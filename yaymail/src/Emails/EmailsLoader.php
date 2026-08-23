@@ -2,8 +2,11 @@
 
 namespace YayMail\Emails;
 
+use YayMail\Utils\Helpers;
 use YayMail\Utils\SingletonTrait;
+use YayMail\Utils\TemplateHelpers;
 use YayMail\YayMailEmails;
+use YayMail\YayMailTemplate;
 
 /**
  * EmailsLoader Class
@@ -61,14 +64,72 @@ class EmailsLoader {
         $yaymail_emails->register( \YayMail\Emails\GlobalHeaderFooter::get_instance() );
 
         do_action( 'yaymail_register_emails', $yaymail_emails );
+
+        $this->register_subject_shortcode_filters( $yaymail_emails );
+    }
+
+    /**
+     * Wire one woocommerce_email_subject_{id} filter per registered YayMail email so
+     * YayMail shortcodes typed into the subject resolve at send time.
+     *
+     * @param YayMailEmails $yaymail_emails Registered emails collection.
+     */
+    private function register_subject_shortcode_filters( $yaymail_emails ) {
+        foreach ( $yaymail_emails->get_emails() as $email ) {
+            $email_id = $email->get_id();
+            if ( empty( $email_id ) ) {
+                continue;
+            }
+
+            add_filter(
+                'woocommerce_email_subject_' . $email_id,
+                function( $subject, $object = null ) use ( $email_id ) {
+                    return self::render_subject_shortcodes( $subject, $object, $email_id );
+                },
+                10,
+                2
+            );
+        }
+    }
+
+    /**
+     * Resolve YayMail shortcodes in a subject, but only when the email's YayMail
+     * template is active. Uses real order context only - never the sample-data
+     * fallback - so a real outgoing subject never leaks placeholder values.
+     *
+     * @param string $subject  Subject after WooCommerce format_string().
+     * @param mixed  $object    Email object; a WC_Order for order emails.
+     * @param string $email_id  WooCommerce email id (also the YayMail template name).
+     * @return string
+     */
+    public static function render_subject_shortcodes( $subject, $object, $email_id ) {
+        if ( ! is_string( $subject ) || false === strpos( $subject, '[' ) ) {
+            return $subject;
+        }
+
+        $template = new YayMailTemplate( $email_id );
+        if ( ! $template->is_enabled() ) {
+            return $subject;
+        }
+
+        $order         = ( $object instanceof \WC_Order ) ? $object : null;
+        $executor_data = [
+            'template'       => $template,
+            'render_data'    => $order ? [ 'order' => $order ] : [],
+            'settings'       => yaymail_settings(),
+            // Real send: resolve to actual values, never editor placeholder tokens.
+            'is_placeholder' => false,
+        ];
+
+        return TemplateHelpers::process_email_subject( $subject, $template, $executor_data );
     }
 
     public function before_email_content( $template ) {
-        include YAYMAIL_PLUGIN_PATH . 'templates/emails/before-email-content.php';
+        include Helpers::get_plugin_path() . 'templates/emails/before-email-content.php';
     }
 
     public function after_email_content( $template ) {
-        include YAYMAIL_PLUGIN_PATH . 'templates/emails/after-email-content.php';
+        include Helpers::get_plugin_path() . 'templates/emails/after-email-content.php';
     }
 
     public function filter_safe_style_css( $default_array ) {

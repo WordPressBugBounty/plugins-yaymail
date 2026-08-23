@@ -68,7 +68,7 @@ class NewUsersShortcodes extends BaseShortcode {
             /**
              * Is sample order
              */
-            $url = wc_customer_edit_account_url();
+            $url = function_exists( 'wc_customer_edit_account_url' ) ? wc_customer_edit_account_url() : wp_login_url();
 
             return wp_kses_post( "<a href='$url'> $text_link </a>" );
         }
@@ -91,7 +91,7 @@ class NewUsersShortcodes extends BaseShortcode {
             /**
              * Is sample order
              */
-            return esc_url( wc_customer_edit_account_url() );
+            return esc_url( function_exists( 'wc_customer_edit_account_url' ) ? wc_customer_edit_account_url() : wp_login_url() );
         }
 
         return ! empty( $render_data['set_password_url'] ) ? $render_data['set_password_url'] : '';

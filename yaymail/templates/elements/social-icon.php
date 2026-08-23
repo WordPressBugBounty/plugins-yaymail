@@ -2,6 +2,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
+use YayMail\SocialIcons\SocialIconEndpoint;
 use YayMail\Utils\TemplateHelpers;
 
 if ( empty( $args['element'] ) ) {
@@ -32,6 +33,15 @@ $theme = [
     'SolidDark'  => 'solid-dark',
     'SolidLight' => 'solid-light',
 ];
+
+$is_custom_theme = isset( $data['theme'] ) && 'Custom' === $data['theme'];
+$icon_color      = isset( $data['icon_color'] ) ? $data['icon_color'] : '#333333';
+// Resolve global preset paths (presets/...) to hex BEFORE building the image URL.
+// Otherwise TemplateRenderer's post-pass replaces the path with "#rrggbb" inside the
+// query string, and the "#" truncates the URL as a fragment.
+$icon_color  = TemplateHelpers::replace_color_paths( $icon_color );
+$icon_size   = isset( $data['width_icon'] ) ? absint( $data['width_icon'] ) : 24;
+$render_size = max( 32, min( 256, $icon_size * 2 ) );
 
 // Handle table alignment
 $table_margin = '0 auto';
@@ -78,14 +88,19 @@ ob_start();
         <td style="text-align: <?php echo esc_attr( $data['align'] ?? 'center' ); ?>;">
         <?php foreach ( $data['icon_list'] as $key => $el ) : ?>
             <?php
-            $img_url     = YAYMAIL_PLUGIN_URL . 'assets/images/social-icons/' . $el['icon'] . '/' . $theme[ $data['theme'] ] . '.png';
+            if ( $is_custom_theme ) {
+                $img_url = SocialIconEndpoint::get_url( $el['icon'], $icon_color, $render_size );
+            } else {
+                $theme_slug = $theme[ $data['theme'] ] ?? 'colorful';
+                $img_url    = YAYMAIL_PLUGIN_URL . 'assets/images/social-icons/' . $el['icon'] . '/' . $theme_slug . '.png';
+            }
             $first_index = ( 'rtl' === $direction_rtl ) ? count( $data['icon_list'] ) - 1 : 0;
             $spacing     = ( $first_index === $key ) ? '0px' : $data['spacing'] . 'px';
             $text_align  = isset( $data['align'] ) ? $data['align'] : 'center';
             ?>
             <span class="yaymail-social-icon-item" style="<?php echo esc_attr( $item_style ); ?>">
                 <a href="<?php echo esc_attr( do_shortcode( $el['url'] ) ); ?>" target="_blank" style="<?php echo esc_attr( $a_style ); ?>">
-                    <img border="0" tabindex="0" src="<?php echo esc_attr( $img_url ); ?>" height="<?php echo esc_attr( $data['width_icon'] ); ?>" width="<?php echo esc_attr( $data['width_icon'] ); ?>" style="display: block; border: 0; margin: 0; padding: 0; outline: none;" />
+                    <img border="0" tabindex="0" src="<?php echo esc_url( $img_url ); ?>" height="<?php echo esc_attr( $data['width_icon'] ); ?>" width="<?php echo esc_attr( $data['width_icon'] ); ?>" style="display: block; border: 0; margin: 0; padding: 0; outline: none;" />
                 </a>
             </span>
         <?php endforeach; ?>

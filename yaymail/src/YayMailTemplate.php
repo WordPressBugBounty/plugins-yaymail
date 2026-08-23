@@ -126,6 +126,9 @@ class YayMailTemplate {
     public function is_enabled() {
         // Check if YayMail core is migrated
         // If not, consider template is not activated
+        if ( ! defined( 'YAYMAIL_VERSION' ) ) {
+            return $this->get_status() === 'active';
+        }
         $old_version = get_option( 'yaymail_version' );
         if ( $old_version && version_compare( $old_version, '4.0.0', '<' ) ) {
             return false;

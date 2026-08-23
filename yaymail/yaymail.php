@@ -3,17 +3,17 @@
  * Plugin Name: YayMail - WooCommerce Email Customizer
  * Plugin URI: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
  * Description: Create awesome transactional emails with a drag and drop email builder
- * Version: 4.4.2
+ * Version: 4.4.3
  * Author: YayCommerce
  * Author URI: https://yaycommerce.com
  * License:     GPLv2 or later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Text Domain: yaymail
  * Requires at least: 4.7
- * Tested up to: 7.0
+ * Tested up to: 7.1
  * Requires PHP: 5.4
  * WC requires at least: 3.0.0
- * WC tested up to: 10.7.0
+ * WC tested up to: 11.0.0
  * Domain Path: /i18n/languages/
  *
  * @package YayMail
@@ -32,7 +32,7 @@ if ( ! defined( 'YAYMAIL_DEBUG' ) ) {
 }
 
 if ( ! defined( 'YAYMAIL_VERSION' ) ) {
-    define( 'YAYMAIL_VERSION', '4.4.2' );
+    define( 'YAYMAIL_VERSION', '4.4.3' );
 }
 
 if ( ! defined( 'YAYMAIL_PLUGIN_URL' ) ) {
@@ -57,6 +57,12 @@ if ( ! defined( 'YAYMAIL_REST_NAMESPACE' ) ) {
 
 if ( ! defined( 'YAYMAIL_MENU_PRIORITY' ) ) {
     define( 'YAYMAIL_MENU_PRIORITY', 100 );
+}
+
+// Lite customizer JS expects a single { global_header_elements, global_footer_elements }
+// object, not the multi-language array used by pro. SettingsPage gates on this flag.
+if ( ! defined( 'YAYMAIL_LITE_LEGACY_GHF_SHAPE' ) ) {
+    define( 'YAYMAIL_LITE_LEGACY_GHF_SHAPE', true );
 }
 
 $yaymail_has_required_deps = true;
@@ -107,11 +113,11 @@ spl_autoload_register(
         if ( ! function_exists( 'is_plugin_active' ) ) {
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
-        $yaymail_wp_pro_plugin_file = 'yay-wp-email-customizer-pro/yay-wp-email-customizer.php';
+        $yaymail_wp_pro_plugin_file = 'email-builder-pro/email-builder.php';
         $yaymail_wp_pro_active      = is_plugin_active( $yaymail_wp_pro_plugin_file ) || is_plugin_active_for_network( $yaymail_wp_pro_plugin_file );
 
-        if ( $yaymail_wp_pro_active ) {
-            $core_file = YAYMAIL_WP_PLUGIN_PATH . 'src/' . $relative_path;
+        if ( $yaymail_wp_pro_active && defined( 'YAYWP_PLUGIN_PATH' ) ) {
+            $core_file = YAYWP_PLUGIN_PATH . 'src/' . $relative_path;
         }
 
         if ( file_exists( $core_file ) ) {
@@ -121,11 +127,16 @@ spl_autoload_register(
     true,
     true
 );
+
+// Declare this platform so shared core reads platform-specific values from the
+// registry instead of detecting the platform inline. Registered after the core
+// autoloader above so PlatformRegistry/PlatformInterface resolve, and before Initialize.
+\YayMail\Platform\PlatformRegistry::register( new \YayMail\Platform\YaymailPlatform() );
+
 /**
  * Initialize constants
  */
 Constants\ConstantsHandler::get_instance();
-// Notices\NoticeWPMail::get_instance();
 
 if ( ! function_exists( 'install_yaymail_admin_notice' ) ) {
     function install_yaymail_admin_notice() {
@@ -135,10 +146,10 @@ if ( ! function_exists( 'install_yaymail_admin_notice' ) ) {
         <?php
                 // translators: %s: search WooCommerce plugin link
                 printf( 'YayMail ' . esc_html__( 'is enabled but not effective. It requires %1$sWooCommerce%2$s in order to work.', 'yaymail' ), '<a href="' . esc_url( admin_url( 'plugin-install.php?s=woocommerce&tab=search&type=term' ) ) . '">', '</a>' );
-                ?>
+        ?>
     </p>
 </div>
-<?php
+        <?php
     }
 }
 

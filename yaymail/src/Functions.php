@@ -69,12 +69,6 @@ if ( ! function_exists( 'yaymail_is_wc_installed' ) ) {
     }
 }
 
-if ( ! function_exists( 'yaymail_is_wp_mail_installed' ) ) {
-    function yaymail_is_wp_mail_installed() {
-        return defined( 'YAYMAIL_WP_VERSION' );
-    }
-}
-
 if ( ! function_exists( 'yaymail_version' ) ) {
     function yaymail_version() {
         if ( defined( 'YAYMAIL_VERSION' ) ) {
@@ -119,6 +113,7 @@ if ( ! function_exists( 'yaymail_get_content' ) ) {
 
         // TODO: do later
         ob_start();
+        // nosemgrep: audit.php.lang.security.file.inclusion-arg
         include $path;
         // nosemgrep
         $html = ob_get_contents();
@@ -244,6 +239,12 @@ if ( ! function_exists( 'yaymail_get_email_elements_data' ) ) {
             return [];
         }
 
+        // Not passed as a get_data() argument: ColumnLayout::get_data( $amount, $attributes )
+        // uses that same first/second position for its own params, so any element's
+        // default color must read this out-of-band instead. Scoped to this one request.
+        global $yaymail_current_email_id;
+        $yaymail_current_email_id = $email_id;
+
         $all_elements = yaymail_get_all_elements();
         $result       = [];
 
@@ -293,6 +294,58 @@ if ( ! function_exists( 'yaymail_get_email_elements_data' ) ) {
         }
 
         return $element;
+    }
+}//end if
+
+if ( ! function_exists( 'yaymail_get_default_brand_color' ) ) {
+
+    /**
+     * Default accent color for newly dragged elements (Heading background, Button
+     * background, etc.), matching the frontend's brand color per platform
+     * (constants/theme.ts WP_COLORS vs YAYMAIL_TOKENS.color.wcPurple).
+     *
+     * Element get_data() methods share BaseElement's abstract contract, but
+     * ColumnLayout::get_data( $amount, $attributes ) repurposes that same
+     * position for a non-attributes param -- so the email/template id can't be
+     * threaded through as a get_data() argument without breaking it. Falls back
+     * to the id yaymail_get_email_elements_data() stashed for the current request.
+     *
+     * @param string|null $email_id Email/template id to check; defaults to the
+     *                               current request's when omitted.
+     * @return string Hex color.
+     */
+    function yaymail_get_default_brand_color( $email_id = null ) {
+        if ( null === $email_id ) {
+            global $yaymail_current_email_id;
+            $email_id = $yaymail_current_email_id;
+        }
+        $email_id = (string) $email_id;
+
+        $is_wp_template = 0 === strpos( $email_id, 'wp-core-' ) || 'wp_global_header_footer' === $email_id;
+
+        return $is_wp_template ? YAYMAIL_COLOR_WP_DEFAULT : YAYMAIL_COLOR_WC_DEFAULT;
+    }
+}
+
+if ( ! function_exists( 'yaymail_get_ghf_disallowed_element_types' ) ) {
+
+    /**
+     * Element types that cannot be used in global header/footer.
+     * Derived from the same availability rules as the GHF customizer sidebar.
+     *
+     * @return string[]
+     */
+    function yaymail_get_ghf_disallowed_element_types() {
+        $elements = yaymail_get_email_elements_data( 'yaymail_global_header_footer' );
+
+        $disallowed = [];
+        foreach ( $elements as $element ) {
+            if ( empty( $element['available'] ) && ! empty( $element['type'] ) ) {
+                $disallowed[] = $element['type'];
+            }
+        }
+
+        return array_values( array_unique( $disallowed ) );
     }
 }//end if
 
@@ -352,6 +405,29 @@ if ( ! function_exists( 'yaymail_get_logger' ) ) {
         $logger->log_exception_message( new \Exception( $message ), $log_type, $additional_data );
     }
 }
+
+if ( ! function_exists( 'yaymail_get_attachment_image_url' ) ) {
+
+    /**
+     * Safely resolve an attachment image URL.
+     *
+     * Returns '' for an empty id or a dangling/deleted attachment (where
+     * wp_get_attachment_image_src() returns false). Never throws, so a missing
+     * image degrades gracefully instead of breaking the request that triggered
+     * rendering (e.g. WooCommerce checkout).
+     *
+     * @param int|string $image_id Attachment ID.
+     * @param string     $size     Registered image size.
+     * @return string Image URL or '' when unavailable.
+     */
+    function yaymail_get_attachment_image_url( $image_id, $size = 'full' ) {
+        if ( empty( $image_id ) ) {
+            return '';
+        }
+        $image = wp_get_attachment_image_src( $image_id, $size );
+        return ( is_array( $image ) && ! empty( $image[0] ) ) ? $image[0] : '';
+    }
+}//end if
 
 if ( ! function_exists( 'yaymail_get_wc_email_settings' ) ) {
     /**

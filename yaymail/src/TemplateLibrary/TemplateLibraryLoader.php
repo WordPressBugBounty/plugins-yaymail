@@ -3,6 +3,7 @@
 namespace YayMail\TemplateLibrary;
 
 use YayMail\Abstracts\BaseTemplate;
+use YayMail\Utils\Helpers;
 use YayMail\Utils\SingletonTrait;
 
 /**
@@ -26,7 +27,7 @@ class TemplateLibraryLoader {
      */
     protected function load_templates_from_directory() {
         $template_library_service = TemplateLibraryService::get_instance();
-        $templates_base_path      = YAYMAIL_PLUGIN_PATH . '/src/TemplateLibrary/Templates';
+        $templates_base_path      = Helpers::get_plugin_path() . '/src/TemplateLibrary/Templates';
         $templates_base_namespace = 'YayMail\\TemplateLibrary\\Templates';
 
         if ( ! is_dir( $templates_base_path ) ) {

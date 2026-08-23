@@ -8,6 +8,7 @@ use YayMail\Elements\Heading;
 use YayMail\Elements\Logo;
 use YayMail\Elements\Text;
 use YayMail\Elements\Footer;
+use YayMail\Integrations\TranslationModule;
 use YayMail\YayMailTemplate;
 use YayMail\Utils\SingletonTrait;
 use YayMail\PostTypes\TemplatePostType;
@@ -375,16 +376,18 @@ class TemplateModel {
      * - 'global_header_elements': array.
      * - 'global_footer_elements': array.
      */
-    public static function get_global_header_and_footer() {
+    public static function get_global_header_and_footer( $language = '', $template_name = 'yaymail_global_header_footer' ) {
         $query_args  = [
-            'name' => 'yaymail_global_header_footer',
+            'name'     => $template_name,
+            'language' => in_array( $language, [ 'en', 'en_US' ], true ) ? '' : $language,
         ];
         $template_id = self::query_template( $query_args );
         if ( empty( $template_id ) ) {
             self::insert(
                 [
-                    'name'     => 'yaymail_global_header_footer',
-                    'elements' => yaymail_get_default_elements( 'yaymail_global_header_footer' ),
+                    'name'     => $template_name,
+                    'elements' => yaymail_get_default_elements( $template_name ),
+                    'language' => $language,
                 ]
             );
             $template_id = self::query_template( $query_args );
@@ -414,6 +417,41 @@ class TemplateModel {
             'global_header_elements' => $global_header_elements,
             'global_footer_elements' => $global_footer_elements,
         ];
+    }
+
+    public static function get_global_headers_and_footers_for_all_available_languages( $template_name = 'yaymail_global_header_footer' ) {
+        $multi_languages_instances = TranslationModule::get_instance()->current_integration;
+
+        if ( ! empty( $multi_languages_instances ) ) {
+            $languages = $multi_languages_instances->get_available_languages();
+        } else {
+            $languages = [ [ 'code' => 'en' ] ];
+        }
+
+        /**
+         * Each language should have 3 fields: code, name, flag
+         *
+         * @Example [
+         *              code: 'en',
+         *              name: 'English',
+         *              flag: 'http://localhost:8080/wp-content/plugins/sitepress-multilingual-cms/res/flags/en.svg'
+         *          ]
+         */
+        $result = array_map(
+            function ( $language ) use ( $template_name ) {
+                $code                     = isset( $language['code'] ) ? $language['code'] : '';
+                $global_header_and_footer = self::get_global_header_and_footer( 'en' !== $code ? $code : '', $template_name );
+
+                return [
+                    'language'               => $code,
+                    'global_header_elements' => $global_header_and_footer['global_header_elements'] ? $global_header_and_footer['global_header_elements'] : [],
+                    'global_footer_elements' => $global_header_and_footer['global_footer_elements'] ? $global_header_and_footer['global_footer_elements'] : [],
+                ];
+            },
+            $languages
+        );
+
+        return array_values( $result );
     }
 
     /**
@@ -446,8 +484,8 @@ class TemplateModel {
             $title_color              = self::query_meta_data( $template_post_id, self::$meta_keys['title_color'], YayMailTemplate::DEFAULT_DATA['title_color'] );
             $content_background_color = self::query_meta_data( $template_post_id, self::$meta_keys['content_background_color'], YayMailTemplate::DEFAULT_DATA['content_background_color'] );
             $content_text_color       = self::query_meta_data( $template_post_id, self::$meta_keys['content_text_color'], YayMailTemplate::DEFAULT_DATA['content_text_color'] );
-            $global_header_settings   = self::query_meta_data( $template_post_id, self::$meta_keys['global_header_settings'], YayMailTemplate::DEFAULT_DATA['global_header_settings'] );
-            $global_footer_settings   = self::query_meta_data( $template_post_id, self::$meta_keys['global_footer_settings'], YayMailTemplate::DEFAULT_DATA['global_footer_settings'] );
+            $global_header_settings   = self::query_meta_data( $template_post_id, self::$meta_keys['global_header_settings'], self::get_default_global_header_settings() );
+            $global_footer_settings   = self::query_meta_data( $template_post_id, self::$meta_keys['global_footer_settings'], self::get_default_global_footer_settings() );
             $preheader                = self::query_meta_data( $template_post_id, self::$meta_keys['preheader'], YayMailTemplate::DEFAULT_DATA['preheader'] );
         }
 
@@ -528,7 +566,23 @@ class TemplateModel {
     }
 
 
-    private static function query_meta_data( $post_id, $meta_name, $default ) {
+    private static function get_default_global_footer_settings(): array {
+        $default = YayMailTemplate::DEFAULT_DATA['global_footer_settings'];
+        if ( ! function_exists( 'WC' ) ) {
+            $default['footer_content'] = '<p style="font-size: 14px;margin: 0px 0px 16px; text-align: center;">[yaymail_site_name]</p>';
+        }
+        return apply_filters( 'yaymail_default_global_footer_settings', $default );
+    }
+
+    private static function get_default_global_header_settings(): array {
+        $default = YayMailTemplate::DEFAULT_DATA['global_header_settings'];
+        if ( ! function_exists( 'WC' ) ) {
+            $default['heading_content'] = '<h1 style="font-size: 30px; font-weight: 300; line-height: normal; margin: 0px; color: inherit;">[yaymail_site_name]</h1>';
+        }
+        return apply_filters( 'yaymail_default_global_header_settings', $default );
+    }
+
+    protected static function query_meta_data( $post_id, $meta_name, $default ) {
         if ( ! isset( $post_id ) ) {
             return $default;
         }
@@ -574,12 +628,15 @@ class TemplateModel {
     public static function get_elements_for_template( $template_id ): array {
         $support_info = SupportedPlugins::get_instance()->get_support_info( $template_id );
         if ( $support_info['status'] !== 'already_supported' ) {
-            $elements = array_map(
+            // 'new_order' only exists on WooCommerce sites; fall back to the WP-core
+            // email so unsupported templates still resolve an elements catalog.
+            $fallback_email_id = yaymail_get_email( 'new_order' ) ? 'new_order' : 'wp-core-mail';
+            $elements          = array_map(
                 function( $element ) {
                     $element['available'] = false;
                     return $element;
                 },
-                yaymail_get_email_elements_data( 'new_order' )
+                yaymail_get_email_elements_data( $fallback_email_id )
             );
             return $elements;
         }

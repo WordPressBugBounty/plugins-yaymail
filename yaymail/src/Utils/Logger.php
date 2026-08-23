@@ -115,8 +115,12 @@ class Logger {
     }
 
     /**
-     * Logs an exception message and sends a JSON error response.
-     * Message will display in folder wp-content/yaymail-logs
+     * Logs an exception message to wp-content/yaymail-logs and returns.
+     *
+     * Does not terminate the request: rendering can be triggered inside another
+     * plugin's request (e.g. WooCommerce checkout AJAX), where dying would break
+     * the host response. Callers that need to abort (YayMail's own AJAX endpoints)
+     * must call wp_send_json_error() themselves.
      */
     public function log_exception_message( $ex, $log_type = 'error', $additional_data = null ) {
         $prefix = ( $log_type === 'warning' ) ? __( 'WARNING:', 'yaymail' ) : __( 'SYSTEM ERROR:', 'yaymail' );
@@ -136,10 +140,5 @@ class Logger {
         }
 
         $this->log( $message );
-
-        // Only send JSON response for errors, not for warnings
-        if ( $log_type === 'error' ) {
-            wp_send_json_error( [ 'mess' => $message ] );
-        }
     }
 }

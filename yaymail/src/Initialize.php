@@ -1,6 +1,7 @@
 <?php
 namespace YayMail;
 
+use YayMail\Utils\Helpers;
 use YayMail\Elements\ElementsLoader;
 use YayMail\Emails\EmailsLoader;
 use YayMail\Engine\ActDeact;
@@ -14,6 +15,7 @@ use YayMail\TemplatePatterns\PatternsLoader;
 use YayMail\TemplatePatterns\SectionTemplatesLoader;
 use YayMail\PreviewEmail\PreviewEmailsLoader;
 use YayMail\Notices\NoticeMain;
+use YayMail\SocialIcons\SocialIconEndpoint;
 use YayMail\TemplateLibrary\LibraryTemplateSchema;
 use YayMail\TemplateLibrary\TemplateLibraryLoader;
 /**
@@ -49,7 +51,7 @@ class Initialize {
     }
 
     public function init_core() {
-        require_once YAYMAIL_PLUGIN_PATH . 'src/Functions.php';
+        require_once Utils\Helpers::get_plugin_path() . 'src/Functions.php';
         do_action( 'yaymail_init_start' );
 
         /**
@@ -100,8 +102,16 @@ class Initialize {
 
         SectionTemplatesLoader::get_instance();
         PatternsLoader::get_instance();
-        TemplateLibraryLoader::get_instance();
-        LibraryTemplateSchema::maybe_create_table();
+
+        // Template Library only ships WooCommerce order-email designs (Completed,
+        // RefundedOrder, NewOrder, ...). Skip its directory scan/class instantiation
+        // (41 files, ~23k lines) and the per-request "SHOW TABLES" check when
+        // WooCommerce isn't active -- it noticeably slows down every admin page load
+        // on WP-only (email-builder) sites for a feature they can't use.
+        if ( yaymail_is_wc_installed() ) {
+            TemplateLibraryLoader::get_instance();
+            LibraryTemplateSchema::maybe_create_table();
+        }
 
         /**
          * Initialize rest api
@@ -121,6 +131,33 @@ class Initialize {
          */
         NoticeMain::get_instance();
 
+        /**
+         * Social icon dynamic tint endpoint
+         */
+        SocialIconEndpoint::get_instance();
+
         do_action( 'yaymail_loaded' );
+    }
+
+    public function current_yaymail_version() {
+        $version = 'yaymail/yaymail.php';
+        if ( ! function_exists( 'is_plugin_active' ) ) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+
+        $yaymail_files = [
+            'yaymail/yaymail.php',
+            'yaymail-pro/yaymail.php',
+            'email-customizer-for-woocommerce/yaymail.php',
+        ];
+
+        foreach ( $yaymail_files as $file ) {
+            if ( is_plugin_active( $file ) || is_plugin_active_for_network( $file ) ) {
+                $version = $file;
+                break;
+            }
+        }
+
+        return $version;
     }
 }

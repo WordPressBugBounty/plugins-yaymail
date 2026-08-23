@@ -32,12 +32,16 @@ class SettingsPage {
      * Initialize hooks when class init
      */
     protected function init_hooks() {
-        // Submenu is registered by YayCommerce AdminShell (YaymailPluginAdapter); keep hook id for enqueue/screen checks.
-        if ( defined( 'YAYMAIL_PREFIX' ) ) {
-            $this->yaymail_hook_surfix = 'yaycommerce_page_' . YAYMAIL_PREFIX . '-settings';
+        // Submenu is registered by YayCommerce AdminShell; keep each platform's
+        // settings-screen hook id (sourced from the registered platform) for the
+        // enqueue/screen checks below.
+        $yaymail_platform = \YayMail\Platform\PlatformRegistry::get( 'yaymail' );
+        if ( $yaymail_platform ) {
+            $this->yaymail_hook_surfix = $yaymail_platform->hook_suffix();
         }
-        if ( defined( 'YAYMAIL_WP_VERSION' ) ) {
-            $this->yay_wp_hook_surfix = 'yaycommerce_page_yay-wp-email-customizer-settings';
+        $wp_platform = \YayMail\Platform\PlatformRegistry::get( 'email-builder' );
+        if ( $wp_platform ) {
+            $this->yay_wp_hook_surfix = $wp_platform->hook_suffix();
         }
         add_action( 'admin_enqueue_scripts', [ $this, 'admin_enqueue_scripts' ], 30 );
         add_filter( 'mce_external_plugins', [ $this, 'register_wp_editor_plugins_script' ] );
@@ -56,14 +60,20 @@ class SettingsPage {
      * Enqueue scripts using in settings page
      */
     public function register_wp_editor_plugins_script( $plugin_array ) {
+        $plugin_url       = YAYMAIL_PLUGIN_URL;
+        $screen           = get_current_screen();
+        $yaymail_platform = \YayMail\Platform\PlatformRegistry::get( 'yaymail' );
+        if ( ( ! $yaymail_platform || ! $screen || $screen->id !== $yaymail_platform->hook_suffix() ) && defined( 'YAYWP_PLUGIN_URL' ) ) {
+            $plugin_url = YAYWP_PLUGIN_URL;
+        }
 
-        $plugin_array['advlist']        = YAYMAIL_PLUGIN_URL . 'assets/scripts/wp-editor-plugins/advlist/plugin.min.js';
-        $plugin_array['autolink']       = YAYMAIL_PLUGIN_URL . 'assets/scripts/wp-editor-plugins/autolink/plugin.min.js';
-        $plugin_array['searchreplace']  = YAYMAIL_PLUGIN_URL . 'assets/scripts/wp-editor-plugins/searchreplace/plugin.min.js';
-        $plugin_array['code']           = YAYMAIL_PLUGIN_URL . 'assets/scripts/wp-editor-plugins/code/plugin.min.js';
-        $plugin_array['visualblocks']   = YAYMAIL_PLUGIN_URL . 'assets/scripts/wp-editor-plugins/visualblocks/plugin.min.js';
-        $plugin_array['table']          = YAYMAIL_PLUGIN_URL . 'assets/scripts/wp-editor-plugins/table/plugin.min.js';
-        $plugin_array['insertdatetime'] = YAYMAIL_PLUGIN_URL . 'assets/scripts/wp-editor-plugins/insertdatetime/plugin.min.js';
+        $plugin_array['advlist']        = $plugin_url . 'assets/scripts/wp-editor-plugins/advlist/plugin.min.js';
+        $plugin_array['autolink']       = $plugin_url . 'assets/scripts/wp-editor-plugins/autolink/plugin.min.js';
+        $plugin_array['searchreplace']  = $plugin_url . 'assets/scripts/wp-editor-plugins/searchreplace/plugin.min.js';
+        $plugin_array['code']           = $plugin_url . 'assets/scripts/wp-editor-plugins/code/plugin.min.js';
+        $plugin_array['visualblocks']   = $plugin_url . 'assets/scripts/wp-editor-plugins/visualblocks/plugin.min.js';
+        $plugin_array['table']          = $plugin_url . 'assets/scripts/wp-editor-plugins/table/plugin.min.js';
+        $plugin_array['insertdatetime'] = $plugin_url . 'assets/scripts/wp-editor-plugins/insertdatetime/plugin.min.js';
 
         return $plugin_array;
     }
@@ -86,7 +96,8 @@ class SettingsPage {
      * Register localize data
      */
     public function localize_js_vars() {
-        $screen = get_current_screen();
+        $screen           = get_current_screen();
+        $current_platform = \YayMail\Platform\PlatformRegistry::from_screen( $screen );
         if ( $screen->id === $this->yaymail_hook_surfix ) {
             $_wc_emails = wc()->mailer()->emails;
 
@@ -166,25 +177,48 @@ class SettingsPage {
                             '"Outfit", "DM Sans", sans-serif',
                             '"Kodchasan", system-ui, sans-serif',
                             '"Fraunces", serif',
+                            '"Rethink Sans","Helvetica Neue",Helvetica,Roboto,Arial,sans-serif',
                         ],
                         'social_icons'           => Localize::get_social_icons_data(),
                         'revision_limit'         => RevisionController::YAYMAIL_TEMPLATE_REVISION_LIMIT,
-                        'global_headers_footers' => Localize::get_global_headers_footers(),
+                        // Two compiled JS bundles still read global_headers_footers as a single
+                        // legacy { global_header_elements, global_footer_elements } object rather
+                        // than the per-language array Localize::get_global_headers_footers()
+                        // returns: (1) the "email-builder" (WP core mail) bundle -- confirmed
+                        // byte-identical to the free "yaymail" lite bundle, it never received the
+                        // multi-language upgrade -- and (2) the "yaymail" lite bundle itself when
+                        // YAYMAIL_LITE_LEGACY_GHF_SHAPE is set. The paid yaymail-pro /
+                        // email-customizer-for-woocommerce variants already expect the array.
+                        // Feeding the array shape to a legacy bundle leaves globalHeaderElements/
+                        // globalFooterElements undefined and crashes the customizer with "Cannot
+                        // read properties of undefined (reading 'find')"; feeding the legacy shape
+                        // to an array-expecting bundle breaks it with "global_headers_footers.find
+                        // is not a function". Keep both conditions -- don't collapse into version
+                        // checks, they gate an unrelated concern (see YAYWP_HOSTS_CORE above).
+                        'global_headers_footers' => ( $current_platform && (
+                            'email-builder' === $current_platform->key()
+                            || ( 'yaymail' === $current_platform->key() && defined( 'YAYMAIL_LITE_LEGACY_GHF_SHAPE' ) && YAYMAIL_LITE_LEGACY_GHF_SHAPE )
+                        ) )
+                            ? \YayMail\Models\TemplateModel::get_global_header_and_footer( '', $current_platform->ghf_option_key() )
+                            : Localize::get_global_headers_footers(
+                                $current_platform ? $current_platform->ghf_option_key() : 'yaymail_global_header_footer'
+                            ),
                         'section_templates'      => SectionTemplateService::get_instance()->get_list_data(),
                         'patterns'               => PatternService::get_instance()->get_list_data(),
                     ],
                     'colors'                         => [
                         'default_background_color'         => YAYMAIL_COLOR_BACKGROUND_DEFAULT,
-                        'default_text_link_color'          => YAYMAIL_COLOR_WC_DEFAULT,
+                        'default_text_link_color'          => ( $current_platform && 'email-builder' === $current_platform->key() ) ? YAYMAIL_COLOR_WP_DEFAULT : YAYMAIL_COLOR_WC_DEFAULT,
                         'default_content_background_color' => YAYMAIL_COLOR_CONTENT_BACKGROUND_DEFAULT,
                         'default_content_text_color'       => YAYMAIL_COLOR_CONTENT_TEXT_DEFAULT,
-                        'default_title_color'              => YAYMAIL_COLOR_TITLE_DEFAULT,
+                        'default_title_color'              => ( $current_platform && 'email-builder' === $current_platform->key() ) ? YAYMAIL_COLOR_WP_DEFAULT : YAYMAIL_COLOR_TITLE_DEFAULT,
                     ],
                     'smtp'                           => [
                         'link_detail' => self_admin_url( 'plugin-install.php?tab=plugin-information&plugin=yaysmtp&section=description&TB_iframe=true&width=600&height=800' ),
                         'setting'     => admin_url( 'admin.php?page=yaysmtp' ),
                         'is_active'   => Helpers::check_plugin_installed( 'yaysmtp/yay-smtp.php' ) || Helpers::check_plugin_installed( 'yaysmtp-pro/yay-smtp.php' ),
                     ],
+                    'translate_integrations'         => Localize::get_translate_integrations(),
                     'reviewed'                       => boolval( get_option( 'yaymail_review' ) ),
                     'ghf_tour'                       => get_option( 'yaymail_ghf_tour', 'initial' ),
                     'test_email_address'             => get_option( 'yaymail_default_email_test', wp_get_current_user()->user_email ),
@@ -195,7 +229,8 @@ class SettingsPage {
                     'supported_plugins'              => SupportedPlugins::get_instance()->get_slug_name_supported_plugins(),
                     'show_multi_select_notice'       => get_option( 'yaymail_show_multi_select_notice', 'yes' ),
                     'viewed_new_elements'            => ! empty( get_option( 'yaymail_viewed_new_elements', [] ) ) ? get_option( 'yaymail_viewed_new_elements' ) : [],
-                    'platform'                       => $screen->id === $this->yay_wp_hook_surfix ? 'email-builder' : 'yaymail',
+                    'ghf_disallowed_element_types'   => yaymail_get_ghf_disallowed_element_types(),
+                    'platform'                       => $current_platform ? $current_platform->key() : 'yaymail',
                     'woocommerce_email_styles'       => $this->get_scoped_woocommerce_email_styles(),
                 ],
                 apply_filters( 'yaymail_additional_localized_variables', [] )

@@ -117,6 +117,7 @@ $column_width_percents = $yaymail_step_marker_presets[ $preset_key ]['widths'];
                                         'width'           => $icon_size . 'px',
                                         'height'          => $icon_size . 'px',
                                         'opacity'         => $is_step_active ? '1' : '0.55',
+                                        'object-fit'      => 'contain',
                                     ]
                                 );
 

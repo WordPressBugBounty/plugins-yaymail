@@ -108,7 +108,7 @@ class Button extends BaseElement {
                     [
                         'value_path'    => 'button_background_color',
                         'title'         => __( 'Background color', 'yaymail' ),
-                        'default_value' => YAYMAIL_COLOR_WC_DEFAULT,
+                        'default_value' => yaymail_get_default_brand_color(),
                     ]
                 ),
                 'text_color'                      => ElementsHelper::get_color(

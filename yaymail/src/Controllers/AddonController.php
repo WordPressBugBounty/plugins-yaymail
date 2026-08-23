@@ -90,7 +90,10 @@ class AddonController extends BaseController {
      * @return array<string, array<string, mixed>>
      */
     private function filter_addons_by_platform( array $data, string $platform ): array {
-        $is_yaymail = ( $platform === 'yaymail' ) ? true : false;
+        // Unknown/absent platform falls through to the WordPress catalog, matching
+        // the prior exact-match behavior ( $platform === 'yaymail' ).
+        $platform_obj = '' !== $platform ? \YayMail\Platform\PlatformRegistry::get( $platform ) : null;
+        $is_yaymail   = $platform_obj ? $platform_obj->is_woo_product() : false;
 
         return array_filter(
             $data,

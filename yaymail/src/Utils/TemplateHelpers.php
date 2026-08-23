@@ -3,6 +3,7 @@
 namespace YayMail\Utils;
 
 use YayMail\Constants\AttributesData;
+use YayMail\Constants\TemplatesData;
 use YayMail\Shortcodes\ShortcodesExecutor;
 use YayMail\YayMailTemplate;
 
@@ -422,6 +423,43 @@ class TemplateHelpers {
     }
 
     /**
+     * Ensure each nested element has parentId pointing to its direct parent.
+     * Root-level elements have no parentId (customizer "Select parent" relies on this).
+     *
+     * @param array       $elements  Template elements tree.
+     * @param string|null $parent_id Parent element id for direct children.
+     * @return array
+     */
+    public static function normalize_elements_parent_ids( $elements, $parent_id = null ) {
+        if ( ! is_array( $elements ) ) {
+            return [];
+        }
+
+        $normalized = [];
+
+        foreach ( $elements as $element ) {
+            if ( ! is_array( $element ) ) {
+                continue;
+            }
+
+            if ( null !== $parent_id && '' !== $parent_id ) {
+                $element['parentId'] = $parent_id;
+            } else {
+                unset( $element['parentId'] );
+            }
+
+            if ( ! empty( $element['children'] ) && is_array( $element['children'] ) ) {
+                $child_parent_id     = isset( $element['id'] ) ? $element['id'] : null;
+                $element['children'] = self::normalize_elements_parent_ids( $element['children'], $child_parent_id );
+            }
+
+            $normalized[] = $element;
+        }
+
+        return $normalized;
+    }
+
+    /**
      * Append invisible characters so inbox clients do not pull body text into the preview line.
      *
      * @param string $preheader     Visible preheader text.
@@ -489,6 +527,43 @@ class TemplateHelpers {
     }
 
     /**
+     * Render YayMail shortcodes inside an email subject at send time.
+     *
+     * Twin of process_email_preheader: registers the template shortcodes with the
+     * given render context, then resolves them. Output is forced to a single
+     * plain-text line because subjects must not contain HTML/markup that some
+     * shortcodes (e.g. order details) emit.
+     *
+     * @param string          $subject  Raw subject after WooCommerce format_string().
+     * @param YayMailTemplate $template Email template.
+     * @param array           $args     Shortcode executor data (template, render_data, settings, ...).
+     * @return string Subject with YayMail shortcodes resolved.
+     */
+    public static function process_email_subject( $subject, $template, $args = [] ) {
+        $subject = (string) $subject;
+
+        // Cheap guard: nothing to resolve when there is no shortcode marker.
+        if ( '' === $subject || false === strpos( $subject, '[' ) || ! $template instanceof YayMailTemplate ) {
+            return $subject;
+        }
+
+        $template_name = $template->get_name();
+        if ( ! $template_name ) {
+            return $subject;
+        }
+
+        $shortcodes = yaymail_get_email_shortcodes( $template_name );
+        new ShortcodesExecutor( $shortcodes, $args );
+
+        // $remove_breaks = true collapses newlines so multi-line shortcode output stays a single subject line.
+        $subject = trim( wp_strip_all_tags( do_shortcode( $subject ), true ) );
+
+        // Extension point: no shortcode restriction by default; lets integrators trim length,
+        // blank structural shortcodes, etc. $args carries template + render_data (incl. order).
+        return apply_filters( 'yaymail_email_subject', $subject, $template, $args );
+    }
+
+    /**
      * Output hidden preheader row at the top of the email body (Woo block-editor style).
      *
      * @param YayMailTemplate $template    Email template.
@@ -501,7 +576,7 @@ class TemplateHelpers {
 
         $template_name = $template->get_name();
 
-        if ( str_starts_with( $template_name, 'pattern_' ) || 'yaymail_global_header_footer' === $template_name ) {
+        if ( str_starts_with( $template_name, 'pattern_' ) || in_array( $template_name, TemplatesData::GLOBAL_HEADER_FOOTER_TEMPLATE_IDS, true ) ) {
             return;
         }
 
