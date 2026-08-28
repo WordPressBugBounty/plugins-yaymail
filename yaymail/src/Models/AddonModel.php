@@ -1600,28 +1600,43 @@ class AddonModel {
         $data = apply_filters( 'yaymail_addon_supported_plugins', $data );
 
         foreach ( array_keys( $data ) as $namespace ) {
-            $data[ $namespace ]['installation_status']              = [];
-            $data[ $namespace ]['installation_status']['is_active'] = function_exists( $namespace . '\init' ) || function_exists( $namespace . '\addon_init' );
-        }
-
-        require_once ABSPATH . 'wp-admin/includes/plugin-install.php';
-        require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-        require_once ABSPATH . 'wp-admin/includes/class-wp-ajax-upgrader-skin.php';
-        require_once ABSPATH . 'wp-admin/includes/class-plugin-upgrader.php';
-
-        foreach ( $data as $namespace => $addon ) {
+            $data[ $namespace ]['installation_status']                 = [];
+            $data[ $namespace ]['installation_status']['is_active']    = function_exists( $namespace . '\init' ) || function_exists( $namespace . '\addon_init' );
             $data[ $namespace ]['installation_status']['is_installed'] = false;
-            if ( isset( $addon['plugin_slug'] ) ) {
-                $plugin_status = \install_plugin_install_status(
-                    [
-                        'slug'    => $addon['plugin_slug'],
-                        'version' => '',
-                    ]
-                );
-                $data[ $namespace ]['installation_status']['is_installed'] = $plugin_status['file'] !== false;
-                $data[ $namespace ]['installation_status']['plugin_file']  = $plugin_status['file'];
-            }
         }
+
+        // Storefront only needs addon metadata. Plugin-install APIs belong in wp-admin / REST.
+        // install_plugin_install_status() also warns on PHP 8+ when update_plugins entries lack `slug`.
+        $needs_install_check = is_admin() || ( defined( 'REST_REQUEST' ) && REST_REQUEST );
+
+        if ( $needs_install_check ) {
+            if ( ! function_exists( 'get_plugins' ) ) {
+                require_once ABSPATH . 'wp-admin/includes/plugin.php';
+            }
+
+            foreach ( $data as $namespace => $addon ) {
+                if ( empty( $addon['plugin_slug'] ) ) {
+                    continue;
+                }
+
+                $slug = $addon['plugin_slug'];
+                if ( ! is_dir( WP_PLUGIN_DIR . '/' . $slug ) ) {
+                    continue;
+                }
+
+                $installed_plugin = get_plugins( '/' . $slug );
+                if ( empty( $installed_plugin ) ) {
+                    continue;
+                }
+
+                $keys        = array_keys( $installed_plugin );
+                $plugin_file = $slug . '/' . reset( $keys );
+
+                $data[ $namespace ]['installation_status']['is_installed'] = true;
+                $data[ $namespace ]['installation_status']['plugin_file']  = $plugin_file;
+            }//end foreach
+        }//end if
+
         return $data;
     }
 

@@ -60,6 +60,13 @@ class SettingsPage {
      * Enqueue scripts using in settings page
      */
     public function register_wp_editor_plugins_script( $plugin_array ) {
+        // mce_external_plugins also runs on the frontend (e.g. Avada Live Builder
+        // calling _WP_Editors::editor_settings() from wp_footer). get_current_screen()
+        // is admin-only and is not defined there.
+        if ( ! function_exists( 'get_current_screen' ) ) {
+            return $plugin_array;
+        }
+
         $plugin_url       = YAYMAIL_PLUGIN_URL;
         $screen           = get_current_screen();
         $yaymail_platform = \YayMail\Platform\PlatformRegistry::get( 'yaymail' );
