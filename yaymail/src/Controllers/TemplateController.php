@@ -241,7 +241,13 @@ class TemplateController extends BaseController {
 
     public function get_template_by_name( \WP_REST_Request $request ) {
         $template_name = sanitize_text_field( $request->get_param( 'template_name' ) );
-        $template_data = $this->model::find_by_name( $template_name );
+        $variant       = yaymail_sanitize_template_variant( $request->get_param( 'variant' ) );
+        $template_data = $this->model::find_by_name( $template_name, '', $variant );
+        if ( '' !== $variant && empty( $template_data['id'] ) ) {
+            // Variant posts are created on first open, seeded from the default design.
+            new YayMailTemplate( $template_name, '', $variant );
+            $template_data = $this->model::find_by_name( $template_name, '', $variant );
+        }
 
         if ( null === $template_data ) {
             $all_emails = yaymail_get_emails();

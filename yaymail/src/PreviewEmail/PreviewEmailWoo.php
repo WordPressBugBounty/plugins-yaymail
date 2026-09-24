@@ -18,7 +18,7 @@ class PreviewEmailWoo {
 
     private function __construct() {}
 
-    public static function email_preview_output( $order_id, $email_id, $email_address = '' ) {
+    public static function email_preview_output( $order_id, $email_id, $email_address = '', $variant = '' ) {
         $current_email = yaymail_get_email( $email_id );
         $current_email = ! empty( $current_email ) && method_exists( $current_email, 'get_root_email' ) ? $current_email->get_root_email() : '';
 
@@ -33,9 +33,11 @@ class PreviewEmailWoo {
         $email_class = get_class( $current_email );
 
         $order         = wc_get_order( $order_id );
-        $template_data = new YayMailTemplate( $email_id );
+        $template_data = new YayMailTemplate( $email_id, '', $variant );
+        // Enabled-ness always comes from the default design; the variant only swaps the layout.
+        $default_template = '' === $variant ? $template_data : new YayMailTemplate( $email_id );
 
-        if ( ! $template_data->is_enabled() ) {
+        if ( ! $default_template->is_enabled() ) {
             return self::render_default_preview( $current_email, $email_class, $order );
         }
 
@@ -47,6 +49,16 @@ class PreviewEmailWoo {
         add_filter( 'woocommerce_email_recipient_' . $current_email->id, [ __CLASS__, 'no_recipient' ] );
         add_filter( 'woocommerce_new_order_email_allows_resend', '__return_true' );
         add_filter( 'yaymail_is_preview_email', '__return_true' );
+        if ( '' !== $variant ) {
+            // Preview the variant being edited; rule-based resolution is skipped while previewing.
+            add_filter(
+                'yaymail_email_get_variant',
+                function () use ( $variant ) {
+                    return $variant;
+                },
+                20
+            );
+        }
 
         $core_template_ids      = SupportedPlugins::get_instance()->get_template_ids_from_core();
         $addon_template_ids     = SupportedPlugins::get_instance()->get_all_addon_supported_template_ids();

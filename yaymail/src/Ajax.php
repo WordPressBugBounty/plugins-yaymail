@@ -8,6 +8,9 @@ use YayMail\Models\TemplateModel;
 use YayMail\Models\RevisionModel;
 use YayMail\Migrations\MainMigration;
 use YayMail\Utils\Helpers;
+use YayMail\Utils\Logger;
+use YayMail\Models\PatternTemplateModel;
+use YayMail\Utils\TemplateHelpers;
 
 /**
  * I18n Logic
@@ -36,6 +39,55 @@ class Ajax {
         add_action( 'wp_ajax_yaymail_export_state', [ $this, 'export_state' ] );
         add_action( 'wp_ajax_yaymail_import_state', [ $this, 'import_state' ] );
         add_action( 'wp_ajax_yaymail_dismiss_new_element_notification', [ $this, 'dismiss_new_element_notification' ] );
+        add_action( 'wp_ajax_yaymail_log_client_error', [ $this, 'log_client_error' ] );
+    }
+
+    /**
+     * Records a runtime error reported by the admin SPA (see apps/customizer/src/utils/client-error-reporter.ts).
+     *
+     * Goes to the WooCommerce log (WooCommerce > Status > Logs, source "yaymail-client") so support can ask the
+     * customer to copy it from wp-admin; falls back to the yaymail-logs file when WooCommerce is absent.
+     */
+    public function log_client_error() {
+        $nonce = isset( $_POST['nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['nonce'] ) ) : '';
+        if ( ! wp_verify_nonce( $nonce, 'yaymail_frontend_nonce' ) || ! current_user_can( 'manage_woocommerce' ) ) {
+            return wp_send_json_error( [ 'mess' => __( 'Verify nonce failed', 'yaymail' ) ], 403 );
+        }
+
+        // A render loop in one browser must not be able to fill the log.
+        $rate_key = 'yaymail_client_error_rate_' . get_current_user_id();
+        $count    = (int) get_transient( $rate_key );
+        if ( $count >= 20 ) {
+            return wp_send_json_success( [ 'logged' => false ] );
+        }
+        set_transient( $rate_key, $count + 1, MINUTE_IN_SECONDS );
+
+        $text = function ( $key, $max = 8000 ) {
+            $value = isset( $_POST[ $key ] ) ? sanitize_textarea_field( wp_unslash( $_POST[ $key ] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+            return mb_substr( $value, 0, $max );
+        };
+
+        $lines = [
+            'CLIENT ERROR [' . $text( 'source', 20 ) . ']: ' . $text( 'message', 1000 ),
+            'Version: ' . $text( 'version', 20 ) . ' | Platform: ' . $text( 'platform', 40 ) . ' | Template: ' . $text( 'template', 200 ),
+            'URL: ' . $text( 'url', 2000 ),
+            'User agent: ' . $text( 'user_agent', 500 ),
+        ];
+        foreach ( [ 'hint' => 'Hint', 'stack' => 'Stack', 'component_stack' => 'Component stack' ] as $key => $label ) {
+            $value = $text( $key );
+            if ( '' !== $value ) {
+                $lines[] = $label . ':' . PHP_EOL . $value;
+            }
+        }
+        $message = implode( PHP_EOL, $lines );
+
+        if ( function_exists( 'wc_get_logger' ) ) {
+            wc_get_logger()->error( $message, [ 'source' => 'yaymail-client' ] );
+        } else {
+            ( new Logger() )->log( $message );
+        }
+
+        wp_send_json_success( [ 'logged' => true ] );
     }
 
     public function import_state() {
@@ -61,7 +113,7 @@ class Ajax {
             $state_data = null;
             for ( $i = 0; $i < $zip->numFiles; $i++ ) {
                 $filename = $zip->getNameIndex( $i );
-                // Matches both "yaymail_backup.json" (YayMail) and "email_builder_backup.json"
+                // Matches both "yaymail_backup.json" (YayMail) and "yaymagic_email_builder_backup.json"
                 // (Email Builder) -- the zip always holds exactly this one entry, named per
                 // getBrandName() in backup/index.tsx.
                 if ( 1 === preg_match( '/_backup\.json$/', (string) $filename ) ) {
@@ -247,7 +299,7 @@ class Ajax {
      */
     private function export_file_name_prefix() {
         $platform = isset( $_POST['platform'] ) ? sanitize_text_field( wp_unslash( $_POST['platform'] ) ) : ''; //phpcs:ignore WordPress.Security.NonceVerification.Missing
-        return 'email-builder' === $platform ? 'email_builder' : 'yaymail';
+        return 'yaymagic-email-builder' === $platform ? 'yaymagic_email_builder' : 'yaymail';
     }
 
     public function process_plugin_installer( $slug ) {
@@ -357,7 +409,8 @@ class Ajax {
                 return wp_send_json_error( [ 'mess' => __( 'Can\'t find email', 'yaymail' ) ] );
             }
 
-            $template = new YayMailTemplate( $template_name );
+            $variant  = yaymail_sanitize_template_variant( isset( $_POST['variant'] ) ? sanitize_text_field( wp_unslash( $_POST['variant'] ) ) : '' );
+            $template = new YayMailTemplate( $template_name, '', $variant );
 
             $render_data = [];
 
@@ -504,10 +557,11 @@ class Ajax {
             $template_name   = isset( $_POST['template_name'] ) ? sanitize_text_field( wp_unslash( $_POST['template_name'] ) ) : '';
             $search_order_id = isset( $_POST['search_order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['search_order_id'] ) ) : null;
             $email_address   = isset( $_POST['email_address'] ) ? sanitize_text_field( wp_unslash( $_POST['email_address'] ) ) : '';
+            $variant         = yaymail_sanitize_template_variant( isset( $_POST['variant'] ) ? sanitize_text_field( wp_unslash( $_POST['variant'] ) ) : '' );
 
-            $email_preview_output = PreviewEmail\PreviewEmailWoo::email_preview_output( $search_order_id, $template_name, $email_address );
+            $email_preview_output = PreviewEmail\PreviewEmailWoo::email_preview_output( $search_order_id, $template_name, $email_address, $variant );
 
-            $email_preview_output = apply_filters( 'yaymail_preview_email', $email_preview_output, $search_order_id, $template_name, $email_address );
+            $email_preview_output = apply_filters( 'yaymail_preview_email', $email_preview_output, $search_order_id, $template_name, $email_address, $variant );
 
             $send_mail = false;
 
@@ -555,6 +609,11 @@ class Ajax {
                         'key'     => YayMailTemplate::META_KEYS['name'],
                         'value'   => $templates,
                         'compare' => 'IN',
+                    ],
+                    // Export the default design only; import keys on name and would collapse variants onto it.
+                    [
+                        'key'     => YayMailTemplate::META_KEYS['variant'],
+                        'compare' => 'NOT EXISTS',
                     ],
                 ],
             ];
@@ -803,6 +862,7 @@ class Ajax {
 
             $template_name = isset( $_POST['data']['template_name'] ) ? sanitize_text_field( wp_unslash( $_POST['data']['template_name'] ) ) : 'new_order';
             $order_id      = isset( $_POST['data']['order_id'] ) ? sanitize_text_field( wp_unslash( $_POST['data']['order_id'] ) ) : 'sample_order';
+            $variant       = yaymail_sanitize_template_variant( isset( $_POST['data']['variant'] ) ? sanitize_text_field( wp_unslash( $_POST['data']['variant'] ) ) : '' );
 
             $template_model = TemplateModel::get_instance();
 
@@ -810,12 +870,12 @@ class Ajax {
 
             $templates_data = apply_filters( 'yaymail_get_all_templates', $template_model->find_all() );
 
-            $selected_template_data = $template_model->find_by_name( $template_name );
+            $selected_template_data = $template_model->find_by_name( $template_name, '', $variant );
 
             $elements_data = TemplateModel::get_elements_for_template( $template_name );
 
             $revision_model = RevisionModel::get_instance();
-            $revisions_data = $revision_model->get_by_template( $template_name );
+            $revisions_data = $revision_model->get_by_template( $template_name, $variant );
 
             wp_send_json_success(
                 [

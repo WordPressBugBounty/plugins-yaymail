@@ -81,8 +81,9 @@ class RevisionController extends BaseController {
     }
     public function get_all_revisions( \WP_REST_Request $request ) {
         $template_name = sanitize_text_field( $request->get_param( 'template_name' ) );
+        $variant       = yaymail_sanitize_template_variant( $request->get_param( 'variant' ) );
 
-        $revisions = $this->model->get_by_template( $template_name );
+        $revisions = $this->model->get_by_template( $template_name, $variant );
         return $revisions;
     }
 
@@ -94,8 +95,9 @@ class RevisionController extends BaseController {
     }
     public function delete_all_revisions( \WP_REST_Request $request ) {
         $template_name = sanitize_text_field( $request->get_param( 'template_name' ) );
+        $variant       = yaymail_sanitize_template_variant( $request->get_param( 'variant' ) );
 
-        $this->model->delete_by_template( $template_name );
+        $this->model->delete_by_template( $template_name, $variant );
         return [ 'success' => true ];
     }
 

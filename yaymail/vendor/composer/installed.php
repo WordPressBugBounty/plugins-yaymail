@@ -3,7 +3,7 @@
         'name' => 'yaycommerce/yaymail',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => '2126cf2c4165b8a8511545819e0c3410b1ec0991',
+        'reference' => 'e59de21c77905374b7ea2d94e61bf8a1d9ceb68c',
         'type' => 'wordpress-plugin',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'yaycommerce/yaymail' => array(
             'pretty_version' => 'dev-master',
             'version' => 'dev-master',
-            'reference' => '2126cf2c4165b8a8511545819e0c3410b1ec0991',
+            'reference' => 'e59de21c77905374b7ea2d94e61bf8a1d9ceb68c',
             'type' => 'wordpress-plugin',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

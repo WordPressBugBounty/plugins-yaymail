@@ -84,8 +84,8 @@ final class PlatformRegistry {
      * @return PlatformInterface
      */
     public static function host_platform(): PlatformInterface {
-        if ( self::wp_hosts_core() && self::has( 'email-builder' ) ) {
-            return self::$platforms['email-builder'];
+        if ( self::wp_hosts_core() && self::has( 'yaymagic-email-builder' ) ) {
+            return self::$platforms['yaymagic-email-builder'];
         }
 
         if ( self::has( 'yaymail' ) ) {

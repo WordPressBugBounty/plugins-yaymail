@@ -98,17 +98,7 @@ class CustomerPOSRefundedOrder extends BaseEmail {
             return $located;
         }
 
-        $order = apply_filters( 'yaymail_order_for_language', isset( $args['order'] ) ? $args['order'] : null, $args );
-
-        $language = $this->get_language( $order );
-
-        $this->template = new YayMailTemplate( $this->id, $language );
-
-        if ( ! $this->template->is_enabled() ) {
-            return $located;
-        }
-
-        return $template_path;
+        return $this->load_template( $args ) ? $template_path : $located;
     }
 
     public function get_template_path() {

@@ -39,8 +39,6 @@ abstract class BaseEmail {
         'plugin_name' => 'WooCommerce',
     ];
 
-    protected $elements = [];
-
     protected $shortcodes = [];
 
     protected $root_email = null;
@@ -109,13 +107,33 @@ abstract class BaseEmail {
             return $located;
         }
 
-        $this->template = new YayMailTemplate( $this->id );
+        return $this->load_template( $args ) ? $template_path : $located;
+    }
 
+    /**
+     * Resolve the variant and load the YayMail template into $this->template.
+     * The default design decides whether YayMail renders this email at all;
+     * a variant only swaps the design when an addon returns one via `yaymail_email_get_variant`.
+     *
+     * @param array       $args          wc_get_template args.
+     * @param string|null $template_name Template to load; defaults to this email's id.
+     * @return bool True when a YayMail template should render.
+     */
+    protected function load_template( $args, $template_name = null ) {
+        $template_name = $template_name ?? $this->id;
+        $order         = isset( $args['order'] ) ? $args['order'] : null;
+
+        $this->template = new YayMailTemplate( $template_name );
         if ( ! $this->template->is_enabled() ) {
-            return $located;
+            return false;
         }
 
-        return $template_path;
+        $variant = yaymail_sanitize_template_variant( apply_filters( 'yaymail_email_get_variant', '', $order, $args, $this, $template_name ) );
+        if ( '' !== $variant ) {
+            $this->template = new YayMailTemplate( $template_name, '', $variant );
+        }
+
+        return true;
     }
 
     public function get_title() {
@@ -128,17 +146,6 @@ abstract class BaseEmail {
 
     public function get_source() {
         return $this->source;
-    }
-
-    public function register_element( $element ) {
-        if ( ! ( $element instanceof BaseElement ) ) {
-            return;
-        }
-        $this->elements[] = $element;
-    }
-
-    public function get_elements() {
-        return $this->elements;
     }
 
     public function register_shortcodes( $shortcodes ) {
@@ -164,8 +171,8 @@ abstract class BaseEmail {
         if ( ! $this->root_email || ! $this->root_email instanceof \WC_Email ) {
             return;
         }
-        $find_yaymail_template = TemplateModel::get_short_data_by_name( $this->id );
-        if ( ! empty( $find_yaymail_template ) && $find_yaymail_template['status'] === 'active' ) {
+        // One batched lookup shared by all emails instead of a per-email query at init.
+        if ( in_array( $this->id, TemplateModel::get_active_default_template_names(), true ) ) {
             $this->root_email->block_email_editor_enabled = false;
         }
     }

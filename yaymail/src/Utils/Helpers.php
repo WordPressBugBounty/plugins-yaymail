@@ -485,7 +485,7 @@ class Helpers {
     public static function get_plugin_work_info() {
         $plugin_work = [
             'yaymail'                 => false,
-            'email-builder' => false,
+            'yaymagic-email-builder' => false,
         ];
 
         if ( function_exists( '\YayMail\init' ) && function_exists( 'WC' ) ) {
@@ -498,9 +498,9 @@ class Helpers {
 
         if ( function_exists( '\YayMail\wp_mail_init' ) ) {
             if ( class_exists( 'YaymailWpPluginAdapter', false ) && method_exists( 'YaymailWpPluginAdapter', 'is_licensed' ) ) {
-                $plugin_work['email-builder'] = \YaymailWpPluginAdapter::is_licensed();
+                $plugin_work['yaymagic-email-builder'] = \YaymailWpPluginAdapter::is_licensed();
             } else {
-                $plugin_work['email-builder'] = true;
+                $plugin_work['yaymagic-email-builder'] = true;
             }
         }
 

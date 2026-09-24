@@ -10,12 +10,14 @@ class Logger {
     private $wp_filesystem;
     private $max_log_files;
 
+    private $ready = false;
+
     /**
      * Constructor for the Logger class.
      *
-     * Initializes the logger with a specified log directory, prefix for log entries,
-     * and the maximum number of log files to keep. Ensures the log directory exists and
-     * performs cleanup of old log files.
+     * Only records the log directory and retention limit. Filesystem setup (WP_Filesystem,
+     * mkdir, old-log cleanup) is deferred to the first log() call because Logger instances
+     * are created on every request by classes that rarely log.
      */
     public function __construct( $log_directory = null, $max_log_files = 30 ) {
         if ( ! $log_directory ) {
@@ -23,6 +25,16 @@ class Logger {
         }
         $this->log_directory = $log_directory;
         $this->max_log_files = $max_log_files;
+    }
+
+    /**
+     * Initializes the filesystem, ensures the log directory exists and prunes old logs. Runs once.
+     */
+    private function ensure_ready() {
+        if ( $this->ready ) {
+            return;
+        }
+        $this->ready = true;
         $this->initialize_filesystem();
 
         // Ensure the log directory exists (only if filesystem is available)
@@ -92,6 +104,8 @@ class Logger {
     }
 
     public function log( $message ) {
+        $this->ensure_ready();
+
         // Return early if filesystem is not available
         if ( ! $this->wp_filesystem ) {
             return;

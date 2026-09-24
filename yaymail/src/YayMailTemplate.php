@@ -39,6 +39,7 @@ class YayMailTemplate {
         'content_text_color'       => '_yaymail_email_content_text_color',
         'title_color'              => '_yaymail_email_title_color',
         'language'                 => '_yaymail_template_language',
+        'variant'                  => '_yaymail_template_variant',
         'modified_by'              => '_yaymail_modified_by',
         'is_v4_supported'          => '_yaymail_is_v4_supported',
         'global_header_settings'   => '_yaymail_global_header_settings',
@@ -56,6 +57,7 @@ class YayMailTemplate {
         'content_text_color'       => '',
         'title_color'              => '',
         'language'                 => '',
+        'variant'                  => '',
         'modified_by'              => '',
         'is_v4_supported'          => false,
         'attachments'              => [],
@@ -82,6 +84,7 @@ class YayMailTemplate {
         'background_color'       => self::DEFAULT_DATA['background_color'],
         'text_link_color'        => self::DEFAULT_DATA['text_link_color'],
         'language'               => self::DEFAULT_DATA['language'],
+        'variant'                => self::DEFAULT_DATA['variant'],
         'title_color'            => self::DEFAULT_DATA['title_color'],
         'attachments'            => self::DEFAULT_DATA['attachments'],
         'preheader'              => self::DEFAULT_DATA['preheader'],
@@ -89,12 +92,17 @@ class YayMailTemplate {
         'global_footer_settings' => self::DEFAULT_DATA['global_footer_settings'],
     ];
 
-    public function __construct( $template_name = '', $language = '' ) {
+    /**
+     * @param string $template_name Email id.
+     * @param string $language      Unused in Lite; kept so callers match the Pro signature.
+     * @param string $variant       Variant slug, '' for the default design.
+     */
+    public function __construct( $template_name = '', $language = '', $variant = '' ) {
 
         $this->model = TemplateModel::get_instance();
 
         if ( is_string( $template_name ) && ! empty( $template_name ) ) {
-            $template_data = $this->model::find_by_name( $template_name, $language );
+            $template_data = $this->model::find_by_name( $template_name, $language, $variant );
             if ( empty( $template_data['id'] ) && SupportedPlugins::get_instance()->get_support_info( $template_name )['status'] === 'already_supported' ) {
                 /** Insert new template when not exists */
                 $template_data = $this->model::insert(
@@ -102,6 +110,7 @@ class YayMailTemplate {
                         'name'                     => $template_name,
                         'elements'                 => yaymail_get_default_elements( $template_name ),
                         'language'                 => $language,
+                        'variant'                  => $variant,
                         'background_color'         => self::DEFAULT_DATA['background_color'],
                         'text_link_color'          => self::DEFAULT_DATA['text_link_color'],
                         'content_background_color' => self::DEFAULT_DATA['content_background_color'],
@@ -111,12 +120,32 @@ class YayMailTemplate {
                         'global_footer_settings'   => self::DEFAULT_DATA['global_footer_settings'],
                     ]
                 );
+                // A new variant post starts from the default design instead of the stock elements.
+                $seed = '' !== $variant ? $this->get_variant_seed( $template_name ) : [];
+                if ( ! empty( $seed ) && ! empty( $template_data['id'] ) ) {
+                    $template_data = $this->model::update( $template_data['id'], $seed );
+                }
             }
-            $this->set_id( $template_data['id'] );
+            // Missing, not-yet-supported templates come back without an id; 0 keeps is_exists() false
+            $this->set_id( $template_data['id'] ?? 0 );
             $this->set_props( $template_data );
             // TODO: Consider filter available elements before pass to props
             $this->renderer = new TemplateRenderer( $this );
         }//end if
+    }
+
+    /**
+     * Design to copy into a freshly created variant post: the default design of the same email.
+     *
+     * @return array Subset of template data accepted by TemplateModel::update(), or [] when nothing to copy.
+     */
+    private function get_variant_seed( $template_name ) {
+        $source = $this->model::find_by_name( $template_name );
+        if ( empty( $source['id'] ) ) {
+            return [];
+        }
+        $seed_keys = [ 'elements', 'background_color', 'text_link_color', 'content_background_color', 'content_text_color', 'title_color', 'global_header_settings', 'global_footer_settings', 'preheader' ];
+        return array_intersect_key( $source, array_flip( $seed_keys ) );
     }
 
     public function is_exists() {
@@ -198,6 +227,10 @@ class YayMailTemplate {
 
     public function get_language( $context = 'view' ) {
         return $this->get_prop( 'language', $context );
+    }
+
+    public function get_variant( $context = 'view' ) {
+        return $this->get_prop( 'variant', $context );
     }
 
     public function get_title_color( $context = 'view' ) {
@@ -299,6 +332,12 @@ class YayMailTemplate {
     public function set_language( $value ) {
         if ( ! is_null( $value ) && is_string( $value ) ) {
             $this->set_prop( 'language', $value );
+        }
+    }
+
+    public function set_variant( $value ) {
+        if ( is_string( $value ) ) {
+            $this->set_prop( 'variant', $value );
         }
     }
 

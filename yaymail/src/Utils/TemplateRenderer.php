@@ -31,7 +31,7 @@ class TemplateRenderer {
         }
 
         // Handle the cases when order is numeric (order_id)
-        if ( isset( $render_data['order'] ) && is_numeric( $render_data['order'] ) ) {
+        if ( isset( $render_data['order'] ) && is_numeric( $render_data['order'] ) && function_exists( 'wc_get_order' ) ) {
             $order = wc_get_order( $render_data['order'] );
             if ( $order ) {
                 $render_data['order'] = $order;

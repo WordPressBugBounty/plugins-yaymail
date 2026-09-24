@@ -68,7 +68,7 @@ class GlobalHeaderFooter {
      * Resolve the platform that owns a given global-header-footer template name.
      *
      * Template naming is the only signal available at this call depth ('wp-core*'
-     * belongs to the email-builder product, everything else to yaymail), so this
+     * belongs to the yaymagic-email-builder product, everything else to yaymail), so this
      * is the single place that maps it to a registered platform instead of each
      * caller re-deriving option keys inline.
      *
@@ -77,7 +77,7 @@ class GlobalHeaderFooter {
      * @return \YayMail\Platform\PlatformInterface
      */
     private static function resolve_platform( $template_name ) {
-        $platform_key = str_starts_with( $template_name, 'wp-core' ) ? 'email-builder' : 'yaymail';
+        $platform_key = str_starts_with( $template_name, 'wp-core' ) ? 'yaymagic-email-builder' : 'yaymail';
 
         return PlatformRegistry::get( $platform_key ) ?? PlatformRegistry::get( 'yaymail' ) ?? new YaymailPlatform();
     }

@@ -69,6 +69,19 @@ if ( ! function_exists( 'yaymail_is_wc_installed' ) ) {
     }
 }
 
+if ( ! function_exists( 'yaymail_sanitize_template_variant' ) ) {
+    /**
+     * Variant slugs are stored as post meta and used as lookup keys, so only [a-z0-9_-] survives.
+     * Anything else (including null) means the default design.
+     */
+    function yaymail_sanitize_template_variant( $variant ) {
+        if ( ! is_string( $variant ) ) {
+            return '';
+        }
+        return preg_match( '/^[a-z0-9_-]{1,40}$/', $variant ) ? $variant : '';
+    }
+}
+
 if ( ! function_exists( 'yaymail_version' ) ) {
     function yaymail_version() {
         if ( defined( 'YAYMAIL_VERSION' ) ) {
@@ -200,26 +213,6 @@ if ( ! function_exists( 'yaymail_get_all_elements' ) ) {
      */
     function yaymail_get_all_elements() {
         return ElementsLoader::get_instance()->get_all();
-    }
-}
-
-if ( ! function_exists( 'yaymail_get_email_available_elements' ) ) {
-
-    /**
-     * Get all available elements of given email
-     *
-     * @param string $email_id
-     *
-     * @return BaseElement[]
-     */
-    function yaymail_get_email_available_elements( $email_id ) {
-        $find_email = yaymail_get_email( $email_id );
-
-        if ( ! $find_email ) {
-            return [];
-        }
-
-        return $find_email->get_elements();
     }
 }
 

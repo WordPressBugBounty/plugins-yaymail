@@ -27,6 +27,9 @@ class TemplateModel {
     private const POST_META_TABLE = 'postmeta';
     private static $meta_keys     = YayMailTemplate::META_KEYS;
 
+    /** @var string[]|null Per-request memo for get_active_default_template_names(). */
+    private static $active_default_template_names = null;
+
     /**
      * Query post with given arguments.
      * Build query string base on given arguments
@@ -63,8 +66,26 @@ class TemplateModel {
             );
         }
 
-        $query_string = implode( ' ', $clauses );
-        $post_id      = $wpdb->get_var( $query_string );
+        // Variant clause is always present so default lookups never return a variant post.
+        $variant_meta_key = self::$meta_keys['variant'];
+        if ( isset( $args['variant'] ) && '' !== $args['variant'] ) {
+            $clauses['join']  .= " JOIN $post_meta AS postmeta3 ON ( posts.ID = postmeta3.post_id )";
+            $clauses['where'] .= $wpdb->prepare(
+                ' AND ( postmeta3.meta_key=%s AND postmeta3.meta_value = %s )',
+                $variant_meta_key,
+                $args['variant']
+            );
+        } else {
+            $clauses['join']  .= $wpdb->prepare(
+                " LEFT JOIN $post_meta AS postmeta3 ON ( posts.ID = postmeta3.post_id AND postmeta3.meta_key = %s )", // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                $variant_meta_key
+            );
+            $clauses['where'] .= " AND ( postmeta3.meta_value IS NULL OR postmeta3.meta_value = '' )";
+        }
+
+        // Oldest post wins when duplicates exist so customizer and send target the same row.
+        $query_string = implode( ' ', $clauses ) . ' ORDER BY posts.ID ASC LIMIT 1';
+        $post_id      = $wpdb->get_var( $query_string ); //phpcs:ignore
 
         return $post_id;
     }
@@ -227,10 +248,16 @@ class TemplateModel {
      *
      * @param string $name
      */
-    public static function find_by_name( $name ) {
+    /**
+     * @param string $name
+     * @param string $language Unused in Lite; kept so callers match the Pro signature.
+     * @param string $variant  Variant slug, '' for the default design.
+     */
+    public static function find_by_name( $name, $language = '', $variant = '' ) {
         $template_id = self::query_template(
             [
-                'name' => $name,
+                'name'    => $name,
+                'variant' => $variant,
             ]
         );
         if ( empty( $template_id ) ) {
@@ -290,6 +317,9 @@ class TemplateModel {
         }
         if ( ! empty( $args['global_footer_settings'] ) ) {
             update_post_meta( $new_template_id, self::$meta_keys['global_footer_settings'], $args['global_footer_settings'] );
+        }
+        if ( isset( $args['variant'] ) && '' !== $args['variant'] ) {
+            update_post_meta( $new_template_id, self::$meta_keys['variant'], $args['variant'] );
         }
 
         // Hook insert data of integrations
@@ -495,6 +525,7 @@ class TemplateModel {
             'name'                     => $template_name,
             'elements'                 => ElementsHelper::filter_available_elements( $template_elements, $template_name ),
             'status'                   => $status,
+            'variant'                  => self::query_meta_data( $template_post_id, self::$meta_keys['variant'], '' ),
             'title_color'              => $title_color ?? '#000000',
             'background_color'         => $background_color ?? YAYMAIL_COLOR_BACKGROUND_DEFAULT,
             'text_link_color'          => $text_link_color ?? YAYMAIL_COLOR_WC_DEFAULT,
@@ -641,6 +672,67 @@ class TemplateModel {
             return $elements;
         }
         return yaymail_get_email_elements_data( $template_id );
+    }
+
+    /**
+     * Names of every template whose default post is active, from one query.
+     *
+     * "Default post" mirrors query_template( [ 'name' => $name ] ) followed by the
+     * status meta read: no variant, default language ('' / unset / en_US), oldest
+     * post wins, missing status counts as inactive. Memoised for the request so the
+     * core emails can all consult it at init without one lookup each.
+     *
+     * @return string[]
+     */
+    public static function get_active_default_template_names() {
+        if ( null !== self::$active_default_template_names ) {
+            return self::$active_default_template_names;
+        }
+
+        global $wpdb;
+        $posts     = $wpdb->prefix . self::POST_TABLE;
+        $post_meta = $wpdb->prefix . self::POST_META_TABLE;
+
+        $rows = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+            $wpdb->prepare(
+                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+                "SELECT posts.ID, name.meta_value AS name, status.meta_value AS status, lang.meta_value AS language, variant.meta_value AS variant
+                FROM $posts AS posts
+                JOIN $post_meta AS name ON ( posts.ID = name.post_id AND name.meta_key = %s )
+                LEFT JOIN $post_meta AS status ON ( posts.ID = status.post_id AND status.meta_key = %s )
+                LEFT JOIN $post_meta AS lang ON ( posts.ID = lang.post_id AND lang.meta_key = %s )
+                LEFT JOIN $post_meta AS variant ON ( posts.ID = variant.post_id AND variant.meta_key = %s )
+                WHERE posts.post_type = %s AND posts.post_status IN ('publish', 'pending', 'future')
+                ORDER BY posts.ID ASC",
+                self::$meta_keys['name'],
+                self::$meta_keys['status'],
+                self::$meta_keys['language'],
+                self::$meta_keys['variant'],
+                TemplatePostType::POST_TYPE
+            ),
+            ARRAY_A
+        );
+
+        $seen   = [];
+        $active = [];
+        foreach ( (array) $rows as $row ) {
+            if ( '' !== (string) $row['variant'] ) {
+                continue;
+            }
+            if ( ! in_array( (string) $row['language'], [ '', 'en_US' ], true ) ) {
+                continue;
+            }
+            if ( isset( $seen[ $row['name'] ] ) ) {
+                continue;
+            }
+            $seen[ $row['name'] ] = true;
+            if ( 'active' === $row['status'] ) {
+                $active[] = $row['name'];
+            }
+        }
+
+        self::$active_default_template_names = $active;
+        return $active;
     }
 
     public static function get_short_data_by_name( $name ) {

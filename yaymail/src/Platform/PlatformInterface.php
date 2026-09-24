@@ -5,7 +5,7 @@
  * Each product (YayMail for WooCommerce, Yay WP Email Customizer) provides one
  * implementation and registers it with the PlatformRegistry at bootstrap. Shared
  * core code reads platform-specific values from the resolved platform instead of
- * detecting the platform inline via defined()/screen-id/'email-builder' branches.
+ * detecting the platform inline via defined()/screen-id/'yaymagic-email-builder' branches.
  *
  * @package YayMail\Platform
  */
@@ -19,7 +19,7 @@ interface PlatformInterface {
     /**
      * Stable platform key used across REST params, localize data, and lookups.
      *
-     * @return string 'yaymail' | 'email-builder'
+     * @return string 'yaymail' | 'yaymagic-email-builder'
      */
     public function key(): string;
 

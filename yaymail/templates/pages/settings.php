@@ -10,7 +10,7 @@ defined( 'ABSPATH' ) || exit;
  * bare pre-loader below would spin forever. Render a dedicated requirement screen
  * instead of a blank, endlessly loading page.
  *
- * The Yay WP Email Customizer product (email-builder platform) is designed to run
+ * The Yay WP Email Customizer product (yaymagic-email-builder platform) is designed to run
  * without WooCommerce, so it must never see this screen — scope the check with the
  * platform provider, falling back to the YAYWP_VERSION signal when the platform
  * cannot be resolved from the current screen.
@@ -100,7 +100,7 @@ if ( $yaymail_needs_woocommerce ) {
     <?php
     wp_editor(
         '',
-        'email-builder-editor-placeholder',
+        'yaymagic-email-builder-editor-placeholder',
         [
             'quicktags'     => false,
             'media_buttons' => true,

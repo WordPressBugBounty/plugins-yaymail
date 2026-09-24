@@ -74,8 +74,8 @@ class RevisionModel {
         ];
     }
 
-    public function get_by_template( $template_name ) {
-        $template_data = TemplateModel::find_by_name( $template_name );
+    public function get_by_template( $template_name, $variant = '' ) {
+        $template_data = TemplateModel::find_by_name( $template_name, '', $variant );
         if ( empty( $template_data['id'] ) ) {
             return [];
         }
@@ -103,8 +103,8 @@ class RevisionModel {
         return $result;
     }
 
-    public function delete_by_template( $template_name ) {
-        $template_data = TemplateModel::find_by_name( $template_name );
+    public function delete_by_template( $template_name, $variant = '' ) {
+        $template_data = TemplateModel::find_by_name( $template_name, '', $variant );
         if ( empty( $template_data['id'] ) ) {
             return [
                 'success' => false,

@@ -45,10 +45,6 @@ class GlobalHeaderFooter extends BaseEmail {
         return $default_elements;
     }
 
-    public function get_all_elements() {
-        return parent::get_elements();
-    }
-
     public function get_template_file( $located, $template_name, $args ) {
     }
 

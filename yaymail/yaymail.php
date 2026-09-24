@@ -3,7 +3,7 @@
  * Plugin Name: YayMail - WooCommerce Email Customizer
  * Plugin URI: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
  * Description: Create awesome transactional emails with a drag and drop email builder
- * Version: 4.4.4
+ * Version: 4.4.5
  * Author: YayCommerce
  * Author URI: https://yaycommerce.com
  * License:     GPLv2 or later
@@ -13,7 +13,7 @@
  * Tested up to: 7.1
  * Requires PHP: 5.4
  * WC requires at least: 3.0.0
- * WC tested up to: 11.0.1
+ * WC tested up to: 11.1.2
  * Domain Path: /i18n/languages/
  *
  * @package YayMail
@@ -32,7 +32,7 @@ if ( ! defined( 'YAYMAIL_DEBUG' ) ) {
 }
 
 if ( ! defined( 'YAYMAIL_VERSION' ) ) {
-    define( 'YAYMAIL_VERSION', '4.4.4' );
+    define( 'YAYMAIL_VERSION', '4.4.5' );
 }
 
 if ( ! defined( 'YAYMAIL_PLUGIN_URL' ) ) {
@@ -113,7 +113,7 @@ spl_autoload_register(
         if ( ! function_exists( 'is_plugin_active' ) ) {
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
-        $yaymail_wp_pro_plugin_file = 'email-builder-pro/email-builder.php';
+        $yaymail_wp_pro_plugin_file = 'yaymagic-email-builder-pro/yaymagic-email-builder.php';
         $yaymail_wp_pro_active      = is_plugin_active( $yaymail_wp_pro_plugin_file ) || is_plugin_active_for_network( $yaymail_wp_pro_plugin_file );
 
         if ( $yaymail_wp_pro_active && defined( 'YAYWP_PLUGIN_PATH' ) ) {
@@ -175,9 +175,14 @@ if ( ! function_exists( 'yaymail_enable_compatible_hpos' ) ) {
         if ( class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
             \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', __FILE__, true );
 
-            // Set compatible for addon
-            $plugins = get_plugins();
-            foreach ( array_keys( $plugins ) as $key ) {
+            // Set compatible for active addons. Read the active-plugin options instead of
+            // scanning the plugin directory: this hook fires on every request and that scans and
+            // parses every plugin header on disk.
+            $active_plugins = array_merge(
+                (array) get_option( 'active_plugins', [] ),
+                array_keys( (array) get_site_option( 'active_sitewide_plugins', [] ) )
+            );
+            foreach ( $active_plugins as $key ) {
                 $is_yaymail_addon = strpos( $key, 'yaymail-addon' ) !== false || strpos( $key, 'email-customizer' ) !== false;
                 if ( $is_yaymail_addon ) {
                     \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', $key, true );

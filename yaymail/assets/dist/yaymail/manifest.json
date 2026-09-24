@@ -1,11 +1,11 @@
 {
-  "_vendor_antd_form-c7f84ba4.js": {
-    "file": "vendor_antd_form-c7f84ba4.js"
+  "_vendor_antd_form-0d5fa2d8.js": {
+    "file": "vendor_antd_form-0d5fa2d8.js"
   },
-  "_vendor_antd_table-ccdc32eb.js": {
-    "file": "vendor_antd_table-ccdc32eb.js",
+  "_vendor_antd_table-36a06472.js": {
+    "file": "vendor_antd_table-36a06472.js",
     "imports": [
-      "_vendor_antd_form-c7f84ba4.js"
+      "_vendor_antd_form-0d5fa2d8.js"
     ]
   },
   "assets/svgs/addons-icon.svg": {
@@ -185,17 +185,17 @@
     "src": "features/email-customizer/components/notice/notice-icon.svg"
   },
   "yaymail-main.css": {
-    "file": "yaymail-main-89dd66e1.css",
+    "file": "yaymail-main-8b4cf375.css",
     "src": "yaymail-main.css"
   },
   "yaymail-main.tsx": {
     "css": [
-      "yaymail-main-89dd66e1.css"
+      "yaymail-main-8b4cf375.css"
     ],
-    "file": "yaymail-main.tsx-b73a6265.js",
+    "file": "yaymail-main.tsx-ad4d12b5.js",
     "imports": [
-      "_vendor_antd_form-c7f84ba4.js",
-      "_vendor_antd_table-ccdc32eb.js"
+      "_vendor_antd_form-0d5fa2d8.js",
+      "_vendor_antd_table-36a06472.js"
     ],
     "isEntry": true,
     "src": "yaymail-main.tsx"

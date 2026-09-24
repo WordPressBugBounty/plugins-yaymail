@@ -5,7 +5,6 @@ namespace YayMail\Notices;
 use YayMail\Utils\SingletonTrait;
 use YayMail\Notices\Ajax;
 use YayMail\SupportedPlugins;
-use YayMail\Utils\Logger;
 
 /**
  *
@@ -14,16 +13,8 @@ use YayMail\Utils\Logger;
 class NoticeMain {
     use SingletonTrait;
 
-    private $logger;
-
-    private $supported_plugins;
-
     protected function __construct() {
-        $this->logger = new Logger();
-
         Ajax::get_instance();
-
-        $this->supported_plugins = SupportedPlugins::get_instance();
 
         $this->init_hooks();
     }
@@ -33,27 +24,9 @@ class NoticeMain {
             return;
         }
         // Show recommendation notice
-        if ( time() >= (int) get_option( 'yaymail_next_recommendation_suggest_addons_notice_time' ) ) {
-            add_action( 'admin_notices', [ $this, 'render_suggest_addons_notice' ] );
-        }
-
-        if ( time() >= (int) get_option( 'yaymail_next_recommendation_upgrade_notice_time' ) ) {
-            add_action( 'admin_notices', [ $this, 'render_upgrade_notice' ] );
-        }
-
-        if ( is_admin() ) {
-            if ( time() >= (int) get_option( 'yaymail_next_recommendation_notice_time' ) || time() >= (int) get_option( 'yaymail_next_recommendation_suggest_addons_notice_time' ) || time() >= (int) get_option( 'yaymail_next_recommendation_upgrade_notice_time' ) ) {
-                wp_enqueue_script( 'yaymail-notice', YAYMAIL_PLUGIN_URL . 'assets/scripts/notice.js', [ 'jquery' ], yaymail_version(), false );
-            }
-
-            wp_localize_script(
-                'yaymail-notice',
-                'yaymail_notice',
-                [
-                    'admin_ajax' => admin_url( 'admin-ajax.php' ),
-                    'nonce'      => wp_create_nonce( 'yaymail_nonce' ),
-                ]
-            );
+        if ( is_admin() && time() >= (int) get_option( 'yaymail_next_recommendation_notice_time' ) ) {
+            add_action( 'admin_notices', [ $this, 'render_recommendation_notice' ] );
+            add_action( 'admin_enqueue_scripts', [ $this, 'enqueue_notice_script' ] );
         }
 
         add_action(
@@ -79,13 +52,13 @@ class NoticeMain {
                 $plugin_data           = $plugins[ $key ];
                 $is_yaycommerce_author = isset( $plugin_data['Author'] ) && strpos( $plugin_data['Author'], 'YayCommerce' ) !== false;
 
-                $is_email_builder = strpos( $key, 'email-builder' ) !== false;
+                $is_yaymagic_email_builder = strpos( $key, 'yaymagic-email-builder' ) !== false;
                 return $is_yaycommerce_author && (
                     strpos( $key, 'yaymail-addon' ) !== false ||
                     strpos( $key, 'email-customizer' ) !== false ||
                     strpos( $key, 'yaymail-premium-addon' ) !== false ||
                     strpos( $key, 'yaymail-conditional-logic' ) !== false
-                ) && ! $is_email_builder;
+                ) && ! $is_yaymagic_email_builder;
             },
             ARRAY_FILTER_USE_KEY
         );
@@ -122,13 +95,14 @@ class NoticeMain {
      */
     public function enqueue_admin_script() {
         ?>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                var pluginRow = document.querySelector('tr[data-plugin="<?php echo esc_js( YAYMAIL_PLUGIN_BASENAME ); ?>"]');
-                if (pluginRow) pluginRow.classList.add('update');
-            });
-        </script>
-        <?php
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var pluginRow = document.querySelector(
+    'tr[data-plugin="<?php echo esc_js( YAYMAIL_PLUGIN_BASENAME ); ?>"]');
+    if (pluginRow) pluginRow.classList.add('update');
+});
+</script>
+<?php
     }
 
     /**
@@ -141,10 +115,29 @@ class NoticeMain {
         );
     }
 
-    public function render_suggest_addons_notice() {
+    /**
+     * Script for the recommendation notice dismiss/no-thanks buttons.
+     */
+    public function enqueue_notice_script() {
+        wp_enqueue_script( 'yaymail-notice', YAYMAIL_PLUGIN_URL . 'assets/scripts/notice.js', [ 'jquery' ], yaymail_version(), false );
+
+        wp_localize_script(
+            'yaymail-notice',
+            'yaymail_notice',
+            [
+                'admin_ajax' => admin_url( 'admin-ajax.php' ),
+                'nonce'      => wp_create_nonce( 'yaymail_nonce' ),
+            ]
+        );
+    }
+
+    public function render_recommendation_notice() {
+        if ( ! function_exists( 'YayMail\init' ) ) {
+            return;
+        }
         /* List out the 3rd-party that need our addon*/
         $addon_needed_plugins = [];
-        foreach ( $this->supported_plugins->get_addon_supported_plugins() as $addon_namespace => $addon ) {
+        foreach ( SupportedPlugins::get_instance()->get_addon_supported_plugins() as $addon_namespace => $addon ) {
             if ( ! empty( $addon['is_3rd_party_installed'] ) && empty( $addon['installation_status']['is_active'] ) ) {
                 $addon_needed_plugins[ $addon_namespace ] = $addon;
             }

@@ -39,7 +39,7 @@ class SettingsPage {
         if ( $yaymail_platform ) {
             $this->yaymail_hook_surfix = $yaymail_platform->hook_suffix();
         }
-        $wp_platform = \YayMail\Platform\PlatformRegistry::get( 'email-builder' );
+        $wp_platform = \YayMail\Platform\PlatformRegistry::get( 'yaymagic-email-builder' );
         if ( $wp_platform ) {
             $this->yay_wp_hook_surfix = $wp_platform->hook_suffix();
         }
@@ -191,7 +191,7 @@ class SettingsPage {
                         // Two compiled JS bundles still read global_headers_footers as a single
                         // legacy { global_header_elements, global_footer_elements } object rather
                         // than the per-language array Localize::get_global_headers_footers()
-                        // returns: (1) the "email-builder" (WP core mail) bundle -- confirmed
+                        // returns: (1) the "yaymagic-email-builder" (WP core mail) bundle -- confirmed
                         // byte-identical to the free "yaymail" lite bundle, it never received the
                         // multi-language upgrade -- and (2) the "yaymail" lite bundle itself when
                         // YAYMAIL_LITE_LEGACY_GHF_SHAPE is set. The paid yaymail-pro /
@@ -203,7 +203,7 @@ class SettingsPage {
                         // is not a function". Keep both conditions -- don't collapse into version
                         // checks, they gate an unrelated concern (see YAYWP_HOSTS_CORE above).
                         'global_headers_footers' => ( $current_platform && (
-                            'email-builder' === $current_platform->key()
+                            'yaymagic-email-builder' === $current_platform->key()
                             || ( 'yaymail' === $current_platform->key() && defined( 'YAYMAIL_LITE_LEGACY_GHF_SHAPE' ) && YAYMAIL_LITE_LEGACY_GHF_SHAPE )
                         ) )
                             ? \YayMail\Models\TemplateModel::get_global_header_and_footer( '', $current_platform->ghf_option_key() )
@@ -215,10 +215,10 @@ class SettingsPage {
                     ],
                     'colors'                         => [
                         'default_background_color'         => YAYMAIL_COLOR_BACKGROUND_DEFAULT,
-                        'default_text_link_color'          => ( $current_platform && 'email-builder' === $current_platform->key() ) ? YAYMAIL_COLOR_WP_DEFAULT : YAYMAIL_COLOR_WC_DEFAULT,
+                        'default_text_link_color'          => ( $current_platform && 'yaymagic-email-builder' === $current_platform->key() ) ? YAYMAIL_COLOR_WP_DEFAULT : YAYMAIL_COLOR_WC_DEFAULT,
                         'default_content_background_color' => YAYMAIL_COLOR_CONTENT_BACKGROUND_DEFAULT,
                         'default_content_text_color'       => YAYMAIL_COLOR_CONTENT_TEXT_DEFAULT,
-                        'default_title_color'              => ( $current_platform && 'email-builder' === $current_platform->key() ) ? YAYMAIL_COLOR_WP_DEFAULT : YAYMAIL_COLOR_TITLE_DEFAULT,
+                        'default_title_color'              => ( $current_platform && 'yaymagic-email-builder' === $current_platform->key() ) ? YAYMAIL_COLOR_WP_DEFAULT : YAYMAIL_COLOR_TITLE_DEFAULT,
                     ],
                     'smtp'                           => [
                         'link_detail' => self_admin_url( 'plugin-install.php?tab=plugin-information&plugin=yaysmtp&section=description&TB_iframe=true&width=600&height=800' ),
@@ -238,6 +238,7 @@ class SettingsPage {
                     'viewed_new_elements'            => ! empty( get_option( 'yaymail_viewed_new_elements', [] ) ) ? get_option( 'yaymail_viewed_new_elements' ) : [],
                     'ghf_disallowed_element_types'   => yaymail_get_ghf_disallowed_element_types(),
                     'platform'                       => $current_platform ? $current_platform->key() : 'yaymail',
+                    'version'                        => yaymail_version(),
                     'woocommerce_email_styles'       => $this->get_scoped_woocommerce_email_styles(),
                 ],
                 apply_filters( 'yaymail_additional_localized_variables', [] )

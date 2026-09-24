@@ -36,16 +36,6 @@ class ElementsLoader {
         }
 
         do_action( 'yaymail_register_elements', $this );
-
-        $emails = yaymail_get_emails();
-
-        foreach ( $this->elements as $element ) {
-            foreach ( $emails as $email ) {
-                if ( $element->is_available_in_email( $email ) ) {
-                    $email->register_element( $element );
-                }
-            }
-        }
     }
 
     public function register_element( $element ) {

@@ -2,9 +2,7 @@
 namespace YayMail;
 
 use YayMail\Utils\Helpers;
-use YayMail\Elements\ElementsLoader;
 use YayMail\Emails\EmailsLoader;
-use YayMail\Engine\ActDeact;
 use YayMail\Engine\Backend\SettingsPage;
 use YayMail\Engine\RestAPI;
 use YayMail\Integrations\IntegrationsLoader;
@@ -31,6 +29,11 @@ class Initialize {
      * The Constructor that load the engine classes
      */
     protected function __construct() {
+        // Procedural helpers (yaymail_version(), yaymail_is_wc_installed(), ...) are used by
+        // every hook callback below, so load them here rather than inside init_core(), whose
+        // hook is filterable and may run after init_modules().
+        require_once Helpers::get_plugin_path() . 'src/Functions.php';
+
         I18n::get_instance();
 
         /**
@@ -51,7 +54,6 @@ class Initialize {
     }
 
     public function init_core() {
-        require_once Utils\Helpers::get_plugin_path() . 'src/Functions.php';
         do_action( 'yaymail_init_start' );
 
         /**
@@ -60,7 +62,6 @@ class Initialize {
         IntegrationsLoader::get_instance();
 
         EmailsLoader::get_instance();
-        ElementsLoader::get_instance();
         ShortcodesLoader::get_instance();
     }
 
@@ -79,8 +80,6 @@ class Initialize {
             }
         }
 
-        ActDeact::get_instance();
-
         if ( yaymail_is_wc_installed() ) {
             WooHandler::get_instance();
         }
@@ -90,11 +89,6 @@ class Initialize {
          */
 
         PreviewEmailsLoader::get_instance();
-
-        /**
-         * Supported templates
-         */
-        SupportedPlugins::get_instance();
 
         /**
          * Core core filters
@@ -107,7 +101,7 @@ class Initialize {
         // RefundedOrder, NewOrder, ...). Skip its directory scan/class instantiation
         // (41 files, ~23k lines) and the per-request "SHOW TABLES" check when
         // WooCommerce isn't active -- it noticeably slows down every admin page load
-        // on WP-only (email-builder) sites for a feature they can't use.
+        // on WP-only (yaymagic-email-builder) sites for a feature they can't use.
         if ( yaymail_is_wc_installed() ) {
             TemplateLibraryLoader::get_instance();
             LibraryTemplateSchema::maybe_create_table();
