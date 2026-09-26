@@ -27,7 +27,7 @@ class Ajax {
         }
         try {
             // The Notice should comeback after 60 days
-            update_option( 'yaymail_next_recommendation_suggest_addons_notice_time', time() + 60 * 60 * 24 * 60 );
+            update_option( 'yaymail_next_recommendation_notice_time', time() + 60 * 60 * 24 * 60 );
             wp_send_json_success();
         } catch ( \Error $error ) {
             yaymail_get_logger( $error );

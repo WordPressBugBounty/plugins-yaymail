@@ -4,7 +4,7 @@ Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: woocommerce email customizer, email templates, email builder, woocommerce emails, drag and drop
 Requires at least: 3.0
 Tested up to: 7.1
-Stable tag: 4.4.5
+Stable tag: 4.4.6
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -234,6 +234,9 @@ We offer single-site licenses and also unlimited site licenses to better support
 9. Break free from default WooCommerce styles, go bold with dark theme email templates
 
 == Changelog ==
+
+= Sep 26, 2026 - Version 4.4.6 =
+- Fixed: Unable to dismiss the addon suggestion banner.
 
 = Sep 24, 2026 - Version 4.4.5 =
 - Added: Support for email template variants: one email can have several alternative designs, and the Conditional Logic addon picks which one is sent.
