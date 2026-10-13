@@ -4,7 +4,7 @@ Donate link: https://yaycommerce.com/yaymail-woocommerce-email-customizer/
 Tags: woocommerce email customizer, email templates, email builder, woocommerce emails, drag and drop
 Requires at least: 3.0
 Tested up to: 7.1
-Stable tag: 4.4.6
+Stable tag: 4.4.7
 Requires PHP: 7.2
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -234,6 +234,11 @@ We offer single-site licenses and also unlimited site licenses to better support
 9. Break free from default WooCommerce styles, go bold with dark theme email templates
 
 == Changelog ==
+
+= Oct 13, 2026 - Version 4.4.7 =
+- Added: Support for WooCommerce 11.2 email templates: Customer Fulfillment, Customer Review Request, Customer Order Withdrawal Request and Customer Verify Email Address.
+- Fixed: Prevent PHP object injection when importing a backup. Serialized objects other than stdClass are rejected.
+- Fixed: Patterns getting stuck while loading on some hosting environments. (Pro)
 
 = Sep 26, 2026 - Version 4.4.6 =
 - Fixed: Unable to dismiss the addon suggestion banner.

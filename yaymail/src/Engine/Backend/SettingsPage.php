@@ -144,7 +144,9 @@ class SettingsPage {
                     'is_rtl'                         => is_rtl(),
                     'urls'                           => [
                         'vite_dynamic_base'      => YAYMAIL_PLUGIN_URL . 'assets/dist/yaymail/',
-                        'asset_url'              => YAYMAIL_PLUGIN_URL . 'assets/images/',
+                        // The screen's own plugin: YAYMAIL_PLUGIN_URL is whichever YayMail core
+                        // defined it first, which lacks this bundle's images when it's Pro.
+                        'asset_url'              => ( $current_platform ? $current_platform->plugin_url() : YAYMAIL_PLUGIN_URL ) . 'assets/images/',
                         'home_url'               => home_url(),
                         'wc_placeholder_img_src' => function_exists( 'wc_placeholder_img_src' ) ? wc_placeholder_img_src() : '',
                     ],
@@ -244,6 +246,30 @@ class SettingsPage {
                 apply_filters( 'yaymail_additional_localized_variables', [] )
             )
         );
+
+        // Printed after the localized yaymailData, before the bundle executes.
+        wp_add_inline_script( 'module/yaymail/yaymail-main.tsx', $this->get_section_template_patterns_rehydrate_script(), 'before' );
+    }
+
+    /**
+     * builder.section_templates[].patterns is localized as pattern types only (see
+     * BaseSectionTemplate::get_raw_data()). Every compiled bundle -- including the
+     * legacy yaymagic-email-builder and Pro ones -- still expects pattern objects
+     * there, so resolve the types against builder.patterns in place. Objects are
+     * shared by reference, so no data is duplicated in the page.
+     *
+     * @return string
+     */
+    private function get_section_template_patterns_rehydrate_script() {
+        return '(function(){'
+            . 'var b=window.yaymailData&&window.yaymailData.builder;'
+            . 'if(!b||!Array.isArray(b.patterns)||!Array.isArray(b.section_templates)){return;}'
+            . 'var byType={};'
+            . 'b.patterns.forEach(function(p){byType[p.type]=p;});'
+            . 'b.section_templates.forEach(function(s){'
+            . 's.patterns=(s.patterns||[]).map(function(t){return typeof t==="string"?byType[t]:t;}).filter(Boolean);'
+            . '});'
+            . '})();';
     }
 
     private function get_scoped_woocommerce_email_styles() {

@@ -3,6 +3,7 @@ namespace YayMail\Migrations;
 
 use YayMail\SupportedPlugins;
 use YayMail\Utils\Logger;
+use YayMail\Utils\SafeUnserializer;
 use YayMail\YayMailTemplate;
 
 /**
@@ -195,7 +196,7 @@ abstract class AbstractMigration {
         );
         $formatted_options = [];
         foreach ( $options as $option ) {
-            $formatted_options[ $option['option_name'] ] = maybe_unserialize( $option['option_value'] );
+            $formatted_options[ $option['option_name'] ] = SafeUnserializer::decode_backup( $option['option_value'] );
         }
         return $formatted_options;
     }

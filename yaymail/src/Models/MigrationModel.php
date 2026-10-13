@@ -2,6 +2,7 @@
 namespace YayMail\Models;
 
 use YayMail\Migrations\AbstractMigration;
+use YayMail\Utils\SafeUnserializer;
 use YayMail\Utils\SingletonTrait;
 use YayMail\Utils\Logger;
 use YayMail\Migrations\MainMigration;
@@ -23,31 +24,15 @@ class MigrationModel {
     }
 
     /**
-     * Safely unserialize values coming from backup/import data.
+     * Decode internal backup options for the listing UI (read-only).
      *
      * @param mixed $value The value to unserialize.
      * @return mixed
      */
     private function safe_maybe_unserialize( $value ) {
-        if ( ! is_string( $value ) ) {
-            return $value;
-        }
+        $decoded = SafeUnserializer::decode( $value );
 
-        if ( ! function_exists( 'is_serialized' ) || ! is_serialized( $value ) ) {
-            return $value;
-        }
-
-        $unserialized = @unserialize( $value, [ 'allowed_classes' => false ] );
-
-        if ( false === $unserialized && 'b:0;' !== $value ) {
-            return $value;
-        }
-
-        if ( is_object( $unserialized ) ) {
-            return $value;
-        }
-
-        return $unserialized;
+        return is_object( $decoded ) ? $value : $decoded;
     }
 
     public function get_onload_data() {
@@ -171,7 +156,7 @@ class MigrationModel {
                         add_post_meta(
                             $inserted_post_id,
                             $postmeta->meta_key,
-                            $this->safe_maybe_unserialize( $postmeta->meta_value )
+                            SafeUnserializer::decode_strict( $postmeta->meta_value )
                         );
                     }
                 }
@@ -181,7 +166,7 @@ class MigrationModel {
             foreach ( $backup['options'] as $option ) {
                 // Only restore options that belong to YayMail (same pattern as export)
                 if ( strpos( $option->option_name, 'yaymail' ) !== false ) {
-                    update_option( $option->option_name, $this->safe_maybe_unserialize( $option->option_value ) );
+                    update_option( $option->option_name, SafeUnserializer::decode_strict( $option->option_value ) );
                 }
             }
 

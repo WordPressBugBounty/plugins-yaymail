@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInita75e777207e60db6f768782025c7cd06
+class ComposerStaticInit9972e72a77bede5a3e8da68100802c08
 {
     public static $prefixLengthsPsr4 = array (
         'Y' => 
@@ -138,6 +138,7 @@ class ComposerStaticInita75e777207e60db6f768782025c7cd06
         'YayMail\\Elements\\SkeletonDivider' => __DIR__ . '/../..' . '/src/Elements/SkeletonDivider.php',
         'YayMail\\Elements\\SocialIcon' => __DIR__ . '/../..' . '/src/Elements/SocialIcon.php',
         'YayMail\\Elements\\Space' => __DIR__ . '/../..' . '/src/Elements/Space.php',
+        'YayMail\\Elements\\SyncedPattern' => __DIR__ . '/../..' . '/src/Elements/SyncedPattern.php',
         'YayMail\\Elements\\Text' => __DIR__ . '/../..' . '/src/Elements/Text.php',
         'YayMail\\Elements\\TextList' => __DIR__ . '/../..' . '/src/Elements/TextList.php',
         'YayMail\\Elements\\Title' => __DIR__ . '/../..' . '/src/Elements/Title.php',
@@ -146,15 +147,24 @@ class ComposerStaticInita75e777207e60db6f768782025c7cd06
         'YayMail\\Emails\\CustomerCancelledOrder' => __DIR__ . '/../..' . '/src/Emails/CustomerCancelledOrder.php',
         'YayMail\\Emails\\CustomerCompletedOrder' => __DIR__ . '/../..' . '/src/Emails/CustomerCompletedOrder.php',
         'YayMail\\Emails\\CustomerFailedOrder' => __DIR__ . '/../..' . '/src/Emails/CustomerFailedOrder.php',
+        'YayMail\\Emails\\CustomerFulfillmentCreated' => __DIR__ . '/../..' . '/src/Emails/CustomerFulfillmentCreated.php',
+        'YayMail\\Emails\\CustomerFulfillmentDeleted' => __DIR__ . '/../..' . '/src/Emails/CustomerFulfillmentDeleted.php',
+        'YayMail\\Emails\\CustomerFulfillmentUpdated' => __DIR__ . '/../..' . '/src/Emails/CustomerFulfillmentUpdated.php',
         'YayMail\\Emails\\CustomerInvoice' => __DIR__ . '/../..' . '/src/Emails/CustomerInvoice.php',
         'YayMail\\Emails\\CustomerNewAccount' => __DIR__ . '/../..' . '/src/Emails/CustomerNewAccount.php',
         'YayMail\\Emails\\CustomerNote' => __DIR__ . '/../..' . '/src/Emails/CustomerNote.php',
         'YayMail\\Emails\\CustomerOnHoldOrder' => __DIR__ . '/../..' . '/src/Emails/CustomerOnHoldOrder.php',
+        'YayMail\\Emails\\CustomerOrderWithdrawalRequested' => __DIR__ . '/../..' . '/src/Emails/CustomerOrderWithdrawalRequested.php',
         'YayMail\\Emails\\CustomerPOSCompletedOrder' => __DIR__ . '/../..' . '/src/Emails/CustomerPOSCompletedOrder.php',
         'YayMail\\Emails\\CustomerPOSRefundedOrder' => __DIR__ . '/../..' . '/src/Emails/CustomerPOSRefundedOrder.php',
         'YayMail\\Emails\\CustomerProcessingOrder' => __DIR__ . '/../..' . '/src/Emails/CustomerProcessingOrder.php',
         'YayMail\\Emails\\CustomerRefundedOrder' => __DIR__ . '/../..' . '/src/Emails/CustomerRefundedOrder.php',
         'YayMail\\Emails\\CustomerResetPassword' => __DIR__ . '/../..' . '/src/Emails/CustomerResetPassword.php',
+        'YayMail\\Emails\\CustomerReviewRequest' => __DIR__ . '/../..' . '/src/Emails/CustomerReviewRequest.php',
+        'YayMail\\Emails\\CustomerStockNotification' => __DIR__ . '/../..' . '/src/Emails/CustomerStockNotification.php',
+        'YayMail\\Emails\\CustomerStockNotificationVerified' => __DIR__ . '/../..' . '/src/Emails/CustomerStockNotificationVerified.php',
+        'YayMail\\Emails\\CustomerStockNotificationVerify' => __DIR__ . '/../..' . '/src/Emails/CustomerStockNotificationVerify.php',
+        'YayMail\\Emails\\CustomerVerifyEmail' => __DIR__ . '/../..' . '/src/Emails/CustomerVerifyEmail.php',
         'YayMail\\Emails\\EmailsLoader' => __DIR__ . '/../..' . '/src/Emails/EmailsLoader.php',
         'YayMail\\Emails\\FailedOrder' => __DIR__ . '/../..' . '/src/Emails/FailedOrder.php',
         'YayMail\\Emails\\GlobalHeaderFooter' => __DIR__ . '/../..' . '/src/Emails/GlobalHeaderFooter.php',
@@ -198,18 +208,23 @@ class ComposerStaticInita75e777207e60db6f768782025c7cd06
         'YayMail\\PreviewEmail\\PreviewEmailsLoader' => __DIR__ . '/../..' . '/src/PreviewEmail/PreviewEmailsLoader.php',
         'YayMail\\Shortcodes\\BillingShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/BillingShortcodes.php',
         'YayMail\\Shortcodes\\CommonShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/CommonShortcodes.php',
+        'YayMail\\Shortcodes\\FulfillmentShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/FulfillmentShortcodes.php',
         'YayMail\\Shortcodes\\HookShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/HookShortcodes.php',
         'YayMail\\Shortcodes\\LegacyCustomShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/LegacyCustomShortcodes.php',
         'YayMail\\Shortcodes\\NewUsersShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/NewUsersShortcodes.php',
         'YayMail\\Shortcodes\\OrderDetails\\OrderDetailsRenderer' => __DIR__ . '/../..' . '/src/Shortcodes/OrderDetails/OrderDetailsRenderer.php',
         'YayMail\\Shortcodes\\OrderDetails\\OrderDetailsShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/OrderDetails/OrderDetailsShortcodes.php',
         'YayMail\\Shortcodes\\OrderMetaShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/OrderMetaShortcodes.php',
+        'YayMail\\Shortcodes\\OrderWithdrawalShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/OrderWithdrawalShortcodes.php',
         'YayMail\\Shortcodes\\PaymentsShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/PaymentsShortcodes.php',
         'YayMail\\Shortcodes\\RefundShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/RefundShortcodes.php',
         'YayMail\\Shortcodes\\ResetPasswordsShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/ResetPasswordsShortcodes.php',
+        'YayMail\\Shortcodes\\ReviewRequestShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/ReviewRequestShortcodes.php',
         'YayMail\\Shortcodes\\ShippingShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/ShippingShortcodes.php',
         'YayMail\\Shortcodes\\ShortcodesExecutor' => __DIR__ . '/../..' . '/src/Shortcodes/ShortcodesExecutor.php',
         'YayMail\\Shortcodes\\ShortcodesLoader' => __DIR__ . '/../..' . '/src/Shortcodes/ShortcodesLoader.php',
+        'YayMail\\Shortcodes\\StockNotificationShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/StockNotificationShortcodes.php',
+        'YayMail\\Shortcodes\\VerifyEmailShortcodes' => __DIR__ . '/../..' . '/src/Shortcodes/VerifyEmailShortcodes.php',
         'YayMail\\SocialIcons\\SocialIconEndpoint' => __DIR__ . '/../..' . '/src/SocialIcons/SocialIconEndpoint.php',
         'YayMail\\SocialIcons\\SocialIconImageCache' => __DIR__ . '/../..' . '/src/SocialIcons/SocialIconImageCache.php',
         'YayMail\\SupportedPlugins' => __DIR__ . '/../..' . '/src/SupportedPlugins.php',
@@ -323,6 +338,7 @@ class ComposerStaticInita75e777207e60db6f768782025c7cd06
         'YayMail\\Utils\\Localize' => __DIR__ . '/../..' . '/src/Utils/Localize.php',
         'YayMail\\Utils\\Logger' => __DIR__ . '/../..' . '/src/Utils/Logger.php',
         'YayMail\\Utils\\OrderProgressVariantHelpers' => __DIR__ . '/../..' . '/src/Utils/OrderProgressVariantHelpers.php',
+        'YayMail\\Utils\\SafeUnserializer' => __DIR__ . '/../..' . '/src/Utils/SafeUnserializer.php',
         'YayMail\\Utils\\SingletonTrait' => __DIR__ . '/../..' . '/src/Utils/SingletonTrait.php',
         'YayMail\\Utils\\StyleInline' => __DIR__ . '/../..' . '/src/Utils/StyleInline.php',
         'YayMail\\Utils\\TemplateHelpers' => __DIR__ . '/../..' . '/src/Utils/TemplateHelpers.php',
@@ -337,9 +353,9 @@ class ComposerStaticInita75e777207e60db6f768782025c7cd06
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInita75e777207e60db6f768782025c7cd06::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInita75e777207e60db6f768782025c7cd06::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInita75e777207e60db6f768782025c7cd06::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit9972e72a77bede5a3e8da68100802c08::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit9972e72a77bede5a3e8da68100802c08::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit9972e72a77bede5a3e8da68100802c08::$classMap;
 
         }, null, ClassLoader::class);
     }

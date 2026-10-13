@@ -690,18 +690,15 @@ class TemplateModel {
         }
 
         global $wpdb;
-        $posts     = $wpdb->prefix . self::POST_TABLE;
-        $post_meta = $wpdb->prefix . self::POST_META_TABLE;
 
         $rows = $wpdb->get_results( // phpcs:ignore WordPress.DB.DirectDatabaseQuery
             $wpdb->prepare(
-                // phpcs:ignore WordPress.DB.PreparedSQL.InterpolatedNotPrepared
                 "SELECT posts.ID, name.meta_value AS name, status.meta_value AS status, lang.meta_value AS language, variant.meta_value AS variant
-                FROM $posts AS posts
-                JOIN $post_meta AS name ON ( posts.ID = name.post_id AND name.meta_key = %s )
-                LEFT JOIN $post_meta AS status ON ( posts.ID = status.post_id AND status.meta_key = %s )
-                LEFT JOIN $post_meta AS lang ON ( posts.ID = lang.post_id AND lang.meta_key = %s )
-                LEFT JOIN $post_meta AS variant ON ( posts.ID = variant.post_id AND variant.meta_key = %s )
+                FROM {$wpdb->posts} AS posts
+                JOIN {$wpdb->postmeta} AS name ON ( posts.ID = name.post_id AND name.meta_key = %s )
+                LEFT JOIN {$wpdb->postmeta} AS status ON ( posts.ID = status.post_id AND status.meta_key = %s )
+                LEFT JOIN {$wpdb->postmeta} AS lang ON ( posts.ID = lang.post_id AND lang.meta_key = %s )
+                LEFT JOIN {$wpdb->postmeta} AS variant ON ( posts.ID = variant.post_id AND variant.meta_key = %s )
                 WHERE posts.post_type = %s AND posts.post_status IN ('publish', 'pending', 'future')
                 ORDER BY posts.ID ASC",
                 self::$meta_keys['name'],

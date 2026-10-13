@@ -2,6 +2,7 @@
 namespace YayMail\Migrations;
 
 use YayMail\Utils\Logger;
+use YayMail\Utils\SafeUnserializer;
 use YayMail\SupportedPlugins;
 use YayMail\YayMailTemplate;
 
@@ -152,7 +153,7 @@ abstract class AbstractAddonMigrationManager {
 
         // If the option is found
         if ( $yaymail_addon_versions_option ) {
-            $versions = maybe_unserialize( $yaymail_addon_versions_option->option_value );
+            $versions = SafeUnserializer::decode_backup( $yaymail_addon_versions_option->option_value );
 
             // If the unserialized value is an array
             if ( is_array( $versions ) ) {

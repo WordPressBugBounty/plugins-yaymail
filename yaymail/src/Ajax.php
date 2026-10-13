@@ -8,6 +8,7 @@ use YayMail\Models\TemplateModel;
 use YayMail\Models\RevisionModel;
 use YayMail\Migrations\MainMigration;
 use YayMail\Utils\Helpers;
+use YayMail\Utils\SafeUnserializer;
 use YayMail\Utils\Logger;
 use YayMail\Models\PatternTemplateModel;
 use YayMail\Utils\TemplateHelpers;
@@ -135,6 +136,12 @@ class Ajax {
 
             if ( empty( $imported_data->posts ) || empty( $imported_data->postmeta ) || empty( $imported_data->options ) ) {
                 return wp_send_json_error( [ 'mess' => __( 'Invalid state file structure.', 'yaymail' ) ] );
+            }
+
+            // Reject serialized gadgets before any DB writes. stdClass from YayMail exports is allowed.
+            if ( $this->has_serialized_object( $imported_data->postmeta, 'meta_value' )
+                || $this->has_serialized_object( $imported_data->options, 'option_value' ) ) {
+                return wp_send_json_error( [ 'mess' => __( 'Invalid backup data: serialized PHP objects are not allowed.', 'yaymail' ) ] );
             }
 
             $migration_model = \YayMail\Models\MigrationModel::get_instance();
@@ -300,6 +307,27 @@ class Ajax {
     private function export_file_name_prefix() {
         $platform = isset( $_POST['platform'] ) ? sanitize_text_field( wp_unslash( $_POST['platform'] ) ) : ''; //phpcs:ignore WordPress.Security.NonceVerification.Missing
         return 'yaymagic-email-builder' === $platform ? 'yaymagic_email_builder' : 'yaymail';
+    }
+
+    /**
+     * Whether imported rows contain a serialized non-stdClass object.
+     *
+     * @param mixed  $rows   Imported rows, as decoded from the backup JSON.
+     * @param string $column Name of the column holding the serialized value.
+     * @return bool
+     */
+    private function has_serialized_object( $rows, string $column ): bool {
+        foreach ( (array) $rows as $row ) {
+            if ( ! isset( $row->{$column} ) ) {
+                continue;
+            }
+
+            if ( SafeUnserializer::has_object_payload( $row->{$column} ) ) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function process_plugin_installer( $slug ) {

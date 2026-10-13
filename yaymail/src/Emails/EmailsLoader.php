@@ -59,6 +59,35 @@ class EmailsLoader {
 
             $yaymail_emails->register( \YayMail\Emails\CustomerPOSCompletedOrder::get_instance() );
             $yaymail_emails->register( \YayMail\Emails\CustomerPOSRefundedOrder::get_instance() );
+
+            /**
+             * Fulfillment emails (WC 10.1, `fulfillments` feature) and
+             * review request email (`customer_review_request` feature)
+             *
+             * @since 4.4.7
+             */
+            $yaymail_emails->register( \YayMail\Emails\CustomerFulfillmentCreated::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerFulfillmentUpdated::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerFulfillmentDeleted::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerReviewRequest::get_instance() );
+
+            /**
+             * Core Back-in-Stock emails (WC 10.2, `customer_stock_notifications` feature)
+             *
+             * @since 4.4.7
+             */
+            $yaymail_emails->register( \YayMail\Emails\CustomerStockNotificationVerify::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerStockNotificationVerified::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerStockNotification::get_instance() );
+
+            /**
+             * Confirm email address (WC 11.0) and
+             * customer order withdrawal request (WC 11.2, `order_withdrawal` feature)
+             *
+             * @since 4.4.7
+             */
+            $yaymail_emails->register( \YayMail\Emails\CustomerVerifyEmail::get_instance() );
+            $yaymail_emails->register( \YayMail\Emails\CustomerOrderWithdrawalRequested::get_instance() );
         }//end if
 
         $yaymail_emails->register( \YayMail\Emails\GlobalHeaderFooter::get_instance() );

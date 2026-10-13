@@ -45,6 +45,14 @@ class ShortcodesLoader {
                     * @since 4.0.6
                     */
                     RefundShortcodes::get_instance(),
+                    /**
+                    * @since 4.4.7
+                    */
+                    FulfillmentShortcodes::get_instance(),
+                    ReviewRequestShortcodes::get_instance(),
+                    StockNotificationShortcodes::get_instance(),
+                    VerifyEmailShortcodes::get_instance(),
+                    OrderWithdrawalShortcodes::get_instance(),
                 ]
             );
         }

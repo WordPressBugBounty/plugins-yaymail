@@ -66,11 +66,19 @@ abstract class BaseSectionTemplate {
         }
     }
 
+    /**
+     * Patterns are referenced by type only: their full data (elements included) is
+     * already localized once in builder.patterns. Embedding it here too doubled the
+     * inline yaymailData script to ~1MB, which some hosts truncate (ModSecurity
+     * response limits, pcre.backtrack_limit in HTML optimizers) and the SPA then
+     * never boots. SettingsPage::get_section_template_patterns_rehydrate_script()
+     * swaps the types back to the objects client-side before any bundle runs.
+     */
     public function get_raw_data() {
         $data             = $this->get_data();
         $data['patterns'] = array_map(
             function( BasePattern $item ) {
-                return $item->get_raw_data();
+                return $item->get_type();
             },
             $data['patterns']
         );

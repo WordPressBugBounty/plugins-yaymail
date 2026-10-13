@@ -90,7 +90,18 @@ class YayMailViteApp {
                 if ( strpos( $handle, 'module/yaymail/' ) !== false ) {
                     $str  = "type='module'";
                     $str .= YAYMAIL_IS_DEVELOPMENT ? ' crossorigin' : '';
-                    $tag  = '<script ' . $str . ' src="' . $src . '" id="' . $handle . '-js"></script>';
+                    $new  = '<script ' . $str . ' src="' . $src . '" id="' . $handle . '-js"></script>';
+                    // Swap only the external script tag: $tag also carries inline scripts added via
+                    // wp_add_inline_script() (e.g. the section template patterns rehydrate script),
+                    // which must be kept or they silently never run.
+                    $tag = preg_replace_callback(
+                        '#<script\b[^>]*\bsrc=[^>]*>\s*</script>#',
+                        function () use ( $new ) {
+                            return $new;
+                        },
+                        $tag,
+                        1
+                    );
                 }
                 return $tag;
             },

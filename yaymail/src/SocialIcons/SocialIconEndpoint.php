@@ -127,7 +127,9 @@ class SocialIconEndpoint {
         // stream the cached file straight from disk.
         $cache_path = SocialIconImageCache::get_path( $cache_key );
         if ( $cache_path && file_exists( $cache_path ) ) {
-            readfile( $cache_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_put_contents
+            // Not user-controlled: uploads/<cache dir>/<md5>.png, hashed from the whitelisted icon, hex-validated color and clamped size.
+            // nosemgrep: audit.php.lang.security.file.read-write-delete
+            readfile( $cache_path ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_system_operations_readfile
             exit;
         }
 
