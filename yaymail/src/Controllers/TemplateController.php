@@ -7,6 +7,7 @@ use YayMail\Models\SettingModel;
 use YayMail\Models\TemplateModel;
 use YayMail\Utils\SingletonTrait;
 use YayMail\YayMailTemplate;
+use YayMail\PostTypes\TemplatePostType;
 
 /**
  * Template Controller
@@ -194,6 +195,14 @@ class TemplateController extends BaseController {
     public function update_template( \WP_REST_Request $request ) {
         $data     = json_decode( $request->get_param( 'data' ), true );
         $id       = sanitize_text_field( $data['template_id'] );
+        // A stale editor (e.g. a deleted variant's design) would otherwise write orphan meta and report success
+        if ( TemplatePostType::POST_TYPE !== get_post_type( (int) $id ) ) {
+            return new \WP_Error(
+                'template_not_found',
+                __( 'Template not found', 'yaymail' ),
+                [ 'status' => 404 ]
+            );
+        }
         $elements = $data['template_elements'];
         // TODO: later
         // $elements                   = Helpers::elements_remove_settings_empty( $request->get_param( 'template_elements' ) );

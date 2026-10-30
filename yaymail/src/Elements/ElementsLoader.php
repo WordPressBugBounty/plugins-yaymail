@@ -112,6 +112,54 @@ class ElementsLoader {
      * $is_nested
      * ...
      */
+    /**
+     * Lite has no global color palette, so a preset path kept from a Pro design ("presets/<id>/<name>/<n>")
+     * is invalid CSS here. Such a value falls back to that attribute's default for the element in this email.
+     *
+     * @param array  $element       Element as stored in the template.
+     * @param string $template_name Email the element is rendered for (defaults can depend on it).
+     * @return array
+     */
+    private static function reset_preset_colors( $element, $template_name ) {
+        static $defaults_by_template = [];
+
+        // Cheap pre-check: most elements have no preset at all
+        if ( empty( $element['data'] ) || ! is_array( $element['data'] ) || false === strpos( wp_json_encode( $element['data'], JSON_UNESCAPED_SLASHES ), 'presets/' ) ) {
+            return $element;
+        }
+
+        if ( ! isset( $defaults_by_template[ $template_name ] ) ) {
+            $defaults_by_template[ $template_name ] = [];
+            foreach ( yaymail_get_email_elements_data( $template_name ) as $definition ) {
+                $defaults_by_template[ $template_name ][ $definition['type'] ] = BaseElement::reduce_new_element( $definition )['data'];
+            }
+        }
+
+        $element['data'] = self::reset_preset_values( $element['data'], $defaults_by_template[ $template_name ][ $element['type'] ] ?? null );
+
+        return $element;
+    }
+
+    /**
+     * Walks nested values too (e.g. border.color), taking the default at the same path.
+     */
+    private static function reset_preset_values( $value, $default ) {
+        if ( is_string( $value ) ) {
+            if ( ! preg_match( '#^\s*presets/[^/]+/[^/]+/\d+\s*$#', $value ) ) {
+                return $value;
+            }
+            return is_string( $default ) ? $default : '';
+        }
+
+        if ( is_array( $value ) ) {
+            foreach ( $value as $key => $item ) {
+                $value[ $key ] = self::reset_preset_values( $item, is_array( $default ) ? ( $default[ $key ] ?? null ) : null );
+            }
+        }
+
+        return $value;
+    }
+
     public static function render_elements( $elements, $args ) {
         $is_nested     = isset( $args['is_nested'] ) ? $args['is_nested'] : false;
         $is_horizontal = isset( $args['is_horizontal'] ) ? $args['is_horizontal'] : false;
@@ -142,6 +190,7 @@ class ElementsLoader {
                 continue;
             }
 
+            $element         = self::reset_preset_colors( $element, $template_name );
             $args['element'] = $element;
 
             new ShortcodesExecutor( $shortcodes, $args );
